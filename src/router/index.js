@@ -1,16 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/login'
+import Register from '@/components/register'
 import Index from '@/components/index'
 import Home from '@/components/home'
 
 import GuideCollect from '@/components/guideManage/guideCollect'
+import GuideCollectAdd from '@/components/guideManage/guideCollectAdd'
 import GuideCollectList from '@/components/guideManage/GuideCollectList'
 import GuideCollectShow from '@/components/guideManage/GuideCollectShow'
-import GuideSummary from '@/components/guideManage/guideSummary'
-import GuideSummaryList from '@/components/guideManage/guideSummaryList'
-import GuideSummaryShow from '@/components/guideManage/guideSummaryShow'
-import GuideSummaryAdd from '@/components/guideManage/guideSummaryAdd'
 
 import BiddingRecord from '@/components/projectEstablish/biddingRecord'
 import BiddingRecordList from '@/components/projectEstablish/biddingRecordList'
@@ -76,6 +74,10 @@ export default new Router({
 	    	name: 'Login',
 		    component: Login
 	    },{
+		    path: '/register',
+	    	name: 'Register',
+		    component: Register
+	    },{
 	    	path: '/index',
 	    	name: 'Index',
 	    	component: Index,
@@ -84,7 +86,12 @@ export default new Router({
 				name: 'Home',
 				component: Home
 			},{
-				// 指南征集
+				// 指南征集申报
+				path: '/index/guideCollectAdd',
+				name: 'GuideCollectAdd',
+				component: GuideCollectAdd
+			},{
+				// 指南征集查询
 				path: '/index/guideCollect',
 				name: 'GuideCollect',
 				component: GuideCollect,
@@ -98,25 +105,6 @@ export default new Router({
 					component: GuideCollectShow
 				}],
 				redirect: '/index/guideCollect/guideCollectList'
-			},{
-				// 指南汇总
-				path: '/index/guideSummary',
-				name: 'GuideSummary',
-				component: GuideSummary,
-				children:[{
-					path: '/index/guideSummary/guideSummaryList',
-					name: 'GuideSummaryList',
-					component: GuideSummaryList
-				},{
-					path: '/index/guideSummary/guideSummaryShow',
-					name: 'GuideSummaryShow',
-					component: GuideSummaryShow
-				},{
-					path: '/index/guideSummary/guideSummaryAdd',
-					name: 'GuideSummaryAdd',
-					component: GuideSummaryAdd
-				}],
-				redirect: '/index/guideSummary/guideSummaryList'
 			},{
 				path:'/index/biddingRecord',
 				name:'BiddingRecord',

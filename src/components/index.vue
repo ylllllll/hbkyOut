@@ -66,10 +66,10 @@
 					name: '指南管理',
 					children: [{
 						id: '101',
-						name: '指南征集'
+						name: '指南征集申报'
 					},{
 						id: '102',
-						name: '指南汇总'
+						name: '指南征集查询'
 					}]
 				},{
 					id: '11',
@@ -165,8 +165,8 @@
 					}]
 				}],
 				testPath: [[
-						'/index/guideCollect',
-						'/index/guideSummary'
+						'/index/guideCollectAdd',
+						'/index/guideCollect'
 					],[
 						'/index/biddingRecord',
 						'/index/projectNotAudited',

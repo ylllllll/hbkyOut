@@ -1,22 +1,45 @@
 <template>
     <div id="login">
-        <el-form ref="ruleForm" :model="ruleForm" label-width="80px" :rules="rules">
-			<div class="header">
-				<img src="../assets/images/login_title.png" alt="" class="tlt01">
-				<img src="../assets/images/login_tlt02.png" alt="" class="tlt02">	
-			</div> 
-            <el-form-item label="用户名:" prop="name">
-                <el-input placeholder="请输入用户名" v-model="ruleForm.name" clearable @keyup.enter.native="submitForm('ruleForm')"></el-input>
-            </el-form-item>
-            <el-form-item label="密码:" prop="pwd">
-                <el-input placeholder="请输入密码" v-model="ruleForm.pwd" show-password @keyup.enter.native="submitForm('ruleForm')"></el-input>
-            </el-form-item>
-            <el-form-item label="验证码:" prop="code" class="code">
-                <el-input placeholder="请输入验证码" v-model="ruleForm.code" @keyup.enter.native="submitForm('ruleForm')"></el-input>
-                <img :src="codeUrl" alt="" @click="handleChangeCode" />
-            </el-form-item>
-            <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
-        </el-form>
+		<header>
+			<img src="../assets/images/login_title.png" alt="">
+		</header>
+		<section>
+			<div class="box">
+				<div class="box_left"></div>
+				<div class="box_right">
+					<el-form ref="ruleForm" :model="ruleForm" label-width="90px" :rules="rules">
+						<div class="header">
+							<img src="../assets/images/login_tlt02.png" alt="" class="tlt02">	
+						</div> 
+						<el-form-item label="用户名:" prop="name">
+							<el-input placeholder="请输入用户名" v-model="ruleForm.name" clearable @keyup.enter.native="submitForm('ruleForm')"></el-input>
+						</el-form-item>
+						<el-form-item label="密码:" prop="pwd">
+							<el-input placeholder="请输入密码" v-model="ruleForm.pwd" show-password @keyup.enter.native="submitForm('ruleForm')"></el-input>
+						</el-form-item>
+						<el-form-item label="用户类型:" prop="type">
+							<el-select placeholder="请选择用户类型" v-model="ruleForm.type">
+								<el-option label="企业" value="0"></el-option>
+								<el-option label="专家" value="1"></el-option>
+							</el-select>
+						</el-form-item>
+						<el-form-item label="验证码:" prop="code" class="code">
+							<el-input placeholder="请输入验证码" v-model="ruleForm.code" @keyup.enter.native="submitForm('ruleForm')"></el-input>
+							<img :src="codeUrl" alt="" @click="handleChangeCode" />
+						</el-form-item>
+						<div class="handle_group">
+							<div class="checkbox">
+								<el-checkbox></el-checkbox>记住密码
+							</div>
+							<router-link to="/register">注册</router-link>
+						</div>
+						<el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
+					</el-form>
+				</div>
+			</div>
+		
+			
+		</section>
     </div>
 </template>
 
@@ -28,7 +51,8 @@
 	        	codeUrl: 'http://192.168.0.37:8087/code/checkCode',
 	            ruleForm: {
 	                name: '',
-	                pwd: '',
+					pwd: '',
+					type: '',
 	                code: ''
 	            },
 	            rules: {
@@ -40,6 +64,11 @@
 	                pwd: [{
 						required: true,
 						message: '请输入密码',
+						trigger: 'blur'
+					}],
+					type: [{
+						required: true,
+						message: '请选择用户类型',
 						trigger: 'blur'
 					}],
 	                code: [{
@@ -99,62 +128,97 @@
 #login {
 		width: 100%;
 		height: 100%;
-		background: url(../assets/images/login_bg.jpg) no-repeat center;
 		background-size: 100% 100%;
 		position: relative;
-        .el-form {
-			background-color: rgba(255,255,255,0.7);
-			border-radius: 10px;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			width: 46%;
-			transform: translate(-50%,-50%);
-			-moz-transform:  translate(-50%,-50%);
-			-webkit-transform: translate(-50%,-50%);
-			-o-transform: translate(-50%,-50%);
-			-ms-transform: translate(-50%,-50%);
-			.header{
-				img{
-					display: block;
-					margin: auto;
-					&.tlt01{
-						width: 48.2%;
-						padding: 30px 0 70px;
-					}
-					&.tlt02{
-						width: 39%;
-						padding-bottom: 10px;
+		header {
+			width: 100%;
+			padding: 2.8% 0 2.8% 10%;
+			background-color: #96def4;
+			img {
+				width: 50%;
+			}
+		}
+		section {
+			padding: 5% 0;
+			background-color: #1cb6e8;
+			.box {
+				width: 75%;
+				margin: auto;
+				display: flex;
+				background-color: #fff;
+				.box_left {
+					width: 61.5%;
+					background-image: url(../assets/images/login_bg.png);
+					background-repeat: no-repeat;
+					background-size: cover;
+					background-position: center;
+				}
+				.box_right {
+					width: 38.5%;
+					padding-bottom: 1%;
+					.el-form {
+						border-radius: 10px;
+						.header{
+							img{
+								display: block;
+								margin: auto;
+								&.tlt02{
+									width: 70.7%;
+									padding: 8% 0 3%;
+								}
+							}
+						}
+						.el-form-item {
+								width: 70.7%;
+								// height: 30px;
+								margin: 1.5% auto;
+								padding: 10px 0;
+								label {
+									padding-right: 10px;
+									text-align-last: justify;
+								}
+								.el-select {
+									width: 100%;
+								}
+						}
+						.code {
+							.el-form-item__content {
+								display: flex;
+								input {
+									width: 100%;
+								}
+								img {
+									width: 60%;
+									margin-left: 5px;
+									cursor: pointer;
+								}
+							}
+						}
+						.handle_group {
+							width: 70.7%;
+							margin: 4% auto;
+							display: flex;
+							justify-content: space-between;
+							.checkbox,a {
+								color: #d8d8d8;
+								.el-checkbox {
+									padding-right: 10px;
+								}
+							}
+						}
+						.el-button {
+							width: 70.7%;
+							display: block;
+							padding: 10px 0;
+							background-color: #23b38f;
+							span {
+								font-size: 25px;
+								letter-spacing: 20px;
+							}
+						}
 					}
 				}
 			}
-            .el-form-item {
-					width: 39.7%;
-					margin: auto;
-	        		padding: 10px 0;
-					label{
-					   width: 64px !important;
-					   text-align-last: justify;
-					}
-            }
-            //.code {
-            	// .el-form-item__content {
-            	// 	display: flex;
-            	// 	input {
-	            // 		width: 320px;
-	            // 	}
-	            // 	img {
-	            // 		margin-right: 5px;
-	            // 	}
-            	// }
-            //}
-            .el-button {
-				display: block;
-				margin: 20px auto 113px;
-				padding: 10px 0;
-				width: 37%;
-				background-color: #23b38f;
-            }
-        }
+		}
     }
 </style>
