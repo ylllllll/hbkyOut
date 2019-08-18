@@ -241,23 +241,10 @@
 					}
 					if(flag) {
 						// 合同管理和课题验收中，待审核、已审核重复的问题
-						if(path == "/index/contractNotAudited") {
-							// alert(1)
-							tabName = "待审核(合同)"
-						}
-						if(path == "/index/contractAudited") {
-							// alert(1)
-							tabName = "已审核(合同)"
-						}
-						if(path == "/index/subjectNotAudited") {
-							// alert(1)
-							tabName = "待审核(课题)"
-						}
-						if(path == "/index/subjectAudited") {
-							// alert(1)
-							tabName = "已审核(课题)"
-						}
-
+						if(path == "/index/contractNotAudited") { tabName = "待审核(合同)" }
+						if(path == "/index/contractAudited") { tabName = "已审核(合同)" }
+						if(path == "/index/subjectNotAudited") { tabName = "待审核(课题)" }
+						if(path == "/index/subjectAudited") { tabName = "已审核(课题)" }
 						this.tabs.push({
 							title: tabName,
 							name: path
@@ -273,7 +260,7 @@
 				}
 				setTimeout(() => {
 					// tabs的刷新按钮
-					let allTabs =  document.querySelectorAll("[id*=tab]")
+					let allTabs =  document.querySelectorAll("[id*=tab]");
 					let allCloseIcon = document.querySelectorAll("[id*=tab] span");
 					let index = allCloseIcon.length;
 					if(!document.querySelectorAll(".el-icon-refresh-right")[index]) {

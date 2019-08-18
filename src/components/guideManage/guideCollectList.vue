@@ -4,45 +4,36 @@
         <div class="queryForm">
             <el-form ref="queryForm" :model="queryForm" >
                 <el-form-item label="指南建议名称：" >
-                    <el-input v-model="queryForm.name"></el-input>
+                    <el-input v-model="queryForm.guideName"></el-input>
                 </el-form-item>
                 <el-form-item label="所属领域：">
-                    <el-select v-model="queryForm.region" placeholder="请选择">
-                        <el-option
-                            v-for="item in queryForm.reginOptions"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
-                        </el-option>
+                    <el-select v-model="queryForm.domain">
+                        <el-option v-for="(item,index) in optGroup1" :key="index" :label="item.content" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="所属类别：">
                     <el-select v-model="queryForm.category">
-                        <el-option 
-                            v-for="item in queryForm.categoryOptions"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
-                        </el-option>
+                        <el-option v-for="(item,index) in optGroup2" :key="index" :label="item.content" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="填报单位：" >
-                    <el-input v-model="queryForm.unit"></el-input>
+                    <el-input v-model="queryForm.fillUnit"></el-input>
                 </el-form-item>
                 <el-form-item label="填报联系人：" >
-                    <el-input v-model="queryForm.contacts"></el-input>
+                    <el-input v-model="queryForm.fillContacts"></el-input>
                 </el-form-item>
                 <el-form-item label="联系人手机：" >
-                    <el-input v-model="queryForm.phone"></el-input>
+                    <el-input v-model="queryForm.contactPhone"></el-input>
                 </el-form-item>
             </el-form>
-            <el-button type="primary">搜索</el-button>
+            <el-button @click="handleSearch">搜索</el-button>
         </div>
 
         <!-- 展示列表 -->
         <div class="showList">
             <!-- 表格 -->
             <el-table
+                v-loading="loading"
                 ref="multipleTable"
                 :data="tableData"
                 tooltip-effect="dark"
@@ -58,7 +49,7 @@
                     align="center">
                 </el-table-column>
                 <el-table-column
-                    prop="name"
+                    prop="guide_name"
                     label="指南建议名称"
                     :show-overflow-tooltip="true"
                     align="center">
@@ -66,15 +57,16 @@
                     <router-link :to="{
                             name: 'GuideCollectShow',
                             params: {
-                                id: scope.row.id
+                                id: scope.row.id,
+                                data: tableData
                             }
                         }"> 
-                        {{ scope.row.name }}
+                        {{ scope.row.guide_name }}
                     </router-link>
                 </template>
                 </el-table-column>
                 <el-table-column
-                    prop="region"
+                    prop="domain"
                     label="所属领域"
                     align="center">
                 </el-table-column>
@@ -84,27 +76,27 @@
                     align="center">
                 </el-table-column>
                 <el-table-column
-                    prop="funds"
+                    prop="research_fund"
                     label="研究经费"
                     align="center">
                 </el-table-column>
                 <el-table-column
-                    prop="date"
+                    prop="research_period"
                     label="研究期限"
                     align="center">
                 </el-table-column>
                 <el-table-column
-                    prop="unit"
+                    prop="fill_unit"
                     label="填报单位"
                     align="center">
                 </el-table-column>
                 <el-table-column
-                    prop="contacts"
+                    prop="fill_contacts"
                     label="填报联系人"
                     align="center">
                 </el-table-column>
                 <el-table-column
-                    prop="phone"
+                    prop="contact_phone"
                     label="联系人手机"
                     align="center">
                 </el-table-column>
@@ -123,110 +115,98 @@
 </template>
 
 <script>
-export default {
-    name:'guideCollectList',
-    data(){
-        return {
-            selectedIDs: [],
-            queryForm:{
-                name:'',
-                unit:'',
-                contacts:'',
-                phone:'',
-                reginOptions:[{
-                    value:'0',
-                    label:'领域1'
-                },{
-                    value:'1',
-                    label:'领域2'
-                }],
-                region:'',
-                categoryOptions:[{
-                    value:'0',
-                    label:'类别1'
-                },{
-                    value:'1',
-                    label:'类别2'
-                }],
-                category:''
+    export default {
+        name:'guideCollectList',
+        data(){
+            return {
+                selectedIDs: [],
+                queryForm: {
+                    guideName:'',
+                    domain:'',
+                    category:'',
+                    fillUnit:'',
+                    fillContacts:'',
+                    contactPhone:'',
+                    pageNum: 1,
+                    pageSize: 10
+                },
+                optGroup1: [],
+                optGroup2: [],
+                loading: false,
+                tableData:[],
+                // multipleSelection: [],
+                currentPage: 4,
+                fenye: {
+                    total: 400, //共有数据多少条
+                    pageNum: 1,
+                    pageSize: 10, //每页显示的条数
+                    pageSizes: [10,20,30,40,50] //选择每页显示多少条
+                },
+            }
+        },
+        methods: {
+            handleSelectionChange(val) {
+                this.multipleSelection = val;
+                let ids = [];
+                this.multipleSelection.map((item)=> {
+                    ids.push(item.id);
+                })
+                this.selectedIDs = ids;
             },
-            tableData:[{
-                id: '1001',
-                name: '名称1名称1名称1名称1名称1名称1名称1名称1',
-                region: '领域',
-                category: '类别1',
-                funds:'经费',
-                date:'期限',
-                unit:"单位1",
-                contacts:"联系人1",
-                phone:"17856567788"
-            },{
-                id: '1002',
-                name: '名称2',
-                region: '领域',
-                category: '类别2',
-                funds:'经费',
-                date:'期限',
-                unit:"单位1",
-                contacts:"联系人1",
-                phone:"17856567788"
-            },{
-                id: '1003',
-                name: '名称3',
-                region: '领域',
-                category: '类别3',
-                funds:'经费',
-                date:'期限',
-                unit:"单位1",
-                contacts:"联系人1",
-                phone:"17856567788"
-            },{
-                id: '1004',
-                name: '名称4',
-                region: '领域',
-                category: '类别4',
-                funds:'经费',
-                date:'期限',
-                unit:"单位1",
-                contacts:"联系人1",
-                phone:"17856567788"
-            }],
-            // multipleSelection: [],
-            currentPage:4,
-            fenye:{
-                total:400, //共有数据多少条
-                pageNum:1,
-                pageSize:100, //每页显示的条数
-                pageSizes:[100,30,40,50] //选择每页显示多少条
+            handleCurrentChange(val) {              //val表示当前页
+                this.queryForm.pageNum = val;
+                this._axios();
             },
-        }
-    },
-    methods:{
-        // toggleSelection(rows) {
-        //     if(rows) {
-        //         rows.forEach(row => {
-        //         this.$refs.multipleTable.toggleRowSelection(row);
-        //         });
-        //     }else {
-        //         this.$refs.multipleTable.clearSelection();
-        //     }
-        // },
-        handleSelectionChange(val) {
-            this.multipleSelection = val;
-            let ids = [];
-            this.multipleSelection.map((item)=> {
-                ids.push(item.id);
+            handleSizeChange(val) {                 //val表示每页展示的条数
+                this.queryForm.pageSize = val;
+                this._axios();
+            },
+            // 请求列表数据
+            _axios() {
+                this.axios({
+                    url: 'http://192.168.0.80:8086/environment/guide/getCollectionByParam',
+                    method: 'get',
+                    params: this.queryForm
+                }).then((res) => {
+                    this.loading = false;
+                    let data = res.data.data;
+                    if(data == "没有查到相关信息") {
+                        this.tableData = []; 
+                        this.$alert('没有查到相关信息','提示',{
+                            confirmButtonText: '确定',
+                            type: 'warning',
+                            callback: action => {}
+                        });
+                    }else {
+                        this.tableData = data;
+                    }
+                })
+            },
+            handleSearch() {
+                this.loading = true;
+                this.queryForm.pageNum = 1;
+                this._axios();
+                document.querySelector(".first-pager").click();
+            }
+        },
+        beforeMount() {
+            // 请求所属领域、所属类别
+            this.axios({
+                url: 'http://192.168.0.80:8086/environment/guide/getCategoryAndDomain',
+                method: 'get',
+            }).then((res) => {
+                let data = res.data.data;
+                for(let i in data) {
+                    if(data[i].classification == "所属领域") {
+                        this.optGroup1.push(data[i]);
+                    }else {
+                        this.optGroup2.push(data[i]);
+                    }
+                }
             })
-            this.selectedIDs = ids;
-        },
-        handleCurrentChange:function(val){//val表示当前页
-            console.log(val)
-        },
-        handleSizeChange(val){//val表示每页展示的条数
-            console.log(val)
+            this._axios();
         }
     }
-}
 </script>
 
 <style lang="less">

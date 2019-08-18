@@ -10,6 +10,15 @@ import qs from 'qs';
 // import './assets/less/main.less'
 //引入自定义全局组件
 import pages from '@/components/pagination/pages'
+
+// 解决报错
+import Router from 'vue-router'
+
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
 Vue.use(pages)
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'; 
