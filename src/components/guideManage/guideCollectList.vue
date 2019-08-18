@@ -108,7 +108,8 @@
                 :pageSize='fenye.pageSize'
                 :pageSizes="fenye.pageSizes"
                 @handleCurrentChangeNum="handleCurrentChange"
-                @handleSizeChangeNum="handleSizeChange">
+                @handleSizeChangeNum="handleSizeChange"
+                @handleTableFreshNum="handleTableFresh">
             </pages>
         </div>
     </div>
@@ -160,6 +161,10 @@
             handleSizeChange(val) {                 //val表示每页展示的条数
                 this.queryForm.pageSize = val;
                 this._axios();
+            },
+            handleTableFresh(){
+                this._axios;
+                document.querySelector(".first-pager").click();
             },
             // 请求列表数据
             _axios() {
