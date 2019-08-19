@@ -181,13 +181,13 @@
                                 this.showForm = this.refreshForm;
                             }
                         });
-                    }else {
-                        this.$alert('提交失败','提示',{
-                            confirmButtonText: '确定',
-                            type: 'warning',
-                            callback: action => {}
-                        });
                     }
+                }).catch((err) => {
+                    this.$alert('提交失败','提示',{
+                        confirmButtonText: '确定',
+                        type: 'warning',
+                        callback: action => {}
+                    });
                 })
             },
             handleBack() {
