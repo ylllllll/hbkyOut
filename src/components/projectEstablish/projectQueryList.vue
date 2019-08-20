@@ -2,27 +2,28 @@
     <div id="projectList">
         <!-- 搜索 -->
         <div class="queryForm">
-            <el-form ref="queryForm" :model="queryForm" >
+            <el-form ref="queryForm" :model="queryForm">
                 <el-form-item label="项目名称：" >
-                    <el-input v-model="queryForm.entry_name"></el-input>
+                    <el-input v-model="queryForm.projectName"></el-input>
                 </el-form-item>
                 <el-form-item label="课题名称：">
-                    <el-input v-model="queryForm.name"></el-input>
+                    <el-input v-model="queryForm.subjectName"></el-input>
                 </el-form-item>
                 <el-form-item label="课题负责人：">
-                    <el-input v-model="queryForm.contacts"></el-input>
+                    <el-input v-model="queryForm.subjectLeader"></el-input>
                 </el-form-item>
                 <el-form-item label="课题负责人联系方式：" >
-                    <el-input v-model="queryForm.phone"></el-input>
+                    <el-input v-model="queryForm.leaderContact"></el-input>
                 </el-form-item>
             </el-form>
-            <el-button type="primary">搜索</el-button>
+            <el-button @click="handleSearch">搜索</el-button>
         </div>
 
         <!-- 展示列表 -->
         <div class="showList">
             <!-- 表格 -->
             <el-table
+                v-loading="loading"
                 ref="multipleTable"
                 :data="tableData"
                 tooltip-effect="dark"
@@ -37,50 +38,50 @@
                     align="center">
                 </el-table-column>
                 <el-table-column
-                    prop="entry_name"
+                    prop="projectName"
                     label="项目名称"
                     :show-overflow-tooltip="true"
                     align="center">
-                <template slot-scope="scope">
-                    <router-link :to="{
+                    <template slot-scope="scope">
+                        <router-link :to="{
                             name: 'ProjectQueryShow',
                             params:{
                                 id: scope.row.id
                             }
                         }"> 
-                        {{ scope.row.entry_name }}
-                    </router-link>
-                </template>
+                        {{ scope.row.projectName }}
+                        </router-link>
+                    </template>
                 </el-table-column>
                 <el-table-column
-                    prop="name"
+                    prop="subjectName"
                     label="课题名称"
                     align="center">
                 </el-table-column>
                 <el-table-column
-                    prop="money"
+                    prop="winningAmount"
                     label="中标（成交）金额"
                     align="center">
                 </el-table-column>
                 <el-table-column
-                    prop="funds"
+                    prop="supportingFunds"
                     label="配套经费"
                     align="center">
                 </el-table-column>
                 <el-table-column
-                    prop="pro_phone"
+                    prop="subjectLeader"
                     label="课题负责人"
                     fit="true"
                     align="center">
                 </el-table-column>
                 <el-table-column
-                    prop="pro_phone"
+                    prop="leaderContact"
                     label="课题负责人联系方式"
                     fit="true"
                     align="center">
                 </el-table-column>
                 <el-table-column
-                    prop="agent_phone"
+                    prop="operatorContact"
                     label="经办人及联系方式"
                     align="center">
                 </el-table-column>
@@ -93,7 +94,8 @@
                 :pageSizes="fenye.pageSizes"
                 @handleCurrentChangeNum="handleCurrentChange"
                 @handleSizeChangeNum="handleSizeChange"
-            ></pages>
+                @handleTableFreshNum="handleTableFresh">
+            </pages>
         </div>
     </div>
 </template>
@@ -104,44 +106,68 @@
         data() {
             return {
                 queryForm:{
-                    entry_name:'',
-                    name:'',
-                    contacts:'',
-                    phone:''
+                    projectName:'',
+                    subjectName:'',
+                    subjectLeader:'',
+                    leaderContact:'',
+                    pageNum: 1,
+                    pageSize: 10
                 },
-                tableData:[{
-                    id:0,
-                    entry_name:'项目名称1',
-                    name:'课题名称1',
-                    money:'金额1',
-                    funds:'配套经费1',
-                    pro_phone:'联系方式1',
-                    agent_phone:'经办人联系方式1'
-                },{
-                    id:1,
-                    entry_name:'项目名称2',
-                    name:'课题名称2',
-                    money:'金额2',
-                    funds:'配套经费2',
-                    pro_phone:'联系方式2',
-                    agent_phone:'经办人联系方式2'
-                }],
+                loading: false,
+                tableData:[],
                 fenye:{
                     total:400, //共有数据多少条
                     pageNum:1,
-                    pageSize:100, //每页显示的条数
-                    pageSizes:[100,30,40,50] //选择每页显示多少条
+                    pageSize:10, //每页显示的条数
+                    pageSizes:[10,20,30,40,50] //选择每页显示多少条
                 },
                 selectedIDs:[]
             }
         },
         methods:{
-            handleCurrentChange:function(val){
-
+            handleCurrentChange(val) {              //val表示当前页
+                this.queryForm.pageNum = val;
+                this._axios();
             },
-            handleSizeChange:function(val){
-
+            handleSizeChange(val) {                 //val表示每页展示的条数
+                this.queryForm.pageSize = val;
+                this._axios();
+            },
+            handleTableFresh(){
+                this._axios;
+                document.querySelector(".first-pager").click();
+            },
+            // 请求列表数据
+            _axios() {
+                this.axios({
+                    url: 'http://192.168.0.80:8087/environment/tender/getAllTender',
+                    method: 'get',
+                    params: this.queryForm
+                }).then((res) => {
+                    this.loading = false;
+                    let data = res.data.data;
+                    console.log(data);
+                    if(data == "没有查到相关信息") {
+                        this.tableData = []; 
+                        this.$alert('没有查到相关信息','提示',{
+                            confirmButtonText: '确定',
+                            type: 'warning',
+                            callback: action => {}
+                        });
+                    }else {
+                        this.tableData = data;
+                    }
+                })
+            },
+            handleSearch() {
+                this.loading = true;
+                this.queryForm.pageNum = 1;
+                this._axios();
+                document.querySelector(".first-pager").click();
             }
+        },
+        beforeMount() {
+            this._axios();
         }
     }
 </script>

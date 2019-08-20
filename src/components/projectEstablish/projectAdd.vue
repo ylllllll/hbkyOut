@@ -24,7 +24,6 @@
                             </td>
                         </tr>
                         <tr>
-
                             <td>课题名称：</td>
                             <td>
                                 <el-input v-model="showForm.subjectName"></el-input>
@@ -62,8 +61,12 @@
                                 <br>
                                 （如有请填写）&nbsp;&nbsp;&nbsp;
                             </td>
-                            <td colspan="3">
+                            <td>
                                 <el-input v-model="showForm.joinTenderUnits"></el-input>
+                            </td>
+                            <td>责任单位：</td>
+                            <td>
+                                <el-input v-model="showForm.responsibleUnit"></el-input>
                             </td>
                         </tr>
                         <tr>
@@ -80,7 +83,12 @@
                         <tr>
                             <td>备注：</td>
                             <td colspan="3">
-                                <el-input v-model="showForm.remarks"></el-input>
+                                <el-input 
+                                    v-model="showForm.remark"
+                                    :autosize="{ minRows: 3}"
+                                    type="textarea"
+                                    maxlength="200">
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
@@ -130,21 +138,20 @@
         data(){
             return{
                 showForm: {
-                    projectName: '1',
-                    tenderNo: '2',
-                    subcontractingNo: '3',
-                    subjectName: '4',
-                    bidders: '5',
-                    winningAmount: '6',
-                    supportingFunds: '7',
-                    subjectLeader: '8',
-                    leaderContact: '9',
-                    joinTenderUnits: '10',
-                    operator: '11',
-                    operatorContact: '12',
-
-                    
-
+                    projectName: '',
+                    tenderNo: '',
+                    subcontractingNo: '',
+                    subjectName: '',
+                    bidders: '',
+                    winningAmount: '',
+                    supportingFunds: '',
+                    subjectLeader: '',
+                    leaderContact: '',
+                    joinTenderUnits: '',
+                    operator: '',
+                    operatorContact: '',
+                    remark: '',
+                    responsibleUnit: '',
                     // 凑接口的字段
                     auditStatus: '1'
                 },
@@ -165,22 +172,34 @@
                     spinner: 'el-icon-loading',
                     background: 'rgba(255,255,255,0.7)'
                 });
-
-                // this.axios({
-                //     url: 'http://192.168.0.80:8087/environment/tender/insertTender',
-                //     method: 'post',
-                //     data: this.showForm
-                // }).then((res) => {
-                //     loading.close();
-                //     console.log(res);
-                // }).catch(() => {
-                //     loading.close();
-                //     this.$alert('提交失败','提示', {
-                //         confirmButtonText: '确定',
-                //         type: 'warning',
-                //         callback: action => {}
-                //     });
-                // })
+                this.axios({
+                    url: 'http://192.168.0.80:8087/environment/tender/insertTender',
+                    method: 'post',
+                    data: this.showForm
+                }).then((res) => {
+                    loading.close();
+                    let data = res.data;
+                    if(data.resultFlag == 0) {
+                        this.$alert('提交成功','提示', {
+                            confirmButtonText: '确定',
+                            type: 'success',
+                            callback: action => {}
+                        });
+                    }else {
+                        this.$alert('提交失败','提示', {
+                            confirmButtonText: '确定',
+                            type: 'warning',
+                            callback: action => {}
+                        });
+                    }
+                }).catch(() => {
+                    loading.close();
+                    this.$alert('提交失败','提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning',
+                        callback: action => {}
+                    });
+                })
             },
             handleBack() {
                 this.$router.go(-1);

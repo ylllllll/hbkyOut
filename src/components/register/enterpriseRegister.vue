@@ -74,22 +74,19 @@
                             </tr>
                             <tr>
                                 <td>营业执照扫描件：</td>
-                                <td>
-                                    <!-- <el-input v-model="showForm.businessFile"></el-input> -->
+                                <td class="file">
                                     <input type="file" @change="getFile($event,1)">
                                 </td>
                             </tr>
                             <tr>
                                 <td>法人身份证文件：</td>
-                                <td>
-                                    <!-- <el-input v-model="showForm.legalCardIdFile"></el-input> -->
+                                <td class="file">
                                     <input type="file" @change="getFile($event,2)">
                                 </td>
                             </tr>
                             <tr>
                                 <td>联系人身份证文件：</td>
-                                <td>
-                                    <!-- <el-input v-model="showForm.contactCardFile "></el-input> -->
+                                <td class="file">
                                     <input type="file" @change="getFile($event,3)">
                                 </td>
                             </tr>
@@ -146,7 +143,7 @@
                     processData: false,
                     usecredensives: true
                 }).then((res) => {
-                    console.log(res);
+                    // this.$router.push("/");
                 })
             },
             handleBack() {
@@ -211,11 +208,14 @@
                                 .el-input__inner {
                                    border: none; 
                                 }
-                                
                             }
+                        }
+                        .file {
+                            background-color: #fff;
                         }
                         [type=file] {
                             width: 100%;
+                            margin: 6.5px;
                         }
                     }
                 }

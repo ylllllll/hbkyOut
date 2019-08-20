@@ -134,7 +134,6 @@
                 optGroup2: [],
                 loading: true,
                 tableData:[],
-                // multipleSelection: [],
                 currentPage: 4,
                 fenye: {
                     total: 400, //共有数据多少条
