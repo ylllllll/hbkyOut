@@ -76,13 +76,10 @@
 					name: '课题立项',
 					children: [{
 						id: '111',
-						name: '招标备案'
+						name: '课题申报'
 					},{
 						id: '112',
-						name: '未审批'
-					},{
-						id: '113',
-						name: '已审批'
+						name: '课题查询'
 					}]
 				},{
 					id: '12',
@@ -168,9 +165,8 @@
 						'/index/guideCollectAdd',
 						'/index/guideCollect'
 					],[
-						'/index/biddingRecord',
-						'/index/projectNotAudited',
-						'/index/projectAudited'
+						'/index/projectAdd',
+						'/index/project',
 					],[
 						'/index/contractCenter',
 						'/index/contractNotAudited',

@@ -16,9 +16,9 @@
                         <el-option v-for="(item,index) in optGroup2" :key="index" :label="item.content" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="填报单位：" >
+                <!-- <el-form-item label="填报单位：" >
                     <el-input v-model="queryForm.fillUnit"></el-input>
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item label="填报联系人：" >
                     <el-input v-model="queryForm.fillContacts"></el-input>
                 </el-form-item>
@@ -169,7 +169,7 @@
             // 请求列表数据
             _axios() {
                 this.axios({
-                    url: 'http://192.168.0.80:8086/environment/guide/getCollectionByParam',
+                    url: 'http://192.168.0.80:8087/environment/guide/getCollectionByParam',
                     method: 'get',
                     params: this.queryForm
                 }).then((res) => {
@@ -197,7 +197,7 @@
         beforeMount() {
             // 请求所属领域、所属类别
             this.axios({
-                url: 'http://192.168.0.80:8086/environment/guide/getCategoryAndDomain',
+                url: 'http://192.168.0.80:8087/environment/guide/getCategoryAndDomain',
                 method: 'get',
             }).then((res) => {
                 let data = res.data.data;

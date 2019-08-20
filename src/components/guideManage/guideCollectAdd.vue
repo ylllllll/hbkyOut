@@ -4,7 +4,7 @@
             <el-form ref="showForm" :model="showForm">
                 <table class="form_table">
                     <thead>
-                        <tr><th colspan="4">指南中心详情页</th></tr>
+                        <tr><th colspan="4">指南征集申报</th></tr>
                     </thead>
                     <tbody>
                         <tr>
@@ -166,14 +166,14 @@
                     background: 'rgba(255,255,255,0.7)'
                 });
                 this.axios({
-                    url: 'http://192.168.0.80:8086/environment/guide/insertGuideInfo',
+                    url: 'http://192.168.0.80:8087/environment/guide/insertGuideInfo',
                     method: 'post',
                     data: this.showForm
                 }).then((res) => {
                     loading.close();
                     let data = res.data;
                     if(data.resultFlag == 0) {
-                        this.$alert('提交成功','提示',{
+                        this.$alert('提交成功','提示', {
                             confirmButtonText: '确定',
                             type: 'success',
                             callback: action => {
@@ -181,9 +181,15 @@
                                 this.showForm = this.refreshForm;
                             }
                         });
+                    }else {
+                        this.$alert('提交失败','提示', {
+                            confirmButtonText: '确定',
+                            type: 'warning',
+                            callback: action => {}
+                        });
                     }
                 }).catch((err) => {
-                    this.$alert('提交失败','提示',{
+                    this.$alert('提交失败','提示', {
                         confirmButtonText: '确定',
                         type: 'warning',
                         callback: action => {}
@@ -196,7 +202,7 @@
         },
         beforeCreate() {
             this.axios({
-                url: 'http://192.168.0.80:8086/environment/guide/getCategoryAndDomain',
+                url: 'http://192.168.0.80:8087/environment/guide/getCategoryAndDomain',
                 method: 'get',
             }).then((res) => {
                 let data = res.data.data;
@@ -216,6 +222,7 @@
 
 <style lang="less">
 #guideCollectAdd{
+    background-color: #fff;
     .showForm{
         table.form_table{
             @media  screen and ( max-width: 1600px ) {

@@ -5,18 +5,18 @@ import Register from '@/components/register'
 import Index from '@/components/index'
 import Home from '@/components/home'
 
+// 指南管理
 import GuideCollect from '@/components/guideManage/guideCollect'
 import GuideCollectAdd from '@/components/guideManage/guideCollectAdd'
 import GuideCollectList from '@/components/guideManage/GuideCollectList'
 import GuideCollectShow from '@/components/guideManage/GuideCollectShow'
 
-import BiddingRecord from '@/components/projectEstablish/biddingRecord'
-import BiddingRecordList from '@/components/projectEstablish/biddingRecordList'
-import BiddingRecordShow from '@/components/projectEstablish/biddingRecordShow'
-import ProjectAudited from '@/components/projectEstablish/projectAudited'
-import ProjectAuditedList from '@/components/projectEstablish/projectAuditedList'
-import ProjectNotAudited from '@/components/projectEstablish/projectNotAudited'
-import ProjectNotAuditedList from '@/components/projectEstablish/projectNotAuditedList'
+// 课题立项
+
+import ProjectAdd from '@/components/projectEstablish/projectAdd'
+import Project from '@/components/projectEstablish/project'
+import ProjectList from '@/components/projectEstablish/projectList'
+import ProjectShow from '@/components/projectEstablish/projectShow'
 
 import ContractCenter from '@/components/contractManage/contractCenter'
 import ContractCenterList from '@/components/contractManage/contractCenterList'
@@ -25,6 +25,7 @@ import ContractNotAudited from '@/components/contractManage/contractNotAudited'
 import ContractNotAuditedList from '@/components/contractManage/contractNotAuditedList'
 import ContractAudited from '@/components/contractManage/contractAudited'
 import ContractAuditedList from '@/components/contractManage/contractAuditedList'
+
 // 日常管理
 import MidTerm from '@/components/daliyManage/midTerm'
 import MidTermList from '@/components/daliyManage/midTermList'
@@ -85,13 +86,11 @@ export default new Router({
 				path: '/index/home',
 				name: 'Home',
 				component: Home
-			},{
-				// 指南征集申报
+			},{	// 指南征集申报
 				path: '/index/guideCollectAdd',
 				name: 'GuideCollectAdd',
 				component: GuideCollectAdd
-			},{
-				// 指南征集查询
+			},{	// 指南征集查询
 				path: '/index/guideCollect',
 				name: 'GuideCollect',
 				component: GuideCollect,
@@ -105,40 +104,24 @@ export default new Router({
 					component: GuideCollectShow
 				}],
 				redirect: '/index/guideCollect/guideCollectList'
-			},{
-				path:'/index/biddingRecord',
-				name:'BiddingRecord',
-				component:BiddingRecord,
-				children:[{
-					path:'/index/projectEstablish/biddingRecordList',
-					name:'BiddingRecordList',
-					component:BiddingRecordList
+			},{	// 课题申报
+				path: '/index/projectAdd',
+				name: 'ProjectAdd',
+				component: ProjectAdd
+			},{	// 课题查询
+				path: '/index/project',
+				name:'Project',
+				component: Project,
+				children: [{
+					path: '/index/project/projectList',
+					name: 'ProjectList',
+					component: ProjectList
 				},{
-					path:'/index/projectEstablish/biddingRecordShow',
-					name:'BiddingRecordShow',
-					component:BiddingRecordShow
+					path: '/index/project/projectShow',
+					name: 'ProjectShow',
+					component: ProjectShow
 				}],
-				redirect:'/index/projectEstablish/biddingRecordList'
-			},{
-				path:'/index/projectNotAudited',
-				name:'ProjectNotAudited',
-				component:ProjectNotAudited,
-				children:[{
-					path:'/index/projectNotAudited/projectNotAuditedList',
-					name:'ProjectNotAudited',
-					component:ProjectNotAuditedList
-				}],
-				redirect:'/index/projectNotAudited/projectNotAuditedList'
-			},{ //课题立项已审批
-				path:'/index/projectAudited',
-				name:'ProjectAudited',
-				component:ProjectAudited,
-				children:[{
-					path:'/index/projectAudited/projectAuditedList',
-					name:'ProjectAuditedList',
-					component:ProjectAuditedList
-				}],
-				redirect:'/index/projectAudited/projectAuditedList'
+				redirect: '/index/project/projectList'
 			},
 			{
 				path: '/index/contractCenter',

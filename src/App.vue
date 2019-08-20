@@ -252,5 +252,16 @@ export default {
             -ms-transform: translate(-50%,-50%);
             -o-transform: translate(-50%,-50%);
 		}
+		// 禁用的表单控件样式
+		.showForm{
+            .is-disabled {
+                .el-input__inner {
+                    cursor: auto;
+                }
+                .el-textarea__inner {
+                    cursor: auto;
+                }
+            }
+        }
   	}
 </style>

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-export default {
-    name:'guideCollect'
-}
+    export default {
+        name:'guideCollect'
+    }
 </script>
