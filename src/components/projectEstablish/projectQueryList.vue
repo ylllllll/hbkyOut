@@ -26,12 +26,11 @@
                 ref="multipleTable"
                 :data="tableData"
                 tooltip-effect="dark"
-                style="width: 100%"
-                @selection-change="handleSelectionChange">
-                <el-table-column
+                style="width: 100%">
+                <!-- <el-table-column
                     type="selection"
                     align="center">
-                </el-table-column>
+                </el-table-column> -->
                 <el-table-column
                     type="index"
                     label="序号"
@@ -44,7 +43,7 @@
                     align="center">
                 <template slot-scope="scope">
                     <router-link :to="{
-                            name: 'ProjectShow',
+                            name: 'ProjectQueryShow',
                             params:{
                                 id: scope.row.id
                             }
@@ -66,6 +65,12 @@
                 <el-table-column
                     prop="funds"
                     label="配套经费"
+                    align="center">
+                </el-table-column>
+                <el-table-column
+                    prop="pro_phone"
+                    label="课题负责人"
+                    fit="true"
                     align="center">
                 </el-table-column>
                 <el-table-column
@@ -131,15 +136,6 @@
             }
         },
         methods:{
-            handleSelectionChange:function(val){
-                this.multipleSelection = val
-                let ids = []
-                this.multipleSelection.map((item)=>{
-                    ids.push(item.id)
-                })
-                this.selectedIDs = ids
-                console.log(this.selectedIDs)
-            },
             handleCurrentChange:function(val){
 
             },

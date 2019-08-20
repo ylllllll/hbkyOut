@@ -86,13 +86,10 @@
 					name: '合同管理',
 					children: [{
 						id: '121',
-						name: '合同中心'
+						name: '合同提交'
 					},{
 						id: '122',
-						name: '待审核'
-					},{
-						id: '123',
-						name: '已审核'
+						name: '合同查询'
 					}]
 				},{
 					id: '13',
@@ -166,11 +163,10 @@
 						'/index/guideCollect'
 					],[
 						'/index/projectAdd',
-						'/index/project',
+						'/index/projectQuery',
 					],[
-						'/index/contractCenter',
-						'/index/contractNotAudited',
-						'/index/contractAudited'
+						'/index/contractAdd',
+						'/index/contractQuery'
 					],[
 						'/index/midTerm',
 						'/index/progressReport',

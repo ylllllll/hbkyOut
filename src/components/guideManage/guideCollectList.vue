@@ -37,12 +37,11 @@
                 ref="multipleTable"
                 :data="tableData"
                 tooltip-effect="dark"
-                style="width: 100%"
-                @selection-change="handleSelectionChange">
-                <el-table-column
+                style="width: 100%">
+                <!-- <el-table-column
                     type="selection"
                     align="center">
-                </el-table-column>
+                </el-table-column> -->
                 <el-table-column
                     type="index"
                     label="序号"
@@ -133,7 +132,7 @@
                 },
                 optGroup1: [],
                 optGroup2: [],
-                loading: false,
+                loading: true,
                 tableData:[],
                 // multipleSelection: [],
                 currentPage: 4,
@@ -146,14 +145,6 @@
             }
         },
         methods: {
-            handleSelectionChange(val) {
-                this.multipleSelection = val;
-                let ids = [];
-                this.multipleSelection.map((item)=> {
-                    ids.push(item.id);
-                })
-                this.selectedIDs = ids;
-            },
             handleCurrentChange(val) {              //val表示当前页
                 this.queryForm.pageNum = val;
                 this._axios();

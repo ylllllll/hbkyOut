@@ -1,17 +1,17 @@
 <template>
-    <div id="project">
+    <div id="contractQuery">
         <router-view></router-view>
     </div>
 </template>
 
 <script>
     export default {
-        name: 'project'
+        name: 'contractQuery'
     }
 </script>
 
 <style lang="less">
-    #project {
+    #contractQuery {
         
     }
 </style>

@@ -24,9 +24,15 @@
                             </td>
                         </tr>
                         <tr>
+
                             <td>课题名称：</td>
-                            <td colspan="3">
+                            <td>
                                 <el-input v-model="showForm.subjectName"></el-input>
+                            </td>
+                            <td>投标人：</td>
+                            <td>
+                                <el-input v-model="showForm.bidders">
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
@@ -40,21 +46,35 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>投标人：</td>
-                            <td>
-                                <el-input v-model="showForm.bidders"></el-input>
-                            </td>
                             <td>课题负责人：</td>
                             <td>
                                 <el-input v-model="showForm.subjectLeader">
                                 </el-input>
                             </td>
+                            <td>课题负责人联系方式：</td>
+                            <td>
+                                <el-input v-model="showForm.leaderContact"></el-input>
+                            </td>
                         </tr>
                         <tr>
-                            <td>课题负责人联系方式：</td>
+                            <td>
+                                课题联合投标单位：
+                                <br>
+                                （如有请填写）&nbsp;&nbsp;&nbsp;
+                            </td>
                             <td colspan="3">
-                                <el-input v-model="showForm.leaderContact">
-                            </el-input>
+                                <el-input v-model="showForm.joinTenderUnits"></el-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>经办人：</td>
+                            <td>
+                                <el-input v-model="showForm.operator"></el-input>
+                            </td>
+                            <td>经办人联系方式：</td>
+                            <td>
+                                <el-input v-model="showForm.operatorContact">
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
@@ -109,17 +129,24 @@
         name:'projectAdd',
         data(){
             return{
-                showForm:{
-                    id:'',
-                    entry_name:'',
-                    tenderNo:'',
-                    subjectName:'',
-                    winningAmount:'',
-                    supportingFunds:'',
-                    bidders:'',
-                    subjectLeader:'',
-                    leaderContact:'',
-                    forecast:''
+                showForm: {
+                    projectName: '1',
+                    tenderNo: '2',
+                    subcontractingNo: '3',
+                    subjectName: '4',
+                    bidders: '5',
+                    winningAmount: '6',
+                    supportingFunds: '7',
+                    subjectLeader: '8',
+                    leaderContact: '9',
+                    joinTenderUnits: '10',
+                    operator: '11',
+                    operatorContact: '12',
+
+                    
+
+                    // 凑接口的字段
+                    auditStatus: '1'
                 },
                 Enclosure:{
                     fujian1:'',
@@ -138,14 +165,22 @@
                     spinner: 'el-icon-loading',
                     background: 'rgba(255,255,255,0.7)'
                 });
-                setTimeout(() => {
-                    loading.close();
-                    this.$alert('审批通过', '提示', {
-                        confirmButtonText: '确定',
-                        type: 'success',
-                        callback: action => {}
-                    });
-                },2000);
+
+                // this.axios({
+                //     url: 'http://192.168.0.80:8087/environment/tender/insertTender',
+                //     method: 'post',
+                //     data: this.showForm
+                // }).then((res) => {
+                //     loading.close();
+                //     console.log(res);
+                // }).catch(() => {
+                //     loading.close();
+                //     this.$alert('提交失败','提示', {
+                //         confirmButtonText: '确定',
+                //         type: 'warning',
+                //         callback: action => {}
+                //     });
+                // })
             },
             handleBack() {
                 this.$router.go(-1);

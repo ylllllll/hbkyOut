@@ -12,19 +12,16 @@ import GuideCollectList from '@/components/guideManage/GuideCollectList'
 import GuideCollectShow from '@/components/guideManage/GuideCollectShow'
 
 // 课题立项
-
 import ProjectAdd from '@/components/projectEstablish/projectAdd'
-import Project from '@/components/projectEstablish/project'
-import ProjectList from '@/components/projectEstablish/projectList'
-import ProjectShow from '@/components/projectEstablish/projectShow'
+import ProjectQuery from '@/components/projectEstablish/projectQuery'
+import ProjectQueryList from '@/components/projectEstablish/projectQueryList'
+import ProjectQueryShow from '@/components/projectEstablish/projectQueryShow'
 
-import ContractCenter from '@/components/contractManage/contractCenter'
-import ContractCenterList from '@/components/contractManage/contractCenterList'
-import ContractCenterShow from '@/components/contractManage/contractCenterShow'
-import ContractNotAudited from '@/components/contractManage/contractNotAudited'
-import ContractNotAuditedList from '@/components/contractManage/contractNotAuditedList'
-import ContractAudited from '@/components/contractManage/contractAudited'
-import ContractAuditedList from '@/components/contractManage/contractAuditedList'
+// 合同管理
+import ContractAdd from '@/components/contractManage/contractAdd'
+import ContractQuery from '@/components/contractManage/contractQuery'
+import ContractQueryList from '@/components/contractManage/contractQueryList'
+import ContractQueryShow from '@/components/contractManage/contractQueryShow'
 
 // 日常管理
 import MidTerm from '@/components/daliyManage/midTerm'
@@ -109,57 +106,39 @@ export default new Router({
 				name: 'ProjectAdd',
 				component: ProjectAdd
 			},{	// 课题查询
-				path: '/index/project',
-				name:'Project',
-				component: Project,
+				path: '/index/projectQuery',
+				name:'ProjectQuery',
+				component: ProjectQuery,
 				children: [{
-					path: '/index/project/projectList',
-					name: 'ProjectList',
-					component: ProjectList
+					path: '/index/projectQuery/projectQueryList',
+					name: 'ProjectQueryList',
+					component: ProjectQueryList
 				},{
-					path: '/index/project/projectShow',
-					name: 'ProjectShow',
-					component: ProjectShow
+					path: '/index/projectQuery/projectQueryShow',
+					name: 'ProjectQueryShow',
+					component: ProjectQueryShow
 				}],
-				redirect: '/index/project/projectList'
-			},
-			{
-				path: '/index/contractCenter',
-				name: 'ContractCenter',
-				component: ContractCenter,
-				children:[{
-					path:'/index/contractCenter/contractCenterList',
-					name:'ContractCenterList',
-					component:ContractCenterList
+				redirect: '/index/projectQuery/projectQueryList'
+			},{	// 合同提交
+				path: '/index/contractAdd',
+				name: 'ContractAdd',
+				component: ContractAdd
+			},{	// 合同查询
+				path: '/index/contractQuery',
+				name: 'ContractQuery',
+				component: ContractQuery,
+				children: [{
+					path: '/index/contractQuery/contractQueryList',
+					name: 'ContractQueryList',
+					component: ContractQueryList
 				},{
-					path:'/index/contractCenter/contractCenterShow',
-					name:'ContractCenterShow',
-					component:ContractCenterShow
+					path: '/index/contractQuery/contractQueryShow',
+					name: 'ContractQueryShow',
+					component: ContractQueryShow
 				}],
-				redirect:'/index/contractCenter/contractCenterList'
+				redirect: '/index/contractQuery/contractQueryList'
 			},
-			{
-				path:'/index/contractNotAudited',
-				name:'ContractNotAudited',
-				component:ContractNotAudited,
-				children:[{
-					path:'/index/contractNotAudited/contractNotAuditedList',
-					name:'ContractNotAuditedList',
-					component:ContractNotAuditedList
-				}],
-				redirect:'/index/contractNotAudited/contractNotAuditedList'
-			},
-			{
-				path:'/index/contractAudited',
-				name:'ContractAudited',
-				component:ContractAudited,
-				children:[{
-					path:'/index/contractAudited/contractAuditedList',
-					name:'ContractAuditedList',
-					component:ContractAuditedList
-				}],
-				redirect:'/index/contractAudited/contractAuditedList'
-			},{	// 中期检查
+			{	// 中期检查
 				path: '/index/midTerm',
 				name: 'MidTerm',
 				component: MidTerm,
