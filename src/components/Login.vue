@@ -45,7 +45,7 @@
 
 <script>
 	export default {
-	    name: 'Login',
+	    name: 'login',
 	    data() {
 	        return {
 	        	codeUrl: 'http://192.168.0.37:8087/code/checkCode',
@@ -82,50 +82,86 @@
 	    methods: {
 	        submitForm(formName) {
 				let _this = this;
+				let type = this.ruleForm.type;
 	            _this.$refs[formName].validate((valid) => {
 	                if(valid) {
-						// _this.$router.push("/index");
-						this.axios({
-							method:"POST",
-							url:'http://192.168.0.37:8087/user/login',
-							data: _this.qs.stringify({
-									name:_this.ruleForm.name,
-									password:_this.ruleForm.pwd,
-									code:_this.ruleForm.code
-								}),
-							credentials: true
-						})
-						.then(function(res){
-							if(res.data.resultFlag === "1"){
-								_this.$alert(res.data.data, '提示', {
+						if(type == 0) {		// 企业
+							_this.axios({
+								url: 'http://192.168.0.37:8087/company/login',
+								method: "post",
+								params: {
+									loginName: _this.ruleForm.name,
+									password: _this.ruleForm.pwd,
+									code: _this.ruleForm.code
+								},
+								credentials: true
+							}).then((res) => {
+								if(res.data.resultFlag === "1") {
+									_this.$alert(res.data.data,'提示', {
+										confirmButtonText: '确定',
+										type:'warning',
+									}).then(() => {
+										_this.handleChangeCode();
+									})
+								}else{
+									_this.$router.push("/index");
+								}
+							}).catch(() => {
+							  	_this.$alert('登录失败','提示', {
 									confirmButtonText: '确定',
-									type:'info',
+									type:'warning',
 								}).then(() => {
-								}).catch(() => {
+									_this.handleChangeCode();
 								})
-							}else{
-								_this.$router.push("/index");
-							}
-						})
-						.catch(function(err){
-						  console.log(err);
-						});
+							});
+						}else if(type == 1) {		// 专家
+							_this.axios({
+								url: 'http://192.168.0.37:8087/extranetExpert/login',
+								method: "post",
+								params: {
+									loginName: _this.ruleForm.name,
+									password: _this.ruleForm.pwd,
+									code: _this.ruleForm.code
+								},
+								credentials: true
+							}).then((res) => {
+								if(res.data.resultFlag === "1") {
+									_this.$alert(res.data.data,'提示', {
+										confirmButtonText: '确定',
+										type:'warning',
+									}).then(() => {
+										_this.handleChangeCode();
+									})
+								}else{
+									_this.$router.push("/index");
+								}
+							}).catch(() => {
+							  	_this.$alert('登录失败','提示', {
+									confirmButtonText: '确定',
+									type:'warning',
+								}).then(() => {
+									_this.handleChangeCode();
+								})
+							});
+						}
 	                }else {
 	                    return false;
 	                }
 				});
-				
 	        },
 	        handleChangeCode() {
 	        	let num = Math.random();
 	        	this.codeUrl = "http://192.168.0.37:8087/code/checkCode?"+num;
 	        }
+		},
+		beforeMount() {
+			this.handleChangeCode();
 		}
 	}
 </script>
 
 <style lang="less">
-#login {
+	#login {
 		width: 100%;
 		height: 100%;
 		background-size: 100% 100%;

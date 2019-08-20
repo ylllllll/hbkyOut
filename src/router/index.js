@@ -1,9 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/login'
-import Register from '@/components/register'
 import Index from '@/components/index'
 import Home from '@/components/home'
+
+// 注册
+import Register from '@/components/register/register'
+import EnterpriseRegister from '@/components/register/enterpriseRegister'
+import ExpertRegister from '@/components/register/expertRegister'
 
 // 指南管理
 import GuideCollect from '@/components/guideManage/guideCollect'
@@ -74,7 +78,16 @@ export default new Router({
 	    },{
 		    path: '/register',
 	    	name: 'Register',
-		    component: Register
+			component: Register,
+			children: [{
+				path: '/register/enterpriseRegister',
+				name: 'EnterpriseRegister',
+				component: EnterpriseRegister
+			},{
+				path: '/register/expertRegister',
+				name: 'ExpertRegister',
+				component: ExpertRegister
+			}]
 	    },{
 	    	path: '/index',
 	    	name: 'Index',

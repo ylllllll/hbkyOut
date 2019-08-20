@@ -1,14 +1,17 @@
 <template>
     <div id="register">
         <header>
-            <img src="../assets/images/login_title.png" alt="">
+            <img src="../../assets/images/login_title.png" alt="">
         </header>
         <section>
             <div class="box">
-                <a class="enterpriseRegister">企业注册</a>
-                <a class="expertRegister">专家注册</a>
+                <router-link to="/register/enterpriseRegister">企业注册</router-link>
+                <router-link to="/register/expertRegister">专家注册</router-link>
             </div>
         </section>
+        <div class="register_box">
+            <router-view></router-view>
+        </div>
     </div>
 </template>
 
@@ -22,7 +25,7 @@
     #register {
         width: 100%;
         height: 100%;
-        background-image: url(../assets/images/login_bg.png);
+        background-image: url(../../assets/images/login_bg.png);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
@@ -46,8 +49,7 @@
                 margin: auto;
                 display: flex;
                 justify-content: space-between;
-                .enterpriseRegister,
-                .expertRegister {
+                a {
                     display: inline-block;
                     width: 350px;
                     height: 140px;
@@ -61,6 +63,11 @@
                     cursor: pointer;
                 }
             }
+        }
+        .register_box {
+            position: fixed;
+            top: 0;
+            left: 0;
         }
     }
 </style>
