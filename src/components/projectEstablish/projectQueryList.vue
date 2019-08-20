@@ -120,8 +120,7 @@
                     pageNum:1,
                     pageSize:10, //每页显示的条数
                     pageSizes:[10,20,30,40,50] //选择每页显示多少条
-                },
-                selectedIDs:[]
+                }
             }
         },
         methods:{
@@ -146,7 +145,6 @@
                 }).then((res) => {
                     this.loading = false;
                     let data = res.data.data;
-                    console.log(data);
                     if(data == "没有查到相关信息") {
                         this.tableData = []; 
                         this.$alert('没有查到相关信息','提示',{
