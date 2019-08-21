@@ -144,7 +144,6 @@ export default {
 								.el-textarea__inner {
 									resize: none;
 								}
-								
 							}
                         }
                     }

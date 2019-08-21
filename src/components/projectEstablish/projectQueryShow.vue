@@ -30,8 +30,7 @@
                             </td>
                             <td>投标人：</td>
                             <td>
-                                <el-input v-model="showForm.bidders" disabled>
-                                </el-input>
+                                <el-input v-model="showForm.bidders" disabled></el-input>
                             </td>
                         </tr>
                         <tr>
@@ -202,7 +201,6 @@
             }
         },
         beforeMount() {
-            console.log(this.paramsData.id);
             this.axios({
                 url: 'http://192.168.0.80:8087/environment/tender/getTenderById',
                 method: 'get',
@@ -217,65 +215,62 @@
 </script>
 
 <style lang="less">
-#projectShow{
-    padding-bottom: 60px;
-    background-color: #fff;
-    margin-bottom: 20px;
-    .showForm{
-        table.form_table{
-            @media  screen and ( max-width: 1600px ) {
-                width: 72.4%;
-            }
-            tbody{
-                tr{
-                    td{
-                        &:first-child{
-                            @media screen and ( min-width: 1500px ) and ( max-width: 1850px ){
-                                width: 30.8%;
-                            }
-                            @media  screen and ( max-width: 1500px ) {
-                                width: 31.8%;
+    #projectShow{
+        padding-bottom: 60px;
+        background-color: #fff;
+        margin-bottom: 20px;
+        .showForm{
+            table.form_table{
+                @media  screen and ( max-width: 1600px ) {
+                    width: 72.4%;
+                }
+                tbody{
+                    tr{
+                        td{
+                            &:first-child{
+                                @media screen and ( min-width: 1500px ) and ( max-width: 1850px ){
+                                    width: 30.8%;
+                                }
+                                @media  screen and ( max-width: 1500px ) {
+                                    width: 31.8%;
+                                }
                             }
                         }
                     }
                 }
             }
         }
-    }
-    .btn_group {
-        margin: 10px 0 30px 0;
-    }
-    .el-table {
-        width: 1130px;
-        margin: auto;
-        border-right: 1px solid #e0e0e0;
-        border-collapse: collapse;
-        tr {
-            height: 50px;
-            th,td {
-                // border: 1px solid #e0e0e0;
-            }
-            th {
-                background-color: #e5f3ff;
-            }
+        .btn_group {
+            margin: 10px 0 30px 0;
         }
-        .el-table__header-wrapper {
-            table {
-                border-collapse: collapse;
+        .el-table {
+            width: 1130px;
+            margin: auto;
+            border-right: 1px solid #e0e0e0;
+            border-collapse: collapse;
+            tr {
+                height: 50px;
                 th {
-                    border: 1px solid #e0e0e0;
-                    border-bottom: none;
+                    background-color: #e5f3ff;
                 }
             }
-        }
-        .el-table__body-wrapper {
-            table {
-                border-collapse: collapse;
-                td {
-                    border: 1px solid #e0e0e0;
+            .el-table__header-wrapper {
+                table {
+                    border-collapse: collapse;
+                    th {
+                        border: 1px solid #e0e0e0;
+                        border-bottom: none;
+                    }
+                }
+            }
+            .el-table__body-wrapper {
+                table {
+                    border-collapse: collapse;
+                    td {
+                        border: 1px solid #e0e0e0;
+                    }
                 }
             }
         }
     }
-}
 </style>

@@ -78,191 +78,140 @@
                         <tr>
                             <td>开户银行：</td>
                             <td>
-                                <el-input 
-                                 v-model="showForm.openBank"
-                                 :disabled="true">
-                                </el-input>
+                                <el-input v-model="showForm.openBank"></el-input>
                             </td>
                             <td>开户银行账号：</td>
                             <td>
-                                <el-input 
-                                 v-model="showForm.openBankAccount"
-                                 :disabled="true">
-                                </el-input>
+                                <el-input v-model="showForm.openBankAccount"></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>电子信箱（E-mail）：</td>
                             <td>
-                                <el-input 
-                                 v-model="showForm.email"
-                                 :disabled="true">
-                                </el-input>
+                                <el-input v-model="showForm.email"></el-input>
                             </td>
                             <td>保证单位：</td>
                             <td>
-                                <el-input 
-                                 v-model="showForm.guaranteedUnits"
-                                 :disabled="true">
-                                </el-input>
+                                <el-input v-model="showForm.guaranteedUnits"></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>保证单位联系人：</td>
                             <td>
-                                <el-input 
-                                 v-model="showForm.guaranteedUnitContact"
-                                 :disabled="true">
-                                </el-input>
+                                <el-input v-model="showForm.guaranteedUnitContact"></el-input>
                             </td>
                             <td>保证单位联系人电话：</td>
                             <td>
-                                <el-input 
-                                 v-model="showForm.guaranteedContactPhone"
-                                 :disabled="true">
-                                </el-input>
+                                <el-input v-model="showForm.guaranteedContactPhone"></el-input>
                             </td>
                         </tr>
                         <!-- 甲方 -->
                         <tr>
                             <td>委托单位（甲方）：</td>
                             <td> 
-                                <el-input 
-                                 v-model="showForm.commissioningUnit"
-                                 :disabled="true">
-                                </el-input>
+                                <el-input v-model="showForm.commissioningUnit"></el-input>
                             </td>
                             <td>委托单位法定代表人：</td>
                             <td>
-                                <el-input 
-                                 v-model="showForm.legalRepresentativeEntrustingA"
-                                 :disabled="true">
-                                </el-input>
+                                <el-input v-model="showForm.legalRepresentativeEntrustingA"></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>委托单位地址：</td>
                             <td> 
-                                <el-input 
-                                 v-model="showForm.commissionedUnitAddressA"
-                                 :disabled="true">
-                                </el-input>
+                                <el-input v-model="showForm.commissionedUnitAddressA"></el-input>
                             </td>
                             <td>委托单位邮政编码：</td>
                             <td>
-                                <el-input 
-                                 v-model="showForm.commissionedUnitZipA"
-                                 :disabled="true">
-                                </el-input>
+                                <el-input v-model="showForm.commissionedUnitZipA"></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>承担单位（乙方）</td>
                             <td>
-                                <el-input 
-                                 v-model="showForm.responsibilityUnitB"
-                                 :disabled="true">
-                                </el-input>
+                                <el-input v-model="showForm.responsibilityUnitB"></el-input>
                             </td>
                             <td>承担单位法定代表人</td>
                             <td>
-                                <el-input 
-                                 v-model="showForm.responsibilityLegalRepresentativeB"
-                                 :disabled="true">
-                                </el-input>
+                                <el-input v-model="showForm.responsibilityLegalRepresentativeB"></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>承担单位地址：</td>
                             <td colspan="3">
-                                <el-input 
-                                    v-model="showForm.commitUnitAddressB"
-                                    :disabled="true">
-                                </el-input>
+                                <el-input v-model="showForm.commitUnitAddressB"></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>承担单位邮政编码：</td>
                             <td colspan="3">
-                                <el-input 
-                                    v-model="showForm.commitUnitZipB"
-                                    :disabled="true">
-                                </el-input>
+                                <el-input v-model="showForm.commitUnitZipB"></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>承担单位课题负责人：</td>
                             <td> 
-                                <el-input 
-                                 v-model="showForm.commitUnitLeaderB"
-                                 :disabled="true">
-                                </el-input>
+                                <el-input v-model="showForm.commitUnitLeaderB"></el-input>
                             </td>
                             <td>承担单位课题负责人电话（手机号）：</td>
                             <td>
-                                <el-input 
-                                 v-model="showForm.commitunitLeadersPhoneB"
-                                 :disabled="true">
-                                </el-input>
+                                <el-input v-model="showForm.commitunitLeadersPhoneB"></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>承担单位课题负责人电子邮件：</td>
                             <td> 
-                                <el-input 
-                                 v-model="showForm.commitmentUnitEmailB"
-                                 :disabled="true">
-                                </el-input>
+                                <el-input v-model="showForm.commitmentUnitEmailB"></el-input>
                             </td>
                             <td>保证单位（丙方）：</td>
                             <td>
-                                <el-input 
-                                 v-model="showForm.guaranteedUnitC"
-                                 :disabled="true">
-                                </el-input>
+                                <el-input v-model="showForm.guaranteedUnitC"></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>保证单位法定代表人/部门负责人：</td>
                             <td> 
-                                <el-input 
-                                 v-model="showForm.guaranteedUnitLeaderC"
-                                 :disabled="true">
-                                </el-input>
+                                <el-input v-model="showForm.guaranteedUnitLeaderC"></el-input>
                             </td>
                             <td>保证单位邮政编码：</td>
                             <td>
-                                <el-input 
-                                 v-model="showForm.guaranteedUnitZipC"
-                                 :disabled="true">
-                                </el-input>
+                                <el-input v-model="showForm.guaranteedUnitZipC"></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>保证单位地址：</td>
                             <td colspan="3">
-                                <el-input 
-                                 v-model="showForm.guaranteedUnitAddressC"
-                                 :disabled="true">
-                                </el-input>
+                                <el-input v-model="showForm.guaranteedUnitAddressC"></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>课题签订说明：</td>
                             <td colspan="3">
-                                <el-input type="textarea" v-model="showForm.subjectSigningDescription"></el-input>
+                                <el-input 
+                                    type="textarea"
+                                    v-model="showForm.subjectSigningDescription"
+                                    :autosize="{ minRows: 3}">
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>课题的目标和主要研究内容：</td>
                             <td colspan="3">
-                                <el-input type="textarea" v-model="showForm.subjectObjectivesResearch"></el-input>
+                                <el-input 
+                                    type="textarea" 
+                                    v-model="showForm.subjectObjectivesResearch"
+                                    :autosize="{ minRows: 3}">
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>课题验收内容和考核指标：</td>
                             <td colspan="3">
-                                <el-input type="textarea" v-model="showForm.subjectAcceptanceAssessment"></el-input>
+                                <el-input 
+                                    type="textarea" 
+                                    v-model="showForm.subjectAcceptanceAssessment"
+                                    :autosize="{ minRows: 3}">
+                                </el-input>
                             </td>
                         </tr>
                     </tbody>
@@ -525,138 +474,160 @@
         </div>
     </div>
 </template>
-<script>
-export default {
-    name:'contractAdd',
-    data(){
-        return{
-            showForm: {
-                subjectCategory:'',
-                projectNo:'',
-                subjectName:'',
-                contractStartTime:'',
-                contractEndTime:'',
-                subjeceLeader:'',
-                subjectLeaderPhone:'',
-                subjectContact:'',
-                subjectContactPhone:'',
-                commitmentUnit:'',
-                commitmentUnitAddress:'',
-                commitmentUnitZip:'',
-                subjectSupervisorDepartment:'',
-                openBank:'',
-                openBankAccount:'',
-                email:'',
-                guaranteedUnits:'',
-                guaranteedUnitContact:'',
-                guaranteedContactPhone:'',
-                commissioningUnit:'',
-                legalRepresentativeEntrustingA:'',
-                commissionedUnitAddressA:'',
-                commissionedUnitZipA:'',
-                responsibilityUnitB:'',
-                responsibilityLegalRepresentativeB:'',
-                commitUnitAddressB:'',
-                commitUnitZipB:'',
-                commitUnitLeaderB:'',
-                commitunitLeadersPhoneB:'',
-                commitmentUnitEmailB:'',
-                guaranteedUnitC:'',
-                guaranteedUnitLeaderC:'',
-                guaranteedUnitZipC:'',
-                guaranteedUnitAddressC:'',
-                subjectSigningDescription:'',
-                subjectObjectivesResearch:'',
-                subjectAcceptanceAssessment:'',
-            },
-            progressForm: [{
-                    id: 1,
-                    contractId: 1,
-                    time: "2018-8到2018-12",
-                    programContentAssessmentIndicators: "让法国人tyre"
-                },
-                {
-                    id: 2,
-                    contractId: 2,
-                    time: "2018-8到2019-1",
-                    programContentAssessmentIndicators: "现代风格的人体感染"
-                }],
-            unitForm: {
-                bearingUnits:'',
-                participatingUnits:'',
-                overseasCooperationUnits:'',
-                country:'',
-                leaderName:'',
-                unitName:'',
-                gender:'',
-                age:'',
-                professionalTitle:'',
-                professional:'',
-                workTask:'',
-                workingTime:'',
-                name:'',
-            },
-            budgetForm: {
-                money: ''
-            }
-        }
-    },
-    methods:{
-        handleSubmit() {
-            const loading = this.$loading({
-                lock: true,
-                text: '请稍后...',
-                spinner: 'el-icon-loading',
-                background: 'rgba(255,255,255,0.7)'
-            });
-            setTimeout(() => {
-                loading.close();
-                this.$alert('提交成功', '提示', {
-                    confirmButtonText: '确定',
-                    type: 'success',
-                    callback: action => {}
-                });
-            },2000);
-        },
-        handleBack() {
-            this.$router.go(-1);
-        }
-    }
 
-}
-</script>
-<style lang="less">
-#contractAdd{
-     .showForm{
-        table.form_table,
-        table.form_table1,
-        table.form_table2{
-            min-width: 1000px;
-            width: 65.4%;
-            thead{
-                th{
-                    font-weight: bold;
+<script>
+    export default {
+        name:'contractAdd',
+        data() {
+            return {
+                showForm: {
+                    subjectCategory: '1',
+                    projectNo: '2',
+                    subjectName: '3',
+                    contractStartTime: '4',
+                    contractEndTime: '5',
+                    subjeceLeader: '6',
+                    subjectLeaderPhone: '7',
+                    subjectContact: '8',
+                    subjectContactPhone: '9',
+                    commitmentUnit: '10',
+                    commitmentUnitAddress: '11',
+                    commitmentUnitZip: '12',
+                    subjectSupervisorDepartment: '13',
+                    openBank: '14',
+                    openBankAccount: '15',
+                    email: '16',
+                    guaranteedUnits: '17',
+                    guaranteedUnitContact: '18',
+                    guaranteedContactPhone: '19',
+                    commissioningUnit: '20',
+                    legalRepresentativeEntrustingA: '21',
+                    commissionedUnitAddressA: '22',
+                    commissionedUnitZipA: '23',
+                    responsibilityUnitB: '24',
+                    responsibilityLegalRepresentativeB: '25',
+                    commitUnitAddressB: '26',
+                    commitUnitZipB: '27',
+                    commitUnitLeaderB: '28',
+                    commitunitLeadersPhoneB: '29',
+                    commitmentUnitEmailB: '30',
+                    guaranteedUnitC: '31',
+                    guaranteedUnitLeaderC: '32',
+                    guaranteedUnitZipC: '33',
+                    guaranteedUnitAddressC: '34',
+                    subjectSigningDescription: '35',
+                    subjectObjectivesResearch: '36',
+                    subjectAcceptanceAssessment: '37',
+                },
+                progressForm: [{
+                        id: 1,
+                        contractId: 1,
+                        time: "2018-8到2018-12",
+                        programContentAssessmentIndicators: "让法国人tyre"
+                    },
+                    {
+                        id: 2,
+                        contractId: 2,
+                        time: "2018-8到2019-1",
+                        programContentAssessmentIndicators: "现代风格的人体感染"
+                    }],
+                unitForm: {
+                    bearingUnits:'',
+                    participatingUnits:'',
+                    overseasCooperationUnits:'',
+                    country:'',
+                    leaderName:'',
+                    unitName:'',
+                    gender:'',
+                    age:'',
+                    professionalTitle:'',
+                    professional:'',
+                    workTask:'',
+                    workingTime:'',
+                    name:'',
+                },
+                budgetForm: {
+                    money: ''
                 }
             }
-            @media  screen and ( max-width: 1600px ) {
-                width: 87.4%;
+        },
+        methods:{
+            handleSubmit() {
+                const loading = this.$loading({
+                    lock: true,
+                    text: '请稍后...',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(255,255,255,0.7)'
+                });
+                // 主表部分
+                this.axios({
+                    url: 'http://192.168.0.80:8087/environment/contract/addContractInfo',
+                    method: 'post',
+                    data: this.showForm
+                }).then((res) => {
+                    console.log(res);
+                    loading.close();
+                    if(res.data.resultFlag == 0) {
+                        this.$alert('提交成功', '提示', {
+                            confirmButtonText: '确定',
+                            type: 'success',
+                            callback: action => {}
+                        });
+                    }else {
+                        this.$alert('提交失败', '提示', {
+                            confirmButtonText: '确定',
+                            type: 'warning',
+                            callback: action => {}
+                        });
+                    }
+                }).catch(() => {
+                    this.$alert('提交失败', '提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning',
+                        callback: action => {}
+                    });
+                })
+            },
+            handleBack() {
+                this.$router.go(-1);
             }
-            
         }
-        .qianding{
-                padding: 10px 0;
-                span{
-                    line-height: 30px;
-                }
-                .el-input{
-                    width: auto;
-                    .el-input__inner{
-                        line-height: 30px;
-                        height: 30px;
+
+    }
+</script>
+
+<style lang="less">
+    #contractAdd{
+        .showForm{
+            table.form_table,
+            table.form_table1,
+            table.form_table2{
+                min-width: 1000px;
+                width: 65.4%;
+                thead{
+                    th{
+                        font-weight: bold;
                     }
                 }
+                @media  screen and ( max-width: 1600px ) {
+                    width: 87.4%;
+                }
+                
             }
-    }
+            .qianding{
+                    padding: 10px 0;
+                    span{
+                        line-height: 30px;
+                    }
+                    .el-input{
+                        width: auto;
+                        .el-input__inner{
+                            line-height: 30px;
+                            height: 30px;
+                        }
+                    }
+                }
+        }
 
-}
+    }
 </style>
