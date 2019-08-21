@@ -217,7 +217,7 @@
                     </tbody>
                 </table>
                 <!-- 三、课题进度及考核指标（进度安排区间一般按3个月） -->
-                <table class="form_table1" :model="progressForm" >
+                <table class="form_table1" :model="progressForm">
                     <thead>
                         <tr>
                             <th colspan="4">课题进度及考核指标（进度安排区间一般按3个月）</th>
@@ -227,6 +227,7 @@
                         <tr>
                             <td style="height:50px;line-height:50px;">时间</td>
                             <td colspan="3">计划内容及考核指标</td>
+                            <!-- <i class="el-icon-circle-plus-outline"></i> -->
                         </tr>
                         <tr v-for="(item,index) in progressForm">
                             <td><el-input v-model="progressForm[index].time"></el-input></td>
@@ -567,25 +568,156 @@
                 }).then((res) => {
                     console.log(res);
                     loading.close();
-                    if(res.data.resultFlag == 0) {
-                        this.$alert('提交成功', '提示', {
-                            confirmButtonText: '确定',
-                            type: 'success',
-                            callback: action => {}
-                        });
-                    }else {
-                        this.$alert('提交失败', '提示', {
-                            confirmButtonText: '确定',
-                            type: 'warning',
-                            callback: action => {}
-                        });
-                    }
+                    let id = res.data.data;
+                    // 子表一
+                    this.axios({
+                        url: 'http://192.168.0.80:8087/environment/contentindicators/insertCI',
+                        method: 'post',
+                        data: [{
+                            "contractId": id,
+                            "programContentAssessmentIndicators": '123456',
+                            "time": '654321'
+                        },{
+                            "contractId": id,
+                            "programContentAssessmentIndicators": '1234567',
+                            "time": '6543210'
+                        }]
+                    }).then((res) => {
+                        console.log(res);
+                        // 子表二
+                        this.axios({
+                            url: 'http://192.168.0.80:8087/environment/contract/subjectkeydev/insertInfo',
+                            method: 'post',
+                            data: {
+                                "age": 0,
+                                "bearingUnits": "string",
+                                "contractId": id,
+                                "country": "string",
+                                "gender": "男",
+                                "isLeader": "string",
+                                "keyResearchDevelopers": "string",
+                                "leaderName": "string",
+                                "overseasCooperationUnits": "string",
+                                "participatingUnits": "string",
+                                "professional": "string",
+                                "professionalTitle": "string",
+                                "unitName": "string",
+                                "workTask": "string",
+                                "workingTime": "string"
+                            }
+                        }).then((res) => {
+                            console.log(res);
+                            // 字表三
+                            this.axios({
+                                url: 'http://192.168.0.80:8087/environment/contract/subjectfundbudget/insertInfo',
+                                method: 'post',
+                                data: {
+                                    "afterYear": "2021",
+                                    "bearAfterBudget": 0,
+                                    "bearBudget": 0,
+                                    "bearCurrentBudget": 0,
+                                    "bearNextBudget": 0,
+                                    "bearNoteBudget": "1111",
+                                    "contractId": id,
+                                    "currentYear": "2019",
+                                    "dailyAfterBudget": 0,
+                                    "dailyBudget": 0,
+                                    "dailyCurrentBudget": 0,
+                                    "dailyNextBudget": 0,
+                                    "dailyNoteBudget": "1111",
+                                    "dailySupportingBudget": 0,
+                                    "departmentAfterBudget": 0,
+                                    "departmentBudget": 0,
+                                    "departmentCurrentBudget": 0,
+                                    "departmentNextBudget": 0,
+                                    "departmentNoteBudget": "1",
+                                    "equipmentAfterBudget": 0,
+                                    "equipmentBudget": 0,
+                                    "equipmentCurrentBudget": 0,
+                                    "equipmentNextBudget": 0,
+                                    "equipmentNoteBudget": "123",
+                                    "equipmentSupportingBudget": 0,
+                                    "expenditureBudget": 0,
+                                    "expertsAfterBudget": 0,
+                                    "expertsBudget": 0,
+                                    "expertsCurrentBudget": 0,
+                                    "expertsNextBudget": 0,
+                                    "expertsNoteBudget": "123",
+                                    "expertsSupportingBudget": 0,
+                                    "fuelAfterBudget": 0,
+                                    "fuelBudget": 0,
+                                    "fuelCurrentBudget": 0,
+                                    "fuelNextBudget": 0,
+                                    "fuelNoteBudget": "123",
+                                    "fuelSupportingBudget": 0,
+                                    "fundingSourcesBudget": 0,
+                                    "id": 1,
+                                    "laborAfterBudget": 0,
+                                    "laborBudget": 0,
+                                    "laborCurrentBudget": 0,
+                                    "laborNextBudget": 0,
+                                    "laborNoteBudget": "123",
+                                    "laborSupportingBudget": 0,
+                                    "materialAfterBudget": 0,
+                                    "materialBudget": 0,
+                                    "materialCurrentBudget": 0,
+                                    "materialNextBudget": 0,
+                                    "materialNoteBudget": "123",
+                                    "materialSupportingBudget": 0,
+                                    "mettingAfterBudget": 0,
+                                    "mettingBudget": 0,
+                                    "mettingCurrentBudget": 0,
+                                    "mettingNextBudget": 0,
+                                    "mettingNoteBudget": "123",
+                                    "mettingSupportingBudget": 0,
+                                    "nextYear": "2020",
+                                    "note": "123",
+                                    "otherAfterBudget": 0,
+                                    "otherBudget": 0,
+                                    "otherCurrentBudget": 0,
+                                    "otherNextBudget": 0,
+                                    "otherNoteBudget": "123",
+                                    "provincialAfterBudget": 0,
+                                    "provincialBudget": 0,
+                                    "provincialCurrentBudget": 0,
+                                    "provincialNextBudget": 0,
+                                    "provincialNoteBudget": "111",
+                                    "testAfterBudget": 0,
+                                    "testBudget": 0,
+                                    "testCurrentBudget": "111",
+                                    "testNextBudget": 0,
+                                    "testNoteBudget": "111",
+                                    "testSupportingBudget": 0
+                                }
+                            }).then((res) => {
+                                console.log(res);
+                                if(res.data.resultFlag == 0) {
+                                    this.$alert('提交成功','提示', {
+                                        confirmButtonText: '确定',
+                                        type: 'success',
+                                        callback: action => {}
+                                    });
+                                }else {
+                                    this.$alert('提交失败','提示', {
+                                        confirmButtonText: '确定',
+                                        type: 'warning',
+                                        callback: action => {}
+                                    });
+                                }
+                            })
+                        })
+                    })
+
+
+
+
+                    
                 }).catch(() => {
-                    this.$alert('提交失败', '提示', {
-                        confirmButtonText: '确定',
-                        type: 'warning',
-                        callback: action => {}
-                    });
+                    // this.$alert('提交失败', '提示', {
+                    //     confirmButtonText: '确定',
+                    //     type: 'warning',
+                    //     callback: action => {}
+                    // });
                 })
             },
             handleBack() {
@@ -612,7 +744,17 @@
                 @media  screen and ( max-width: 1600px ) {
                     width: 87.4%;
                 }
-                
+            }
+            .form_table1 {
+                tr {
+                    position: relative;
+                    i {
+                        position: absolute;
+                        font-size: 30px;
+                        top: 10px;
+                        right: 0px;
+                    }
+                }
             }
             .qianding{
                     padding: 10px 0;
