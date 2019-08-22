@@ -226,12 +226,18 @@
                     <tbody>
                         <tr>
                             <td style="height:50px;line-height:50px;">时间</td>
-                            <td colspan="3">计划内容及考核指标</td>
-                            <!-- <i class="el-icon-circle-plus-outline"></i> -->
+                            <td colspan="3" style="position:relative;">
+                                计划内容及考核指标
+                                <i class="el-icon-circle-plus-outline" @click="handleTrAdd(1)"></i>
+                            </td>
+                            
                         </tr>
-                        <tr v-for="(item,index) in progressForm">
-                            <td><el-input v-model="progressForm[index].time"></el-input></td>
-                            <td><el-input v-model="progressForm[index].programContentAssessmentIndicators"></el-input></td>
+                        <tr v-for="(item,index) in progressForm" :key="index">
+                            <td><el-input v-model="item.time"></el-input></td>
+                            <td style="position:relative;">
+                                <el-input v-model="item.programContentAssessmentIndicators"></el-input>
+                                <i class="el-icon-remove-outline" @click="handleTrRemove(index)"></i>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -259,14 +265,10 @@
                             <td>国家或地区：</td>
                             <td colspan="3"><el-input v-model="unitForm.country"></el-input></td>
                         </tr>
-                        
                     </tbody>
                 </table>
-                <table class="form_table1" :model="unitForm">
+                <table class="form_table1" :model="unitForm" style="margin-top:10px;">
                     <tbody>
-                        <tr>
-                            <td colspan="9" style="text-align:left;padding-left:10px;background-color:#fff;">课题负责人：</td>
-                        </tr>
                         <tr>
                            <td style="background-color:#e5f3ff;"><span>姓名</span></td>
                            <td style="background-color:#e5f3ff;"><span>所在单位</span></td>
@@ -278,7 +280,10 @@
                            <td style="background-color:#e5f3ff;"><span>为本课题工作时间（%）</span></td>
                            <td style="background-color:#e5f3ff;"><span>本人签名</span></td>
                         </tr>
-                       <tr>
+                        <tr>
+                            <td colspan="9" style="text-align:left;padding-left:10px;background-color:#fff;">课题负责人：</td>
+                        </tr>
+                        <tr>
                            <td><el-input v-model="unitForm.leaderName"></el-input></td>
                            <td><el-input v-model="unitForm.unitName"></el-input></td>
                            <td><el-input v-model="unitForm.gender"></el-input></td>
@@ -290,7 +295,10 @@
                            <td><el-input v-model="unitForm.name"></el-input></td>
                        </tr>
                        <tr>
-                           <td colspan="9" style="text-align:left;padding-left:10px;">主要研发人员：</td>
+                           <td colspan="9" style="text-align:left;padding-left:10px;position:relative;">
+                               主要研发人员：
+                               <i class="el-icon-circle-plus-outline" @click="handleTrAdd(2)"></i>
+                            </td>
                        </tr>
                        <tr>
                            <td><el-input v-model="unitForm.keyResearchDevelopers"></el-input></td>
@@ -301,7 +309,10 @@
                            <td><el-input v-model="unitForm.keyResearchDevelopers"></el-input></td>
                            <td><el-input v-model="unitForm.keyResearchDevelopers"></el-input></td>
                            <td><el-input v-model="unitForm.keyResearchDevelopers"></el-input></td>
-                           <td><el-input v-model="unitForm.keyResearchDevelopers"></el-input></td>
+                           <td style="position:relative;">
+                               <el-input v-model="unitForm.keyResearchDevelopers"></el-input>
+                               <i class="el-icon-remove-outline" @click="handleTrRemove(index)"></i>
+                           </td>
                        </tr>
                     </tbody>
                 </table>
@@ -468,7 +479,6 @@
                         </tr>
                     </tbody>
                 </table>
-
             </el-form>
             <el-button @click="handleSubmit">提交</el-button>
             <el-button @click="handleBack">返回</el-button>
@@ -521,14 +531,11 @@
                     subjectAcceptanceAssessment: '37',
                 },
                 progressForm: [{
-                        id: 1,
-                        contractId: 1,
+                        contractId: 0,
                         time: "2018-8到2018-12",
                         programContentAssessmentIndicators: "让法国人tyre"
-                    },
-                    {
-                        id: 2,
-                        contractId: 2,
+                    },{
+                        contractId: 0,
                         time: "2018-8到2019-1",
                         programContentAssessmentIndicators: "现代风格的人体感染"
                     }],
@@ -569,19 +576,14 @@
                     console.log(res);
                     loading.close();
                     let id = res.data.data;
+                    for(let i in this.progressForm) {
+                        this.progressForm[i].contractId = id;
+                    }
                     // 子表一
                     this.axios({
                         url: 'http://192.168.0.80:8087/environment/contentindicators/insertCI',
                         method: 'post',
-                        data: [{
-                            "contractId": id,
-                            "programContentAssessmentIndicators": '123456',
-                            "time": '654321'
-                        },{
-                            "contractId": id,
-                            "programContentAssessmentIndicators": '1234567',
-                            "time": '6543210'
-                        }]
+                        data: this.progressForm
                     }).then((res) => {
                         console.log(res);
                         // 子表二
@@ -607,7 +609,7 @@
                             }
                         }).then((res) => {
                             console.log(res);
-                            // 字表三
+                            // 子表三
                             this.axios({
                                 url: 'http://192.168.0.80:8087/environment/contract/subjectfundbudget/insertInfo',
                                 method: 'post',
@@ -707,21 +709,44 @@
                             })
                         })
                     })
-
-
-
-
-                    
                 }).catch(() => {
-                    // this.$alert('提交失败', '提示', {
-                    //     confirmButtonText: '确定',
-                    //     type: 'warning',
-                    //     callback: action => {}
-                    // });
+                    this.$alert('提交失败','提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning',
+                        callback: action => {}
+                    });
                 })
             },
             handleBack() {
                 this.$router.go(-1);
+            },
+            handleTrAdd(val) {
+                if(val == 1) {
+                    let item = {
+                        time: '',
+                        programContentAssessmentIndicators: ''
+                    };
+                    this.progressForm.push(item);
+                }else if(val == 2) {
+                    let item = {
+                        time: '',
+                        programContentAssessmentIndicators: ''
+                    };
+                    this.progressForm.push(item);
+                }
+                
+            },
+            handleTrRemove(_index) {
+                if(this.progressForm.length == 1) {
+                    this.$alert('至少保留一条','提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning',
+                        callback: action => {}
+                    });
+                }else {
+                    this.progressForm.splice(_index,1);
+                }
+                
             }
         }
 
@@ -752,7 +777,8 @@
                         position: absolute;
                         font-size: 30px;
                         top: 10px;
-                        right: 0px;
+                        right: -40px;
+                        cursor: pointer;
                     }
                 }
             }
