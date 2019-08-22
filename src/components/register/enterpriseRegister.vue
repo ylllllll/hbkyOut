@@ -129,6 +129,52 @@
         },
         methods: {
             handleSubmit() {
+                // 非空验证
+                for(let i in this.showForm) {
+                    if(typeof(this.showForm[i]) == "string") {
+                        if(this.showForm[i].match(/^[ ]*$/)){
+                            this.$alert('请将表格填写完整','提示', {
+                                confirmButtonText: '确定',
+                                type: 'warning',
+                                callback: action => {}
+                            });
+                            return false;
+                        }
+                    }
+                }
+                for(let i in this.showForm.administratorInformation) {
+                    if(this.showForm.administratorInformation[i].match(/^[ ]*$/)){
+                        this.$alert('请将表格填写完整','提示', {
+                            confirmButtonText: '确定',
+                            type: 'warning',
+                            callback: action => {}
+                        });
+                        return false;
+                    }
+                }
+                if(this.businessFile == "" || this.legalCardIdFile == "" || this.contactCardFile == "") {
+                    this.$alert('请上传全部附件','提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning',
+                        callback: action => {}
+                    });
+                    return false;
+                }
+                // 密码验证
+                // 身份证验证
+                // 手机号验证
+                if(this.validate.validatePhone(this.showForm.administratorInformation.contactPhone)) {
+                    this.$alert('请输入正确的手机号','提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning',
+                        callback: action => {}
+                    });
+                    return false;
+                }
+                // 邮箱验证
+                // 文件格式验证
+
+
                 let formData = new FormData(),
                     userInformation = JSON.stringify(this.showForm);
                 formData.append('userInformation',new Blob([userInformation],{type: "application/json"}));
@@ -143,7 +189,28 @@
                     processData: false,
                     usecredensives: true
                 }).then((res) => {
-                    // this.$router.push("/");
+                    if(res.data.resultFlag == 0) {
+                        this.$alert('注册成功','提示', {
+                            confirmButtonText: '确定',
+                            type: 'success',
+                            callback: action => {
+                                this.$router.push("/");
+                            }
+                        });
+                    }else {
+                        this.$alert(res.data.data,'提示', {
+                            confirmButtonText: '确定',
+                            type: 'warning',
+                            callback: action => {}
+                        });
+                    }
+                    
+                }).catch(() => {
+                    this.$alert('注册失败','提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning',
+                        callback: action => {}
+                    });
                 })
             },
             handleBack() {

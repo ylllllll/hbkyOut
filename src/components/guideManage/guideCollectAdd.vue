@@ -195,6 +195,23 @@
                         callback: action => {}
                     });
                 })
+
+                let obj = {             
+                        ParNo: '111',
+                        SearialNo: '111'
+                    };
+
+                this.axios({
+                    url: 'http://192.168.3.230:52789/api/tpm_info_temps/GetEntityBySNOrPn',
+                    method: 'post',     // get或者post
+                    data: obj
+                }).then((res) => {
+                    // 请求成功的回调函数，res就是返回的结果
+                }).catch((err) => {
+                    // 请求失败的回调函数
+                })
+
+
             },
             handleBack() {
                 this.$router.go(-1);
