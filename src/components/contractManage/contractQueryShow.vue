@@ -370,32 +370,32 @@
                         
                     </tbody>
                 </table>
-                <table class="form_table1" :model="unitForm">
+                <table class="form_table1" :model="unitForm" style="margin-top:10px;">
                     <tbody>
+                        <tr style="background-color:#e5f3ff;">
+                            <td><span>姓名</span></td>
+                            <td><span>所在单位</span></td>
+                            <td><span>性别</span></td>
+                            <td><span>年龄</span></td>
+                            <td><span>职称</span></td>
+                            <td><span>从事专业</span></td>
+                            <td style="padding:0 10px;"><span style="white-space:nowrap;">本课题中承担工作</span></td>
+                            <td style="padding:0 10px;"><span style="white-space:nowrap;">为本课题工作时间（%）</span></td>
+                            <!-- <td style="background-color:#e5f3ff;"><span>本人签名</span></td> -->
+                        </tr>
                         <tr>
                             <td colspan="8" style="text-align:left;padding-left:10px;background-color:#fff;">课题负责人：</td>
                         </tr>
-                        <tr style="background-color:#e5f3ff;">
-                           <td><span>姓名</span></td>
-                           <td><span>所在单位</span></td>
-                           <td><span>性别</span></td>
-                           <td><span>年龄</span></td>
-                           <td><span>职称</span></td>
-                           <td><span>从事专业</span></td>
-                           <td style="padding:0 10px;"><span style="white-space:nowrap;">本课题中承担工作</span></td>
-                           <td style="padding:0 10px;"><span style="white-space:nowrap;">为本课题工作时间（%）</span></td>
-                           <!-- <td style="background-color:#e5f3ff;"><span>本人签名</span></td> -->
-                        </tr>
-                       <tr>
-                           <td><el-input v-model="unitForm.leaderName" disabled></el-input></td>
-                           <td><el-input v-model="unitForm.unitName" disabled></el-input></td>
-                           <td><el-input v-model="unitForm.gender" disabled></el-input></td>
-                           <td><el-input v-model="unitForm.age" disabled></el-input></td>
-                           <td><el-input v-model="unitForm.professionalTitle" disabled></el-input></td>
-                           <td><el-input v-model="unitForm.professional" disabled></el-input></td>
-                           <td><el-input v-model="unitForm.workTask" disabled></el-input></td>
-                           <td><el-input v-model="unitForm.workingTime" disabled></el-input></td>
-                           <!-- <td><el-input v-model="unitForm.name"></el-input></td> -->
+                        <tr>
+                            <td><el-input v-model="unitForm.leaderName" disabled></el-input></td>
+                            <td><el-input v-model="unitForm.unitName" disabled></el-input></td>
+                            <td><el-input v-model="unitForm.gender" disabled></el-input></td>
+                            <td><el-input v-model="unitForm.age" disabled></el-input></td>
+                            <td><el-input v-model="unitForm.professionalTitle" disabled></el-input></td>
+                            <td><el-input v-model="unitForm.professional" disabled></el-input></td>
+                            <td><el-input v-model="unitForm.workTask" disabled></el-input></td>
+                            <td><el-input v-model="unitForm.workingTime" disabled></el-input></td>
+                            <!-- <td><el-input v-model="unitForm.name"></el-input></td> -->
                         </tr>
                         <tr>
                             <td colspan="8" style="text-align:left;padding-left:10px;">主要研发人员：</td>
@@ -413,7 +413,7 @@
                     </tbody>
                 </table>
                 <!-- 五、课题经费预算 -->
-                <!-- <table class="form_table2" :model="budgetForm">
+                <table class="form_table2" :model="budgetForm">
                     <thead>
                         <tr>
                             <th colspan="7">课题经费来源预算</th>
@@ -442,7 +442,7 @@
                         </tr>
                         <tr>
                             <td>1、省环保科研课题经费</td>
-                            <td><el-input v-model="budgetForm.provincialBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.provincialBudget"></el-input></td>
                             <td><el-input v-model="budgetForm.provincialCurrentBudget"></el-input></td>
                             <td><el-input v-model="budgetForm.provincialNextBudget"></el-input></td>
                             <td><el-input v-model="budgetForm.provincialAfterBudget"></el-input></td>
@@ -450,7 +450,7 @@
                         </tr>
                         <tr>
                             <td>2、部门、地方配套</td>
-                            <td><el-input v-model="budgetForm.departmentBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.departmentBudget"></el-input></td>
                             <td><el-input v-model="budgetForm.departmentCurrentBudget"></el-input></td>
                             <td><el-input v-model="budgetForm.departmentNextBudget"></el-input></td>
                             <td><el-input v-model="budgetForm.departmentAfterBudget"></el-input></td>
@@ -458,7 +458,7 @@
                         </tr>
                         <tr>
                             <td>3、承担单位自筹</td>
-                            <td><el-input v-model="budgetForm.bearBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.bearBudget"></el-input></td>
                             <td><el-input v-model="budgetForm.bearCurrentBudget"></el-input></td>
                             <td><el-input v-model="budgetForm.bearNextBudget"></el-input></td>
                             <td><el-input v-model="budgetForm.bearAfterBudget"></el-input></td>
@@ -466,7 +466,7 @@
                         </tr>
                         <tr >
                             <td>4、其他来源</td>
-                            <td><el-input v-model="budgetForm.otherBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.otherBudget"></el-input></td>
                             <td><el-input v-model="budgetForm.otherCurrentBudget"></el-input></td>
                             <td><el-input v-model="budgetForm.otherNextBudget"></el-input></td>
                             <td><el-input v-model="budgetForm.otherAfterBudget"></el-input></td>
@@ -574,7 +574,7 @@
                             <td><el-input v-model="budgetForm.dailyNoteBudget"></el-input></td>
                         </tr>
                     </tbody>
-                </table> -->
+                </table>
             </el-form>
             <el-button @click = "handleBack">返回</el-button>
         </div>
@@ -614,17 +614,16 @@
                 this.showForm = data;
             }).catch(() => {})
             // 子表一
-            // this.axios({
-            //     url: 'http://192.168.0.80:8087/environment/contentindicators/getIndicatorById',
-            //     method: 'get',
-            //     params: {
-            //         id: this.paramsData.id
-            //     }
-            // }).then((res) => {
-            //     let data = res.data.data;
-            //     console.log(res);
-            //     // this.progressForm = data;
-            // }).catch(() => {})
+            this.axios({
+                url: 'http://192.168.0.80:8087/environment/contentindicators/getIndicatorById',
+                method: 'get',
+                params: {
+                    id: this.paramsData.id
+                }
+            }).then((res) => {
+                let data = res.data.data;
+                this.progressForm = data;
+            }).catch(() => {})
             // 子表二
             this.axios({
                 url: 'http://192.168.0.80:8087/environment/contract/subject_participa_unit/getDeveloperInfoById',
@@ -637,37 +636,27 @@
                 this.unitForm = data;
             }).catch(() => {})
             // 子表三
-            // this.axios({
-            //     url: 'http://192.168.0.80:8087/environment/contract/keydev/getKeyDevInfoById',
-            //     method: 'get',
-            //     params: {
-            //         cid: this.paramsData.id
-            //     }
-            // }).then((res) => {
-            //     let data = res.data.data;
-            //     console.log(res);
-            //     // this.progressForm = data;
-            // }).catch(() => {})
+            this.axios({
+                url: 'http://192.168.0.80:8087/environment/contract/keydev/getKeyDevInfoById',
+                method: 'get',
+                params: {
+                    cid: this.paramsData.id
+                }
+            }).then((res) => {
+                let data = res.data.data;
+                this.keyForm = data;
+            }).catch(() => {})
             // 子表四
-            // this.axios({
-            //     url: 'http://192.168.0.80:8087/environment/contract/subjectfundbudget/getInfoById',
-            //     method: 'get',
-            //     params: {
-            //         id: this.paramsData.id
-            //     }
-            // }).then((res) => {
-            //     let data = res.data.data;
-            //     console.log(res);
-            //     // this.progressForm = data;
-            // }).catch(() => {})
-        },
-        mounted() {
-            let currentYear = new Date().getFullYear(),
-                nextYear = currentYear + 1,
-                afterYear = nextYear + 1;
-            // this.budgetForm.currentYear = currentYear;
-            // this.budgetForm.nextYear = nextYear;
-            // this.budgetForm.afterYear = afterYear;
+            this.axios({
+                url: 'http://192.168.0.80:8087/environment/contract/subjectfundbudget/getInfoById',
+                method: 'get',
+                params: {
+                    id: this.paramsData.id
+                }
+            }).then((res) => {
+                let data = res.data.data;
+                this.budgetForm = data;
+            }).catch(() => {})
         }
     }
 </script>
