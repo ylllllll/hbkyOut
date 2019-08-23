@@ -160,7 +160,7 @@
                     </tbody>
                 </table>
             </el-form>
-            <el-button @click = "handleBack">返回</el-button>
+            <el-button @click="handleBack">返回</el-button>
         </div>
     </div>
 </template>
@@ -213,7 +213,11 @@
                                     width: 31.8%;
                                 }
                             }
+                            .el-textarea {
+                                padding: 10px;
+                            }
                         }
+                        
                     }
                 }
             }

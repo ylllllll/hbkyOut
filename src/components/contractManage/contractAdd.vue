@@ -190,7 +190,7 @@
                                 <el-input 
                                     type="textarea"
                                     v-model="showForm.subjectSigningDescription"
-                                    :autosize="{ minRows: 3}">
+                                    :autosize="{ minRows:3 }">
                                 </el-input>
                             </td>
                         </tr>
@@ -200,7 +200,7 @@
                                 <el-input 
                                     type="textarea" 
                                     v-model="showForm.subjectObjectivesResearch"
-                                    :autosize="{ minRows: 3}">
+                                    :autosize="{ minRows:3 }">
                                 </el-input>
                             </td>
                         </tr>
@@ -210,7 +210,7 @@
                                 <el-input 
                                     type="textarea" 
                                     v-model="showForm.subjectAcceptanceAssessment"
-                                    :autosize="{ minRows: 3}">
+                                    :autosize="{ minRows:3 }">
                                 </el-input>
                             </td>
                         </tr>
@@ -293,30 +293,30 @@
                            <td><el-input v-model="unitForm.workTask"></el-input></td>
                            <td><el-input v-model="unitForm.workingTime"></el-input></td>
                            <!-- <td><el-input v-model="unitForm.name"></el-input></td> -->
-                       </tr>
-                       <tr>
-                           <td colspan="8" style="text-align:left;padding-left:10px;position:relative;">
-                               主要研发人员：
-                               <i class="el-icon-circle-plus-outline" @click="handleTrAdd(2)"></i>
+                        </tr>
+                        <tr>
+                            <td colspan="8" style="text-align:left;padding-left:10px;position:relative;">
+                                主要研发人员：
+                                <i class="el-icon-circle-plus-outline" @click="handleTrAdd(2)"></i>
                             </td>
-                       </tr>
-                       <tr v-for="(item,index) in keyForm" :key="index">
-                           <td><el-input v-model="item.keyDevName"></el-input></td>
-                           <td><el-input v-model="item.unitName"></el-input></td>
-                           <td><el-input v-model="item.gender"></el-input></td>
-                           <td><el-input v-model="item.age"></el-input></td>
-                           <td><el-input v-model="item.professionalTitle"></el-input></td>
-                           <td><el-input v-model="item.professional"></el-input></td>
-                           <td><el-input v-model="item.workTask"></el-input></td>
-                           <td style="position:relative;">
-                               <el-input v-model="item.workingTime"></el-input>
-                               <i class="el-icon-remove-outline" @click="handleTrRemove(2,index)"></i>
+                        </tr>
+                        <tr v-for="(item,index) in keyForm" :key="index">
+                            <td><el-input v-model="item.keyDevName"></el-input></td>
+                            <td><el-input v-model="item.unitName"></el-input></td>
+                            <td><el-input v-model="item.gender"></el-input></td>
+                            <td><el-input v-model="item.age"></el-input></td>
+                            <td><el-input v-model="item.professionalTitle"></el-input></td>
+                            <td><el-input v-model="item.professional"></el-input></td>
+                            <td><el-input v-model="item.workTask"></el-input></td>
+                            <td style="position:relative;">
+                                <el-input v-model="item.workingTime"></el-input>
+                                <i class="el-icon-remove-outline" @click="handleTrRemove(2,index)"></i>
                             </td>
-                           <!-- <td style="position:relative;">
-                               <el-input v-model="unitForm.keyResearchDevelopers"></el-input>
-                               <i class="el-icon-remove-outline" @click="handleTrRemove(index)"></i>
-                           </td> -->
-                       </tr>
+                            <!-- <td style="position:relative;">
+                                <el-input v-model="unitForm.keyResearchDevelopers"></el-input>
+                                <i class="el-icon-remove-outline" @click="handleTrRemove(index)"></i>
+                            </td> -->
+                        </tr>
                     </tbody>
                 </table>
                 <!-- 五、课题经费预算 -->
@@ -534,14 +534,14 @@
                     subjectAcceptanceAssessment: '37',
                 },
                 progressForm: [{
-                        contractId: 0,
-                        time: "2018-8到2018-12",
-                        programContentAssessmentIndicators: "让法国人tyre"
-                    },{
-                        contractId: 0,
-                        time: "2018-8到2019-1",
-                        programContentAssessmentIndicators: "现代风格的人体感染"
-                    }],
+                    contractId: 0,
+                    time: "2018-8到2018-12",
+                    programContentAssessmentIndicators: "让法国人tyre"
+                },{
+                    contractId: 0,
+                    time: "2018-8到2019-1",
+                    programContentAssessmentIndicators: "现代风格的人体感染"
+                }],
                 unitForm: {
                     contractId: 0,
                     bearingUnits: '1',
@@ -828,7 +828,6 @@
             this.budgetForm.nextYear = nextYear;
             this.budgetForm.afterYear = afterYear;
         }
-
     }
 </script>
 
@@ -862,19 +861,18 @@
                 }
             }
             .qianding{
-                    padding: 10px 0;
-                    span{
+                padding: 10px 0;
+                span{
+                    line-height: 30px;
+                }
+                .el-input{
+                    width: auto;
+                    .el-input__inner{
                         line-height: 30px;
-                    }
-                    .el-input{
-                        width: auto;
-                        .el-input__inner{
-                            line-height: 30px;
-                            height: 30px;
-                        }
+                        height: 30px;
                     }
                 }
+            }
         }
-
     }
 </style>

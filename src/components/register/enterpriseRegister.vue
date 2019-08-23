@@ -39,7 +39,9 @@
                             <tr>
                                 <td>单位性质：</td>
                                 <td>
-                                    <el-input v-model="showForm.administratorInformation.unitNature"></el-input>
+                                    <el-select v-model="showForm.administratorInformation.unitNature">
+                                        <el-option v-for="(item,index) in optGroup" :key="index" :label="item.content" :value="item.id"></el-option>
+                                    </el-select>
                                 </td>
                             </tr>
                             <tr>
@@ -124,7 +126,8 @@
                 },
                 businessFile: '',
                 legalCardIdFile: '',
-                contactCardFile : ''
+                contactCardFile : '',
+                optGroup: []
             }
         },
         methods: {
@@ -143,7 +146,7 @@
                     }
                 }
                 for(let i in this.showForm.administratorInformation) {
-                    if(this.showForm.administratorInformation[i].match(/^[ ]*$/)){
+                    if((this.showForm.administratorInformation[i] + "").match(/^[ ]*$/)){
                         this.$alert('请将表格填写完整','提示', {
                             confirmButtonText: '确定',
                             type: 'warning',
@@ -161,7 +164,23 @@
                     return false;
                 }
                 // 密码验证
+                if(this.validate.validatePwd(this.showForm.password)) {
+                    this.$alert('密码长度为6-18位','提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning',
+                        callback: action => {}
+                    });
+                    return false;
+                }
                 // 身份证验证
+                if(this.validate.validateCard(this.showForm.administratorInformation.contactIdCard)) {
+                    this.$alert('请输入正确的身份证号','提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning',
+                        callback: action => {}
+                    });
+                    return false;
+                }
                 // 手机号验证
                 if(this.validate.validatePhone(this.showForm.administratorInformation.contactPhone)) {
                     this.$alert('请输入正确的手机号','提示', {
@@ -172,9 +191,15 @@
                     return false;
                 }
                 // 邮箱验证
-                // 文件格式验证
-
-
+                if(this.validate.validateEmail(this.showForm.administratorInformation.email)) {
+                    this.$alert('请输入正确的电子邮件','提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning',
+                        callback: action => {}
+                    });
+                    return false;
+                }
+                // 文件格式验证和社会信用号验证是后端做的
                 let formData = new FormData(),
                     userInformation = JSON.stringify(this.showForm);
                 formData.append('userInformation',new Blob([userInformation],{type: "application/json"}));
@@ -204,7 +229,6 @@
                             callback: action => {}
                         });
                     }
-                    
                 }).catch(() => {
                     this.$alert('注册失败','提示', {
                         confirmButtonText: '确定',
@@ -231,6 +255,22 @@
                     this.contactCardFile = event.target.files[0];
                 }
             }
+        },
+        beforeMount() {
+            // 请求单位性质
+            this.axios({
+                url: 'http://192.168.0.37:8087/checkApplyStyle/unitNature',
+                method: 'post',
+            }).then((res) => {
+                let data = res.data.data;
+                for(let i in data) {
+                    let obj = {
+                        id: data[i].id,
+                        content: data[i].content
+                    }
+                    this.optGroup.push(obj);
+                }
+            })
         }
     }
 </script>
@@ -275,6 +315,9 @@
                                 .el-input__inner {
                                    border: none; 
                                 }
+                            }
+                            .el-select {
+                                width: 100%;
                             }
                         }
                         .file {
