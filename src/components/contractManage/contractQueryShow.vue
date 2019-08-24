@@ -38,8 +38,8 @@
                             <td>合同开始时间（精确到月）：</td>
                             <td>
                                 <el-input 
-                                 v-model="showForm.contractStartTime" 
-                                 :disabled="true">
+                                v-model="showForm.contractStartTime" 
+                                :disabled="true">
                                 </el-input>
                             </td>
                             <td>合同结束时间（精确到月）：</td>
@@ -54,15 +54,15 @@
                             <td>课题负责人：</td>
                             <td>
                                 <el-input 
-                                 v-model="showForm.subjeceLeader" 
-                                 :disabled="true">
+                                v-model="showForm.subjeceLeader" 
+                                :disabled="true">
                                 </el-input>
                             </td>
                             <td>课题负责人电话及手机：</td>
                             <td>
                                 <el-input 
-                                 v-model="showForm.subjectLeaderPhone"
-                                 :disabled="true">
+                                v-model="showForm.subjectLeaderPhone"
+                                :disabled="true">
                                 </el-input>
                             </td>
                         </tr>
@@ -70,8 +70,8 @@
                             <td>课题联系人：</td>
                             <td>
                                 <el-input 
-                                 v-model="showForm.subjectContact"
-                                 :disabled="true">
+                                v-model="showForm.subjectContact"
+                                :disabled="true">
                                 </el-input>
                             </td>
                             <td>课题联系人电话及手机：</td>
@@ -87,8 +87,8 @@
                             <td>承担单位：</td>
                             <td colspan="3">
                                 <el-input 
-                                 v-model="showForm.commitmentUnit"
-                                 :disabled="true">
+                                v-model="showForm.commitmentUnit"
+                                :disabled="true">
                                 </el-input>
                             </td>
                             
@@ -367,7 +367,6 @@
                             <td>国家或地区：</td>
                             <td colspan="3"><el-input v-model="unitForm.country" disabled></el-input></td>
                         </tr>
-                        
                     </tbody>
                 </table>
                 <table class="form_table1" :model="unitForm" style="margin-top:10px;">
@@ -381,7 +380,6 @@
                             <td><span>从事专业</span></td>
                             <td style="padding:0 10px;"><span style="white-space:nowrap;">本课题中承担工作</span></td>
                             <td style="padding:0 10px;"><span style="white-space:nowrap;">为本课题工作时间（%）</span></td>
-                            <!-- <td style="background-color:#e5f3ff;"><span>本人签名</span></td> -->
                         </tr>
                         <tr>
                             <td colspan="8" style="text-align:left;padding-left:10px;background-color:#fff;">课题负责人：</td>

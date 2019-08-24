@@ -48,16 +48,16 @@
                     label="课题类别"
                     :show-overflow-tooltip="true"
                     align="center">
-                 <template slot-scope="scope">
-                    <router-link :to="{
-                            name: 'ContractQueryShow',
-                            params: {
-                                id: scope.row.id
-                            }
-                        }"> 
-                        {{ scope.row.subjectCategory }}
-                    </router-link>
-                </template>
+                    <template slot-scope="scope">
+                        <router-link :to="{
+                                name: 'ContractQueryShow',
+                                params: {
+                                    id: scope.row.id
+                                }
+                            }"> 
+                            {{ scope.row.subjectCategory }}
+                        </router-link>
+                    </template>
                 </el-table-column>
                 <el-table-column
                 prop="subjectName"
