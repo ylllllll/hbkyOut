@@ -5,7 +5,7 @@
                 <table class="form_table">
                     <thead>
                         <tr>
-                            <th colspan="4">专家新增详情页</th>
+                            <th colspan="4">专家库详情页</th>
                         </tr>
                     </thead>
                     <tbody>

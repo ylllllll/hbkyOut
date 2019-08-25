@@ -1,10 +1,5 @@
 <template>
     <div id="noticeShow">
-        <div class="button">
-            <el-button type="primary" @click="handleAdd">添加</el-button>
-            <el-button type="primary" @click="handleEdit">修改</el-button>
-            <el-button type="primary" @click="handleDelete">删除</el-button>
-        </div>
         <!-- 展示列表 -->
         <div class="showList">
             <!-- 表格 -->
@@ -13,6 +8,7 @@
                 :data="tableData"
                 tooltip-effect="dark"
                 style="width: 100%"
+                v-loading="loading"
                 @selection-change="handleSelectionChange">
                 <el-table-column
                 type="selection"
@@ -29,18 +25,11 @@
                 :show-overflow-tooltip="true"
                 align="center">
                  <template slot-scope="scope">
-                    <router-link :to="{
-                        name:'ContractCenterShow',
-                        params:{
-                            name:scope.row.id
-                        }
-                        }"> 
-                        {{scope.row.title}}
-                    </router-link>
+                       <span @click="handleShow(scope.row.id)">{{scope.row.title}}</span>
                 </template>
                 </el-table-column>
                 <el-table-column
-                prop="date"
+                prop="startTime"
                 label="发送时间"
                 align="center">
                 </el-table-column>
@@ -59,15 +48,15 @@
                 :pageSizes="fenye.pageSizes"
                 @handleCurrentChangeNum="handleCurrentChange"
                 @handleSizeChangeNum="handleSizeChange"
+                @handleTableFreshNum="handleTableFresh"
             ></pages>
         </div>
-
-        <!-- 对话框 -->
-        <el-dialog :title="title" :visible.sync="dialogTableVisible" top="0">
+        <!-- 查看 -->
+        <el-dialog title="查看公告" :visible.sync="dialogShow" top="0">
              <el-form ref="form" :model="form" label-width="80px">
                  <div class="form-item">
                      <span>公告标题：</span>
-                     <el-input v-model="form.title"></el-input>
+                     <el-input v-model="form.title" disabled></el-input>
                  </div>
                 <div class="form-item">
                     <div class="form-item-date">
@@ -75,9 +64,10 @@
                         <el-date-picker 
                         type="date" 
                         placeholder="选择日期" 
-                        v-model="form.date1"
+                        v-model="form.startTime"
                         format="yyyy-MM-dd"
-                        value-format="yyyy-MM-dd" ></el-date-picker>
+                        value-format="yyyy-MM-dd"
+                        disabled ></el-date-picker>
                         
                     </div>
                     <div class="form-item-date">
@@ -85,20 +75,21 @@
                         <el-date-picker 
                         type="date" 
                         placeholder="选择日期" 
-                        v-model="form.date2"
+                        v-model="form.endTime"
                         format="yyyy-MM-dd"
-                        value-format="yyyy-MM-dd" ></el-date-picker>
+                        value-format="yyyy-MM-dd"
+                        disabled ></el-date-picker>
                     </div>
                 </div>
                 <div class="form-item form-item-content">
                     <span>公告正文：</span>
                     <el-input
                      v-model="form.content"
+                     disabled
                      type="textarea">
                     </el-input>
                 </div>
             </el-form>
-            <el-button type="primary" @click="handleSend">发送</el-button>
         </el-dialog>
     </div>
 </template>
@@ -111,104 +102,104 @@ export default {
             tableData:[{
                 id:'0101',
                 title:'公告',
-                date:'11',
+                startTime:'11',
                 content:'11'
             },{
                 id:'0102',
                 title:'公告',
-                date:'11',
+                startTime:'11',
                 content:'11'
             }],
             fenye:{
                 total:400, //共有数据多少条
                 pageNum:1,
-                pageSize:100, //每页显示的条数
-                pageSizes:[100,30,40,50] //选择每页显示多少条
+                pageSize:2, //每页显示的条数
+                pageSizes:[2,20,30,40] //选择每页显示多少条
             },
             dialogTableVisible:false,
+            dialogTableEdit:false,
+            dialogShow:false,
             form:{
                 title:'',
-                date1:'',
-                date2:'',
+                startTime:'',
+                endTime:'',
                 content:''
             },
+            id:'',
             selectedIDs:[],
             multipleSelection:[],
-            title:"添加公告"
+            loading:true
         }
     },
     methods:{
-        handleAdd(){
-            let $this = this;
-            $this.form.title=''
-            $this.form.date1=''
-            $this.form.date2=''
-            $this.form.content=''
-            this.dialogTableVisible = true
-        },
-        handleEdit(){
-            let $this = this;
-            if($this.selectedIDs.length != 1){
-                $this.$alert('请选择一条数据进行修改', '提示', {
-                    confirmButtonText: '确定',
-                    type:'warning',
-                }).then(() => {
-                }).catch(() => {
-                })
-            }else{
-                $this.title = '修改公告'
-                $this.handleAdd();
-                $this.form.title=$this.multipleSelection[0].title
-                $this.form.date1=$this.multipleSelection[0].date
-                $this.form.date2=$this.multipleSelection[0].date
-                $this.form.content=$this.multipleSelection[0].content
-            }
-        },
-        handleDelete(){
-
+        // 查看公告
+        handleShow(id){
+            this.tableData.map((item) => {
+                if(id == item.id){
+                    this.form = item
+                    this.dialogShow = true
+                    return;
+                }
+            })
         },
         handleSelectionChange(val) {
             this.multipleSelection = val;
-            let ids = []
+            var ids = []
             this.multipleSelection.map((item)=> {
                 ids.push(item.id)
             })
             this.selectedIDs = ids
         },
+        // 分页
         handleCurrentChange:function(val){//val表示当前页
-            console.log(val)
+            this.fenye.pageNum = val
+            this.getTableData(this.fenye.pageNum,this.fenye.pageSize)
         },
         handleSizeChange(val){//val表示每页展示的条数
-            console.log(val)
+            this.fenye.pageSize = val
+            this.getTableData(this.fenye.pageNum,this.fenye.pageSize)
         },
-        handleSend(){//添加发送
-            let $this = this;
-            $this.title = "添加公告"
-            for(let i in $this.form){
-                if($this.form[i] == '' || $this.form[i] == null){
-                    $this.$alert('请把信息填写完整', '提示', {
-                        confirmButtonText: '确定',
-                        type:'warning',
-                    }).then(() => {
-                    }).catch(() => {
-                    })
-                    return;
+        handleTableFresh(){
+            document.querySelector(".first-pager").click()
+            this.getTableData(this.fenye.pageNum,this.fenye.pageSize)
+        },
+        getTableData(page,total){
+            let _this = this;
+            this.axios({
+                method:'POST',
+                url:'http://192.168.0.37:8087/notification/query',
+                params:{
+                    page:page,
+                    total:total
                 }
-            }
-            let $form = {
-                id:'',
-                title:$this.form.title,
-                date:$this.form.date1,
-                content:$this.form.content
-            }
-            $this.tableData.push($form)
-            $this.dialogTableVisible = false
+            }).then(function(res){
+                console.log(res.data.data)
+                if(res.data.data == null){
+                    _this.tableData=[]
+                    _this.loading = false
+                }else{
+                    _this.loading = false
+                    _this.fenye.total = res.data.data.alltotal
+                    _this.tableData = res.data.data.data
+                }
+            }).catch(function(err){
+                console.log(err)
+            })
         }
+    },
+    mounted(){
+        this.getTableData(this.fenye.pageNum,this.fenye.pageSize)
     }
 }
 </script>
 <style lang="less">
 #noticeShow{
+    .showList{
+        min-height: 810px;
+        .el-table{
+            min-height: 750px;
+        }
+    }
     .el-dialog__wrapper{
         background-color: rgba(0,0,0,0.3);
         .el-dialog{
@@ -288,6 +279,11 @@ export default {
             span{
                 line-height: 1;
             }
+        }
+    }
+    .el-tooltip{
+        span{
+            cursor: pointer;
         }
     }
 }

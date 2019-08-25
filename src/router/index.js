@@ -36,9 +36,10 @@ import ProgressReportList from '@/components/daliyManage/progressReportList'
 import MattersReport from '@/components/daliyManage/mattersReport'
 import MattersReportList from '@/components/daliyManage/mattersReportList'
 
+// 课题验收
 import SubjectApply from '@/components/subjectAccept/subjectApply'
-import SubjectApplyList from '@/components/subjectAccept/subjectApplyList'
-import SubjectApplyShow from '@/components/subjectAccept/subjectApplyShow'
+// import SubjectApplyList from '@/components/subjectAccept/subjectApplyList'
+import SubjectApplyAdd from '@/components/subjectAccept/subjectApplyAdd'
 import SubjectNotAudited from '@/components/subjectAccept/subjectNotAudited'
 import SubjectNotAuditedList from '@/components/subjectAccept/subjectNotAuditedList'
 import SubjectAudited from '@/components/subjectAccept/subjectAudited'
@@ -47,19 +48,22 @@ import SubjectApplyEnd from '@/components/subjectAccept/subjectApplyEnd'
 import SubjectApplyEndList from '@/components/subjectAccept/subjectApplyEndList'
 import SubjectApplyEndShow from '@/components/subjectAccept/subjectApplyEndShow'
 
-import ResultsAdd from '@/components/resultsManage/resultsAdd'
-import ResultsAddList from '@/components/resultsManage/resultsAddList'
-import ResultsAddShow from '@/components/resultsManage/resultsAddShow'
-import ResultsLibrary from '@/components/resultsManage/resultsLibrary'
-import ResultsLibraryList from '@/components/resultsManage/resultsLibraryList'
-import ResultsLibraryShow from '@/components/resultsManage/resultsLibraryShow'
+// 成果管理
+// import ResultsAdd from '@/components/resultsManage/resultsAdd'
+// import ResultsAddList from '@/components/resultsManage/resultsAddList'
+// import ResultsAddShow from '@/components/resultsManage/resultsAddShow'
+// import ResultsLibrary from '@/components/resultsManage/resultsLibrary'
+// import ResultsLibraryList from '@/components/resultsManage/resultsLibraryList'
+// import ResultsLibraryShow from '@/components/resultsManage/resultsLibraryShow'
 
-import ExpertAdd from '@/components/expertManage/expertAdd'
-import ExpertAddList from '@/components/expertManage/expertAddList'
-import ExpertLibrary from '@/components/expertManage/expertLibrary'
-import ExpertLibraryList from '@/components/expertManage/expertLibraryList'
-import ExpertLibraryShow from '@/components/expertManage/expertLibraryShow'
+// 专家管理
+// import ExpertAdd from '@/components/expertManage/expertAdd'
+// import ExpertAddList from '@/components/expertManage/expertAddList'
+// import ExpertLibrary from '@/components/expertManage/expertLibrary'
+// import ExpertLibraryList from '@/components/expertManage/expertLibraryList'
+// import ExpertLibraryShow from '@/components/expertManage/expertLibraryShow'
 
+// 通知公告
 import Notice from '@/components/notice/notice'
 import NoticeShow from '@/components/notice/noticeShow'
 
@@ -185,20 +189,16 @@ export default new Router({
 					component: MattersReportList
 				}],
 				redirect: '/index/mattersReport/MattersReportList'
-			},{
+			},{//课题验收
 				path:'/index/subjectApply',
 				name:'SubjectApply',
 				component:SubjectApply,
 				children:[{
-					path:'/index/subjectApply/subjectApplyList',
-					name:'SubjectApplyList',
-					component:SubjectApplyList,
-				},{
-					path:'/index/subjectApply/subjectApplyShow',
-					name:'SubjectApplyShow',
-					component:SubjectApplyShow
+					path:'/index/subjectApply/subjectApplyAdd',
+					name:'SubjectApplyAdd',
+					component:SubjectApplyAdd
 				}],
-				redirect:'/index/subjectApply/subjectApplyList'
+				redirect:'/index/subjectApply/subjectApplyAdd'
 			},
 			{
 				path:'/index/subjectNotAudited',
@@ -237,63 +237,7 @@ export default new Router({
 				}],
 				redirect:'/index/subjectApplyEnd/subjectApplyEndList'
 			},
-			{
-				path:'/index/resultsAdd',
-				name:'ResultsAdd',
-				component:ResultsAdd,
-				children:[{
-					path:'/index/resultsAdd/resultsAddList',
-					name:'ResultsAddList',
-					component:ResultsAddList
-				},{
-					path:'/index/resultsAdd/resultsAddShow',
-					name:'ResultsAddShow',
-					component:ResultsAddShow
-				}],
-				redirect:'/index/resultsAdd/resultsAddList'
-			},
-			{
-				path:'/index/resultsLibrary',
-				name:'ResultsLibrary',
-				component:ResultsLibrary,
-				children:[{
-					path:'/index/resultsLibrary/resultsLibraryList',
-					name:'ResultsLibraryList',
-					component:ResultsLibraryList
-				},{
-					path:'/index/resultsLibrary/resultsLibraryShow',
-					name:'ResultsLibraryShow',
-					component:ResultsLibraryShow
-				}],
-				redirect:'/index/resultsLibrary/resultsLibraryList'
-			},
-			{
-				path:'/index/expertAdd',
-				name:'ExpertAdd',
-				component:ExpertAdd,
-				children:[{
-					path:'/index/expertAdd/expertAddList',
-					name:'ExpertAddList',
-					component:ExpertAddList
-				}],
-				redirect:'/index/expertAdd/expertAddList'
-			},
-			{
-				path:'/index/expertLibrary',
-				name:'ExpertLibrary',
-				component:ExpertLibrary,
-				children:[{
-					path:'/index/expertLibrary/expertLibraryList',
-					name:'ExpertLibraryList',
-					component:ExpertLibraryList
-				},{
-					path:'/index/expertLibrary/expertLibraryShow',
-					name:'ExpertLibraryShow',
-					component:ExpertLibraryShow
-				}],
-				redirect:'/index/expertLibrary/expertLibraryList'
-			},
-			{
+			{//通知公告
 				path:'/index/notice',
 				name:'Notice',
 				component:Notice,

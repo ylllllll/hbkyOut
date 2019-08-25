@@ -121,26 +121,6 @@
 						name: '验收结束'
 					}]
 				},{
-					id: '15',
-					name: '成果管理',
-					children: [{
-						id: '151',
-						name: '成果新增'
-					},{
-						id: '152',
-						name: '成果库'
-					}]
-				},{
-					id: '16',
-					name: '专家管理',
-					children: [{
-						id: '161',
-						name: '专家新增'
-					},{
-						id: '162',
-						name: '专家库'
-					}]
-				},{
 					id: '17',
 					name: '通知公告',
 					children: [{
@@ -176,12 +156,6 @@
 						'/index/subjectNotAudited',
 						'/index/subjectAudited',
 						'/index/subjectApplyEnd'
-					],[
-						'/index/resultsAdd',
-						'/index/resultsLibrary',
-					],[
-						'/index/expertAdd',
-						'/index/expertLibrary',
 					],[
 						'/index/notice'
 					],[
@@ -352,7 +326,9 @@
 					type: 'warning'
 				}).then(() => {
 					this.$router.push("/");
-				}).catch(() => {});
+				}).catch(() => {
+
+				})
 			}
 		},
 		mounted() {

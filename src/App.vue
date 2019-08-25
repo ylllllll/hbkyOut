@@ -261,6 +261,12 @@ export default {
                     cursor: auto;
                 }
             }
-        }
+		}
+		.el-input.is-disabled .el-input__inner,
+		.el-textarea.is-disabled .el-textarea__inner{
+			cursor: auto;
+			background-color: #fff;
+			color: #000;
+		}
   	}
 </style>
