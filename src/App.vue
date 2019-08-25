@@ -276,6 +276,9 @@ export default {
 		.el-radio__inner:hover {
 			border-color: #0abd90;
 		}
+		.el-radio__inner {
+			border-color: #0abd90;
+		}
 		.el-radio__label {
 			margin-left: 5px;
 		}

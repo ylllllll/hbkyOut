@@ -59,16 +59,6 @@
                     label="中期检查名称"
                     :show-overflow-tooltip="true"
                     align="center">
-                    <template slot-scope="scope">
-                        <router-link :to="{
-                            name: 'MidTermShow',
-                            params: {
-                                id: scope.row.id
-                            }
-                        }"> 
-                        {{ scope.row.name }}
-                        </router-link>
-                    </template>
                 </el-table-column>
                 <el-table-column
                     prop="time"
@@ -86,7 +76,7 @@
                 </el-table-column>
                 <el-table-column
                     prop="state"
-                    label="是否完成"
+                    label="操作"
                     align="center">
                     <template slot-scope="scope">
                         <el-button @click="handleUploadEnclosure(scope.row.id)" v-show="scope.row.state == '1'">上传附件</el-button>
@@ -169,9 +159,8 @@
             // },
             handleUploadEnclosure(val) {
                 this.$router.push({
-                    name: 'MidTermShow',
+                    name: 'MidTermAdd',
                     params: {
-                        state: 'upload',
                         id: val
                     }
                 })

@@ -31,7 +31,10 @@ import ContractQueryShow from '@/components/contractManage/contractQueryShow'
 import MidTerm from '@/components/daliyManage/midTerm'
 import MidTermList from '@/components/daliyManage/midTermList'
 import MidTermAdd from '@/components/daliyManage/midTermAdd'
-import MidTermShow from '@/components/daliyManage/midTermShow'
+import MidTermAddForm1 from '@/components/daliyManage/midTermAddForm1'
+import MidTermAddForm2 from '@/components/daliyManage/midTermAddForm2'
+
+
 import ProgressReport from '@/components/daliyManage/progressReport'
 import ProgressReportList from '@/components/daliyManage/progressReportList'
 import ProgressReportShow from '@/components/daliyManage/progressReportShow'
@@ -166,11 +169,17 @@ export default new Router({
 				},{
 					path: '/index/midTerm/midTermAdd',
 					name: 'MidTermAdd',
-					component: MidTermAdd
-				},{
-					path: '/index/midTerm/midTermShow',
-					name: 'MidTermShow',
-					component: MidTermShow
+					component: MidTermAdd,
+					children: [{
+						path: '/index/midTerm/midTermAdd/midTermAddForm1',
+						name: 'MidTermAddForm1',
+						component: MidTermAddForm1
+					},{
+						path: '/index/midTerm/midTermAdd/midTermAddForm2',
+						name: 'MidTermAddForm2',
+						component: MidTermAddForm2
+					}],
+					redirect: '/index/midTerm/midTermAdd/midTermAddForm1'
 				}],
 				redirect: '/index/midTerm/midTermList'
 			},{ // 进展情况报告
