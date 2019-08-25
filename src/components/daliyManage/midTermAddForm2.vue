@@ -109,7 +109,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr style="height:50px;" class="my_tr">
+                        <tr style="height:50px;" id="my_tr">
                             <td></td>
                             <td>总经费</td>
                             <td colspan="2">省环保课题经费</td>
@@ -146,10 +146,10 @@
                                 <el-input v-model="showForm.projectName"></el-input>
                             </td>
                         </tr>
-                        <tr style="height:50px;" class="my_tr2">
+                        <tr style="height:50px;" id="my_tr2">
                             <td colspan="6">省环保课题经费使用情况：目前已支出111万元，具体如下（对照合同支出范围填写）：</td>
                         </tr>
-                        <tr style="height:50px;" class="my_tr">
+                        <tr style="height:50px;" id="my_tr">
                             <td>设备费</td>
                             <td>材料费</td>
                             <td>测试化验加工费</td>
@@ -181,7 +181,7 @@
                                 <el-input v-model="showForm.projectName"></el-input>
                             </td>
                         </tr>
-                        <tr style="height:50px;" class="my_tr">
+                        <tr style="height:50px;" id="my_tr">
                             <td colspan="2">出版/文献/信息传播/知识产权事务费</td>
                             <td>劳务费（或管理及人员费中人员费）</td>
                             <td>其他费用</td>
@@ -229,7 +229,7 @@
                                 <el-input v-model="showForm.projectName"></el-input>
                             </td>
                         </tr>
-                        <tr class="my_tr3">
+                        <tr id="my_tr3">
                             <td>创汇<br>（万美元）</td>
                             <td>
                                 <el-input v-model="showForm.projectName"></el-input>
@@ -243,7 +243,7 @@
                                 <el-input v-model="showForm.projectName"></el-input>
                             </td>
                         </tr>
-                        <tr class="my_tr3">
+                        <tr id="my_tr3">
                             <td>新材料<br>（件）</td>
                             <td>
                                 <el-input v-model="showForm.projectName"></el-input>
@@ -272,7 +272,7 @@
                                 <el-input v-model="showForm.projectName"></el-input>
                             </td>
                         </tr>
-                        <tr class="my_tr3">
+                        <tr id="my_tr3">
                             <td>国外专利</td>
                             <td>
                                 <el-input v-model="showForm.projectName"></el-input>
@@ -286,7 +286,7 @@
                                 <el-input v-model="showForm.projectName"></el-input>
                             </td>
                         </tr>
-                        <tr class="my_tr3">
+                        <tr id="my_tr3">
                             <td>SCI索引<br>（篇）</td>
                             <td>
                                 <el-input v-model="showForm.projectName"></el-input>
@@ -300,7 +300,7 @@
                                 <el-input v-model="showForm.projectName"></el-input>
                             </td>
                         </tr>
-                        <tr class="my_tr3">
+                        <tr id="my_tr3">
                             <td>研究（咨询）<br>报告（份）</td>
                             <td>
                                 <el-input v-model="showForm.projectName"></el-input>
@@ -314,7 +314,6 @@
                                 <el-input v-model="showForm.projectName"></el-input>
                             </td>
                         </tr>
-
                         <tr>
                             <td rowspan="2" style="text-align:center;">人才培养情况（人）</td>
                             <td>高级人才<br>（人）</td>
@@ -323,21 +322,79 @@
                             </td>
                             <td colspan="4"></td>
                         </tr>
-                        <tr class="my_tr3">
+                        <tr id="my_tr3">
                             <td>培养研究生人数</td>
                             <td>
                                 <el-input v-model="showForm.projectName"></el-input>
                             </td>
                             <td colspan="4"></td>
                         </tr>
-                        
-
-
-                        
+                    </tbody>
+                </table>
+                <table class="form_table my_table" :model="showForm">
+                    <thead>
+                        <tr>
+                            <th colspan="7" class="small_title">四、课题实施情况说明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="my_tr4">
+                            <td>
+                                <p>1、项目实际进度情况（包括经济、技术等指标完成情况，重点介绍课题进展、重大突破及工作成效等）（限300字以内）</p>
+                                <el-input 
+                                    v-model="showForm.remark"
+                                    :autosize="{ minRows:5 }"
+                                    type="textarea"
+                                    maxlength="300">
+                                </el-input>
+                            </td>
+                        </tr>
+                        <tr id="my_tr4">
+                            <td>
+                                <p>2、课题资金使用情况（包括资金落实、使用及存在问题）（限200字以内）</p>
+                                <el-input 
+                                    v-model="showForm.remark"
+                                    :autosize="{ minRows:5 }"
+                                    type="textarea"
+                                    maxlength="200">
+                                </el-input>
+                            </td>
+                        </tr>
+                        <tr id="my_tr4">
+                            <td>
+                                <p>3、项目执行过程中存在的问题、解决措施及有关建议（限200字以内）</p>
+                                <el-input 
+                                    v-model="showForm.remark"
+                                    :autosize="{ minRows:5 }"
+                                    type="textarea"
+                                    maxlength="200">
+                                </el-input>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="form_table my_table" :model="showForm">
+                    <thead>
+                        <tr>
+                            <th colspan="7" class="small_title">五、项目承担单位审核意见（主要对项目填写情况是否属实作出评价）</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="my_tr4">
+                            <td>
+                                <el-input 
+                                    v-model="showForm.remark"
+                                    :autosize="{ minRows:5 }"
+                                    type="textarea"
+                                    maxlength="300">
+                                </el-input>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </el-form>
             <div class="btn_group">
+                <el-button @click="handleSubmit">提交</el-button>
                 <el-button @click="handleBack">返回</el-button>
             </div>
         </div>
@@ -374,7 +431,25 @@
                 tableData: []
             }
         },
-        methods: { 
+        methods: {
+            handleSubmit() {
+                const loading = this.$loading({
+                    lock: true,
+                    text: '请稍后...',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(255,255,255,0.7)'
+                });
+                setTimeout(() => {
+                    loading.close();
+                    this.$alert('审批通过','提示', {
+                        confirmButtonText: '确定',
+                        type: 'success',
+                        callback: action => {
+                            this.$router.go(-1);
+                        }
+                    });
+                },2000);
+            },
             handleBack() {
                 this.$router.go(-1);
             }
@@ -424,9 +499,6 @@
                                     width: 31.8%;
                                 }
                             }
-                            .el-textarea {
-                                padding: 10px;
-                            }
                             .el-checkbox-group {
                                 padding: 8px 0;
                                 display: flex;
@@ -456,24 +528,32 @@
                 td {
                     width: 14.2857% !important;
                 }
-                .my_tr {
+                #my_tr {
                     td {
-                        text-align: center !important;
-                        background-color: #e5f3ff !important;
+                        text-align: center;
+                        background-color: #e5f3ff;
                     } 
                 }
-                .my_tr2 {
+                #my_tr2 {
                     td {
-                        text-align: left !important;
-                        background-color: #fff !important;
+                        text-align: left;
+                        background-color: #fff;
                         padding-left: 10px;
                     }
                 }
-                .my_tr3 {
+                #my_tr3 {
                     td {
-                        text-align: center !important;
-                        background-color: #fff !important;
+                        text-align: center;
+                        background-color: #fff;
                     }
+                }
+                #my_tr4 {
+                    td {
+                        background-color: #fff;
+                        text-align: left;
+                        padding: 10px;
+                    }
+                    
                 }
             }
         }

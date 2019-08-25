@@ -117,8 +117,6 @@
                                 </el-input>
                             </td>
                         </tr>
-                        
-
                         <tr style="height:50px;">
                             <td>评价等级：</td>
                             <td colspan="3" class="radio_group">
@@ -128,12 +126,11 @@
                                 <el-radio v-model="radio6" label="4">较差</el-radio>
                             </td>
                         </tr>
-                        
-                        
                     </tbody>
                 </table>
             </el-form>
             <div class="btn_group">
+                <el-button @click="handleSubmit">提交</el-button>
                 <el-button @click="handleBack">返回</el-button>
             </div>
         </div>
@@ -169,7 +166,25 @@
                 tableData: []
             }
         },
-        methods: { 
+        methods: {
+            handleSubmit() {
+                const loading = this.$loading({
+                    lock: true,
+                    text: '请稍后...',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(255,255,255,0.7)'
+                });
+                setTimeout(() => {
+                    loading.close();
+                    this.$alert('审批通过','提示', {
+                        confirmButtonText: '确定',
+                        type: 'success',
+                        callback: action => {
+                            this.$router.go(-1);
+                        }
+                    });
+                },2000);
+            },
             handleBack() {
                 this.$router.go(-1);
             }

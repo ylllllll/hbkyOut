@@ -113,7 +113,7 @@
                     pageNum: 1,
                     pageSize: 10
                 },
-                loading: false,
+                loading: true,
                 tableData:[],
                 fenye:{
                     total:400, //共有数据多少条
