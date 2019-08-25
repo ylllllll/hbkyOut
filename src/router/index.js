@@ -31,10 +31,15 @@ import ContractQueryShow from '@/components/contractManage/contractQueryShow'
 import MidTerm from '@/components/daliyManage/midTerm'
 import MidTermList from '@/components/daliyManage/midTermList'
 import MidTermAdd from '@/components/daliyManage/midTermAdd'
+import MidTermShow from '@/components/daliyManage/midTermShow'
 import ProgressReport from '@/components/daliyManage/progressReport'
 import ProgressReportList from '@/components/daliyManage/progressReportList'
+import ProgressReportShow from '@/components/daliyManage/progressReportShow'
+import ProgressReportAdd from '@/components/daliyManage/progressReportAdd'
 import MattersReport from '@/components/daliyManage/mattersReport'
 import MattersReportList from '@/components/daliyManage/mattersReportList'
+import MattersReportShow from '@/components/daliyManage/mattersReportShow'
+import MattersReportAdd from '@/components/daliyManage/mattersReportAdd'
 
 import SubjectApply from '@/components/subjectAccept/subjectApply'
 import SubjectApplyList from '@/components/subjectAccept/subjectApplyList'
@@ -150,8 +155,7 @@ export default new Router({
 					component: ContractQueryShow
 				}],
 				redirect: '/index/contractQuery/contractQueryList'
-			},
-			{	// 中期检查
+			},{	// 中期检查
 				path: '/index/midTerm',
 				name: 'MidTerm',
 				component: MidTerm,
@@ -163,6 +167,10 @@ export default new Router({
 					path: '/index/midTerm/midTermAdd',
 					name: 'MidTermAdd',
 					component: MidTermAdd
+				},{
+					path: '/index/midTerm/midTermShow',
+					name: 'MidTermShow',
+					component: MidTermShow
 				}],
 				redirect: '/index/midTerm/midTermList'
 			},{ // 进展情况报告
@@ -173,8 +181,16 @@ export default new Router({
 					path: '/index/progressReport/progressReportList',
 					name: 'ProgressReportList',
 					component: ProgressReportList
+				},{
+					path: '/index/progressReport/progressReportShow',
+					name: 'ProgressReportShow',
+					component: ProgressReportShow
+				},{
+					path: '/index/progressReport/progressReportAdd',
+					name: 'ProgressReportAdd',
+					component: ProgressReportAdd
 				}],
-				redirect: '/index/progressReport/ProgressReportList'
+				redirect: '/index/progressReport/progressReportList'
 			},{ // 重大事项报告
 				path: '/index/mattersReport',
 				name: 'MattersReport',
@@ -183,8 +199,16 @@ export default new Router({
 					path: '/index/mattersReport/mattersReportList',
 					name: 'MattersReportList',
 					component: MattersReportList
+				},{
+					path: '/index/mattersReport/mattersReportShow',
+					name: 'MattersReportShow',
+					component: MattersReportShow
+				},{
+					path: '/index/mattersReport/mattersReportAdd',
+					name: 'MattersReportAdd',
+					component: MattersReportAdd
 				}],
-				redirect: '/index/mattersReport/MattersReportList'
+				redirect: '/index/mattersReport/mattersReportList'
 			},{
 				path:'/index/subjectApply',
 				name:'SubjectApply',

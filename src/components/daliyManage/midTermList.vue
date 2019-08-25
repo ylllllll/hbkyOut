@@ -9,20 +9,20 @@
                 <el-form-item label="进度执行情况：">
                     <el-select v-model="queryForm.region" placeholder="请选择">
                         <el-option
-                                v-for="item in queryForm.reginOptions"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
+                            v-for="item in queryForm.reginOptions"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
                         </el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="技术、经济等考核指标：">
                     <el-select v-model="queryForm.category">
                         <el-option 
-                                v-for="item in queryForm.categoryOptions"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
+                            v-for="item in queryForm.categoryOptions"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -34,8 +34,8 @@
         </div>
 
         <!-- 按钮 -->
-        <el-button type="primary" size="mini" @click="handleLaunchInspect">发起检查</el-button>
-        <el-button type="primary" size="mini" @click="handleUploadEnclosure">上传附件</el-button>
+        <!-- <el-button @click="handleLaunchInspect">发起检查</el-button> -->
+        <!-- <el-button @click="handleUploadEnclosure">上传附件</el-button> -->
 
         <!-- 展示列表 -->
         <div class="showList">
@@ -44,12 +44,11 @@
                 ref="multipleTable"
                 :data="tableData"
                 tooltip-effect="dark"
-                style="width: 100%"
-                @selection-change="handleSelectionChange">
-                <el-table-column
+                style="width: 100%">
+                <!-- <el-table-column
                     type="selection"
                     align="center">
-                </el-table-column>
+                </el-table-column> -->
                 <el-table-column
                     type="index"
                     label="序号"
@@ -62,7 +61,7 @@
                     align="center">
                     <template slot-scope="scope">
                         <router-link :to="{
-                            name: 'GuideSummaryShow',
+                            name: 'MidTermShow',
                             params: {
                                 id: scope.row.id
                             }
@@ -85,6 +84,14 @@
                         <span class="red" v-show="scope.row.state == '1'">未全部上传</span>
                     </template>
                 </el-table-column>
+                <el-table-column
+                    prop="state"
+                    label="是否完成"
+                    align="center">
+                    <template slot-scope="scope">
+                        <el-button @click="handleUploadEnclosure(scope.row.id)" v-show="scope.row.state == '1'">上传附件</el-button>
+                    </template>
+                </el-table-column>
             </el-table>
             <!-- 分页 -->
             <pages
@@ -104,7 +111,6 @@
         name:'midTermList',
         data() {
             return {
-                selectedIDs: [],
                 queryForm: {
                     name:'',
                     unit:'',
@@ -152,39 +158,32 @@
                 fenye: {
                     total: 400, //共有数据多少条
                     pageNum: 1,
-                    pageSize: 100, //每页显示的条数
-                    pageSizes: [100,30,40,50] //选择每页显示多少条
+                    pageSize: 10, //每页显示的条数
+                    pageSizes: [10,20,30,40,50] //选择每页显示多少条
                 }
             }
         },
         methods: {
-            handleLaunchInspect() {
-                this.$router.push("/index/midTerm/midTermAdd");
-            },
-            handleUploadEnclosure() {
-                if(this.selectedIDs.length != 1) {
-                    this.$alert('请选择一条数据', '提示',{
-                        confirmButtonText: '确定',
-                        type: 'warning'
-                    }).then(() => {}); //一定别忘了这个
-                }else {
-                    // this.$router.push({
-                    //     name: 'BiddingRecordShow',
-                    //     params: {
-                    //         state: 'notShowPage',
-                    //         id: this.selectedIDs[0]
-                    //     }
-                    // })
-                }
-            },
-            handleSelectionChange(val) {
-                this.multipleSelection = val;
-                let ids = [];
-                this.multipleSelection.map((item)=> {
-                    ids.push(item.id);
+            // handleLaunchInspect() {
+            //     this.$router.push("/index/midTerm/midTermAdd");
+            // },
+            handleUploadEnclosure(val) {
+                this.$router.push({
+                    name: 'MidTermShow',
+                    params: {
+                        state: 'upload',
+                        id: val
+                    }
                 })
-                this.selectedIDs = ids;
             },
+            // handleSelectionChange(val) {
+            //     this.multipleSelection = val;
+            //     let ids = [];
+            //     this.multipleSelection.map((item)=> {
+            //         ids.push(item.id);
+            //     })
+            //     this.selectedIDs = ids;
+            // },
             handleCurrentChange:function(val) {//val表示当前页
                 console.log(val)
             },
@@ -206,15 +205,19 @@
             margin: 10px auto;
         }
         .showList {
-            min-height: 640px;;
+            min-height: 680px;;
             padding: 10px;
+            margin-top: 10px;
             .el-table {
-                min-height: 590px;
+                min-height: 630px;
                 .green {
                     color: #09bd90;
                 }
                 .red {
                     color: #fe0100;
+                }
+                .el-button{
+                    margin: 0;
                 }
             }
             .pages {

@@ -3,34 +3,20 @@
         <!-- 搜索 -->
         <div class="queryForm">
             <el-form ref="queryForm" :model="queryForm" >
-                <el-form-item label="指南建议名称：" >
+                <el-form-item label="课程类别：" >
+                    <el-input v-model="queryForm.category"></el-input>
+                </el-form-item>
+                <el-form-item label="课程名称：">
                     <el-input v-model="queryForm.name"></el-input>
                 </el-form-item>
-                <el-form-item label="所属领域：">
-                    <el-select v-model="queryForm.region" placeholder="请选择">
-                        <el-option
-                            v-for="item in queryForm.reginOptions"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
-                        </el-option>
-                    </el-select>
+                <el-form-item label="课题联系人：">
+                     <el-input v-model="queryForm.contacts"></el-input>
                 </el-form-item>
-                <el-form-item label="所属类别：">
-                    <el-select v-model="queryForm.category">
-                        <el-option 
-                            v-for="item in queryForm.categoryOptions"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="填报单位：" >
+                <el-form-item label="承担单位：" >
                     <el-input v-model="queryForm.unit"></el-input>
                 </el-form-item>
-                <el-form-item label="填报联系人：" >
-                    <el-input v-model="queryForm.contacts"></el-input>
+                <el-form-item label="课题主管部门：" >
+                    <el-input v-model="queryForm.department"></el-input>
                 </el-form-item>
                 <el-form-item label="联系人手机：" >
                     <el-input v-model="queryForm.phone"></el-input>
@@ -59,53 +45,39 @@
                 </el-table-column>
                 <el-table-column
                     prop="name"
-                    label="指南建议名称"
+                    label="课题类别"
                     :show-overflow-tooltip="true"
                     align="center">
-                 <template slot-scope="scope">
-                    <!-- <router-link :to="{
-                            name: 'GuideCollectShow',
-                            params: {
-                                id: scope.row.id
-                            }
-                        }">  -->
-                        {{ scope.row.name }}
-                    <!-- </router-link> -->
-                </template>
                 </el-table-column>
                 <el-table-column
                     prop="region"
-                    label="所属领域"
+                    label="课题名称"
                     align="center">
                 </el-table-column>
                 <el-table-column
                     prop="category"
-                    label="所属类别"
+                    min-width="115"
+                    label="课题的目标和主要研究内容"
                     align="center">
                 </el-table-column>
                 <el-table-column
                     prop="funds"
-                    label="研究经费"
+                    label="课题联系人"
                     align="center">
                 </el-table-column>
                 <el-table-column
                     prop="date"
-                    label="研究期限"
+                    label="联系人手机"
                     align="center">
                 </el-table-column>
                 <el-table-column
                     prop="unit"
-                    label="填报单位"
+                    label="承担单位"
                     align="center">
                 </el-table-column>
                 <el-table-column
                     prop="contacts"
-                    label="填报联系人"
-                    align="center">
-                </el-table-column>
-                <el-table-column
-                    prop="phone"
-                    label="联系人手机"
+                    label="课题主管部门"
                     align="center">
                 </el-table-column>
             </el-table>
@@ -133,21 +105,7 @@
                     unit:'',
                     contacts:'',
                     phone:'',
-                    reginOptions:[{
-                        value:'0',
-                        label:'领域1'
-                    },{
-                        value:'1',
-                        label:'领域2'
-                    }],
                     region:'',
-                    categoryOptions:[{
-                        value:'0',
-                        label:'类别1'
-                    },{
-                        value:'1',
-                        label:'类别2'
-                    }],
                     category:''
                 },
                 tableData:[{
@@ -242,12 +200,12 @@
                     phone:"17856567788"
                 }],
                 multipleSelection: [],
-                currentPage:4,
+                currentPage: 4,
                 fenye: {
                     total:400, //共有数据多少条
                     pageNum:1,
-                    pageSize:100, //每页显示的条数
-                    pageSizes:[100,30,40,50] //选择每页显示多少条
+                    pageSize:10, //每页显示的条数
+                    pageSizes:[10,20,30,40,50] //选择每页显示多少条
                 }
             }
         },
@@ -272,78 +230,3 @@
 </script>
 
 <style lang="less">
-    #midTermMessageBox{
-        background-color: #edf1f4;
-        * {
-           font-size: 14px; 
-        }
-        .queryForm {
-            .el-form {
-                padding: 5px 0 0 0;
-                height: 90px;
-                .el-form-item {
-                    margin: 5px 0;
-                    label {
-                        width: 110px !important;
-                    }
-                }
-            }
-            .el-button {
-                bottom: 10px;
-                right: 35px;
-            }
-        }
-        .showList {
-            position: relative;
-            height: 360px;
-            min-height: 0 !important;
-            background-color: #fff;
-            margin-top: 5px;
-            padding: 5px;
-            
-        }
-        .el-table {
-            min-height: 0 !important;
-            padding-bottom: 0 !important;
-            .has-gutter {
-                width: 99%;
-            }
-            .el-table__body-wrapper {
-                height: 315px;
-                overflow-y: auto;
-            }
-            table {
-                width: auto !important;
-            }
-            .el-table--scrollable-x,.el-table__body-wrapper{
-                overflow-x: hidden;
-            }
-            &::before {
-                background-color: #fff;
-                height: 0;
-            }
-            td,th {
-                padding: 6px 0;
-            }
-            td,th {
-                border-left: 1px solid #EBEEF5;
-                &:first-child{
-                    border-right: 0;
-                }
-            }
-        }
-        .pages{
-            // transform: scale(0.9);
-            padding-top: 5px;
-            border-top: 1px solid #d9d9d9;
-            .el-button{
-                background-color: transparent;
-                border: 0;
-                margin: 0;
-                span{
-                    line-height: 1;
-                }
-            }
-        }
-    }
-</style>
