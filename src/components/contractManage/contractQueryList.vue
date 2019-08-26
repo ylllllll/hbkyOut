@@ -4,89 +4,89 @@
         <div class="queryForm">
             <el-form ref="queryForm" :model="queryForm" >
                 <el-form-item label="课程类别：" >
-                    <el-input v-model="queryForm.category"></el-input>
+                    <el-input v-model="queryForm.subjectCategory"></el-input>
                 </el-form-item>
                 <el-form-item label="课程名称：">
-                    <el-input v-model="queryForm.name"></el-input>
+                    <el-input v-model="queryForm.subjectName"></el-input>
                 </el-form-item>
                 <el-form-item label="课题联系人：">
-                     <el-input v-model="queryForm.contacts"></el-input>
+                     <el-input v-model="queryForm.subjectContact"></el-input>
                 </el-form-item>
                 <el-form-item label="承担单位：" >
-                    <el-input v-model="queryForm.unit"></el-input>
+                    <el-input v-model="queryForm.commitmentUnit"></el-input>
                 </el-form-item>
                 <el-form-item label="课题主管部门：" >
-                    <el-input v-model="queryForm.department"></el-input>
+                    <el-input v-model="queryForm.subjectSupervisorDepartment"></el-input>
                 </el-form-item>
                 <el-form-item label="联系人手机：" >
-                    <el-input v-model="queryForm.phone"></el-input>
+                    <el-input v-model="queryForm.subjectContactPhone"></el-input>
                 </el-form-item>
             </el-form>
-            <el-button type="primary" >搜索</el-button>
+            <el-button @click="handleSearch">搜索</el-button>
         </div>
 
         <!-- 展示列表 -->
         <div class="showList">
             <!-- 表格 -->
             <el-table
+                v-loading="loading"
                 ref="multipleTable"
                 :data="tableData"
                 tooltip-effect="dark"
-                style="width: 100%"
-                @selection-change="handleSelectionChange">
-                <el-table-column
+                style="width: 100%">
+                <!-- <el-table-column
                     type="selection"
                     align="center">
-                </el-table-column>
+                </el-table-column> -->
                 <el-table-column
                     type="index"
                     label="序号"
                     align="center">
                 </el-table-column>
                 <el-table-column
-                    prop="category"
+                    prop="subjectCategory"
                     label="课题类别"
                     :show-overflow-tooltip="true"
                     align="center">
-                 <template slot-scope="scope">
-                    <router-link :to="{
-                            name: 'ContractQueryShow',
-                            params: {
-                                id: scope.row.id
-                            }
-                        }"> 
-                        {{ scope.row.category }}
-                    </router-link>
-                </template>
+                    <template slot-scope="scope">
+                        <router-link :to="{
+                                name: 'ContractQueryShow',
+                                params: {
+                                    id: scope.row.id
+                                }
+                            }"> 
+                            {{ scope.row.subjectCategory }}
+                        </router-link>
+                    </template>
                 </el-table-column>
                 <el-table-column
-                prop="name"
+                prop="subjectName"
                 label="课题名称"
                 align="center">
                 </el-table-column>
                 <el-table-column
-                prop="contents"
+                prop="subjectObjectivesResearch"
                 min-width="135"
                 label="课题的目标和主要研究内容"
                 align="center">
                 </el-table-column>
                 <el-table-column
-                prop="contacts"
+                prop="subjectContact"
                 label="课题联系人"
                 align="center">
                 </el-table-column>
                 <el-table-column
-                prop="phone"
+                prop="subjectContactPhone"
                 label="联系人手机"
                 align="center">
                 </el-table-column>
                 <el-table-column
-                prop="unit"
+                prop="commitmentUnit"
                 label="承担单位"
                 align="center">
                 </el-table-column>
                 <el-table-column
-                prop="department"
+                prop="subjectSupervisorDepartment"
                 label="课题主管部门"
                 align="center">
                 </el-table-column>
@@ -99,71 +99,84 @@
                 :pageSizes="fenye.pageSizes"
                 @handleCurrentChangeNum="handleCurrentChange"
                 @handleSizeChangeNum="handleSizeChange"
-            ></pages>
+                @handleTableFreshNum="handleTableFresh">
+            </pages>
         </div>
     </div>
 </template>
 
 <script>
-export default {
-    name:'contractQueryList',
-    data(){
-        return {
-            queryForm:{
-                category:'',
-                name:'',
-                contacts:'',
-                unit:'',
-                department:'',
-                phone:'',
-                reginOptions:[{
-                    value:'0',
-                    label:'领域1'
-                },{
-                    value:'1',
-                    label:'领域2'
-                }],
-                region:'',
-                categoryOptions:[{
-                    value:'0',
-                    label:'类别1'
-                },{
-                    value:'1',
-                    label:'类别2'
-                }],
-                category:''
-            },
-            tableData:[{
-                id:'0101',
-                category:'类别1',
-                name:'名称1',
-                contents:'内容1',
-                contacts:'联系人1',
-                phone:'178****1234',
-                unit:'单位1',
-                department:'',
-                state:1
-            }],
-            fenye:{
-                total:400, //共有数据多少条
-                pageNum:1,
-                pageSize:100, //每页显示的条数
-                pageSizes:[100,30,40,50] //选择每页显示多少条
+    export default {
+        name:'contractQueryList',
+        data(){
+            return {
+                queryForm: {
+                    subjectCategory: '',
+                    subjectName: '',
+                    subjectContact: '',
+                    commitmentUnit: '',
+                    subjectSupervisorDepartment: '',
+                    subjectContactPhone:'',
+                    pageNum: 1,
+                    pageSize: 10
+                },
+                loading: true,
+                tableData: [],
+                currentPage: 4,
+                fenye: {
+                    total: 400, //共有数据多少条
+                    pageNum: 1,
+                    pageSize: 10, //每页显示的条数
+                    pageSizes: [10,20,30,40,50] //选择每页显示多少条
+                }
             }
-        }
-    },
-    methods:{
-        handleSelectionChange:function(){
-
         },
-        handleCurrentChange:function(val){
-            console.log('this is currentPange:' + val)
+        methods:{
+            handleCurrentChange(val) {              //val表示当前页
+                this.queryForm.pageNum = val;
+                this._axios();
+            },
+            handleSizeChange(val) {                 //val表示每页展示的条数
+                this.queryForm.pageSize = val;
+                this._axios();
+            },
+            handleTableFresh(){
+                this._axios;
+                document.querySelector(".first-pager").click();
+            },
+            // 请求列表数据
+            _axios() {
+                this.axios({
+                    url: 'http://192.168.0.80:8087/environment/contract/getAllInfo',
+                    method: 'get',
+                    params: this.queryForm
+                }).then((res) => {
+                    this.loading = false;
+                    let data = res.data.data;
+                    if(data.list.length == 0) {
+                        this.tableData = []; 
+                        this.$alert('没有查到相关信息','提示',{
+                            confirmButtonText: '确定',
+                            type: 'warning',
+                            callback: action => {}
+                        });
+                    }else {
+                        this.tableData = data.list;
+                        this.fenye.total = data.total;
+                    }
+                })
+            },
+            handleSearch() {
+                this.loading = true;
+                this.queryForm.pageNum = 1;
+                this._axios();
+                document.querySelector(".first-pager").click();
+            }
         },
-        handleSizeChange:function(val){
-            console.log('这是每页显示条数:' + val)
+        beforeMount() {
+            this._axios();
         }
     }
-}
 </script>
 
 <style lang="less">

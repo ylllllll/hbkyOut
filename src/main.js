@@ -19,6 +19,9 @@ import pages from '@/components/pagination/pages'
 //   return originalPush.call(this, location).catch(err => err)
 // }
 
+import validate from './js/validate.js'
+Vue.prototype.validate = validate;
+
 Vue.use(pages)
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'; 

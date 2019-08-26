@@ -208,7 +208,7 @@
                     id: this.paramsData.id
                 }
             }).then((res) => {
-                this.showForm = res.data.data[0];
+                this.showForm = res.data.data;
             })
         }
     }

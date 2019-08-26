@@ -32,9 +32,10 @@
                             <td colspan="3">
                                 <el-input 
                                     v-model="showForm.reasonBasis"
-                                    :autosize="{ minRows: 3}"
+                                    :autosize="{ minRows:3 }"
                                     type="textarea"
-                                    minlength="300">
+                                    maxlength="300"
+                                    placeholder="请输入少于300字">
                                 </el-input>
                             </td>
                         </tr>
@@ -43,9 +44,10 @@
                             <td colspan="3">
                                 <el-input 
                                     v-model="showForm.researchContentTechnology"
-                                    :autosize="{ minRows: 3}"
+                                    :autosize="{ minRows:3 }"
                                     type="textarea"
-                                    minlength="300">
+                                    maxlength="300"
+                                    placeholder="请输入少于300字">
                                 </el-input>
                             </td>
                         </tr>
@@ -54,9 +56,10 @@
                             <td colspan="3">
                                 <el-input 
                                     v-model="showForm.expectedTargetOutcome"
-                                    :autosize="{ minRows: 3}"
+                                    :autosize="{ minRows:3}"
                                     type="textarea"
-                                    minlength="200">
+                                    maxlength="200"
+                                    placeholder="请输入少于200字">
                                 </el-input>
                             </td>
                         </tr>
@@ -65,7 +68,7 @@
                             <td>
                                 <el-input v-model="showForm.fillUnit"></el-input>
                             </td>
-                            <td>单位负责人（签字）：</td>
+                            <td>单位负责人：</td>
                             <td>
                                 <el-input v-model="showForm.unitPrincipal"></el-input>
                             </td>
@@ -127,8 +130,8 @@
 <script>
     export default {
         name:'guideCollectAdd',
-        data(){
-            return{
+        data() {
+            return {
                 showForm: {
                     guideName: '',
                     domain: '',
@@ -145,12 +148,7 @@
                     demonstrationPoint: '',
                     provinceDomainMechanism: '',
                     fillContacts: '',
-                    contactPhone: '',
-                    // 没用凑接口的
-                    createTime: '',
-                    declarationStatus: '',
-                    isSelect: '',
-                    id: ''
+                    contactPhone: ''
                 },
                 refreshForm: {},
                 optGroup1: [],
@@ -159,6 +157,17 @@
         },
         methods:{
             handleSubmit() {
+                // 非空验证
+                for(let i in this.showForm) {
+                    if((this.showForm[i] + "").match(/^[ ]*$/)){
+                        this.$alert('请将表格填写完整','提示', {
+                            confirmButtonText: '确定',
+                            type: 'warning',
+                            callback: action => {}
+                        });
+                        return false;
+                    } 
+                }
                 const loading = this.$loading({
                     lock: true,
                     text: '请稍后...',
@@ -221,31 +230,37 @@
 </script>
 
 <style lang="less">
-#guideCollectAdd{
-    background-color: #fff;
-    .showForm{
-        table.form_table{
-            @media  screen and ( max-width: 1600px ) {
-                width: 72.4%;
-            }
-            tbody{
-                tr{
-                    td{
-                        &:first-child{
-                            @media screen and ( min-width: 1500px ) and ( max-width: 1850px ){
-                                width: 30.8%;
+    #guideCollectAdd{
+        background-color: #fff;
+        .showForm{
+            table.form_table{
+                @media  screen and ( max-width: 1600px ) {
+                    width: 72.4%;
+                }
+                tbody{
+                    tr{
+                        td{
+                            &:first-child{
+                                @media screen and ( min-width: 1500px ) and ( max-width: 1850px ){
+                                    width: 30.8%;
+                                }
+                                @media  screen and ( max-width: 1500px ) {
+                                    width: 31.8%;
+                                }
                             }
-                            @media  screen and ( max-width: 1500px ) {
-                                width: 31.8%;
+                            .el-select {
+                                width: 100%;
+                            }
+                            .el-textarea {
+                                padding: 10px;
                             }
                         }
                     }
                 }
             }
         }
+        .btn_group {
+            padding: 20px 0;
+        }
     }
-    .btn_group {
-        padding: 20px 0;
-    }
-}
 </style>

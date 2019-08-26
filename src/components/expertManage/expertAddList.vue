@@ -56,10 +56,10 @@
                             <td>出生日期：</td>
                             <td>
                                 <el-date-picker
-                                 v-model="addForm.birthday"
-                                 type="date"
-                                 value-format="yyyy-MM-dd"
-                                 placeholder="选择日期">
+                                    v-model="addForm.birthday"
+                                    type="date"
+                                    value-format="yyyy-MM-dd"
+                                    placeholder="选择日期">
                                 </el-date-picker>
                             </td>
                             <td>工作单位：</td>

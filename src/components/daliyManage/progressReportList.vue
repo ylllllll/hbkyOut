@@ -30,8 +30,10 @@
                     </el-select>
                 </el-form-item>
             </el-form>
-            <el-button type="primary">搜索</el-button>
+            <el-button>搜索</el-button>
         </div>
+
+        <el-button @click="handleAudited">申请</el-button>
 
         <!-- 展示列表 -->
         <div class="showList">
@@ -40,12 +42,11 @@
                 ref="multipleTable"
                 :data="tableData"
                 tooltip-effect="dark"
-                style="width: 100%"
-                @selection-change="handleSelectionChange">
-                <el-table-column
+                style="width: 100%">
+                <!-- <el-table-column
                     type="selection"
                     align="center">
-                </el-table-column>
+                </el-table-column> -->
                 <el-table-column
                     type="index"
                     label="序号"
@@ -58,7 +59,7 @@
                     align="center">
                     <template slot-scope="scope">
                         <router-link :to="{
-                            name: 'GuideSummaryShow',
+                            name: 'ProgressReportShow',
                             params: {
                                 id: scope.row.id
                             }
@@ -172,19 +173,22 @@
             }
         },
         methods: {
-            handleSelectionChange(val) {
-                this.multipleSelection = val;
-                let ids = [];
-                this.multipleSelection.map((item)=> {
-                    ids.push(item.id);
-                })
-                this.selectedIDs = ids;
-            },
+            // handleSelectionChange(val) {
+            //     this.multipleSelection = val;
+            //     let ids = [];
+            //     this.multipleSelection.map((item)=> {
+            //         ids.push(item.id);
+            //     })
+            //     this.selectedIDs = ids;
+            // },
             handleCurrentChange:function(val) {//val表示当前页
                 console.log(val)
             },
             handleSizeChange(val) {//val表示每页展示的条数
                 console.log(val)
+            },
+            handleAudited() {
+                this.$router.push("/index/progressReport/progressReportAdd");
             }
         }
     }
@@ -201,7 +205,7 @@
             margin: 10px auto;
         }
         .showList {
-            margin-top: 10px;
+            // margin-top: 10px;
             min-height: 640px;;
             padding: 10px;
             .el-table {

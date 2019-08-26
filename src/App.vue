@@ -341,5 +341,34 @@ export default {
 				}
 			}
     	}
+		// 日期选择
+		.el-date-editor{
+			.el-input__inner {
+				padding-left: 30px;
+			}
+		}
+		// el-table空数据时左边框会消失
+		.el-table__empty-block {
+			border-left: 1px solid #e0e0e0;
+		}
+		// 单选框radio
+		.el-radio__inner:hover {
+			border-color: #0abd90;
+		}
+		.el-radio__inner {
+			border-color: #0abd90;
+		}
+		.el-radio__label {
+			margin-left: 5px;
+		}
+		.is-checked {
+			.el-radio__inner {
+				border-color: #0abd90;
+				background-color: #0abd90;
+			}
+			.el-radio__label {
+				color: #0abd90;
+			}
+		}
   	}
 </style>
