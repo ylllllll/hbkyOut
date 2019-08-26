@@ -11,14 +11,14 @@
                             <td>课题名称：</td>
                             <td>
                                 <el-input
-                                    v-model="showForm.projectName"
+                                    v-model="showForm.subjectName"
                                     :disabled="true">
                                 </el-input>
                             </td>
                             <td>课题编号：</td>
                             <td>
                                 <el-input
-                                    v-model="showForm.projectName"
+                                    v-model="showForm.projectNo"
                                     :disabled="true">
                                 </el-input>
                             </td>
@@ -27,14 +27,14 @@
                             <td>承担单位：</td>
                             <td>
                                 <el-input 
-                                    v-model="showForm.tenderNo"
+                                    v-model="showForm.commitmentUnit"
                                     :disabled="true">
                                 </el-input>
                             </td>
                             <td>负责人：</td>
                             <td>
                                 <el-input 
-                                    v-model="showForm.subcontractingNo"
+                                    v-model="showForm.unitHead"
                                     :disabled="true">
                                 </el-input>
                             </td>
@@ -42,65 +42,62 @@
                         <tr style="height:50px;">
                             <td>申请类型：</td>
                             <td colspan="3">
-                                <el-radio v-model="radio" label="1">变更</el-radio>
-                                <el-radio v-model="radio" label="2">备案</el-radio>
+                                <el-radio v-model="showForm.adjustTypeId" label="1" disabled>变更</el-radio>
+                                <el-radio v-model="showForm.adjustTypeId" label="2" disabled>备案</el-radio>
                             </td>
                         </tr>
-                        <tr v-if="radio == 1">
+                        <tr v-if="showForm.adjustTypeId == 1">
                             <td>变更事项：</td>
                             <td colspan="3">
-                                <el-checkbox-group v-model="checkList1">
+                                <el-checkbox-group v-model="checkbox">
                                     <div class="item">
-                                        <el-checkbox label="0"></el-checkbox>
+                                        <el-checkbox label="1" disabled></el-checkbox>
                                         <label>课题负责人</label>
                                     </div>
                                     <div class="item">
-                                        <el-checkbox label="1"></el-checkbox>
+                                        <el-checkbox label="2" disabled></el-checkbox>
                                         <label>研究内容或示范点</label>
                                     </div>
                                     <div class="item">
-                                        <el-checkbox label="2"></el-checkbox>
+                                        <el-checkbox label="3" disabled></el-checkbox>
                                         <label>课题延期</label>
                                     </div>
                                     <div class="item">
-                                        <el-checkbox label="3"></el-checkbox>
+                                        <el-checkbox label="4" disabled></el-checkbox>
                                         <label>课题经费</label>
                                     </div>
                                     <div class="item">
-                                        <el-checkbox label="4"></el-checkbox>
+                                        <el-checkbox label="5" disabled></el-checkbox>
                                         <label>其他</label>
                                     </div>
                                 </el-checkbox-group>
                             </td>
                         </tr>
-                        <tr v-if="radio == 2">
+                        <tr v-if="showForm.adjustTypeId == 2">
                             <td>备案事项：</td>
                             <td colspan="3">
-                                <el-checkbox-group v-model="checkList1">
+                                <el-checkbox-group v-model="checkbox">
                                     <div class="item">
-                                        <el-checkbox label="0"></el-checkbox>
+                                        <el-checkbox label="6"></el-checkbox>
                                         <label>主要参加人员变动</label>
                                     </div>
                                     <div class="item">
-                                        <el-checkbox label="1"></el-checkbox>
+                                        <el-checkbox label="7"></el-checkbox>
                                         <label>课题经费调整</label>
                                     </div>
                                     <div class="item">
-                                        <el-checkbox label="2"></el-checkbox>
+                                        <el-checkbox label="8"></el-checkbox>
                                         <label>其他</label>
                                     </div>
                                 </el-checkbox-group>
                             </td>
                         </tr>
                         <tr>
-                            <td>
-                                具体情况：
-                                <br>
-                                （说明需备案的事项及其原因）
+                            <td>具体情况：<br>（说明需备案的事项及其原因）
                             </td>
                             <td colspan="3">
                                 <el-input 
-                                    v-model="showForm.remark"
+                                    v-model="showForm.specificFacts"
                                     :autosize="{ minRows:10 }"
                                     type="textarea"
                                     maxlength="200"
@@ -108,7 +105,6 @@
                                 </el-input>
                             </td>
                         </tr>
-                        
                     </tbody>
                 </table>
             </el-form>
@@ -124,22 +120,12 @@
         name:'mattersReportShow',
         data(){
             return{
-                radio: '1',
-                checkList1: [],
-                checkList2: [],
+                checkbox: [],
                 showForm:{
-                },
-                Enclosure:{
-                    fujian1:'',
-                    fujian2:'',
-                    fujian3:'',
-                    fujian4:'',
-                    fujian5:'',
                 },
                 paramsData: {
                     id: this.$route.params.id
-                },
-                tableData: []
+                }
             }
         },
         methods: { 
@@ -147,17 +133,20 @@
                 this.$router.go(-1);
             }
         },
-        // beforeMount() {
-        //     this.axios({
-        //         url: 'http://192.168.0.80:8087/environment/tender/getTenderById',
-        //         method: 'get',
-        //         params: {
-        //             id: this.paramsData.id
-        //         }
-        //     }).then((res) => {
-        //         this.showForm = res.data.data[0];
-        //     })
-        // }
+        beforeMount() {
+            this.axios({
+                url: 'http://192.168.0.80:8087/enviroment/daily/major/getMajorById',
+                method: 'get',
+                params: {
+                    id: this.paramsData.id
+                }
+            }).then((res) => {
+                res.data.data.adjustTypeId = res.data.data.adjustTypeId + "";
+                console.log(res);
+                this.showForm = res.data.data;
+                this.checkbox = this.showForm.adjustmentMattersId.split(",");
+            })
+        }
     }
 </script>
 
@@ -198,6 +187,9 @@
                         text-align: left;
                         padding: 10px 0 0 20px;
                     }
+                }
+                .el-textarea {
+                    padding: 10px;
                 }
             }
         }

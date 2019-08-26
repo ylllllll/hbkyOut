@@ -153,7 +153,7 @@
                 }).then((res) => {
                     this.loading = false;
                     let data = res.data.data;
-                    if(data == "没有查到相关信息") {
+                    if(data.list.length == 0) {
                         this.tableData = []; 
                         this.$alert('没有查到相关信息','提示',{
                             confirmButtonText: '确定',
@@ -161,7 +161,8 @@
                             callback: action => {}
                         });
                     }else {
-                        this.tableData = data;
+                        this.tableData = data.list;
+                        this.fenye.total = data.total;
                     }
                 })
             },

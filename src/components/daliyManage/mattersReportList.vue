@@ -4,33 +4,28 @@
         <div class="queryForm">
             <el-form ref="queryForm" :model="queryForm">
                 <el-form-item label="课题名称：" >
-                    <el-input v-model="queryForm.name"></el-input>
+                    <el-input v-model="queryForm.subjectName"></el-input>
                 </el-form-item>
                 <el-form-item label="承担单位：">
-                    <el-input v-model="queryForm.unit"></el-input>
+                    <el-input v-model="queryForm.commitmentUnit"></el-input>
                 </el-form-item>
                 <el-form-item label="调整类型：">
-                    <el-select v-model="queryForm.region" placeholder="请选择">
-                        <el-option
-                                v-for="item in queryForm.reginOptions"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
-                        </el-option>
+                    <el-select v-model="queryForm.adjustTypId">
+                        <el-option v-for="(item,index) in optGroup1" :key="index" :label="item.adjustType" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="调整事项：">
-                    <el-select v-model="queryForm.category">
-                        <el-option 
-                                v-for="item in queryForm.categoryOptions"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
-                        </el-option>
+                    <el-select v-if="queryForm.adjustTypId == ''" v-model="queryForm.adjustmentMattersId">
+                    </el-select>
+                    <el-select v-if="queryForm.adjustTypId == 1" v-model="queryForm.adjustmentMattersId">
+                        <el-option v-for="(item,index) in optGroup2" :key="index" :label="item.adjustmentMatters" :value="item.id"></el-option>
+                    </el-select>
+                    <el-select v-if="queryForm.adjustTypId == 2" v-model="queryForm.adjustmentMattersId">
+                        <el-option v-for="(item,index) in optGroup3" :key="index" :label="item.adjustmentMatters" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
             </el-form>
-            <el-button>搜索</el-button>
+            <el-button @click="handleSearch">搜索</el-button>
         </div>
 
         <el-button @click="handleAudited">申请</el-button>
@@ -39,6 +34,7 @@
         <div class="showList">
             <!-- 表格 -->
             <el-table
+                v-loading="loading"
                 ref="multipleTable"
                 :data="tableData"
                 tooltip-effect="dark"
@@ -53,7 +49,7 @@
                     align="center">
                 </el-table-column>
                 <el-table-column
-                    prop="name"
+                    prop="subjectName"
                     label="课题名称"
                     :show-overflow-tooltip="true"
                     align="center">
@@ -64,42 +60,57 @@
                                 id: scope.row.id
                             }
                         }"> 
-                        {{ scope.row.name }}
+                        {{ scope.row.subjectName }}
                         </router-link>
                     </template>
                 </el-table-column>
                 <el-table-column
-                    prop="danwei"
+                    prop="commitmentUnit"
                     label="承担单位"
                     align="center">
                 </el-table-column>
                 <el-table-column
-                    prop="state"
+                    prop="adjustTypId"
                     label="调整类型"
                     align="center">
                     <template slot-scope="scope">
-                        <span v-show="scope.row.state == '0'">变更</span>
-                        <span v-show="scope.row.state == '1'">备案</span>
+                        <span v-show="scope.row.adjustTypId == '1'">变更</span>
+                        <span v-show="scope.row.adjustTypId == '2'">备案</span>
                     </template>
                 </el-table-column>
                 <el-table-column
-                    prop="shixiang"
+                    prop="adjustmentMattersId"
                     label="调整事项"
                     align="center">
+                    <template slot-scope="scope">
+                        <span v-show="scope.row.adjustmentMattersId == '1'">课题负责人</span>
+                        <span v-show="scope.row.adjustmentMattersId == '2'">研究内容或示范点</span>
+                        <span v-show="scope.row.adjustmentMattersId == '3'">课题延期</span>
+                        <span v-show="scope.row.adjustmentMattersId == '4'">课题经费</span>
+                        <span v-show="scope.row.adjustmentMattersId == '5'">其他</span>
+                        <span v-show="scope.row.adjustmentMattersId == '6'">主要参加人员变动</span>
+                        <span v-show="scope.row.adjustmentMattersId == '7'">课题经费调整</span>
+                        <span v-show="scope.row.adjustmentMattersId == '8'">其他</span>
+                    </template>
                 </el-table-column>
                 <el-table-column
-                    prop="fuzeren"
+                    prop="unitHead"
                     label="单位负责人"
                     align="center">
                 </el-table-column>
-                <el-table-column
+                <!-- <el-table-column
                     prop="phone"
                     label="单位负责人电话"
                     align="center">
-                </el-table-column>
+                </el-table-column> -->
                 <el-table-column
+                    prop="shenheStatus"
                     label="审核状态"
                     align="center">
+                    <template slot-scope="scope">
+                        <span v-show="scope.row.shenheStatus == '0'">未审批</span>
+                        <span v-show="scope.row.shenheStatus == '1'">已审批</span>
+                    </template>
                 </el-table-column>
             </el-table>
             <!-- 分页 -->
@@ -109,7 +120,8 @@
                 :pageSize='fenye.pageSize'
                 :pageSizes="fenye.pageSizes"
                 @handleCurrentChangeNum="handleCurrentChange"
-                @handleSizeChangeNum="handleSizeChange">
+                @handleSizeChangeNum="handleSizeChange"
+                @handleTableFreshNum="handleTableFresh">
             </pages>
         </div>
     </div>
@@ -121,80 +133,99 @@
         data() {
             return {
                 queryForm: {
-                    name:'',
-                    unit:'',
-                    contacts:'',
-                    phone:'',
-                    reginOptions:[{
-                        value:'0',
-                        label:'类型1'
-                    },{
-                        value:'1',
-                        label:'类型2'
-                    }],
-                    region:'',
-                    categoryOptions:[{
-                        value:'0',
-                        label:'事项1'
-                    },{
-                        value:'1',
-                        label:'事项2'
-                    }],
-                    category:''
+                    subjectName: '',
+                    commitmentUnit: '',
+                    adjustTypId: '',
+                    adjustmentMattersId: '',
+                    pageNum: 1,
+                    pageSize: 10,
+                    uid: '1'
                 },
+                optGroup1: [],
+                optGroup2: [],
+                optGroup3: [],
+                loading: true,
                 selectedIDs: [],
-                tableData: [{
-                    id: '1001',
-                    name: '名称1名称1名称1名称1名称1名称1名称1名称1',
-                    danwei: '单位',
-                    state: '0',
-                    shixiang: '事项'
-                },{
-                    id: '1002',
-                    name: '名称2',
-                    danwei: '单位',
-                    state: '1',
-                    shixiang: '事项'
-                },{
-                    id: '1003',
-                    name: '名称3',
-                    danwei: '单位',
-                    state: '0',
-                    shixiang: '事项'
-                },{
-                    id: '1004',
-                    name: '名称4',
-                    danwei: '单位',
-                    state: '1',
-                    shixiang: '事项'
-                }],
+                tableData: [],
                 currentPage: 4,
                 fenye: {
                     total: 400, //共有数据多少条
                     pageNum: 1,
-                    pageSize: 100, //每页显示的条数
-                    pageSizes: [100,30,40,50] //选择每页显示多少条
+                    pageSize: 10, //每页显示的条数
+                    pageSizes: [10,20,30,40,50] //选择每页显示多少条
                 }
             }
         },
         methods: {
-            // handleSelectionChange(val) {
-            //     this.multipleSelection = val;
-            //     let ids = [];
-            //     this.multipleSelection.map((item)=> {
-            //         ids.push(item.id);
-            //     })
-            //     this.selectedIDs = ids;
-            // },
-            handleCurrentChange:function(val) {//val表示当前页
-                console.log(val)
+           handleCurrentChange(val) {              //val表示当前页
+                this.queryForm.pageNum = val;
+                this._axios();
             },
-            handleSizeChange(val) {//val表示每页展示的条数
-                console.log(val)
+            handleSizeChange(val) {                 //val表示每页展示的条数
+                this.queryForm.pageSize = val;
+                this._axios();
+            },
+            handleTableFresh(){
+                this._axios;
+                document.querySelector(".first-pager").click();
             },
             handleAudited() {
                 this.$router.push("/index/mattersReport/mattersReportAdd");
+            },
+            // 请求列表数据
+            _axios() {
+                this.axios({
+                    url: 'http://192.168.0.80:8087/enviroment/daily/major/getAllMajorInfoByUid',
+                    method: 'get',
+                    params: this.queryForm
+                }).then((res) => {
+                    console.log(res);
+                    this.loading = false;
+                    let data = res.data.data;
+                    if(data.list.length == 0) {
+                        this.tableData = []; 
+                        this.$alert('没有查到相关信息','提示',{
+                            confirmButtonText: '确定',
+                            type: 'warning',
+                            callback: action => {}
+                        });
+                    }else {
+                        this.tableData = data.list;
+                        this.fenye.total = data.total;
+                    }
+                })
+            },
+            handleSearch() {
+                this.loading = true;
+                this.queryForm.pageNum = 1;
+                this._axios();
+                document.querySelector(".first-pager").click();
             }
+        },
+        beforeMount() {
+            // 请求调整类型
+            this.axios({
+                url: 'http://192.168.0.80:8087/enviroment/daily/major/getAllAdjustType',
+                method: 'get',
+            }).then((res) => { 
+                let data = res.data.data;
+                this.optGroup1 = data;
+                // 请求调整事项
+                this.axios({
+                    url: 'http://192.168.0.80:8087/enviroment/daily/major/getAllAdjustmentMatters',
+                    method: 'get',
+                }).then((res) => { 
+                    let data = res.data.data;
+                    for(let i in data) {
+                        if(data[i].adjustTypeId == "1") {
+                            this.optGroup2.push(data[i]);
+                        }else {
+                            this.optGroup3.push(data[i]);
+                        }
+                    }
+                })
+            })
+            this._axios();
         }
     }
 </script>
