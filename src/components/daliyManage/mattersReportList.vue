@@ -70,28 +70,14 @@
                     align="center">
                 </el-table-column>
                 <el-table-column
-                    prop="adjustTypId"
+                    prop="adjustType"
                     label="调整类型"
                     align="center">
-                    <template slot-scope="scope">
-                        <span v-show="scope.row.adjustTypId == '1'">变更</span>
-                        <span v-show="scope.row.adjustTypId == '2'">备案</span>
-                    </template>
                 </el-table-column>
                 <el-table-column
-                    prop="adjustmentMattersId"
+                    prop="adjustmentMatters"
                     label="调整事项"
                     align="center">
-                    <template slot-scope="scope">
-                        <span v-show="scope.row.adjustmentMattersId == '1'">课题负责人</span>
-                        <span v-show="scope.row.adjustmentMattersId == '2'">研究内容或示范点</span>
-                        <span v-show="scope.row.adjustmentMattersId == '3'">课题延期</span>
-                        <span v-show="scope.row.adjustmentMattersId == '4'">课题经费</span>
-                        <span v-show="scope.row.adjustmentMattersId == '5'">其他</span>
-                        <span v-show="scope.row.adjustmentMattersId == '6'">主要参加人员变动</span>
-                        <span v-show="scope.row.adjustmentMattersId == '7'">课题经费调整</span>
-                        <span v-show="scope.row.adjustmentMattersId == '8'">其他</span>
-                    </template>
                 </el-table-column>
                 <el-table-column
                     prop="unitHead"
@@ -145,7 +131,6 @@
                 optGroup2: [],
                 optGroup3: [],
                 loading: true,
-                selectedIDs: [],
                 tableData: [],
                 currentPage: 4,
                 fenye: {
@@ -157,7 +142,7 @@
             }
         },
         methods: {
-           handleCurrentChange(val) {              //val表示当前页
+            handleCurrentChange(val) {              //val表示当前页
                 this.queryForm.pageNum = val;
                 this._axios();
             },

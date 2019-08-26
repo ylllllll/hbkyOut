@@ -10,7 +10,7 @@
                         <tr>
                             <td>课题名称：</td>
                             <td>
-                                <el-input v-model="showForm.subjectCategory"></el-input>
+                                <el-input v-model="showForm.subjectName"></el-input>
                             </td>
                             <td>课题编号：</td>
                             <td>
@@ -20,40 +20,45 @@
                         <tr>
                             <td>承担单位：</td>
                             <td>
-                                <el-input v-model="showForm.contractStartTime"></el-input>
+                                <el-input v-model="showForm.bearerUnit"></el-input>
                             </td>
                             <td>填报日期：</td>
                             <td>
-                                <el-input v-model="showForm.contractEndTime"></el-input>
+                                <el-date-picker
+                                    v-model="showForm.fillTime"
+                                    type="date"
+                                    value-format="yyyy-MM-dd"
+                                    placeholder="选择日期">
+                                </el-date-picker>
                             </td>
                         </tr>
                         <tr>
                             <td>项目负责人：</td>
                             <td>
-                                <el-input v-model="showForm.subjeceLeader"></el-input>
+                                <el-input v-model="showForm.projectLeader"></el-input>
                             </td>
                             <td>项目负责人联系电话：</td>
                             <td>
-                                <el-input v-model="showForm.subjectLeaderPhone"></el-input>
+                                <el-input v-model="showForm.projectLeaderPhone"></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>主要联系人：</td>
                             <td>
-                                <el-input v-model="showForm.subjectContact"></el-input>
+                                <el-input v-model="showForm.primaryContacts"></el-input>
                             </td>
                             <td>主要联系人联系电话：</td>
                             <td>
-                                <el-input v-model="showForm.subjectContactPhone">
+                                <el-input v-model="showForm.primaryContactsPhone">
                             </el-input>
                             </td>
                         </tr>
                         <tr style="height:50px;">
                             <td>进展情况：</td>
                             <td colspan="3">
-                                <el-radio v-model="radio" label="1">超前</el-radio>
-                                <el-radio v-model="radio" label="2">正常</el-radio>
-                                <el-radio v-model="radio" label="3">滞后</el-radio>
+                                <el-radio v-model="showForm.progress" label="45">超前</el-radio>
+                                <el-radio v-model="showForm.progress" label="46">正常</el-radio>
+                                <el-radio v-model="showForm.progress" label="47">滞后</el-radio>
                             </td>
                         </tr>
                         <tr class="item">
@@ -73,10 +78,15 @@
                                 </ol>
                             </td>
                         </tr>
+                        <!-- 二、目前进展情况 -->
                         <tr class="item">
                             <td colspan="4">
                                 <h4>二、目前进展情况</h4>
-                                <p>已完成研发任务{{ progressForm.dataList.length - 1}}项，完成工作进度{{ progressForm.progress }}%。</p>
+                                <p>
+                                    已完成研发任务{{ progressForm.dataList.length - 1}}项，完成工作进度
+                                    <el-input class="_inline" v-model="showForm.progressCompletedPercentage"></el-input>
+                                    %。
+                                    </p>
                                 <ol>
                                     <li v-for="(item,index) in progressForm.dataList" :key="index">
                                         <span class="index">{{ index + 1 }}.</span>
@@ -90,15 +100,29 @@
                                 </ol>
                             </td>
                         </tr>
+                        <!-- 三、使用经费情况 -->
                         <tr class="item">
                             <td colspan="4">
                                 <h4>三、使用经费情况</h4>
                                 <ol style="line-height:1.8;">
-                                    <li>已到位课题总经费{{ fundsForm.num }}万元；已使用课题经费{{ fundsForm.num }}万元，占总经费{{ fundsForm.num }}%。</li>
-                                    <li>其中：已使用省环保课题经费{{ fundsForm.num }}万元，占胜环保课题经费{{ fundsForm.num }}%。</li>
+                                    <li>已到位课题总经费
+                                        <el-input class="_inline" v-model="showForm.totalFundsInplace"></el-input>
+                                        万元；已使用课题经费
+                                        <el-input class="_inline" v-model="showForm.projectFundsUsed"></el-input>
+                                        万元，占总经费
+                                        <el-input class="_inline" v-model="showForm.totalFunding"></el-input>
+                                        %。
+                                    </li>
+                                    <li>其中：已使用省环保课题经费
+                                        <el-input class="_inline" v-model="showForm.provincialEnvironmentalFundsUsed"></el-input>
+                                        万元，占省环保课题经费
+                                        <el-input class="_inline" v-model="showForm.provincialEnvironmentalFundsPercent"></el-input>
+                                        %。
+                                    </li>
                                 </ol>
                             </td>
                         </tr>
+                        <!-- 四、课题实施中存在的主要问题 -->
                         <tr class="item">
                             <td colspan="4">
                                 <h4>四、课题实施中存在的主要问题（研究遇到的困难及技术、方案、人员等变动情况）</h4>
@@ -115,6 +139,7 @@
                                 </ol>
                             </td>
                         </tr>
+                        <!-- 五、下一步研发工作安排 -->
                         <tr class="item">
                             <td colspan="4">
                                 <h4>五、下一步研发工作安排</h4>
@@ -131,25 +156,45 @@
                                 </ol>
                             </td>
                         </tr>
+                        <!-- 六、课题预计完成时间 -->
                         <tr class="item">
                             <td colspan="4">
                                 <h4>六、课题预计完成时间</h4>
                                 <ol style="line-height:1.8;">
-                                    <li>1. 合同约定结题时间：{{ timeForm.date }}</li>
+                                    <li>
+                                        1. 合同约定结题时间：
+                                        <el-date-picker
+                                            class="_inline_date"
+                                            v-model="showForm.contractAgreedClosingTime"
+                                            type="date"
+                                            value-format="yyyy-MM-dd"
+                                            placeholder="选择日期">
+                                        </el-date-picker>
+                                    </li>
                                     <li>
                                         2. 能否按合同约定时间完成课题？
-                                        <el-radio v-model="timeForm.radio" label="1">能</el-radio>
-                                        <el-radio v-model="timeForm.radio" label="2">不能</el-radio>
+                                        <el-radio v-model="showForm.isComplateContract" label="0" style="line-height:28px;">能</el-radio>
+                                        <el-radio v-model="showForm.isComplateContract" label="1" style="line-height:28px;">不能</el-radio>
                                     </li>
-                                    <li>3. 预计申请课题验收时间：{{ timeForm.date }}</li>
+                                    <li>
+                                        3. 预计申请课题验收时间：
+                                        <el-date-picker
+                                            class="_inline_date"
+                                            v-model="showForm.estimatedAcceptanceTime"
+                                            type="date"
+                                            value-format="yyyy-MM-dd"
+                                            placeholder="选择日期">
+                                        </el-date-picker>
+                                    </li>
                                 </ol>
                             </td>
                         </tr>
+                        <!-- 七、单位审核意见 -->
                         <tr class="item">
                             <td colspan="4">
                                 <h4>七、单位审核意见</h4>
                                 <el-input 
-                                    v-model="showForm.reason_basis"
+                                    v-model="showForm.unitAuditComments"
                                     :autosize="{ minRows:10 }"
                                     type="textarea">
                                 </el-input>
@@ -171,9 +216,33 @@
     export default {
         name:'progressReportAdd',
         data(){
-            return{
+            return {
                 radio: '',
                 showForm: {
+                    // 主表
+                    subjectName: '17',
+                    projectNo: '18',
+                    bearerUnit: '1',
+                    fillTime: '',
+                    projectLeader: '13',
+                    projectLeaderPhone: '14',
+                    primaryContacts: '8',
+                    primaryContactsPhone: '9',
+                    progress: '45',
+                    // 进展情况完成比
+                    progressCompletedPercentage: '28',
+                    // 使用经费情况
+                    totalFundsInplace: '21',
+                    projectFundsUsed: '12',
+                    totalFunding: '20',
+                    provincialEnvironmentalFundsUsed: '16',
+                    provincialEnvironmentalFundsPercent: '15',
+                    // 课题预计完成时间
+                    contractAgreedClosingTime: '',
+                    isComplateContract: '0',
+                    estimatedAcceptanceTime: '',
+                    // 单位核审意见
+                    unitAuditComments: '22'
                 },
                 taskForm: [''],
                 progressForm: {
@@ -196,22 +265,33 @@
         },
         methods:{
             handleSubmit() {
-                const loading = this.$loading({
-                    lock: true,
-                    text: '请稍后...',
-                    spinner: 'el-icon-loading',
-                    background: 'rgba(255,255,255,0.7)'
-                });
-                setTimeout(() => {
-                    loading.close();
-                    this.$alert('审核通过', '提示', {
-                        confirmButtonText: '确定',
-                        type: 'success',
-                        callback: action => {
-                            this.$router.go(-1);
-                        }
-                    });
-                },2000);
+                this.axios({
+                    url: 'http://192.168.0.80:8087/environment/progress/insertProgress',
+                    method: 'post',
+                    data: this.showForm
+                }).then((res) => {
+                    console.log(res);
+                    let id = res.data.data;
+                    // 一、合同要求研发任务
+                })
+
+
+                // const loading = this.$loading({
+                //     lock: true,
+                //     text: '请稍后...',
+                //     spinner: 'el-icon-loading',
+                //     background: 'rgba(255,255,255,0.7)'
+                // });
+                // setTimeout(() => {
+                //     loading.close();
+                //     this.$alert('审核通过', '提示', {
+                //         confirmButtonText: '确定',
+                //         type: 'success',
+                //         callback: action => {
+                //             this.$router.go(-1);
+                //         }
+                //     });
+                // },2000);
             },
             handleBack() {
                 this.$router.go(-1);
@@ -298,6 +378,35 @@
                     }
                     .el-textarea {
                         margin-bottom: 10px;
+                    }
+                }
+                .el-date-editor {
+                    width: 100%;
+                    .el-input__inner {
+                        width: 100%;
+                    }
+                }
+                ._inline {
+                    display: inline-block;
+                    width: 40px;
+                    height: 18px;
+                    .el-input__inner{
+                        height: 100%;
+                        padding: 0 3px;
+                        border-bottom: 1px solid #000;
+                        border-radius: 0;
+                    }
+                    
+                }
+                ._inline_date{
+                    width: 300px;
+                    height: 28px;
+                    // line-height: 30px;
+                    .el-input__icon {
+                        display: none;
+                    }
+                    .el-input__inner {
+                        height: 100%;
                     }
                 }
             }
