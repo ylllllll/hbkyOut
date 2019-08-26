@@ -6,27 +6,14 @@
                 <el-form-item label="课题名称：" >
                     <el-input v-model="queryForm.name"></el-input>
                 </el-form-item>
-                <el-form-item label="承担单位：">
-                    <el-input v-model="queryForm.unit"></el-input>
-                </el-form-item>
-                <el-form-item label="单位性质：">
-                     <el-select v-model="queryForm.unit_nature" clearable placeholder="请选择">
-                        <el-option 
-                         v-for="item in queryForm.unitOptions"
-                         :key="item.id"
-                         :label="item.content"
-                         :value="item.id">
-                        </el-option>
-                     </el-select>
-                </el-form-item>
-                <el-form-item label="课题责任人：" >
-                    <el-input v-model="queryForm.person_liable"></el-input>
+                <el-form-item label="课题编号：">
+                    <el-input v-model="queryForm.topicNumber"></el-input>
                 </el-form-item>
             </el-form>
             <el-button type="primary"  @click="handleQuery">搜索</el-button>
         </div>
 
-        <el-button @click="handleExamine">审核</el-button>
+        <el-button v-show="isShowExamine" @click="handleExamine">审核</el-button>
         <!-- 展示列表 -->
         <div class="showList">
             <!-- 表格 -->
@@ -56,7 +43,8 @@
                         name:'SubjectApplyShow',
                         params:{
                             id:scope.row.id,
-                            arrays:tableData
+                            arrays:tableData,
+                            isShow:1,
                         }
                         }"> 
                         {{scope.row.topicName}}
@@ -125,16 +113,7 @@ export default {
         return{
             queryForm:{
                 name:'',
-                unit:'',
-                unitOptions:[{
-                    id:'0',
-                    content:'大专院校'
-                },{
-                    id:'1',
-                    content:'科研院所'
-                }],
-                unit_nature:'',
-                person_liable:''
+                topicNumber:''
             },
             tableData:[{
                 topicName:'11',
@@ -153,62 +132,79 @@ export default {
                 pageSizes:[10,20,30,40] //选择每页显示多少条
             },
             loading:true,
-            selectedIDs:[]
+            selectedIDs:[],
+            acceptancePhaseIds:[],
+            isShowExamine:true
         }
     },
     methods:{
         handleQuery(){
             console.log(this.queryForm.unit_nature)
-            this.getTableData(this.queryForm.name,this.queryForm.unit,this.queryForm.unit_nature,this.queryForm.person_liable,this.fenye.pageNum,this.fenye.pageSize)
+            this.getTableData(this.queryForm.name,this.queryForm.topicNumber,this.fenye.pageNum,this.fenye.pageSize)
         },
-        handleSelectionChange:function(){
+        handleSelectionChange:function(val){
             this.multipleSelection = val
-                let ids = []
-                this.multipleSelection.map((item)=>{
-                    ids.push(item.id)
-                })
+            let ids = []
+            let btnAcceptancePhaseId = []
+            this.multipleSelection.map((item)=>{
+                ids.push(item.id)
+                btnAcceptancePhaseId.push(item.acceptancePhaseId)
+            })
             this.selectedIDs = ids
+            this.acceptancePhaseIds = btnAcceptancePhaseId
+            this.isShowBtnExamine(btnAcceptancePhaseId)
+        },
+        // 是否显示上面的审核按钮
+        isShowBtnExamine(ids){
+            if(ids.length == 1){
+                if(ids[0] != 2){
+                    this.isShowExamine=false
+                }else{
+                    this.isShowExamine=true
+                }
+            }else{
+                 this.isShowExamine=true
+            }
         },
         handleExamine(){
-            if(this.selectedIDs.length != 1){
+            if(this.selectedIDs.length !=1){
                 this.$alert('请选择一条数据', '提示', {
                     confirmButtonText: '确定',
                     type: 'warning'
                 }).then(() => {}).catch(() => {}); //一定别忘了这个
             }else{
-                // this.$router.push({
-                //     name: 'ContractCenterShow',
-                //     params: {
-                //         state: 'notShowPage',
-                //         id: this.selectedIDs[0]
-                //     }
-                // })
+                this.$router.push({
+                    name:'SubjectApplyShow',
+                    params:{
+                        id:this.selectedIDs,
+                        arrays:this.tableData,
+                        isShow:2,
+                    }
+                })
             }
         },
          // 点击按钮刷新表格
         handleTableFresh(){
-            this.getTableData(this.queryForm.name,this.queryForm.unit,this.queryForm.unit_nature,this.queryForm.person_liable,this.fenye.pageNum,this.fenye.pageSize)
+            this.getTableData(this.queryForm.name,this.queryForm.topicNumber,this.fenye.pageNum,this.fenye.pageSize)
         },
         handleCurrentChange:function(val){
             console.log(val)
             this.fenye.pageNum = val
-            this.getTableData(this.queryForm.name,this.queryForm.unit,this.queryForm.unit_nature,this.queryForm.person_liable,this.fenye.pageNum,this.fenye.pageSize)
+            this.getTableData(this.queryForm.name,this.queryForm.topicNumber,this.fenye.pageNum,this.fenye.pageSize)
         },
         handleSizeChange:function(val){
             console.log(val)
             this.fenye.pageSize = val
-            this.getTableData(this.queryForm.name,this.queryForm.unit,this.queryForm.unit_nature,this.queryForm.person_liable,this.fenye.pageNum,this.fenye.pageSize)
+            this.getTableData(this.queryForm.name,this.queryForm.topicNumber,this.fenye.pageNum,this.fenye.pageSize)
         },
-        getTableData(topicName,unit,unitNature,projectLeader,Page,total){
+        getTableData(topicName,topicNumber,Page,total){
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/acceptState/query',
+                url:'http://192.168.0.37:8087/apply/checkApplyStateQuery',
                 params:{
                     topicName:topicName,
-                    subjectUndertakingUnit:unit,
-                    unitNature: unitNature,
-                    projectLeader:projectLeader,
+                    topicNumber:topicNumber,
                     Page:Page,
                     total:total
                 },
@@ -217,13 +213,24 @@ export default {
                 }
             }).then(function(res){
                 console.log(res)
-                if(res.data.data == null){
-                    _this.tableData=[]
-                    _this.loading = false
+                if(res.data.resultFlag == 1){
+                    _this.$alert('请先登录', '提示', {
+                    confirmButtonText: '确定',
+                    type: 'warning'
+                    }).then(() => {
+                        _this.$router.push('/');
+                    }).catch(() => {
+                        _this.$router.push('/');
+                    }); //一定别忘了这个
                 }else{
-                    _this.tableData = res.data.data.data
-                    _this.loading = false
-                    _this.fenye.total = res.data.data.alltotal
+                    if(res.data.data == null){
+                        _this.tableData=[]
+                        _this.loading = false
+                    }else{
+                        _this.tableData = res.data.data.data
+                        _this.loading = false
+                        _this.fenye.total = res.data.data.count
+                    }
                 }
             }).catch(function(err){
                 console.log(err)
@@ -243,7 +250,7 @@ export default {
         }
     },
     mounted(){
-        this.getTableData(this.queryForm.name,this.queryForm.unit,this.queryForm.unit_nature,this.queryForm.person_liable,this.fenye.pageNum,this.fenye.pageSize)
+        this.getTableData(this.queryForm.name,this.queryForm.topicNumber,this.fenye.pageNum,this.fenye.pageSize)
         this.getUnitNatureData()
     }
 }

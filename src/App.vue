@@ -268,5 +268,78 @@ export default {
 			background-color: #fff;
 			color: #000;
 		}
+		// yl
+		.el-dialog__wrapper{
+        	background-color: rgba(0,0,0,0.3);
+			.el-dialog{
+				color: #000;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-top:0;
+				min-width: 1000px;
+				transform: translate(-50%,-50%);
+				-webkit-transform: translate(-50%,-50%);
+				-moz-transform: translate(-50%,-50%);
+				-ms-transform: translate(-50%,-50%);
+				-o-transform: translate(-50%,-50%);
+				.el-dialog__header{
+					text-align: center;
+					font-size: 0;
+					position: relative;
+					padding: 20px 0;
+					border-bottom: 1px solid #d9d9d9;
+					span{
+						font-size: 21px;
+					}
+					.el-icon-close:before{
+						font-size: 23px;
+						font-weight: 600;
+					}
+				}
+				.el-dialog__body{
+					padding: 2px 34px 10px 20px;
+					.el-form{
+						.form-item{
+							width: 100%;
+							font-size: 0;
+							display: inline-block;
+							padding-bottom: 10px;
+							span{
+								width: 10%;
+								text-align: right;
+							}
+							.el-input,.el-textarea{
+								width: 90%;
+								textarea{
+									min-height: 356px !important;
+									padding: 0 10px;
+								}
+							}
+							.form-item-date{
+								width: 50%;
+								font-size: 0;
+								display: inline-block;
+								.el-date-editor{
+									width: 77.7%;
+									.el-input__inner{
+										padding-left: 30px;
+									}
+									span{
+										width: auto;
+									}
+								}
+							}
+						}
+						.form-item-content span{
+							vertical-align: top;
+						}
+					}
+					.el-button{
+						display: block;
+					}
+				}
+			}
+    	}
   	}
 </style>

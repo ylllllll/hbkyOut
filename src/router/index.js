@@ -42,6 +42,7 @@ import SubjectApply from '@/components/subjectAccept/subjectApply'
 import SubjectApplyAdd from '@/components/subjectAccept/subjectApplyAdd'
 import SubjectNotAudited from '@/components/subjectAccept/subjectNotAudited'
 import SubjectNotAuditedList from '@/components/subjectAccept/subjectNotAuditedList'
+import SubjectApplyShow from '@/components/subjectAccept/subjectApplyShow'
 import SubjectAudited from '@/components/subjectAccept/subjectAudited'
 import SubjectAuditedList from '@/components/subjectAccept/subjectAuditedList'
 import SubjectApplyEnd from '@/components/subjectAccept/subjectApplyEnd'
@@ -208,6 +209,10 @@ export default new Router({
 					path:'/index/subjectNotAudited/subjectNotAuditedList',
 					name:'SubjectNotAuditedList',
 					component:SubjectNotAuditedList,
+				},{
+					path:'/index/subjectNotAudited/subjectApplyShow',
+					name:'SubjectApplyShow',
+					component:SubjectApplyShow
 				}],
 				redirect:'/index/subjectNotAudited/subjectNotAuditedList'
 			},
