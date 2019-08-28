@@ -172,7 +172,8 @@
                             callback: action => {}
                         });
                     }else {
-                        this.tableData = data;
+                        this.tableData = data.list;
+                        this.fenye.total = data.total;
                     }
                 })
             },
