@@ -112,13 +112,10 @@
 						name: '验收申请'
 					},{
 						id: '142',
-						name: '待审核'
+						name: '审核验收(管理员)'
 					},{
 						id: '143',
-						name: '已审核'
-					},{
-						id: '144',
-						name: '验收结束'
+						name: '验收查询(管理员)'
 					}]
 				},{
 					id: '17',
@@ -154,8 +151,7 @@
 					],[
 						'/index/subjectApply',
 						'/index/subjectNotAudited',
-						'/index/subjectAudited',
-						'/index/subjectApplyEnd'
+						'/index/subjectApplyEnd',
 					],[
 						'/index/notice'
 					],[
@@ -531,7 +527,7 @@
 		.queryForm{
             // height: 134px;
             position: relative;
-            background-color: #fff;
+			background-color: #fff;
             .el-form{
                	padding: 10px 14.2% 10px 0;
                 .el-form-item{
@@ -572,6 +568,7 @@
 			table.form_table{
 				width: 59.4%;
 				margin: auto;
+				min-width: 900px;
 				border-collapse: collapse;
 				thead{
 					th{
@@ -607,6 +604,7 @@
 			table.form_table1{
 				width: 59.4%;
 				margin: auto;
+				min-width: 900px;
 				border-collapse: collapse;
 				thead{
 					th{
@@ -650,6 +648,7 @@
 			table.form_table2{
 				width: 59.4%;
 				margin: auto;
+				min-width: 900px;
 				border-collapse: collapse;
 				thead{
 					th{
@@ -724,7 +723,7 @@
             position: relative;
             min-height: 680px;
             background-color: #fff;
-            padding: 10px;
+			padding: 10px;
             .el-table{
                 min-height: 630px;
                 padding-bottom: 10px;

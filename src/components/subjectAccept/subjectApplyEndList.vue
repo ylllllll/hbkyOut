@@ -4,37 +4,13 @@
         <div class="queryForm">
             <el-form ref="queryForm" :model="queryForm" >
                 <el-form-item label="课题名称：" >
-                    <el-input v-model="queryForm.name"></el-input>
+                    <el-input v-model="queryForm.topicName"></el-input>
                 </el-form-item>
-                <el-form-item label="完成单位：">
-                    <el-input v-model="queryForm.unit"></el-input>
-                </el-form-item>
-                <el-form-item label="课题起始时间：">
-                    <el-date-picker
-                    v-model="queryForm.startDate"
-                    type="date"
-                    placeholder="选择日期">
-                    </el-date-picker>
-                </el-form-item>
-                <el-form-item label="课题完成时间：" >
-                    <el-date-picker
-                    v-model="queryForm.endDate"
-                    type="date"
-                    placeholder="选择日期">
-                    </el-date-picker>
-                </el-form-item>
-                <el-form-item label="成果水平：">
-                     <el-select v-model="queryForm.level" placeholder="请选择">
-                        <el-option 
-                         v-for="item in queryForm.levelOptions"
-                         :key="item.value"
-                         :label="item.label"
-                         :value="item.value">
-                        </el-option>
-                     </el-select>
+                <el-form-item label="课题编号：">
+                    <el-input v-model="queryForm.topicNumber"></el-input>
                 </el-form-item>
             </el-form>
-            <el-button type="primary">搜索</el-button>
+            <el-button type="primary" @click="handleQueryForm">搜索</el-button>
         </div>
          <!-- 展示列表 -->
         <div class="showList">
@@ -44,6 +20,7 @@
                 :data="tableData"
                 tooltip-effect="dark"
                 style="width: 100%"
+                v-loading="loading"
                 @selection-change="handleSelectionChange">
                 <el-table-column
                 type="selection"
@@ -55,48 +32,60 @@
                 align="center">
                 </el-table-column>
                 <el-table-column
-                prop="name"
+                prop="topicName"
                 label="课题名称"
                 :show-overflow-tooltip="true"
                 align="center">
                  <template slot-scope="scope">
                     <router-link :to="{
-                        name:'SubjectApplyEndShow',
+                        name:'SubjectApplyShow',
                         params:{
-                            name:scope.row.id
+                            id:scope.row.id,
+                            arrays:tableData,
+                            isShowExmine: 1
                         }
                         }"> 
-                        {{scope.row.name}}
+                        {{scope.row.topicName}}
                     </router-link>
                 </template>
                 </el-table-column>
                 <el-table-column
-                prop="unit"
+                prop="subjectUndertakingUnit"
                 label="完成单位"
                 align="center">
                 </el-table-column>
                 <el-table-column
-                prop="startDate"
+                prop="acceptanceCertificate.projectStartTime"
                 label="课题起始时间"
                 align="center">
                 </el-table-column>
                 <el-table-column
-                prop="endDate"
+                prop="acceptanceCertificate.projectCompletionTime"
                 label="课题完成时间"
                 align="center">
                 </el-table-column>
                 <el-table-column
-                prop="level"
+                prop="acceptanceCertificate.achievementLevel"
                 label="成果水平"
                 align="center">
+                    <template slot-scope="scope">
+                        <el-select v-model="scope.row.acceptanceCertificate.achievementLevel" disabled>
+                            <el-option 
+                                v-for="item in achievementLevelOptions"
+                                :key="item.id"
+                                :label="item.content"
+                                :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </template>
                 </el-table-column>
                 <el-table-column
-                prop="innovate"
+                prop="acceptanceCertificate.mainSolveTechnology"
                 label="主要解决的关键技术与创新点"
                 align="center">
                 </el-table-column>
                 <el-table-column
-                prop="completion"
+                prop="acceptanceCertificate.mainCompletion"
                 label="主要技术、经济与环境指标完成情况"
                 align="center">
                 </el-table-column>
@@ -109,6 +98,7 @@
                 :pageSizes="fenye.pageSizes"
                 @handleCurrentChangeNum="handleCurrentChange"
                 @handleSizeChangeNum="handleSizeChange"
+                @handleTableFreshNum="handleTableFresh"
             ></pages>
         </div>
     </div>
@@ -119,17 +109,10 @@ export default {
     data(){
         return{
             queryForm:{
-                name:'',
-                unit:'',
-                startDate:'',
-                endDate:'',
-                levelOptions:[{
-                    value:'0',
-                    label:'国际领先'
-                }],
-                level:'',
+                topicName:'',
+                topicNumber:''
             },
-             tableData:[{
+            tableData:[{
                 id:'',
                 name:'1',
                 unit:'1',
@@ -137,26 +120,89 @@ export default {
                 endDate:'1',
                 level:'1',
                 innovate:'1',
-                completion:'2'
+                completion:'2',
+                acceptanceCertificate:{
+                    achievementLevel:null,
+                }
+            }],
+            // 成果水平
+            achievementLevelOptions:[{
+                id:'',
+                content:''
             }],
             fenye:{
-                total:400, //共有数据多少条
+                total:10, //共有数据多少条
                 pageNum:1,
                 pageSize:10, //每页显示的条数
-                pageSizes:[10,30,40,50] //选择每页显示多少条
-            }
+                pageSizes:[10,20,30,40] //选择每页显示多少条
+            },
+            loading:true
         }
     },
     methods:{
         handleSelectionChange:function(){
 
         },
+        // 分页
+        handleTableFresh(){
+            document.querySelector(".first-pager").click()
+            this.getTableData(this.queryForm.topicName,this.queryForm.companyName,this.fenye.pageNum,this.fenye.pageSize)
+        },
         handleCurrentChange:function(val){
-            console.log('this is currentPange:' + val)
+            this.fenye.pageNum = val
+            this.getTableData(this.queryForm.topicName,this.queryForm.topicNumber,this.fenye.pageNum,this.fenye.pageSize)
         },
         handleSizeChange:function(val){
-            console.log('这是每页显示条数:' + val)
+            this.fenye.pageSize = val
+            this.getTableData(this.queryForm.topicName,this.queryForm.topicNumber,this.fenye.pageNum,this.fenye.pageSize)
+        },
+        // 获取成果水平
+        getAchievementShapeOptions(){
+            let _this = this
+            this.axios({
+                method:'POST',
+                url:'http://192.168.0.37:8087/checkApplyStyle/queryAchievementLevel',
+            }).then(function(res){
+                console.log(res)
+                _this.achievementLevelOptions = res.data.data
+            }).catch(function(err){
+                console.log(err)
+            })
+        },
+        // 搜索
+        handleQueryForm(){
+            this.getTableData(this.queryForm.topicName,this.queryForm.topicNumber,this.fenye.pageNum,this.fenye.pageSize)
+        },
+        // 获取列表信息
+        getTableData(topicName,topicNumber,Page,total){
+            let _this = this
+            this.axios({
+                method:'POST',
+                url:'http://192.168.0.37:8087/apply/queryResult',
+                params:{
+                    topicName,
+                    topicNumber,
+                    Page,
+                    total
+                }
+            }).then((res)=>{
+                if(res.data.data == null){
+                    _this.tableData=[]
+                    _this.loading = false
+                }else{
+                    _this.loading = false
+                    _this.fenye.total = res.data.data.alltotal
+                    _this.tableData = res.data.data.data
+                }
+            }).catch((err)=>{
+                console.log(err)
+            })
         }
+    },
+    async created(){
+        await this.getAchievementShapeOptions()
+        await this.getTableData(this.queryForm.topicName,this.queryForm.topicNumber,this.fenye.pageNum,this.fenye.pageSize)
+        
     }
     
 }
@@ -178,6 +224,18 @@ export default {
         .el-table{
             min-height: 590px;
             padding-bottom: 10px;
+        }
+    }
+    .el-select{
+        .el-input.is-disabled{
+            .el-input__inner{
+                border: 0 !important;
+                height: 23px !important;
+                text-align: center !important;
+            }
+            .el-input__suffix{
+                display: none;
+            }
         }
     }
     .pages{

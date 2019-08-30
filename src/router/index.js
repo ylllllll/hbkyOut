@@ -51,11 +51,18 @@ import SubjectApplyAdd from '@/components/subjectAccept/subjectApplyAdd'
 import SubjectNotAudited from '@/components/subjectAccept/subjectNotAudited'
 import SubjectNotAuditedList from '@/components/subjectAccept/subjectNotAuditedList'
 import SubjectApplyShow from '@/components/subjectAccept/subjectApplyShow'
-import SubjectAudited from '@/components/subjectAccept/subjectAudited'
-import SubjectAuditedList from '@/components/subjectAccept/subjectAuditedList'
+import SubjectUploadFirst from '@/components/subjectAccept/subjectUploadFirst'
+import SubjectUploadSecond from '@/components/subjectAccept/subjectUploadSecond'
+// 审核验收--管理员
 import SubjectApplyEnd from '@/components/subjectAccept/subjectApplyEnd'
 import SubjectApplyEndList from '@/components/subjectAccept/subjectApplyEndList'
 import SubjectApplyEndShow from '@/components/subjectAccept/subjectApplyEndShow'
+
+// import SubjectAudited from '@/components/subjectAccept/subjectAudited'
+// import SubjectAuditedList from '@/components/subjectAccept/subjectAuditedList'
+// 验收查询--管理员
+// import SubjectApplyEndManage from '@/components/subjectAccept/subjectApplyEndManage'
+// import SubjectApplyEndManageList from '@/components/subjectAccept/subjectApplyEndManageList'
 
 // 成果管理
 // import ResultsAdd from '@/components/resultsManage/resultsAdd'
@@ -223,7 +230,7 @@ export default new Router({
 					component: MattersReportAdd
 				}],
 				redirect: '/index/mattersReport/mattersReportList'
-			},{
+			},{//验收申请--员工
 				path:'/index/subjectApply',
 				name:'SubjectApply',
 				component:SubjectApply,
@@ -234,7 +241,7 @@ export default new Router({
 				}],
 				redirect:'/index/subjectApply/subjectApplyAdd'
 			},
-			{
+			{//审核验收--管理员
 				path:'/index/subjectNotAudited',
 				name:'SubjectNotAudited',
 				component:SubjectNotAudited,
@@ -246,21 +253,18 @@ export default new Router({
 					path:'/index/subjectNotAudited/subjectApplyShow',
 					name:'SubjectApplyShow',
 					component:SubjectApplyShow
+				},{
+					path:'/index/subjectNotAudited/subjectUploadFirst',
+					name:'SubjectUploadFirst',
+					component:SubjectUploadFirst
+				},{
+					path:'/index/subjectNotAudited/subjectUploadSecond',
+					name:'SubjectUploadSecond',
+					component:SubjectUploadSecond
 				}],
 				redirect:'/index/subjectNotAudited/subjectNotAuditedList'
 			},
-			{
-				path:'/index/subjectAudited',
-				name:'SubjectAudited',
-				component:SubjectAudited,
-				children:[{
-					path:'/index/subjectAudited/subjectAuditedList',
-					name:'SubjectAuditedList',
-					component:SubjectAuditedList,
-				}],
-				redirect:'/index/subjectAudited/subjectAuditedList'
-			},
-			{
+			{//验收查询--管理员
 				path:'/index/subjectApplyEnd',
 				name:'SubjectApplyEnd',
 				component:SubjectApplyEnd,

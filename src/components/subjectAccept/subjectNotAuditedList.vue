@@ -92,6 +92,13 @@
                 label="状态"
                 align="center">
                 </el-table-column>
+                <el-table-column
+                label="操作"
+                align="center">
+                    <template slot-scope="scope">
+                        <el-button @click="handleUpload(scope.row.id,2)">上传附件</el-button>
+                    </template>
+                </el-table-column>
             </el-table>
             <!-- 分页 -->
             <pages
@@ -138,6 +145,27 @@ export default {
         }
     },
     methods:{
+        // 员工上传附件
+        handleUpload(id,num){
+            if(num == 1){
+                this.$router.push({
+                    name:'SubjectUploadFirst',
+                    params:{
+                        id:id,
+                        arrays:this.tableData,
+                    }
+                })
+            }else{
+                this.$router.push({
+                    name:'SubjectUploadSecond',
+                    params:{
+                        id:id,
+                        arrays:this.tableData,
+                    }
+                })
+            }
+        },
+        // 搜索
         handleQuery(){
             console.log(this.queryForm.unit_nature)
             this.getTableData(this.queryForm.name,this.queryForm.topicNumber,this.fenye.pageNum,this.fenye.pageSize)

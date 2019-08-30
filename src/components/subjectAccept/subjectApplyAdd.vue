@@ -482,11 +482,11 @@ export default {
         }
         
     },
-    mounted(){
-        this.getTopicNameOptions()//课题名称
-        this.getUnitNature()//单位性质
-        this.getApplicationAcceptanceModeOptions()//申请验收形式
-        this.getSubmitInventoryOptions()//验收提交资料清单接口
+    async created(){
+        await this.getTopicNameOptions()//课题名称
+        await this.getUnitNature()//单位性质
+        await this.getApplicationAcceptanceModeOptions()//申请验收形式
+        await this.getSubmitInventoryOptions()//验收提交资料清单接口
     }
 }
 </script>
