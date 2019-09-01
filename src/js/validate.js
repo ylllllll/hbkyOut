@@ -7,16 +7,6 @@ let validatePhone = (val) => {
     return false;
 };
 
-// 验证手机号和固话
-let validatePhone2 = (val) => {
-    let reg = /^1[3456789]\d{9}$/;
-    let reg2 = /([0-9]{3,4}-)?[0-9]{7,8}/;
-    if(!reg.test(val) || !reg.test(val)) {
-        return "请输入正确的联系电话";
-    }
-    return false;
-}
-
 // 验证密码（待完善）
 let validatePwd = (val) => {
     if(val.length < 6 || val.length > 18) {
@@ -123,10 +113,20 @@ let validateEmail = (val) => {
     }
 }
 
+// 数字验证
+let validateNum = (val) => {
+    let reg = /(.*?)\d+(.*?)/;
+    if(!reg.test(val)) {
+        return "金额请输入数字";
+    }else {
+        return false;
+    }
+}
+
 export default {
     validatePhone,
-    validatePhone2,
     validatePwd,
     validateCard,
-    validateEmail
+    validateEmail,
+    validateNum
 }
