@@ -1,16 +1,26 @@
 // 验证手机号
 let validatePhone = (val) => {
-    var reg = /^1[3456789]\d{9}$/;
+    let reg = /^1[3456789]\d{9}$/;
     if(!reg.test(val)) {
-        return true;
+        return "请输入正确的手机号";
     }
     return false;
 };
 
+// 验证手机号和固话
+let validatePhone2 = (val) => {
+    let reg = /^1[3456789]\d{9}$/;
+    let reg2 = /([0-9]{3,4}-)?[0-9]{7,8}/;
+    if(!reg.test(val) || !reg.test(val)) {
+        return "请输入正确的联系电话";
+    }
+    return false;
+}
+
 // 验证密码（待完善）
 let validatePwd = (val) => {
     if(val.length < 6 || val.length > 18) {
-        return true;
+        return "密码长度为6-18位";
     }
     return false;
 }
@@ -62,7 +72,7 @@ let validateCard = (val) => {
     let ereg;
     //地区检验 
     if(area[parseInt(val.substr(0, 2))] == null) 
-        return true; 
+        return "请输入正确的身份证号"; 
     //身份号码位数及格式检验 
     switch(val.length) { 
         case 15: 
@@ -74,7 +84,7 @@ let validateCard = (val) => {
             if(ereg.test(val)) { 
                 return false; 
             }else { 
-                return true;
+                return "请输入正确的身份证号";
             }
             break; 
         case 18: 
@@ -93,21 +103,21 @@ let validateCard = (val) => {
                 if (M == idcard_array[17]) 
                     return false; //检测ID的校验位 
                 else 
-                    return true; 
+                    return "请输入正确的身份证号"; 
             }else 
-                return true; 
+                return "请输入正确的身份证号"; 
             break; 
         default: 
-            return true; 
+            return "请输入正确的身份证号"; 
             break; 
     } 
 }
 
 // 验证邮箱
 let validateEmail = (val) => {
-    var reg = /^\w+((.\w+)|(-\w+))@[A-Za-z0-9]+((.|-)[A-Za-z0-9]+).[A-Za-z0-9]+$/; //正则表达式
+    let reg = /^\w+((.\w+)|(-\w+))@[A-Za-z0-9]+((.|-)[A-Za-z0-9]+).[A-Za-z0-9]+$/; //正则表达式
     if(!reg.test(val)){ //正则验证不通过，格式不对
-        return true;
+        return "请输入正确的电子邮件";
     }else {
         return false;
     }
@@ -115,6 +125,7 @@ let validateEmail = (val) => {
 
 export default {
     validatePhone,
+    validatePhone2,
     validatePwd,
     validateCard,
     validateEmail
