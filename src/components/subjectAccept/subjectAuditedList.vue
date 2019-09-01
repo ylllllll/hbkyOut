@@ -25,7 +25,7 @@
             </el-form>
             <el-button type="primary" >搜索</el-button>
         </div>
-
+        
         <!-- 展示列表 -->
         <div class="showList">
             <!-- 表格 -->
@@ -144,11 +144,11 @@ export default {
                 isUpload:'11'
             }],
             fenye:{
-                total:400, //共有数据多少条
+                total:10, //共有数据多少条
                 pageNum:1,
-                pageSize:100, //每页显示的条数
-                pageSizes:[100,30,40,50] //选择每页显示多少条
-            }
+                pageSize:10, //每页显示的条数
+                pageSizes:[10,20,30,40] //选择每页显示多少条
+            },
         }
     },
     methods:{

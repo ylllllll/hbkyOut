@@ -70,8 +70,8 @@
                     <tbody>
                         <tr><td colspan="4">二、验收意见</td></tr>
                         <tr>
-                            <td><span>（一）对课题情况的总体评价</span></td>
-                            <td colspan="3">
+                            <td style="width:25.8%;"><span>（一）对课题情况的总体评价</span></td>
+                            <td colspan="3" >
                                 <el-input type="textarea" v-model="showForm.topicOverallEvaluation"></el-input>
                             </td>
                         </tr>
@@ -93,7 +93,7 @@
                                 <el-radio v-model="showForm.acceptanceConclusionId" label="2">结题</el-radio>
                                 <el-radio v-model="showForm.acceptanceConclusionId" label="3">不通过验收</el-radio> -->
                                 <el-radio-group v-model="showForm.acceptanceConclusionId">
-                                    <span v-for="(item,index) in finalAcceptanceMethod">
+                                    <span v-for="(item,index) in finalAcceptanceMethod" :key="index">
                                         <el-radio :label="item.id">{{item.content}}</el-radio>
                                     </span>
                                 </el-radio-group>
@@ -111,7 +111,7 @@
                             <td>职务/职称</td>
                         </tr>
                         <span class="addCircle" @click="handleAddExpertName"><i class="el-icon-circle-plus-outline"></i></span>
-                        <tr v-for="(item,index) in showForm.expertGroupCommentsNameList">
+                        <tr v-for="(item,index) in showForm.expertGroupCommentsNameList" :key="index">
                             <td><el-input v-model="item.expertName"></el-input></td>
                             <td><el-input v-model="item.companyName"></el-input></td>
                             <td><el-input v-model="item.major"></el-input></td>
@@ -119,9 +119,9 @@
                             <span class="removeCircle" @click="handleRemoveExpertName(index)"><i class="el-icon-remove-outline"></i></span>
                         </tr>
                         <tr>
-                            <td><span>验收专家组组长签字：</span></td>
+                            <td style="text-align:right;"><span>验收专家组组长签字：</span></td>
                             <td><el-input v-model="showForm.expertLeader"></el-input></td>
-                            <td>日期：</td>
+                            <td style="text-align:right;">日期：</td>
                             <td>
                                 <el-date-picker
                                     v-model="showForm.writeDate"
@@ -132,15 +132,15 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>专家组意见表文件：</td>
-                            <td colspan="3">
+                            <td style="text-align:right;">专家组意见表文件：</td>
+                            <td colspan="3" style="text-align:left;padding-left:10px;">
                                 <!-- <el-input v-model="showForm.expertGroupCommentsFile"></el-input> -->
                                 <input type="file" id="expertGroupCommentsFile">
                             </td>
                         </tr>
                         <tr>
-                            <td>专家评议表文件：</td>
-                            <td colspan="3">
+                            <td style="text-align:right;">专家评议表文件：</td>
+                            <td colspan="3" style="text-align:left; padding-left:10px;">
                                 <!-- <el-input v-model="showForm.expertAcceptanceFormFile"></el-input> -->
                                 <input type="file" id="expertAcceptanceFormFile">
                             </td>
@@ -240,10 +240,10 @@ export default {
         submitAxios(expertGroupCommentsFile,expertAcceptanceFormFile){
             let _this = this
             var formData = new FormData()
+            // formData.append('type',true)
+            formData.append('caId',_this.params.id)
             formData.append('type',true)
-            formData.append('id',_this.params.id)
-            formData.append('type',true)
-            formData.append('acceptanceFinalResultId',_this.showForm.acceptanceConclusionId)
+            // formData.append('acceptanceFinalResultId',_this.showForm.acceptanceConclusionId)
             formData.append('expertGroupCommentsFile',expertGroupCommentsFile)
             formData.append('expertAcceptanceFormFile',expertAcceptanceFormFile)
             let expertGroupComment = JSON.stringify({
@@ -264,15 +264,15 @@ export default {
                 'topicOverallEvaluation':_this.showForm.topicOverallEvaluation,
                 'suggest':_this.showForm.suggest,
                 'acceptanceConclusionId':_this.showForm.acceptanceConclusionId,
-                'expertGroupCommentsNameList':_this.showForm.expertGroupCommentsNameList,
+                'extranetExpertGroupCommentsNameList':_this.showForm.expertGroupCommentsNameList,
                 'expertLeader':_this.showForm.expertLeader,
                 'writeDate':_this.showForm.writeDate
             })
             // new Blob([outcomeInformationAll], {type: "application/json"})
-            formData.append('expertGroupComment',new Blob([expertGroupComment],{type:'application/json'}))
+            formData.append('extranetExpertGroupComment',new Blob([expertGroupComment],{type:'application/json'}))
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/subjectAccept/examine',
+                url:'http://192.168.0.37:8087/apply/submitExpertGroup',
                 data:formData
             }).then(function(res){
                 let data = ''
@@ -386,6 +386,20 @@ export default {
                 }
                 .el-radio__input.is-disabled.is-checked .el-radio__inner::after{
                     background-color: #fff;
+                }
+            }
+            .el-date-editor{
+                .el-input__prefix{
+                    line-height: 50px;
+                }
+                .el-input__inner{
+                    text-align: left;
+                }
+            }
+            .el-textarea{
+                .el-textarea__inner{
+                    min-height: 100px !important;
+                    padding: 10px !important;
                 }
             }
             .addCircle{

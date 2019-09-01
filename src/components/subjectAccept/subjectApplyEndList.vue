@@ -38,11 +38,10 @@
                 align="center">
                  <template slot-scope="scope">
                     <router-link :to="{
-                        name:'SubjectApplyShow',
+                        name:'SubjectApplyEndShow',
                         params:{
                             id:scope.row.id,
                             arrays:tableData,
-                            isShowExmine: 1
                         }
                         }"> 
                         {{scope.row.topicName}}
@@ -141,7 +140,7 @@ export default {
     },
     methods:{
         handleSelectionChange:function(){
-
+            
         },
         // 分页
         handleTableFresh(){
@@ -191,9 +190,10 @@ export default {
                     _this.loading = false
                 }else{
                     _this.loading = false
-                    _this.fenye.total = res.data.data.alltotal
+                    _this.fenye.total = res.data.data.count
                     _this.tableData = res.data.data.data
                 }
+                console.log(res)
             }).catch((err)=>{
                 console.log(err)
             })
@@ -202,7 +202,6 @@ export default {
     async created(){
         await this.getAchievementShapeOptions()
         await this.getTableData(this.queryForm.topicName,this.queryForm.topicNumber,this.fenye.pageNum,this.fenye.pageSize)
-        
     }
     
 }

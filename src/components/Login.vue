@@ -37,8 +37,6 @@
 					</el-form>
 				</div>
 			</div>
-		
-			
 		</section>
     </div>
 </template>
@@ -96,6 +94,8 @@
 								},
 								credentials: true
 							}).then((res) => {
+								console.log(res)
+								// res.data.data.identity 0 管理员 1 员工
 								if(res.data.resultFlag === "1") {
 									_this.$alert(res.data.data,'提示', {
 										confirmButtonText: '确定',
@@ -104,6 +104,8 @@
 										_this.handleChangeCode();
 									})
 								}else{
+									let i = res.data.data.identity
+									document.cookie="identity="+i
 									_this.$router.push("/index");
 								}
 							}).catch(() => {

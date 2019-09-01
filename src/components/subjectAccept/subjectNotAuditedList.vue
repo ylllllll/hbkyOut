@@ -13,9 +13,9 @@
             <el-button type="primary"  @click="handleQuery">搜索</el-button>
         </div>
 
-        <el-button v-show="isShowExamine" @click="handleExamine">审核</el-button>
+        <el-button v-if="identity==0" v-show="isShowExamine" @click="handleExamine">审核</el-button>
         <!-- 展示列表 -->
-        <div class="showList">
+        <div class="showList" :class="{margin:identity!=0 || !isShowExamine}">
             <!-- 表格 -->
             <el-table
                 ref="multipleTable"
@@ -94,9 +94,11 @@
                 </el-table-column>
                 <el-table-column
                 label="操作"
-                align="center">
+                align="center"
+                v-if="identity==1" >
                     <template slot-scope="scope">
-                        <el-button @click="handleUpload(scope.row.id,2)">上传附件</el-button>
+                        <el-button v-show="scope.row.acceptancePhaseId >2" @click="handleUpload(scope.row.id,scope.row.acceptancePhaseId)">上传附件</el-button>
+                        <el-button v-show="scope.row.acceptancePhaseId <=2" @click="handleUpload(scope.row.id,scope.row.acceptancePhaseId)">修改</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -141,13 +143,14 @@ export default {
             loading:true,
             selectedIDs:[],
             acceptancePhaseIds:[],
-            isShowExamine:true
+            isShowExamine:true,
+            identity:parseInt(document.cookie.substring(document.cookie.length-1))
         }
     },
     methods:{
         // 员工上传附件
         handleUpload(id,num){
-            if(num == 1){
+            if(num == 4){
                 this.$router.push({
                     name:'SubjectUploadFirst',
                     params:{
@@ -155,7 +158,7 @@ export default {
                         arrays:this.tableData,
                     }
                 })
-            }else{
+            }else if(num == 6){
                 this.$router.push({
                     name:'SubjectUploadSecond',
                     params:{
@@ -163,6 +166,8 @@ export default {
                         arrays:this.tableData,
                     }
                 })
+            }else if(num <=2){
+                console.log('修改')
             }
         },
         // 搜索
@@ -280,6 +285,7 @@ export default {
     mounted(){
         this.getTableData(this.queryForm.name,this.queryForm.topicNumber,this.fenye.pageNum,this.fenye.pageSize)
         this.getUnitNatureData()
+        
     }
 }
 </script>
@@ -295,6 +301,9 @@ export default {
                 min-height: 590px;
                 padding-bottom: 10px;
             }
+        }
+        .margin{
+            margin-top:10px;
         }
         .pages{
             .el-button{
