@@ -5,7 +5,7 @@
                 <table class="form_table">
                      <thead>
                         <tr><th colspan="4">江苏省环保科研课题验收证书</th></tr>
-                        <tr><th colspan="4">苏环验字<el-input v-model="title1"></el-input> 第<el-input v-model="title2"></el-input>号</th></tr>
+                        <tr><th colspan="4">苏环验字<el-input v-model="title1"></el-input>第<el-input v-model="title2"></el-input>号</th></tr>
                     </thead>
                     <tbody>
                         <tr>
@@ -741,9 +741,10 @@ export default {
         },
         submitAxios(lastReport){
             let _this = this
-            console.log(_this.showForm.acceptanceCertificatePatentList)
             let _achievementForm = JSON.stringify(_this.showForm.achievementForm)
             _this.showForm.achievementForm = _achievementForm
+            let str = '苏环验字'+ _this.title1 +'第'+ _this.title2+'号'
+            _this.showForm.translate = str
             var formData = new FormData()
             formData.append('caId',_this.params.id)
             formData.append('lastReport',lastReport)

@@ -363,7 +363,7 @@
                 </div>
 
                 <!-- 提交 课题验收证书 step4-->
-                <div class="step4" v-if="showForm.acceptancePhaseId>=90">
+                <div class="step4" v-if="showForm.acceptancePhaseId>=7">
                     <p>江苏省环保科研课题验收证书</p>
                     <table class="form_table">
                         <thead>
