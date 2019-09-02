@@ -5,7 +5,7 @@
                 <table class="form_table">
                      <thead>
                         <tr><th colspan="4">江苏省环保科研课题验收证书</th></tr>
-                        <tr><th colspan="4">苏环验字<el-input></el-input> 第<el-input></el-input>号</th></tr>
+                        <tr><th colspan="4">苏环验字<el-input v-model="title1"></el-input> 第<el-input v-model="title2"></el-input>号</th></tr>
                     </thead>
                     <tbody>
                         <tr>
@@ -701,6 +701,8 @@ export default {
                 id:this.$route.params.id,
                 arrays:this.$route.params.arrays
             },
+            title1:'',
+            title2:''
         }
     },
     methods:{
