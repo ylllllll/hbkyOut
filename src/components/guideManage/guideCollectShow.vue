@@ -74,7 +74,7 @@
                                     :disabled="true">
                                 </el-input>
                             </td>
-                            <td>单位负责人(签字)：</td>
+                            <td>单位负责人：</td>
                             <td>
                                 <el-input 
                                  v-model="showForm.person"

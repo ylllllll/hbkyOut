@@ -84,7 +84,7 @@
                             <td colspan="3">
                                 <el-input 
                                     v-model="showForm.remark"
-                                    :autosize="{ minRows: 3}"
+                                    :autosize="{ minRows:3 }"
                                     type="textarea"
                                     maxlength="200"
                                     disabled>
@@ -201,6 +201,7 @@
             }
         },
         beforeMount() {
+            // 主表数据
             this.axios({
                 url: 'http://192.168.0.80:8087/environment/tender/getTenderById',
                 method: 'get',
@@ -210,6 +211,8 @@
             }).then((res) => {
                 this.showForm = res.data.data;
             })
+            // 审核数据
+            
         }
     }
 </script>
@@ -226,7 +229,7 @@
                 }
                 tbody{
                     tr{
-                        td{
+                        td {
                             &:first-child{
                                 @media screen and ( min-width: 1500px ) and ( max-width: 1850px ){
                                     width: 30.8%;
@@ -234,6 +237,9 @@
                                 @media  screen and ( max-width: 1500px ) {
                                     width: 31.8%;
                                 }
+                            }
+                            .el-textarea {
+                                padding: 10px;
                             }
                         }
                     }
