@@ -97,8 +97,8 @@
                 align="center"
                 v-if="identity==1" >
                     <template slot-scope="scope">
-                        <el-button v-show="scope.row.acceptancePhaseId >2" @click="handleUpload(scope.row.id,scope.row.acceptancePhaseId)">上传附件</el-button>
-                        <el-button v-show="scope.row.acceptancePhaseId <=2" @click="handleUpload(scope.row.id,scope.row.acceptancePhaseId)">修改</el-button>
+                        <el-button class="btnEdit" v-show="scope.row.acceptancePhaseId >2" @click="handleUpload(scope.row.id,scope.row.acceptancePhaseId)">上传附件</el-button>
+                        <el-button class="btnEdit" v-show="scope.row.acceptancePhaseId <=2" @click="handleUpload(scope.row.id,scope.row.acceptancePhaseId)">修改</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -218,15 +218,14 @@ export default {
         },
          // 点击按钮刷新表格
         handleTableFresh(){
+            document.querySelector(".first-pager").click()
             this.getTableData(this.queryForm.name,this.queryForm.topicNumber,this.fenye.pageNum,this.fenye.pageSize)
         },
         handleCurrentChange:function(val){
-            console.log(val)
             this.fenye.pageNum = val
             this.getTableData(this.queryForm.name,this.queryForm.topicNumber,this.fenye.pageNum,this.fenye.pageSize)
         },
         handleSizeChange:function(val){
-            console.log(val)
             this.fenye.pageSize = val
             this.getTableData(this.queryForm.name,this.queryForm.topicNumber,this.fenye.pageNum,this.fenye.pageSize)
         },
@@ -245,15 +244,12 @@ export default {
                     'Content-Type':'application/x-www-form-urlencoded'
                 }
             }).then(function(res){
-                console.log(res)
                 if(res.data.resultFlag == 1){
-                    _this.$alert('请先登录', '提示', {
+                    _this.$alert(res.data.data, '提示', {
                     confirmButtonText: '确定',
                     type: 'warning'
                     }).then(() => {
-                        _this.$router.push('/');
                     }).catch(() => {
-                        _this.$router.push('/');
                     }); //一定别忘了这个
                 }else{
                     if(res.data.data == null){
@@ -296,14 +292,20 @@ export default {
             width: 130px;
         }
         .showList{
-            min-height: 640px;
+            min-height: 680px;
             .el-table{
-                min-height: 590px;
+                min-height: 630px;
                 padding-bottom: 10px;
             }
         }
         .margin{
             margin-top:10px;
+        }
+        .el-button{
+            margin: 10px auto;
+        }
+        .btnEdit{
+            margin: auto;
         }
         .pages{
             .el-button{

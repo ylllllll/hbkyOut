@@ -56,6 +56,11 @@
 <script>
 	export default {
 		name: "index",
+		provide(){
+			return{
+				reload:this.reload
+			}
+		},
 		data() {
 			return {
 				test: {
@@ -325,6 +330,13 @@
 				}).catch(() => {
 
 				})
+			},
+			// 当前页刷新
+			reload(){
+				this.refreshFlag = false
+				this.$nextTick(() =>{
+					this.refreshFlag = true
+				})
 			}
 		},
 		mounted() {
@@ -344,6 +356,7 @@
 				document.querySelector(".el-main .box").style.height = mainHeight;
 			})
 		},
+		
 		watch: {
 			$route() {
 				let fullScreen = document.querySelector(".is-fullscreen");
