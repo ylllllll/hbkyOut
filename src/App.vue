@@ -370,5 +370,13 @@ export default {
 				color: #0abd90;
 			}
 		}
+		// 附件上传
+		.file_tr {
+			height: 50px;
+			.file_td {
+				padding-left: 10px;
+				text-align: left;
+			}
+		}
   	}
 </style>

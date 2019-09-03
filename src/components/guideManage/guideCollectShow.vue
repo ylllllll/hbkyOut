@@ -99,7 +99,7 @@
                                     :disabled="true">
                                 </el-input>
                             </td>
-                            <td>研究期限：</td>
+                            <td>研究期限（年）：</td>
                             <td>
                                 <el-input 
                                     v-model="showForm.research_fund"

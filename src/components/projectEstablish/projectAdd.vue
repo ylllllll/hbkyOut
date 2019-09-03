@@ -91,34 +91,34 @@
                                 </el-input>
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="file_tr">
                             <td>中标文件附件：</td>
-                            <td colspan="3">
-                                <el-input v-model="Enclosure.fujian1"></el-input>
+                            <td colspan="3" class="file_td">
+                                <input type="file" @change="getFile($event,1)">
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="file_tr">
                             <td>成交公告附件：</td>
-                            <td colspan="3">
-                                <el-input v-model="Enclosure.fujian2"></el-input>
+                            <td colspan="3" class="file_td">
+                                <input type="file" @change="getFile($event,2)">
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="file_tr">
                             <td>成交通知书附件：</td>
-                            <td colspan="3">
-                                <el-input v-model="Enclosure.fujian3"></el-input>
+                            <td colspan="3" class="file_td">
+                                <input type="file" @change="getFile($event,3)">
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="file_tr">
                             <td>响应文件附件：</td>
-                            <td colspan="3">
-                                <el-input v-model="Enclosure.fujian4"></el-input>
+                            <td colspan="3" class="file_td">
+                                <input type="file" @change="getFile($event,4)">
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="file_tr">
                             <td>其他附件：</td>
-                            <td colspan="3">
-                                <el-input v-model="Enclosure.fujian5"></el-input>
+                            <td colspan="3" class="file_td">
+                                <input type="file" @change="getFile($event,5)">
                             </td>
                         </tr>
                     </tbody>
@@ -134,6 +134,7 @@
 
 <script>
     export default {
+        inject: ["reload"],
         name: 'projectAdd',
         data() {
             return {
@@ -153,7 +154,7 @@
                     remark: '',
                     responsibleUnit: ''
                 },
-                Enclosure:{
+                Enclosure: {
                     fujian1:'',
                     fujian2:'',
                     fujian3:'',
@@ -163,7 +164,7 @@
             }
         },
         methods:{ 
-            handleSubmit(){
+            handleSubmit() {
                 // 非空验证
                 for(let i in this.showForm) {
                     if(typeof(this.showForm[i]) == "string") {
@@ -178,10 +179,24 @@
                     }
                 }
                 // 数字验证
-                let validateNum = [this.validate.validateNum(this.showForm.winningAmount),this.validate.validateNum(this.showForm.supportingFunds)];
+                let validateNum = [ this.validate.validateNum(this.showForm.winningAmount),
+                                    this.validate.validateNum(this.showForm.supportingFunds)];
                 for(let i in validateNum) {
                     if(validateNum[i]) {
                         this.$alert(validateNum[i],'提示', {
+                            confirmButtonText: '确定',
+                            type: 'warning',
+                            callback: action => {}
+                        });
+                        return false;
+                    }
+                }
+                // 手机号验证
+                let validatePhone = [   this.validate.validatePhone(this.showForm.leaderContact),
+                                        this.validate.validatePhone(this.showForm.operatorContact)];
+                for(let i in validatePhone) {
+                    if(validatePhone[i]) {
+                        this.$alert(validatePhone[i],'提示', {
                             confirmButtonText: '确定',
                             type: 'warning',
                             callback: action => {}
@@ -206,7 +221,9 @@
                         this.$alert('提交成功','提示', {
                             confirmButtonText: '确定',
                             type: 'success',
-                            callback: action => {}
+                            callback: action => {
+                                this.reload();
+                            }
                         });
                     }else {
                         this.$alert('提交失败','提示', {
@@ -226,6 +243,19 @@
             },
             handleBack() {
                 this.$router.go(-1);
+            },
+            getFile(event,index) {
+                if(index == 1) {
+                    this.Enclosure.fujian1 = event.target.files[0];
+                }else if(index == 2) {
+                    this.Enclosure.fujian2 = event.target.files[0];
+                }else if(index == 3) {
+                    this.Enclosure.fujian3 = event.target.files[0];
+                }else if(index == 4) {
+                    this.Enclosure.fujian4 = event.target.files[0];
+                }else if(index == 5) {
+                    this.Enclosure.fujian5 = event.target.files[0];
+                }
             }
         }
     }

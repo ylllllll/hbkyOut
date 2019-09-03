@@ -8,11 +8,13 @@
                 </el-form-item>
                 <el-form-item label="所属领域：">
                     <el-select v-model="queryForm.domain">
+                        <el-option label="所有领域" value=""></el-option>
                         <el-option v-for="(item,index) in optGroup1" :key="index" :label="item.content" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="所属类别：">
                     <el-select v-model="queryForm.category">
+                        <el-option label="所有类别" value=""></el-option>
                         <el-option v-for="(item,index) in optGroup2" :key="index" :label="item.content" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
@@ -158,10 +160,11 @@
             // 请求列表数据
             _axios() {
                 this.axios({
-                    url: 'http://192.168.0.80:8087/environment/guide/getCollectionByParam',
+                    url: 'http://192.168.0.80:8087/environment/guide/getCollectionByUid',
                     method: 'get',
                     params: this.queryForm
                 }).then((res) => {
+                    console.log(res)
                     this.loading = false;
                     let data = res.data.data;
                     if(data == "没有查到相关信息") {

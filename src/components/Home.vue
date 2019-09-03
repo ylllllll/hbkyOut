@@ -2,53 +2,20 @@
 	<div id="home">
 		<header class="home_header">
 			<div class="item topic">
-				<h3 class="item_title">课题</h3>
-				<div class="item_content">
-					<div class="item_content_left">
-						<img src="../assets/images/home/topic.png" alt="">
-					</div>
-					
-					<div class="item_content_right">
-						<div class="num">{{ test_header[0] }}</div>
-						<div class="state">待审核</div>
-					</div>
-				</div>
+				<img src="../assets/images/home/topic.png" alt="">
+				<div class="count">{{ test[0] }}</div>
 			</div>
 			<div class="item contract">
-				<h3 class="item_title">合同</h3>
-				<div class="item_content">
-					<div class="item_content_left">
-						<img src="../assets/images/home/contract.png" alt="">
-					</div>
-					<div class="item_content_right">
-						<div class="num">{{ test_header[1] }}</div>
-						<div class="state">待审核</div>
-					</div>
-				</div>
+				<img src="../assets/images/home/contract.png" alt="">
+				<div class="count">{{ test[1] }}</div>
 			</div>
 			<div class="item check">
-				<h3 class="item_title">验收</h3>
-				<div class="item_content">
-					<div class="item_content_left">
-						<img src="../assets/images/home/check.png" alt="">
-					</div>
-					<div class="item_content_right">
-						<div class="num">{{ test_header[2] }}</div>
-						<div class="state">待审核</div>
-					</div>
-				</div>
+				<img src="../assets/images/home/check.png" alt="">
+				<div class="count">{{ test[2] }}</div>
 			</div>
 			<div class="item expert">
-				<h3 class="item_title">专家</h3>
-				<div class="item_content">
-					<div class="item_content_left">
-						<img src="../assets/images/home/expert.png" alt="">
-					</div>
-					<div class="item_content_right">
-						<div class="num">{{ test_header[3] }}</div>
-						<div class="state">待审核</div>
-					</div>
-				</div>
+				<img src="../assets/images/home/expert.png" alt="">
+				<div class="count">{{ test[3] }}</div>
 			</div>
 		</header>
 		<section class="home_content">
@@ -60,7 +27,7 @@
 							<span class="bar_left">标题</span>
 							<span class="bar_right">更新时间</span>
 						</li>
-						<li v-for="i in 12" class="item">
+						<li v-for="i in 10" :key="i" class="item">
 							<a class="item_left" href="">南京市鼓楼区绿化改建项目南京市鼓楼区绿化改建项目南京市鼓楼区绿化改建项目</a>
 							<span class="item_right">2019-04-26</span>
 						</li>
@@ -75,7 +42,7 @@
 							<span class="bar_left">标题</span>
 							<span class="bar_right">更新时间</span>
 						</li>
-						<li v-for="i in 12" class="item">
+						<li v-for="i in 10" :key="i" class="item">
 							<a class="item_left" href="">南京市鼓楼区绿化改建项目南京市鼓楼区绿化改建项目南京市鼓楼区绿化改建项目</a>
 							<span class="item_right">2019-04-26</span>
 						</li>
@@ -91,7 +58,7 @@
 		name: 'home',
 		data() {
 			return {
-				test_header: [275,96,79,100]
+				test: [275,96,79,100]
 			}
 		},
 		methods: {
@@ -103,50 +70,24 @@
 
 <style lang="less">
 	#home {
+		overflow-y: hidden;
 		.home_header {
 			display: flex;
 			justify-content: space-between;
 			.item {
+				position: relative;
 				width: 24.5%;
-				height: 219px;
-				background-image: url(../assets/images/home/topic_bg.png);
-				background-repeat: no-repeat;
-				background-size: cover;
-				background-position: center;
-				.item_title,.state,.num {
+				img {
+					width: 100%;
+				}
+				.count {
+					position: absolute;
+					font-size: 3.8vw;
+					font-weight: bold;
 					color: #fff;
-					font-size: 20px;
+					top: 35%;
+					left: 10%;
 				}
-				.item_title {
-					font-weight: normal;
-					padding: 15px;
-				}
-				.item_content {
-					display: flex;
-					margin-top: 10px;
-					.item_content_left {
-						width: 50%;
-						text-align: center;
-					}
-					.item_content_right {
-						width: 50%;
-						text-align: center;
-						padding-right: 12%;
-						.num {
-							font-size: 76px;
-							line-height: 70px;
-						}
-					}
-				}
-			}
-			.contract {
-				background-image: url(../assets/images/home/contract_bg.png);
-			}
-			.check {
-				background-image: url(../assets/images/home/check_bg.png);
-			}
-			.expert {
-				background-image: url(../assets/images/home/expert_bg.png);
 			}
 		}
 		.home_content {
@@ -157,15 +98,14 @@
 				width: 49.65%;
 				background-color: #fff;
 				color: #333;
-				height: 618px;
-				padding: 20px 20px 0 20px;
+				padding: 20px;
 				.home_content_title {
 					font-weight: normal;
 					font-size: 18px;
 					display: flex;
 					justify-content: space-between;
 					border-bottom: 1px solid #eeeeee;
-					padding: 0 50px 10px 5px;
+					padding: 0 10px 10px 5px;
 					span {
 						cursor: pointer;
 					}
@@ -173,10 +113,10 @@
 				.home_content_list ul {
 					list-style-type: none;
 					.list_title_bar {
-						background-color: #f5f5f5;
 						padding: 10px 0;
 						margin-top: 6px;
 						display: flex;
+						font-weight: bold;
 						span {
 							font-size: 18px;
 							display: inline-block;
@@ -187,12 +127,13 @@
 						}
 						.bar_right {
 							width: 25%;
+							text-align: right;
+							padding-right: 9.8%;
 						}
 					}
 					.item {
 						padding: 10px 0;
 						display: flex;
-						border-bottom: 1px dashed #ededed;
 						span,a {
 							display: inline-block;
 							white-space: nowrap;
@@ -201,11 +142,16 @@
 						}
 						.item_left {
 							width: 73%;
-							padding: 0 8%;
+							padding: 0 8% 0 4%;
 						}
 						.item_right {
 							width: 27%;
 							letter-spacing: 1px;
+							text-align: right;
+							padding-right: 8%;
+						}
+						&:nth-child(odd) {
+							background-color: #fbfbfb;
 						}
 					}
 				}

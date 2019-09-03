@@ -325,6 +325,10 @@
 				}).catch(() => {
 
 				})
+			},
+			reload() {
+				this.refreshFlag = false
+     			this.$nextTick(() => (this.refreshFlag = true))
 			}
 		},
 		mounted() {
@@ -343,6 +347,11 @@
 				let mainHeight = parseInt(window.getComputedStyle(document.querySelector(".el-main")).height) - 35 + "px";
 				document.querySelector(".el-main .box").style.height = mainHeight;
 			})
+		},
+		provide() {
+			return {
+				reload: this.reload
+			}
 		},
 		watch: {
 			// 切换页面时等待界面消失（存在bug）

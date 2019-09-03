@@ -85,7 +85,7 @@
                                 <el-input v-model="showForm.researchFund">
                                 </el-input>
                             </td>
-                            <td>研究期限：</td>
+                            <td>研究期限（年）：</td>
                             <td>
                                 <el-input v-model="showForm.researchPeriod"></el-input>
                             </td>
@@ -129,6 +129,7 @@
 
 <script>
     export default {
+        inject: ["reload"],
         name:'guideCollectAdd',
         data() {
             return {
@@ -150,7 +151,6 @@
                     fillContacts: '',
                     contactPhone: ''
                 },
-                refreshForm: {},
                 optGroup1: [],
                 optGroup2: []
             }
@@ -167,6 +167,16 @@
                         });
                         return false;
                     } 
+                }
+                // 手机验证
+                let validatePhone = this.validate.validatePhone(this.showForm.contactPhone);
+                if(validatePhone) {
+                    this.$alert(validatePhone,'提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning',
+                        callback: action => {}
+                    });
+                    return false;
                 }
                 const loading = this.$loading({
                     lock: true,
@@ -186,8 +196,7 @@
                             confirmButtonText: '确定',
                             type: 'success',
                             callback: action => {
-                                // 刷新备用方法
-                                this.showForm = this.refreshForm;
+                                this.reload();
                             }
                         });
                     }else {
@@ -198,6 +207,7 @@
                         });
                     }
                 }).catch((err) => {
+                    loading.close();
                     this.$alert('提交失败','提示', {
                         confirmButtonText: '确定',
                         type: 'warning',
@@ -223,8 +233,6 @@
                     }
                 }
             })
-            // 刷新备用方法
-            this.refreshForm = this.showForm;
         }
     }
 </script>
