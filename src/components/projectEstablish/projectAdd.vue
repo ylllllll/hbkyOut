@@ -126,7 +126,6 @@
             </el-form>
             <div class="btn_group">
                 <el-button @click="handleSubmit">提交</el-button>
-                <el-button @click="handleBack">返回</el-button>
             </div>
         </div>
     </div>
@@ -164,7 +163,7 @@
             }
         },
         methods:{ 
-            handleSubmit() {
+            handleSubmit() { 
                 // 非空验证
                 for(let i in this.showForm) {
                     if(typeof(this.showForm[i]) == "string") {
@@ -240,9 +239,6 @@
                         callback: action => {}
                     });
                 })
-            },
-            handleBack() {
-                this.$router.go(-1);
             },
             getFile(event,index) {
                 if(index == 1) {

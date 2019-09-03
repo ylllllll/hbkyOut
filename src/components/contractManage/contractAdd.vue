@@ -484,14 +484,14 @@
                 </table>
             </el-form>
             <el-button @click="handleSubmit">提交</el-button>
-            <el-button @click="handleBack">返回</el-button>
         </div>
     </div>
 </template>
 
 <script>
     export default {
-        name:'contractAdd',
+        inject: ["reload"],
+        name: 'contractAdd',
         data() {
             return {
                 showForm: {
@@ -752,7 +752,9 @@
                                         this.$alert('提交成功','提示', {
                                             confirmButtonText: '确定',
                                             type: 'success',
-                                            callback: action => {}
+                                            callback: action => {
+                                                this.reload();
+                                            }
                                         });
                                     }else {
                                         this.$alert('提交失败','提示', {
@@ -801,9 +803,6 @@
                         callback: action => {}
                     });
                 })
-            },
-            handleBack() {
-                this.$router.go(-1);
             },
             handleTrAdd(val) {
                 if(val == 1) {

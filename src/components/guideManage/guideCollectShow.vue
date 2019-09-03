@@ -39,7 +39,7 @@
                                 <el-input 
                                     v-model="showForm.reason_basis" 
                                     :disabled="true"
-                                    :autosize="{ minRows: 3}"
+                                    :autosize="{ minRows:3 }"
                                     type="textarea">
                                 </el-input>
                             </td>
@@ -50,7 +50,7 @@
                                 <el-input 
                                     v-model="showForm.research_content_technology" 
                                     :disabled="true"
-                                    :autosize="{ minRows: 3}"
+                                    :autosize="{ minRows:3 }"
                                     type="textarea">
                                  </el-input>
                             </td>
@@ -61,7 +61,7 @@
                                 <el-input 
                                     v-model="showForm.expected_target_outcome" 
                                     :disabled="true"
-                                    :autosize="{ minRows: 3}"
+                                    :autosize="{ minRows:3 }"
                                     type="textarea">
                                 </el-input>
                             </td>
@@ -161,6 +161,7 @@
                 </table>
             </el-form>
             <el-button @click="handleBack">返回</el-button>
+            {{ paramsData.id }}
         </div>
     </div>
 </template>
@@ -185,10 +186,12 @@
             }
         },
         beforeMount() {
+            console.log(this.paramsData.data);
             // 遍历数据
             for(let i in this.paramsData.data) {
                 if(this.paramsData.id == this.paramsData.data[i].id) {
                     this.showForm = this.paramsData.data[i];
+                    return false;
                 }
             }
         },

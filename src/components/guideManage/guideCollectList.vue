@@ -101,6 +101,15 @@
                     label="联系人手机"
                     align="center">
                 </el-table-column>
+                <el-table-column
+                    prop="is_select"
+                    label="选中状态"
+                    align="center">
+                    <template slot-scope="scope">
+                        <span v-show="scope.row.is_select == '0'">未选中</span>
+                        <span v-show="scope.row.is_select == '1'">已选中</span>
+                    </template>
+                </el-table-column>
             </el-table>
             <!-- 分页 -->
             <pages
@@ -122,19 +131,22 @@
         data(){
             return {
                 queryForm: {
-                    guideName:'',
-                    domain:'',
-                    category:'',
-                    fillUnit:'',
-                    fillContacts:'',
-                    contactPhone:'',
+                    // null为接口需要
+                    guideName: null,
+                    domain: null,
+                    category: null,
+                    fillUnit: null,
+                    fillContacts: null,
+                    contactPhone: null,
                     pageNum: 1,
-                    pageSize: 10
+                    pageSize: 10,
+                    // 凑字段
+                    uid: '0'
                 },
                 optGroup1: [],
                 optGroup2: [],
                 loading: true,
-                tableData:[],
+                tableData: [],
                 currentPage: 4,
                 fenye: {
                     total: 0, //共有数据多少条
@@ -160,8 +172,8 @@
             // 请求列表数据
             _axios() {
                 this.axios({
-                    url: 'http://192.168.0.80:8087/environment/guide/getCollectionByUid',
-                    method: 'get',
+                    url: 'http://192.168.0.80:8087/environment/guide/getUnitCollection',
+                    method: 'post',
                     params: this.queryForm
                 }).then((res) => {
                     console.log(res)

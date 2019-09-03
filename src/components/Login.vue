@@ -29,7 +29,7 @@
 						</el-form-item>
 						<div class="handle_group">
 							<div class="checkbox">
-								<el-checkbox></el-checkbox>记住密码
+								<el-checkbox v-model="rememberPwd"></el-checkbox>记住密码
 							</div>
 							<router-link to="/register">注册</router-link>
 						</div>
@@ -46,7 +46,8 @@
 	    name: 'login',
 	    data() {
 	        return {
-	        	codeUrl: 'http://192.168.0.37:8087/code/checkCode',
+				rememberPwd: '',
+	        	codeUrl: 'http://192.168.0.80:8087/code/checkCode',
 	            ruleForm: {
 	                name: '',
 					pwd: '',
@@ -85,7 +86,7 @@
 	                if(valid) {
 						if(type == 0) {		// 企业
 							_this.axios({
-								url: 'http://192.168.0.37:8087/company/login',
+								url: 'http://192.168.0.80:8087/company/login',
 								method: "post",
 								params: {
 									loginName: _this.ruleForm.name,
@@ -103,7 +104,8 @@
 									}).then(() => {
 										_this.handleChangeCode();
 									})
-								}else{
+								}else {
+
 									let i = res.data.data.identity
 									document.cookie="identity="+i
 									_this.$router.push("/index");
@@ -118,7 +120,7 @@
 							});
 						}else if(type == 1) {		// 专家
 							_this.axios({
-								url: 'http://192.168.0.37:8087/extranetExpert/login',
+								url: 'http://192.168.0.80:8087/extranetExpert/login',
 								method: "post",
 								params: {
 									loginName: _this.ruleForm.name,
@@ -153,7 +155,7 @@
 	        },
 	        handleChangeCode() {
 	        	let num = Math.random();
-	        	this.codeUrl = "http://192.168.0.37:8087/code/checkCode?"+num;
+	        	this.codeUrl = "http://192.168.0.80:8087/code/checkCode?"+num;
 	        }
 		},
 		beforeMount() {
@@ -208,7 +210,6 @@
 						}
 						.el-form-item {
 								width: 70.7%;
-								// height: 30px;
 								margin: 1.5% auto;
 								padding: 10px 0;
 								label {

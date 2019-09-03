@@ -327,8 +327,8 @@
 				})
 			},
 			reload() {
-				this.refreshFlag = false
-     			this.$nextTick(() => (this.refreshFlag = true))
+				this.refreshFlag = false;
+     			this.$nextTick(() => (this.refreshFlag = true));
 			}
 		},
 		mounted() {

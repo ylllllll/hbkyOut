@@ -121,7 +121,6 @@
             </el-form>
             <div class="btn_group">
                 <el-button @click="handleSubmit">提交</el-button>
-                <el-button @click="handleBack">返回</el-button>
             </div>
         </div>
     </div>
@@ -214,9 +213,6 @@
                         callback: action => {}
                     });
                 })
-            },
-            handleBack() {
-                this.$router.go(-1);
             }
         },
         beforeCreate() {
