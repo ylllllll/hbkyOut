@@ -338,8 +338,12 @@
                             <td colspan="3">计划内容及考核指标</td>
                         </tr>
                         <tr v-for="(item,index) in progressForm" :key="index">
-                            <td><el-input v-model="item.time"></el-input></td>
-                            <td><el-input v-model="item.programContentAssessmentIndicators"></el-input></td>
+                            <td>
+                                <el-input v-model="item.time" disabled=""></el-input>
+                            </td>
+                            <td>
+                                <el-input v-model="item.programContentAssessmentIndicators" disabled=""></el-input>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -399,14 +403,14 @@
                             <td colspan="8" style="text-align:left;padding-left:10px;">主要研发人员：</td>
                         </tr>
                         <tr v-for="(item,index) in keyForm" :key="index">
-                            <td><el-input v-model="item.keyDevName"></el-input></td>
-                            <td><el-input v-model="item.unitName"></el-input></td>
-                            <td><el-input v-model="item.gender"></el-input></td>
-                            <td><el-input v-model="item.age"></el-input></td>
-                            <td><el-input v-model="item.professionalTitle"></el-input></td>
-                            <td><el-input v-model="item.professional"></el-input></td>
-                            <td><el-input v-model="item.workTask"></el-input></td>
-                            <td><el-input v-model="item.workingTime"></el-input></td>
+                            <td><el-input v-model="item.keyDevName" disabled></el-input></td>
+                            <td><el-input v-model="item.unitName" disabled></el-input></td>
+                            <td><el-input v-model="item.gender" disabled></el-input></td>
+                            <td><el-input v-model="item.age" disabled></el-input></td>
+                            <td><el-input v-model="item.professionalTitle" disabled></el-input></td>
+                            <td><el-input v-model="item.professional" disabled></el-input></td>
+                            <td><el-input v-model="item.workTask" disabled></el-input></td>
+                            <td><el-input v-model="item.workingTime" disabled></el-input></td>
                         </tr>
                     </tbody>
                 </table>
@@ -432,43 +436,43 @@
                         </tr>
                         <tr>
                             <td style="text-align:center;">合计</td>
-                            <td><el-input v-model="budgetForm.fundingSourcesBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.currentYearSourceTotal"></el-input></td>
-                            <td><el-input v-model="budgetForm.nextYearSourceTotal"></el-input></td>
-                            <td><el-input v-model="budgetForm.afterYearSourceTotal"></el-input></td>
-                            <td><el-input v-model="budgetForm.fundingSourcesNote"></el-input></td>
+                            <td><el-input v-model="budgetForm.fundingSourcesBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.currentYearSourceTotal" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.nextYearSourceTotal" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.afterYearSourceTotal" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.fundingSourcesNote" disabled></el-input></td>
                         </tr>
                         <tr>
                             <td>1、省环保科研课题经费</td>
-                            <td><el-input v-model="budgetForm.provincialBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.provincialCurrentBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.provincialNextBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.provincialAfterBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.provincialNoteBudget"></el-input></td>
+                            <td><el-input v-model="budgetForm.provincialBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.provincialCurrentBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.provincialNextBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.provincialAfterBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.provincialNoteBudget" disabled></el-input></td>
                         </tr>
                         <tr>
                             <td>2、部门、地方配套</td>
-                            <td><el-input v-model="budgetForm.departmentBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.departmentCurrentBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.departmentNextBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.departmentAfterBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.departmentNoteBudget"></el-input></td>
+                            <td><el-input v-model="budgetForm.departmentBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.departmentCurrentBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.departmentNextBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.departmentAfterBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.departmentNoteBudget" disabled></el-input></td>
                         </tr>
                         <tr>
                             <td>3、承担单位自筹</td>
-                            <td><el-input v-model="budgetForm.bearBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.bearCurrentBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.bearNextBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.bearAfterBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.bearNoteBudget"></el-input></td>
+                            <td><el-input v-model="budgetForm.bearBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.bearCurrentBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.bearNextBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.bearAfterBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.bearNoteBudget" disabled></el-input></td>
                         </tr>
                         <tr >
                             <td>4、其他来源</td>
-                            <td><el-input v-model="budgetForm.otherBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.otherCurrentBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.otherNextBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.otherAfterBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.otherNoteBudget"></el-input></td>
+                            <td><el-input v-model="budgetForm.otherBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.otherCurrentBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.otherNextBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.otherAfterBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.otherNoteBudget" disabled></el-input></td>
                         </tr>
                     </tbody>
                 </table>
@@ -492,84 +496,84 @@
                         </tr>
                         <tr>
                             <td style="text-align:center;">合计</td>
-                            <td><el-input v-model="budgetForm.expenditureBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.currentYearExpenditureTotal"></el-input></td>
-                            <td><el-input v-model="budgetForm.nextYearExpenditureTotal"></el-input></td>
-                            <td><el-input v-model="budgetForm.afterYearExpenditureTotal"></el-input></td>
-                            <td><el-input v-model="budgetForm.selfTotalExpenditures"></el-input></td>
-                            <td><el-input v-model="budgetForm.totalExpendituresNote"></el-input></td>
+                            <td><el-input v-model="budgetForm.expenditureBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.currentYearExpenditureTotal" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.nextYearExpenditureTotal" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.afterYearExpenditureTotal" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.selfTotalExpenditures" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.totalExpendituresNote" disabled></el-input></td>
                         </tr>
                         <tr>
                             <td>1、设备费</td>
-                            <td><el-input v-model="budgetForm.equipmentBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.equipmentCurrentBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.equipmentNextBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.equipmentAfterBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.equipmentSupportingBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.equipmentNoteBudget"></el-input></td>
+                            <td><el-input v-model="budgetForm.equipmentBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.equipmentCurrentBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.equipmentNextBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.equipmentAfterBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.equipmentSupportingBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.equipmentNoteBudget" disabled></el-input></td>
                         </tr>
                         <tr>
                             <td>2、材料费</td>
-                            <td><el-input v-model="budgetForm.materialBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.materialCurrentBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.materialNextBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.materialAfterBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.materialSupportingBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.materialNoteBudget"></el-input></td>
+                            <td><el-input v-model="budgetForm.materialBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.materialCurrentBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.materialNextBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.materialAfterBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.materialSupportingBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.materialNoteBudget" disabled></el-input></td>
                         </tr>
                         <tr>
                             <td>3、测试化验加工费</td>
-                            <td><el-input v-model="budgetForm.testBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.testCurrentBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.testNextBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.testAfterBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.testSupportingBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.testNoteBudget"></el-input></td>
+                            <td><el-input v-model="budgetForm.testBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.testCurrentBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.testNextBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.testAfterBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.testSupportingBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.testNoteBudget" disabled></el-input></td>
                         </tr>
                         <tr >
                             <td>4、燃料动力费</td>
-                            <td><el-input v-model="budgetForm.fuelBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.fuelCurrentBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.fuelNextBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.fuelAfterBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.fuelSupportingBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.fuelNoteBudget"></el-input></td>
+                            <td><el-input v-model="budgetForm.fuelBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.fuelCurrentBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.fuelNextBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.fuelAfterBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.fuelSupportingBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.fuelNoteBudget" disabled></el-input></td>
                         </tr>
                         <tr >
                             <td>5、会议差旅费</td>
-                            <td><el-input v-model="budgetForm.mettingBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.mettingCurrentBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.mettingNextBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.mettingAfterBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.mettingSupportingBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.mettingNoteBudget"></el-input></td>
+                            <td><el-input v-model="budgetForm.mettingBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.mettingCurrentBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.mettingNextBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.mettingAfterBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.mettingSupportingBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.mettingNoteBudget" disabled></el-input></td>
                         </tr>
                         <tr >
                             <td>6、劳务费</td>
-                            <td><el-input v-model="budgetForm.laborBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.laborCurrentBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.laborNextBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.laborAfterBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.laborSupportingBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.laborNoteBudget"></el-input></td>
+                            <td><el-input v-model="budgetForm.laborBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.laborCurrentBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.laborNextBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.laborAfterBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.laborSupportingBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.laborNoteBudget" disabled></el-input></td>
                         </tr>
                         <tr >
                             <td>7、专家咨询费</td>
-                            <td><el-input v-model="budgetForm.expertsBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.expertsCurrentBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.expertsNextBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.expertsAfterBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.expertsSupportingBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.expertsNoteBudget"></el-input></td>
+                            <td><el-input v-model="budgetForm.expertsBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.expertsCurrentBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.expertsNextBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.expertsAfterBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.expertsSupportingBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.expertsNoteBudget" disabled></el-input></td>
                         </tr>
                         <tr >
                             <td><span>8、日常水、电、气、暖消耗等</span></td>
-                            <td><el-input v-model="budgetForm.dailyBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.dailyCurrentBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.dailyNextBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.dailyAfterBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.dailySupportingBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.dailyNoteBudget"></el-input></td>
+                            <td><el-input v-model="budgetForm.dailyBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.dailyCurrentBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.dailyNextBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.dailyAfterBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.dailySupportingBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.dailyNoteBudget" disabled></el-input></td>
                         </tr>
                     </tbody>
                 </table>

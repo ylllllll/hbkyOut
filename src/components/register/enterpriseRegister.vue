@@ -164,8 +164,9 @@
                     return false;
                 }
                 // 密码验证
-                if(this.validate.validatePwd(this.showForm.password)) {
-                    this.$alert('密码长度为6-18位','提示', {
+                let validatePwd = this.validate.validatePwd(this.showForm.password);
+                if(validatePwd) {
+                    this.$alert(validatePwd,'提示', {
                         confirmButtonText: '确定',
                         type: 'warning',
                         callback: action => {}
@@ -173,8 +174,9 @@
                     return false;
                 }
                 // 身份证验证
-                if(this.validate.validateCard(this.showForm.administratorInformation.contactIdCard)) {
-                    this.$alert('请输入正确的身份证号','提示', {
+                let validateCard = this.validate.validateCard(this.showForm.administratorInformation.contactIdCard);
+                if(validateCard) {
+                    this.$alert(validateCard,'提示', {
                         confirmButtonText: '确定',
                         type: 'warning',
                         callback: action => {}
@@ -182,8 +184,9 @@
                     return false;
                 }
                 // 手机号验证
-                if(this.validate.validatePhone(this.showForm.administratorInformation.contactPhone)) {
-                    this.$alert('请输入正确的手机号','提示', {
+                let validatePhone = this.validate.validatePhone(this.showForm.administratorInformation.contactPhone);
+                if(validatePhone) {
+                    this.$alert(validatePhone,'提示', {
                         confirmButtonText: '确定',
                         type: 'warning',
                         callback: action => {}
@@ -191,8 +194,9 @@
                     return false;
                 }
                 // 邮箱验证
-                if(this.validate.validateEmail(this.showForm.administratorInformation.email)) {
-                    this.$alert('请输入正确的电子邮件','提示', {
+                let validateEmail = this.validate.validateEmail(this.showForm.administratorInformation.email);
+                if(validateEmail) {
+                    this.$alert(validateEmail,'提示', {
                         confirmButtonText: '确定',
                         type: 'warning',
                         callback: action => {}
@@ -239,12 +243,6 @@
             },
             handleBack() {
                 this.$router.go(-1);
-            },
-            handleExceed() {
-                this.$message.warning("最多只能上传一个附件");
-            },
-            beforeRemove(file, fileList) {
-                return this.$confirm(`确定移除 ${ file.name }？`);
             },
             getFile(event,index) {
                 if(index == 1) {

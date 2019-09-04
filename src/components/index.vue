@@ -358,12 +358,13 @@
 		},
 		
 		watch: {
-			$route() {
-				let fullScreen = document.querySelector(".is-fullscreen");
-				if(fullScreen) {
-					fullScreen.style.display = "none";
-				}
-			}
+			// 切换页面时等待界面消失（存在bug）
+			// $route() {
+			// 	let fullScreen = document.querySelector(".is-fullscreen");
+			// 	if(fullScreen) {
+			// 		fullScreen.style.display = "none";
+			// 	}
+			// }
 		}
 	}
 </script>

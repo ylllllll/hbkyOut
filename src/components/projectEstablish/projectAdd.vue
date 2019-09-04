@@ -59,7 +59,7 @@
                             <td>
                                 课题联合投标单位：
                                 <br>
-                                （如有请填写）&nbsp;&nbsp;&nbsp;
+                                （如有请填写）
                             </td>
                             <td>
                                 <el-input v-model="showForm.joinTenderUnits"></el-input>
@@ -125,8 +125,8 @@
                 </table>
             </el-form>
             <div class="btn_group">
-                <el-button @click = "handleSubmit">提交</el-button>
-                <el-button @click = "handleBack">返回</el-button>
+                <el-button @click="handleSubmit">提交</el-button>
+                <el-button @click="handleBack">返回</el-button>
             </div>
         </div>
     </div>
@@ -134,9 +134,9 @@
 
 <script>
     export default {
-        name:'projectAdd',
-        data(){
-            return{
+        name: 'projectAdd',
+        data() {
+            return {
                 showForm: {
                     projectName: '',
                     tenderNo: '',
@@ -151,9 +151,7 @@
                     operator: '',
                     operatorContact: '',
                     remark: '',
-                    responsibleUnit: '',
-                    // 凑接口的字段
-                    auditStatus: '1'
+                    responsibleUnit: ''
                 },
                 Enclosure:{
                     fujian1:'',
@@ -166,6 +164,31 @@
         },
         methods:{ 
             handleSubmit(){
+                // 非空验证
+                for(let i in this.showForm) {
+                    if(typeof(this.showForm[i]) == "string") {
+                        if(this.showForm[i].match(/^[ ]*$/)){
+                            this.$alert('请将表格填写完整','提示', {
+                                confirmButtonText: '确定',
+                                type: 'warning',
+                                callback: action => {}
+                            });
+                            return false;
+                        }
+                    }
+                }
+                // 数字验证
+                let validateNum = [this.validate.validateNum(this.showForm.winningAmount),this.validate.validateNum(this.showForm.supportingFunds)];
+                for(let i in validateNum) {
+                    if(validateNum[i]) {
+                        this.$alert(validateNum[i],'提示', {
+                            confirmButtonText: '确定',
+                            type: 'warning',
+                            callback: action => {}
+                        });
+                        return false;
+                    }
+                }
                 const loading = this.$loading({
                     lock: true,
                     text: '请稍后...',
@@ -229,13 +252,17 @@
                                     width: 31.8%;
                                 }
                             }
+                            .el-textarea {
+                                padding: 10px;
+                            }
                         }
                     }
                 }
             }
         }
         .btn_group {
-            margin: 10px 0 30px 0;
+            padding: 10px 0 30px 0;
+            background-color: #fff;
         }
     }
 </style>
