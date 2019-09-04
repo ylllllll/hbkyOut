@@ -3,19 +3,19 @@
 		<header class="home_header">
 			<div class="item topic">
 				<img src="../assets/images/home/topic.png" alt="">
-				<div class="count">{{ test[0] }}</div>
+				<div class="count">{{ topicCount }}</div>
 			</div>
 			<div class="item contract">
 				<img src="../assets/images/home/contract.png" alt="">
-				<div class="count">{{ test[1] }}</div>
+				<div class="count">{{ contractCount }}</div>
 			</div>
 			<div class="item check">
 				<img src="../assets/images/home/check.png" alt="">
-				<div class="count">{{ test[2] }}</div>
+				<div class="count">{{ checkCount }}</div>
 			</div>
 			<div class="item expert">
 				<img src="../assets/images/home/expert.png" alt="">
-				<div class="count">{{ test[3] }}</div>
+				<div class="count">{{ expertCount }}</div>
 			</div>
 		</header>
 		<section class="home_content">
@@ -27,9 +27,9 @@
 							<span class="bar_left">标题</span>
 							<span class="bar_right">更新时间</span>
 						</li>
-						<li v-for="i in 10" :key="i" class="item">
-							<a class="item_left" href="">南京市鼓楼区绿化改建项目南京市鼓楼区绿化改建项目南京市鼓楼区绿化改建项目</a>
-							<span class="item_right">2019-04-26</span>
+						<li v-for="(item,index) in leftList" :key="'l'+index" class="item">
+							<a class="item_left" href="">{{ item.title }}</a>
+							<span class="item_right">{{ item.startTime }}</span>
 						</li>
 					</ul>
 				</div>
@@ -58,12 +58,52 @@
 		name: 'home',
 		data() {
 			return {
-				test: [275,96,79,100]
+				topicCount: 0,
+				contractCount: 0,
+				checkCount: 0,
+				expertCount: 0,
+				leftList: []
 			}
 		},
 		methods: {
 		},
-		mounted() {
+		mounted() {	
+
+			// 请求验收待审核
+			this.axios({
+				url: 'http://192.168.0.37:8087/extranet/subjectTotal',
+				method: 'post'
+			}).then((res) => {
+				if(res.data.resultFlag == 0) {
+					this.$nextTick(() => {
+						this.checkCount = res.data.data;
+					})
+				}else {
+					this.$alert(res.data.data,'提示',{
+						confirmButtonText: '确定',
+						type: 'warning',
+						callback: action => {}
+					});
+				}
+				
+			})
+
+			// 请求通知公告列表数据
+			this.axios({
+				url: 'http://192.168.0.37:8087/notification/ExtranetQuery',
+				method: 'post'
+			}).then((res) => {
+				let data = res.data.data,
+					length = 0;
+				if(data.length >= 10) {
+					length = 10;
+				}else {
+					length = data.length;
+				}
+				for(let i = 0;i < length;i ++) {
+					this.leftList.push(data[i]);
+				}
+			})
 		},
 	}
 </script>
@@ -96,6 +136,7 @@
 			margin-top: 15px;
 			.home_content_left,.home_content_right {
 				width: 49.65%;
+				min-height: 478px;
 				background-color: #fff;
 				color: #333;
 				padding: 20px;

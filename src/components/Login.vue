@@ -46,7 +46,7 @@
 	    name: 'login',
 	    data() {
 	        return {
-				rememberPwd: '',
+				rememberPwd: false,
 	        	codeUrl: 'http://192.168.0.80:8087/code/checkCode',
 	            ruleForm: {
 	                name: '',
@@ -105,9 +105,14 @@
 										_this.handleChangeCode();
 									})
 								}else {
-
+									// 记住密码
+									if(this.rememberPwd) {
+										localStorage.setItem("username",this.ruleForm.name);
+										localStorage.setItem("password",this.ruleForm.pwd);
+										localStorage.setItem("usertype",this.ruleForm.type);
+									}
 									let i = res.data.data.identity
-									document.cookie="identity="+i
+									document.cookie="identity="+i;
 									_this.$router.push("/index");
 								}
 							}).catch(() => {
@@ -137,6 +142,12 @@
 										_this.handleChangeCode();
 									})
 								}else{
+									// 记住密码
+									if(this.rememberPwd) {
+										localStorage.setItem("username",this.ruleForm.name);
+										localStorage.setItem("password",this.ruleForm.pwd);
+										localStorage.setItem("usertype",this.ruleForm.type);
+									}
 									_this.$router.push("/index");
 								}
 							}).catch(() => {
@@ -160,6 +171,17 @@
 		},
 		beforeMount() {
 			this.handleChangeCode();
+			let username = localStorage.getItem("username");
+			let password = localStorage.getItem("password");
+			let usertype = localStorage.getItem("usertype");
+			this.$nextTick(() => {
+				this.ruleForm.name = username;
+				this.ruleForm.pwd = password;
+				this.ruleForm.type = usertype;
+				if(username != "") {
+					this.rememberPwd = true;
+				}
+			})
 		}
 	}
 </script>

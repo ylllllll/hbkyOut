@@ -154,16 +154,16 @@
                     responsibleUnit: ''
                 },
                 Enclosure: {
-                    fujian1:'',
-                    fujian2:'',
-                    fujian3:'',
-                    fujian4:'',
-                    fujian5:'',
+                    winningDocument:'',
+                    transactionAnnouncement:'',
+                    noticeTransaction:'',
+                    responseFile:'',
+                    otherAttachments:'',
                 }
             }
         },
         methods:{ 
-            handleSubmit() { 
+            handleSubmit() {
                 // 非空验证
                 for(let i in this.showForm) {
                     if(typeof(this.showForm[i]) == "string") {
@@ -214,17 +214,50 @@
                     method: 'post',
                     data: this.showForm
                 }).then((res) => {
-                    loading.close();
                     let data = res.data;
                     if(data.resultFlag == 0) {
-                        this.$alert('提交成功','提示', {
-                            confirmButtonText: '确定',
-                            type: 'success',
-                            callback: action => {
-                                this.reload();
+                        let oid = data.data;
+                        let formData = new FormData();
+                        formData.append('oid',oid);
+                        formData.append('winningDocument',this.Enclosure.winningDocument);
+                        formData.append('transactionAnnouncement',this.Enclosure.transactionAnnouncement);
+                        formData.append('noticeTransaction',this.Enclosure.noticeTransaction);
+                        formData.append('responseFile',this.Enclosure.responseFile);
+                        formData.append('otherAttachments',this.Enclosure.otherAttachments);
+                        this.axios({
+                            url: 'http://192.168.0.80:8087/environment/tender/TenderFileUpload',
+                            method: 'post',
+                            data: formData,
+                            contentType: false,
+                            processData: false,
+                            usecredensives: true
+                        }).then((res) => {
+                            loading.close();
+                            if(res.data.resultFlag == 0) {
+                                this.$alert('提交成功','提示', {
+                                    confirmButtonText: '确定',
+                                    type: 'success',
+                                    callback: action => {
+                                        this.reload();
+                                    }
+                                });
+                            }else {
+                                this.$alert('提交失败','提示', {
+                                    confirmButtonText: '确定',
+                                    type: 'warning',
+                                    callback: action => {}
+                                });
                             }
-                        });
+                        }).catch(() => {
+                            loading.close();
+                            this.$alert('提交失败','提示', {
+                                confirmButtonText: '确定',
+                                type: 'warning',
+                                callback: action => {}
+                            });
+                        })
                     }else {
+                        loading.close();
                         this.$alert('提交失败','提示', {
                             confirmButtonText: '确定',
                             type: 'warning',
@@ -242,15 +275,15 @@
             },
             getFile(event,index) {
                 if(index == 1) {
-                    this.Enclosure.fujian1 = event.target.files[0];
+                    this.Enclosure.winningDocument = event.target.files[0];
                 }else if(index == 2) {
-                    this.Enclosure.fujian2 = event.target.files[0];
+                    this.Enclosure.transactionAnnouncement = event.target.files[0];
                 }else if(index == 3) {
-                    this.Enclosure.fujian3 = event.target.files[0];
+                    this.Enclosure.noticeTransaction = event.target.files[0];
                 }else if(index == 4) {
-                    this.Enclosure.fujian4 = event.target.files[0];
+                    this.Enclosure.responseFile = event.target.files[0];
                 }else if(index == 5) {
-                    this.Enclosure.fujian5 = event.target.files[0];
+                    this.Enclosure.otherAttachments = event.target.files[0];
                 }
             }
         }

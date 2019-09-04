@@ -161,7 +161,6 @@
                 </table>
             </el-form>
             <el-button @click="handleBack">返回</el-button>
-            {{ paramsData.id }}
         </div>
     </div>
 </template>

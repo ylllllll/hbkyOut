@@ -91,34 +91,34 @@
                                 </el-input>
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="file_tr">
                             <td>中标文件附件：</td>
-                            <td colspan="3">
-                                <el-input v-model="Enclosure.fujian1"></el-input>
+                            <td colspan="3" class="file_td">
+                                <a :href="fileData[0].upload_file_address" download="true">{{ fileData[0].upload_file_name }}</a>
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="file_tr">
                             <td>成交公告附件：</td>
-                            <td colspan="3">
-                                <el-input v-model="Enclosure.fujian2"></el-input>
+                            <td colspan="3" class="file_td">
+                                <a :href="fileData[1].upload_file_address" download="true">{{ fileData[1].upload_file_name }}</a>
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="file_tr">
                             <td>成交通知书附件：</td>
-                            <td colspan="3">
-                                <el-input v-model="Enclosure.fujian3"></el-input>
+                            <td colspan="3" class="file_td">
+                                <a :href="fileData[2].upload_file_address" download="true">{{ fileData[2].upload_file_name }}</a>
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="file_tr">
                             <td>响应文件附件：</td>
-                            <td colspan="3">
-                                <el-input v-model="Enclosure.fujian4"></el-input>
+                            <td colspan="3" class="file_td">
+                                <a :href="fileData[3].upload_file_address" download="true">{{ fileData[3].upload_file_name }}</a>
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="file_tr">
                             <td>其他附件：</td>
-                            <td colspan="3">
-                                <el-input v-model="Enclosure.fujian5"></el-input>
+                            <td colspan="3" class="file_td">
+                                <a :href="fileData[4].upload_file_address" download="true">{{ fileData[4].upload_file_name }}</a>
                             </td>
                         </tr>
                     </tbody>
@@ -192,7 +192,8 @@
                 paramsData: {
                     id: this.$route.params.id
                 },
-                tableData: []
+                tableData: [],
+                fileData: []
             }
         },
         methods: { 
@@ -211,6 +212,20 @@
             }).then((res) => {
                 this.showForm = res.data.data;
             })
+            // 附件信息
+            this.axios({
+                url: 'http://192.168.0.80:8087/environment/tender/updateTenderStatusByReturnCommit',
+                method: 'get',
+                params: {
+                    id: this.paramsData.id
+                }
+            }).then((res) => {
+                console.log(res.data.data);
+                let data = res.data.data;
+                this.fileData = data;
+                console.log(this.fileData)
+            })
+
             // 审核数据
             
         }

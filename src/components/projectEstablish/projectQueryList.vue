@@ -139,7 +139,7 @@
             // 请求列表数据
             _axios() {
                 this.axios({
-                    url: 'http://192.168.0.80:8087/environment/tender/getAllTender',
+                    url: 'http://192.168.0.80:8087/environment/tender/getTenderByUid',
                     method: 'get',
                     params: this.queryForm
                 }).then((res) => {
