@@ -134,14 +134,12 @@
                         <tr>
                             <td style="text-align:right;">专家组意见表文件：</td>
                             <td colspan="3" style="text-align:left;padding-left:10px;">
-                                <!-- <el-input v-model="showForm.expertGroupCommentsFile"></el-input> -->
                                 <input type="file" id="expertGroupCommentsFile">
                             </td>
                         </tr>
                         <tr>
                             <td style="text-align:right;">专家评议表文件：</td>
                             <td colspan="3" style="text-align:left; padding-left:10px;">
-                                <!-- <el-input v-model="showForm.expertAcceptanceFormFile"></el-input> -->
                                 <input type="file" id="expertAcceptanceFormFile">
                             </td>
                         </tr>

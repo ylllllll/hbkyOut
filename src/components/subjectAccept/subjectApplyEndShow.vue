@@ -162,23 +162,20 @@
                         </tr>
                         <tr>
                             <td>提交清单文件：</td>
-                            <td colspan="3" style="height:50px;"> 
-                                <el-input disabled v-model="showForm.submitInventoryUrl"></el-input>
+                            <td colspan="3" style="height:50px;padding-left:10px;">
+                                <a  @click="uploadFileInventory(showForm.submitInventoryUrl,showForm.submitInventoryUrlName)"  :download="showForm.submitInventoryUrlName">{{showForm.submitInventoryUrlName}}</a>
                             </td>
                         </tr>
                         <tr>
                             <td>验收申请表附件：</td>
-                            <td colspan="3" style="height:50px;">
-                                <el-input 
-                                 disabled
-                                 v-model="showForm.applicationAcceptanceUrl"
-                                 ></el-input>
+                            <td colspan="3" style="height:50px;padding-left:10px;">
+                                <a  @click="uploadFileInventory(showForm.applicationAcceptanceUrl,showForm.applicationAcceptanceUrlName)"  :download="showForm.applicationAcceptanceUrlName">{{showForm.applicationAcceptanceUrlName}}</a>
                             </td>
                         </tr>
                         <tr>
                             <td>成果附件：</td>
-                            <td colspan="3" style="height:50px;">
-                                <el-input disabled v-model="showForm.achievementsUrl" ></el-input>
+                            <td colspan="3" style="height:50px;padding-left:10px;">
+                                <a  @click="uploadFileInventory(showForm.achievementsUrl,showForm.achievementsName)"  :download="showForm.achievementsName">{{showForm.achievementsName}}</a>
                             </td>
                         </tr>
                     </tbody>
@@ -190,15 +187,14 @@
                         <tbody>
                             <tr>
                                 <td>专项审计报告（事务所出具报告）：</td>
-                                <!-- <td colspan="3"><input type="file" id="specialAuditFile"></td> -->
-                                <td colspan="3">
-                                    <el-input v-model="showForm.auditReportUrl"></el-input>
+                                <td colspan="3" style="height:50px;padding-left:10px;">
+                                    <a  @click="uploadFileInventory(showForm.auditReportUrl,showForm.auditReportUrlName)"  :download="showForm.auditReportUrlName">{{showForm.auditReportUrlName}}</a>
                                 </td>
                             </tr>
                             <tr>
                                 <td>初审报告：</td>
-                                <td colspan="3">
-                                    <el-input v-model="showForm.firstInspectionReportUrl"></el-input>
+                                <td colspan="3" style="height:50px;padding-left:10px;">
+                                    <a  @click="uploadFileInventory(showForm.firstInspectionReportUrl,showForm.firstInspectionReportUrlName)"  :download="showForm.firstInspectionReportUrlName">{{showForm.firstInspectionReportUrlName}}</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -332,14 +328,14 @@
                             </tr>
                             <tr>
                                 <td>专家组意见表文件：</td>
-                                <td colspan="3">
-                                    <el-input disabled v-model="showForm.extranetExpertGroupCommentsUrl"></el-input>
+                                <td colspan="3" style="height:50px;text-align:left;padding-left:10px;">
+                                    <a  @click="uploadFileInventory(showForm.expertGroupCommentsUrl,showForm.expertGroupCommentsUrlName)"  :download="showForm.expertGroupCommentsUrlName">{{showForm.expertGroupCommentsUrlName}}</a>
                                 </td>
                             </tr>
                             <tr>
                                 <td>专家评议表文件：</td>
-                                <td colspan="3">
-                                    <el-input disabled v-model="showForm.expertAcceptanceFormUrl"></el-input>
+                                <td colspan="3" style="height:50px;text-align:left;padding-left:10px;">
+                                    <a  @click="uploadFileInventory(showForm.expertAcceptanceFormUrl,showForm.expertAcceptanceFormUrlName)"  :download="showForm.expertAcceptanceFormUrlName">{{showForm.expertAcceptanceFormUrlName}}</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -979,8 +975,8 @@
                             </tr>
                             <tr>
                                 <td>上传的最终证书文件：</td>
-                                <td colspan="3">
-                                    <el-input disabled v-model="showForm.acceptanceCertificateUrl"></el-input>
+                                <td colspan="3" style="height:50px;">
+                                    <a @click="uploadFileInventory(showForm.acceptanceCertificateUrl,showForm.acceptanceCertificateUrlName)"  :download="showForm.acceptanceCertificateUrlName" >{{showForm.acceptanceCertificateUrlName}}</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -1221,6 +1217,7 @@ export default {
                 url:'http://192.168.0.37:8087/checkApplyStyle/unitNature',
             }).then(function(res){
                 _this.unitNatureOptions = res.data.data
+                _this.getApplicationAcceptanceModeOptions()//申请验收形式
             }).catch(function(err){
                 console.log(err)
             })
@@ -1233,6 +1230,7 @@ export default {
                 url:'http://192.168.0.37:8087/checkApplyStyle/applicationAcceptance',
             }).then(function(res){
                 _this.applicationAcceptanceModeOptions = res.data.data
+                _this.getSubmitInventoryOptions()//验收提交资料清单接口
             }).catch(function(err){
                 console.log(err)
             })
@@ -1245,6 +1243,7 @@ export default {
                 url:'http://192.168.0.37:8087/checkApplyStyle/applicationSubmitList'
             }).then(function(res){
                 _this.submitInventoryOptions = res.data.data
+                _this.getAchievementFormOptions()//获取成果形式
             }).catch(function(err){
                 console.log(err)
             })
@@ -1255,6 +1254,10 @@ export default {
                 arrays.map((item) => {
                     if(id == item.id){
                         this.showForm = item
+                        this.showForm.submitInventory = JSON.parse(item.submitInventory)
+                        if(item.acceptanceCertificate != null || item.acceptanceCertificate !=undefined){
+                            this.showForm.acceptanceCertificate.achievementForm = JSON.parse(item.acceptanceCertificate.achievementForm)
+                        }
                         return;
                     }
                 })
@@ -1281,6 +1284,7 @@ export default {
                 url:'http://192.168.0.37:8087/checkApplyStyle/queryAchievementShape',
             }).then(function(res){
                 _this.achievementFormOptions = res.data.data
+                _this.getAchievementLevelOptions()//成果水平
             }).catch(function(err){
                 console.log(err)
             })
@@ -1293,20 +1297,25 @@ export default {
                 url:'http://192.168.0.37:8087/checkApplyStyle/queryAchievementLevel',
             }).then(function(res){
                 _this.achievementLevelOptions = res.data.data
+                _this.getAcceptance()//获取成果形式
             }).catch(function(err){
                 console.log(err)
             })
+        },
+        // 下载文件
+        uploadFileInventory(fileUrl,fileName){
+            window.location.href="http://192.168.0.37:8087/file/queryFileStream"+'?fileUrl=' + fileUrl + '&fileName=' + fileName
         }
 
     },
     async mounted(){
        await this.getUnitNature()//单位性质
-       await this.getApplicationAcceptanceModeOptions()//申请验收形式
-       await this.getSubmitInventoryOptions()//验收提交资料清单接口
-       await this.getAchievementFormOptions()//获取成果形式
-       await this.getAchievementLevelOptions()//成果水平
+    //    await this.getApplicationAcceptanceModeOptions()//申请验收形式
+    //    await this.getSubmitInventoryOptions()//验收提交资料清单接口
+    //    await this.getAchievementFormOptions()//获取成果形式
+    //    await this.getAchievementLevelOptions()//成果水平
+    //    await this.getAcceptance()//获取成果形式
        await this.TicketParams(this.paramsData.id,this.paramsData.arrays)
-       await this.getAcceptance()
     }
 }
 </script>
@@ -1482,7 +1491,6 @@ export default {
             }
             .el-checkbox-group{
                 >span{
-                    margin:5px 10px;
                     display: inline-block;
                     .el-checkbox{
                         min-width: 120px;

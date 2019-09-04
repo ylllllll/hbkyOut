@@ -9,33 +9,13 @@
                     <tbody>
                         <tr>
                             <td>课题名称：</td>
-                            <td>
-                                <!-- <el-input v-model="showForm.topicName" ></el-input> -->
-                                <el-select 
-                                 v-model="showForm.topicName"  
-                                 placeholder="请选择"
-                                 @change="handleSelectChange">
-                                    <el-option
-                                    v-for="item in topicNameOptions"
-                                    :key="item.id"
-                                    :label="item.subjectName"
-                                    :value="item.subjectName">
-                                    </el-option>
-                                </el-select>
+                            <td @click="handleSelect">
+                                <el-input v-model="showForm.topicName" disabled placeholder="点击选择课题名称" ></el-input>
+
                             </td>
                             <td>课题编号：</td>
                             <td>
-                                <el-select 
-                                 v-model="showForm.topicNumber"  
-                                 placeholder="请选择"
-                                 @change="handleTopicNumberChange">
-                                    <el-option
-                                    v-for="(item,index) in topicNumberOptions"
-                                    :key="index"
-                                    :label="index"
-                                    :value="item">
-                                    </el-option>
-                                </el-select>
+                                <el-input v-model="showForm.topicNumber" disabled ></el-input>
                             </td>
                         </tr>
                         <tr>
@@ -67,11 +47,11 @@
                         <tr>
                             <td>课题责任人电子邮箱：</td>
                             <td>
-                                <el-input v-model="showForm.projectLeaderMail" ></el-input>
+                                <el-input disabled v-model="showForm.projectLeaderMail" ></el-input>
                             </td>
                             <td>课题责任人通讯地址：</td>
                             <td>
-                                <el-input v-model="showForm.postalAddress" ></el-input>
+                                <el-input disabled v-model="showForm.postalAddress" ></el-input>
                             </td>
                         </tr>
                         <tr>
@@ -87,7 +67,6 @@
                         <tr>
                             <td>验收申请时间：</td>
                             <td>
-                                <!-- <el-input v-model="showForm.applicationAcceptanceTime" ></el-input> -->
                                 <el-date-picker
                                     v-model="showForm.applicationAcceptanceTime"
                                     type="date"
@@ -195,17 +174,12 @@
                         <tr>
                             <td>验收申请表附件：</td>
                             <td colspan="3" style="height:50px;">
-                                <!-- <el-input 
-                                 v-model="showForm.applicationAcceptanceUrl"
-                                 ></el-input> -->
                                  <input type="file" id="applicationAcceptanceFile">
                             </td>
                         </tr>
                         <tr>
                             <td>成果附件：</td>
                             <td colspan="3" style="height:50px;">
-                                <!-- <el-input v-model="showForm.achievementsUrl" ></el-input> -->
-                                <!-- <a class='download' :href='showForm.achievementsUrl' download=""  title="下载">下载</a> -->
                                 <input type="file" id="achievementsFile">
                             </td>
                         </tr>
@@ -214,11 +188,22 @@
             </el-form>
             <el-button type="primary"  @click="handleSubmit">提交</el-button>
         </div>
+        <!-- 选择课题名称弹出框 -->
+        <div class="popBox" v-if="isShowPopBox">
+            <div class="popContent">
+                <popBox @confirm="handleChildConfirm" @popClose="handlePopClose"></popBox>
+            </div>
+        </div>
     </div>
 </template>
 <script>
+import SubjectApplyAddBox from '@/components/subjectAccept/subjectApplyAddBox'
 export default {
+    inject:["reload"],
     name:'subjectApplyAdd',
+    components:{
+        popBox:SubjectApplyAddBox
+    },
     data(){
         return{
             showForm:{
@@ -244,15 +229,12 @@ export default {
                 environmentalDepartmentsOpinion:'',
                 provinceAssessmentCenterOpinion:'',
                 competentDepartmentOinion:'',
-                // applicationAcceptanceUrl:'',
-                // achievementsUrl:''
             },
             topicNameOptions:[{//课题名称
                 "id":'',
                 "subjectName":''
             }],
             topicNumberOptions:[{//课题编号
-
             }],
             unitNatureOptions:[{//单位性质接口
                 "id": 1,
@@ -269,13 +251,14 @@ export default {
             submitInventoryOptions:[{//验收提交资料清单
                 id:'',
                 content:''
-            }]
+            }],
+            isShowPopBox:false,
+            contractId:''
         }
     },
     methods:{
         // 提交
         handleSubmit(){
-            console.log()
             for(let i in this.showForm){
                 if(typeof(this.showForm[i]) == "string"){
                     if(this.showForm[i].match(/^[ ]*$/) || this.showForm[i] == 'null' || this.showForm == undefined){
@@ -317,11 +300,6 @@ export default {
             formData.append('submitInventoryFile',submitInventoryFile)
             formData.append('applicationAcceptanceFile',applicationAcceptanceFile)
             formData.append('achievementsFile',achievementsFile)
-            // JSON.stringify(_this.showForm.submitInventory)
-            // submitInventoryFile 提交清单文件
-            // applicationAcceptanceFile 验收申请表文件
-            // achievementsFile 成果附件文件
-
             let extranetCheckApply = JSON.stringify({
                 topicName:_this.showForm.topicName,
                 topicNumber:_this.showForm.topicNumber,
@@ -347,6 +325,7 @@ export default {
                 submitInventory:JSON.stringify(_this.showForm.submitInventory),
             })
             formData.append('extranetCheckApply', new Blob([extranetCheckApply], {type: "application/json"}))
+            formData.append('contractId',_this.contractId)
             this.axios({
                 method:'POST',
                 url:'http://192.168.0.37:8087/apply/addAcceptApply',
@@ -358,91 +337,51 @@ export default {
                 data:formData
             }).then(function(res){
                 let data = res.data.data
-                if(res.data.resultFlag == 0){
-                    _this.$alert(data, '提示', {
-                        confirmButtonText: '确定',
-                        callback: action => {
-                            // _this.$refs['showForm'].resetFields();
-                            // 备用刷新
-                            _this.$router.back(0)
-                        }
-                    });
-                }else if(res.data.resultFlag == 1){
-                    _this.$alert(data, '提示', {
-                        confirmButtonText: '确定',
-                        callback: action => {
-                            
-                        }
-                    });
-                }
-            }).catch(function(err){
-                console.log(err)
-            })
-        },
-        // 课题名称
-        getTopicNameOptions(){
-            let _this = this
-            this.axios({
-                method:'POST',
-                url:'http://192.168.0.37:8087/apply/queryTopicName'
-            }).then(function(res){
-                _this.topicNameOptions = res.data.data
-            }).catch(function(err){
-                console.log(err)
-            })
-        },
-        // 根据课题名称获取课题编号
-        getTopicNumber(projectName){
-            let _this = this
-            this.axios({
-                method:'POST',
-                url:'http://192.168.0.37:8087/apply/queryTopicNumber',
-                params:{
-                    projectName:projectName
-                }
-            }).then(function(res){
-                _this.topicNumberOptions = res.data.data
-            }).catch(function(err){
-                console.log(err)
-            })
-        },
-        // 选中课题名称
-        handleSelectChange(){
-            this.getTopicNumber(this.showForm.topicName)//获取课题编号
-        },
-        // 选中课题编号
-        handleTopicNumberChange(){
-            // event.srcElement.blur()
-            if(this.showForm.topicName == '' || this.showForm.topicName == undefined){
-                this.$alert('请先选择课题名称', '提示', {
+                _this.$alert(data, '提示', {
                     confirmButtonText: '确定',
+                    type:'info',
                     callback: action => {
+                        _this.reload()
                     }
                 });
-                return false
-            }else{
-                this.getInformationByTopicNumber(this.showForm.topicNumber)
-            }
-        },
-        // 根据编号获取信息
-        getInformationByTopicNumber(topicNumber){
-            let _this = this
-            this.axios({
-                method:'POST',
-                url:'http://192.168.0.37:8087/apply/queryInformationByTopicNumber',
-                params:{
-                    projectNumber:topicNumber
-                }
-            }).then(function(res){
-                _this.showForm.agreementEndTime = res.data.data.agreementEndTime
-                _this.showForm.agreementStartTime = res.data.data.agreementStartTime
-                _this.showForm.subjectUndertakingUnit = res.data.data.subjectUndertakingUnit
-                _this.showForm.unitNature = res.data.data.unitNature
-                _this.showForm.projectLeader = res.data.data.projectLeader
-                _this.showForm.projectLeaderPhone = res.data.data.projectLeaderPhone
             }).catch(function(err){
                 console.log(err)
             })
+        },
+        // 点击课题名称
+        handleSelect(){
+            this.isShowPopBox = true
+        },
+        handleChildConfirm(val,data){
+            if(val.length != 1){
+                this.$alert('请选择一条数据','提示',{
+                    confirmButtonText: '确定',
+                    type: 'warning',
+                    callback: action => {}
+                })
+            }else{
+                this.isShowPopBox = false
+                data.map((item) => {
+                    if(val[0] == item.id){
+                        this.contractId = item.id
+                        this.showForm.topicName = item.subjectName
+                        this.showForm.topicNumber = item.projectNo
+                        this.showForm.subjectUndertakingUnit = item.commitmentUnit
+                        this.showForm.unitNature = item.unitNature
+                        this.showForm.projectLeader= item.subjeceLeader
+                        this.showForm.projectLeaderPhone = item.subjectLeaderPhone
+                        this.showForm.projectLeaderMail = item.email 
+                        this.showForm.postalAddress= item.commitmentUnitAddress
+                        this.showForm.agreementStartTime = item.contractStartTime
+                        this.showForm.agreementEndTime = item.contractEndTime
+                        return;
+                    }
+                })
+            }
+        },
+        // 关闭
+        handlePopClose(){
+            this.isShowPopBox = false
         },
         // 单位性质字典类接口
         getUnitNature(){
@@ -452,6 +391,7 @@ export default {
                 url:'http://192.168.0.37:8087/checkApplyStyle/unitNature',
             }).then(function(res){
                 _this.unitNatureOptions = res.data.data
+                _this.getApplicationAcceptanceModeOptions()
             }).catch(function(err){
                 console.log(err)
             })
@@ -464,6 +404,7 @@ export default {
                 url:'http://192.168.0.37:8087/checkApplyStyle/applicationAcceptance',
             }).then(function(res){
                 _this.applicationAcceptanceModeOptions = res.data.data
+                _this.getSubmitInventoryOptions()
             }).catch(function(err){
                 console.log(err)
             })
@@ -483,10 +424,9 @@ export default {
         
     },
     async created(){
-        await this.getTopicNameOptions()//课题名称
         await this.getUnitNature()//单位性质
-        await this.getApplicationAcceptanceModeOptions()//申请验收形式
-        await this.getSubmitInventoryOptions()//验收提交资料清单接口
+        // await this.getApplicationAcceptanceModeOptions()//申请验收形式
+        // await this.getSubmitInventoryOptions()//验收提交资料清单接口
     }
 }
 </script>
@@ -551,6 +491,28 @@ export default {
                     line-height: 50px;
                 }
             }
+        }  
+    }
+    .popBox{
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        top: 0;
+        left: 0;
+        z-index: 101;
+        .popContent{
+            position: absolute;
+            width: 85%;
+            min-width: 1000px;
+            height: 580px;
+            overflow: auto;
+            background-color: #fff;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
         }
     }
 }
