@@ -111,8 +111,12 @@
 										localStorage.setItem("password",this.ruleForm.pwd);
 										localStorage.setItem("usertype",this.ruleForm.type);
 									}
+									// 身份
 									let i = res.data.data.identity
 									document.cookie="identity="+i;
+									// 姓名
+									let realName = res.data.data.realName;
+									document.cookie="realName="+realName;
 									_this.$router.push("/index");
 								}
 							}).catch(() => {

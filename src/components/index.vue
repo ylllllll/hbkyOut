@@ -30,9 +30,9 @@
 						</div>
 						<div class="header_top_right">
 							<a class="user_solid"></a>
-							<span class="welcome">欢迎{{ test.username }}登录！</span>
-							<a class="tools"></a>
-							<a class="question"></a>
+							<span class="welcome">欢迎{{ realName }}登录！</span>
+							<!-- <a class="tools"></a> -->
+							<!-- <a class="question"></a> -->
 							<a class="switch" @click="handleLogOut"></a>
 						</div>
 					</div>
@@ -63,9 +63,7 @@
 		},
 		data() {
 			return {
-				test: {
-					username: '评估中心'
-				},
+				realName: '123',
 				testNav: [{
 					id: '10',
 					name: '指南管理',
@@ -355,6 +353,20 @@
 				let mainHeight = parseInt(window.getComputedStyle(document.querySelector(".el-main")).height) - 35 + "px";
 				document.querySelector(".el-main .box").style.height = mainHeight;
 			})
+			// 获取真实姓名
+			// this.realName = document.cookie;
+			console.log(document.cookie.indexOf("realName"))
+			console.log(document.cookie.split(";"))
+			let arr = document.cookie.split(";");
+			for(let i in arr) {
+				// arr2 = arr[i].split("=");
+				console.log(arr[i].split("="));
+				let arr2 = arr[i].split("=");
+				if(arr2[0].trim() == "realName") {
+					this.realName = arr2[1];
+					console.log(arr2[1])
+				}
+			}
 		},
 		provide() {
 			return {

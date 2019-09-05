@@ -160,7 +160,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/checkApplyStyle/queryAchievementLevel',
+                url:'http://192.168.0.80:8087/checkApplyStyle/queryAchievementLevel',
             }).then(function(res){
                 console.log(res)
                 _this.achievementLevelOptions = res.data.data
@@ -177,7 +177,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/apply/queryResult',
+                url:'http://192.168.0.80:8087/apply/queryResult',
                 params:{
                     topicName,
                     topicNumber,

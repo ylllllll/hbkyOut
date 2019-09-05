@@ -39,7 +39,7 @@
                                 <el-input 
                                     v-model="showForm.reason_basis" 
                                     :disabled="true"
-                                    :autosize="{ minRows:3 }"
+                                    :autosize="{ minRows:4 }"
                                     type="textarea">
                                 </el-input>
                             </td>
@@ -50,7 +50,7 @@
                                 <el-input 
                                     v-model="showForm.research_content_technology" 
                                     :disabled="true"
-                                    :autosize="{ minRows:3 }"
+                                    :autosize="{ minRows:4 }"
                                     type="textarea">
                                  </el-input>
                             </td>
@@ -61,7 +61,7 @@
                                 <el-input 
                                     v-model="showForm.expected_target_outcome" 
                                     :disabled="true"
-                                    :autosize="{ minRows:3 }"
+                                    :autosize="{ minRows:4 }"
                                     type="textarea">
                                 </el-input>
                             </td>
@@ -77,8 +77,8 @@
                             <td>单位负责人：</td>
                             <td>
                                 <el-input 
-                                 v-model="showForm.person"
-                                 :disabled="true">
+                                    v-model="showForm.unit_principal"
+                                    :disabled="true">
                                 </el-input>
                             </td>
                         </tr>
@@ -148,19 +148,12 @@
                                 </el-input>
                             </td>
                         </tr>
-                        <!-- <tr>
-                            <td>附件：</td>
-                            <td colspan="3">
-                                <el-input 
-                                 v-model="showForm.file"
-                                 :disabled="true">
-                                </el-input>
-                            </td>
-                        </tr> -->
                     </tbody>
                 </table>
             </el-form>
-            <el-button @click="handleBack">返回</el-button>
+            <div class="btn_group">
+                <el-button @click="handleBack">返回</el-button>
+            </div>
         </div>
     </div>
 </template>
@@ -216,7 +209,10 @@
                                 }
                             }
                             .el-textarea {
-                                padding: 10px;
+                                .el-textarea__inner {
+                                    padding: 10px;
+                                    resize: none;
+                                }
                             }
                         }
                         

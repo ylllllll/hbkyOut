@@ -136,7 +136,7 @@
                 formData.append('legalCardIdFile',this.legalCardIdFile);
                 formData.append('contactCardFile',this.contactCardFile);
                 this.axios({
-                    url: 'http://192.168.0.37:8087/company/register',
+                    url: 'http://192.168.0.80:8087/company/register',
                     method: 'post',
                     data: formData,
                     contentType: false,
@@ -148,12 +148,6 @@
             },
             handleBack() {
                 this.$router.go(-1);
-            },
-            handleExceed() {
-                this.$message.warning("最多只能上传一个附件");
-            },
-            beforeRemove(file, fileList) {
-                return this.$confirm(`确定移除 ${ file.name }？`);
             },
             getFile(event,index) {
                 if(index == 1) {

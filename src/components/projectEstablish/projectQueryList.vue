@@ -28,10 +28,6 @@
                 :data="tableData"
                 tooltip-effect="dark"
                 style="width: 100%">
-                <!-- <el-table-column
-                    type="selection"
-                    align="center">
-                </el-table-column> -->
                 <el-table-column
                     type="index"
                     label="序号"
@@ -56,33 +52,37 @@
                 <el-table-column
                     prop="subjectName"
                     label="课题名称"
+                    :show-overflow-tooltip="true"
                     align="center">
                 </el-table-column>
                 <el-table-column
                     prop="winningAmount"
                     label="中标（成交）金额"
+                    :show-overflow-tooltip="true"
                     align="center">
                 </el-table-column>
                 <el-table-column
                     prop="supportingFunds"
                     label="配套经费"
+                    :show-overflow-tooltip="true"
                     align="center">
                 </el-table-column>
                 <el-table-column
                     prop="subjectLeader"
                     label="课题负责人"
-                    fit="true"
+                    :show-overflow-tooltip="true"
                     align="center">
                 </el-table-column>
                 <el-table-column
                     prop="leaderContact"
                     label="课题负责人联系方式"
-                    fit="true"
+                    :show-overflow-tooltip="true"
                     align="center">
                 </el-table-column>
                 <el-table-column
                     prop="operatorContact"
                     label="经办人及联系方式"
+                    :show-overflow-tooltip="true"
                     align="center">
                 </el-table-column>
             </el-table>
@@ -109,9 +109,7 @@
                     projectName:'',
                     subjectName:'',
                     subjectLeader:'',
-                    leaderContact:'',
-                    pageNum: 1,
-                    pageSize: 10
+                    leaderContact:''
                 },
                 loading: true,
                 tableData:[],
@@ -125,11 +123,11 @@
         },
         methods:{
             handleCurrentChange(val) {              //val表示当前页
-                this.queryForm.pageNum = val;
+                this.fenye.pageNum = val;
                 this._axios();
             },
             handleSizeChange(val) {                 //val表示每页展示的条数
-                this.queryForm.pageSize = val;
+                this.fenye.pageSize = val;
                 this._axios();
             },
             handleTableFresh(){
@@ -138,10 +136,13 @@
             },
             // 请求列表数据
             _axios() {
+                let data = this.queryForm;
+                data.pageNum = this.fenye.pageNum;
+                data.pageSize = this.fenye.pageSize;
                 this.axios({
                     url: 'http://192.168.0.80:8087/environment/tender/getTenderByUid',
                     method: 'get',
-                    params: this.queryForm
+                    params: data
                 }).then((res) => {
                     this.loading = false;
                     let data = res.data.data;

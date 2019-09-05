@@ -270,7 +270,7 @@ export default {
             formData.append('extranetExpertGroupComment',new Blob([expertGroupComment],{type:'application/json'}))
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/apply/submitExpertGroup',
+                url:'http://192.168.0.80:8087/apply/submitExpertGroup',
                 data:formData
             }).then(function(res){
                 let data = ''
@@ -324,7 +324,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/checkApplyStyle/finalAcceptanceMethod',
+                url:'http://192.168.0.80:8087/checkApplyStyle/finalAcceptanceMethod',
             }).then(function(res){
                 _this.finalAcceptanceMethod = res.data.data
             }).catch(function(err){

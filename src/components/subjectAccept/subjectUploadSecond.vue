@@ -767,7 +767,7 @@ export default {
             formData.append('acceptanceCertificate',new Blob([acceptanceCertificate],{type:'application/json'}))
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/apply/submitLastReport',
+                url:'http://192.168.0.80:8087/apply/submitLastReport',
                 data:formData
             }).then(function(res){
                 let data = ''
@@ -813,7 +813,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/checkApplyStyle/unitNature'
+                url:'http://192.168.0.80:8087/checkApplyStyle/unitNature'
             }).then(function(res){
                 _this.unitNatureOptions = res.data.data
                 _this.getAchievementFormOptions()
@@ -826,7 +826,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/checkApplyStyle/queryAchievementShape'
+                url:'http://192.168.0.80:8087/checkApplyStyle/queryAchievementShape'
             }).then(function(res){
                 _this.achievementFormOptions = res.data.data
                 _this.getAchievementLevelOptions()
@@ -839,7 +839,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/checkApplyStyle/queryAchievementLevel'
+                url:'http://192.168.0.80:8087/checkApplyStyle/queryAchievementLevel'
             }).then(function(res){
                 _this.achievementLevelOptions = res.data.data
             }).catch(function(err){

@@ -328,7 +328,7 @@ export default {
             formData.append('contractId',_this.contractId)
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/apply/addAcceptApply',
+                url:'http://192.168.0.80:8087/apply/addAcceptApply',
                 //忽略contentType
                 contentType: false,
                 //取消序列换 formData本来就是序列化好的
@@ -388,7 +388,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/checkApplyStyle/unitNature',
+                url:'http://192.168.0.80:8087/checkApplyStyle/unitNature',
             }).then(function(res){
                 _this.unitNatureOptions = res.data.data
                 _this.getApplicationAcceptanceModeOptions()
@@ -401,7 +401,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/checkApplyStyle/applicationAcceptance',
+                url:'http://192.168.0.80:8087/checkApplyStyle/applicationAcceptance',
             }).then(function(res){
                 _this.applicationAcceptanceModeOptions = res.data.data
                 _this.getSubmitInventoryOptions()
@@ -414,7 +414,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/checkApplyStyle/applicationSubmitList'
+                url:'http://192.168.0.80:8087/checkApplyStyle/applicationSubmitList'
             }).then(function(res){
                 _this.submitInventoryOptions = res.data.data
             }).catch(function(err){

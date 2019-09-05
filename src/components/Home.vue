@@ -71,7 +71,7 @@
 
 			// 请求验收待审核
 			this.axios({
-				url: 'http://192.168.0.37:8087/extranet/subjectTotal',
+				url: 'http://192.168.0.80:8087/extranet/subjectTotal',
 				method: 'post'
 			}).then((res) => {
 				if(res.data.resultFlag == 0) {
@@ -90,7 +90,7 @@
 
 			// 请求通知公告列表数据
 			this.axios({
-				url: 'http://192.168.0.37:8087/notification/ExtranetQuery',
+				url: 'http://192.168.0.80:8087/notification/ExtranetQuery',
 				method: 'post'
 			}).then((res) => {
 				let data = res.data.data,

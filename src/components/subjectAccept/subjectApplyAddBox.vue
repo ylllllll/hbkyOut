@@ -149,7 +149,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/apply/queryTopicNameAndNumber',
+                url:'http://192.168.0.80:8087/apply/queryTopicNameAndNumber',
                 params:{
                     Page,
                     total

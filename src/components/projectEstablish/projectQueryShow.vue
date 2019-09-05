@@ -84,7 +84,7 @@
                             <td colspan="3">
                                 <el-input 
                                     v-model="showForm.remark"
-                                    :autosize="{ minRows:3 }"
+                                    :autosize="{ minRows:4 }"
                                     type="textarea"
                                     maxlength="200"
                                     disabled>
@@ -94,38 +94,38 @@
                         <tr class="file_tr">
                             <td>中标文件附件：</td>
                             <td colspan="3" class="file_td">
-                                <a :href="fileData[0].upload_file_address" download="true">{{ fileData[0].upload_file_name }}</a>
+                                <a @click="handleDownload(0)">{{ fileData[0].upload_file_name }}</a>
                             </td>
                         </tr>
                         <tr class="file_tr">
                             <td>成交公告附件：</td>
                             <td colspan="3" class="file_td">
-                                <a :href="fileData[1].upload_file_address" download="true">{{ fileData[1].upload_file_name }}</a>
+                                <a @click="handleDownload(1)">{{ fileData[1].upload_file_name }}</a>
                             </td>
                         </tr>
                         <tr class="file_tr">
                             <td>成交通知书附件：</td>
                             <td colspan="3" class="file_td">
-                                <a :href="fileData[2].upload_file_address" download="true">{{ fileData[2].upload_file_name }}</a>
+                                <a @click="handleDownload(2)">{{ fileData[2].upload_file_name }}</a>
                             </td>
                         </tr>
                         <tr class="file_tr">
                             <td>响应文件附件：</td>
                             <td colspan="3" class="file_td">
-                                <a :href="fileData[3].upload_file_address" download="true">{{ fileData[3].upload_file_name }}</a>
+                                <a @click="handleDownload(3)">{{ fileData[3].upload_file_name }}</a>
                             </td>
                         </tr>
                         <tr class="file_tr">
                             <td>其他附件：</td>
                             <td colspan="3" class="file_td">
-                                <a :href="fileData[4].upload_file_address" download="true">{{ fileData[4].upload_file_name }}</a>
+                                <a @click="handleDownload(4)">{{ fileData[4].upload_file_name }}</a>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </el-form>
             <div class="btn_group">
-                <el-button @click = "handleBack">返回</el-button>
+                <el-button @click="handleBack">返回</el-button>
             </div>
             <el-table
                 ref="multipleTable"
@@ -182,26 +182,32 @@
         data(){
             return{
                 showForm:{},
-                Enclosure:{
-                    fujian1:'',
-                    fujian2:'',
-                    fujian3:'',
-                    fujian4:'',
-                    fujian5:'',
-                },
                 paramsData: {
                     id: this.$route.params.id
                 },
                 tableData: [],
-                fileData: []
+                // 解决报错
+                fileData: [
+                    {upload_file_name: ''},
+                    {upload_file_name: ''},
+                    {upload_file_name: ''},
+                    {upload_file_name: ''},
+                    {upload_file_name: ''}
+                ]
             }
         },
         methods: { 
             handleBack() {
                 this.$router.go(-1);
+            },
+            handleDownload(val) {
+                window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
+                                     + this.fileData[val].upload_file_address 
+                                     + '&fileName=' 
+                                     + this.fileData[val].upload_file_name;
             }
         },
-        beforeMount() {
+        mounted() {
             // 主表数据
             this.axios({
                 url: 'http://192.168.0.80:8087/environment/tender/getTenderById',
@@ -212,19 +218,21 @@
             }).then((res) => {
                 this.showForm = res.data.data;
             })
-            // 附件信息
-            this.axios({
-                url: 'http://192.168.0.80:8087/environment/tender/updateTenderStatusByReturnCommit',
-                method: 'get',
-                params: {
-                    id: this.paramsData.id
-                }
-            }).then((res) => {
-                console.log(res.data.data);
-                let data = res.data.data;
-                this.fileData = data;
-                console.log(this.fileData)
-            })
+            // 解决接口数据混乱
+            setTimeout(() => {
+                 // 附件信息
+                this.axios({
+                    url: 'http://192.168.0.80:8087/environment/tender/updateTenderStatusByReturnCommit',
+                    method: 'get',
+                    params: {
+                        id: this.paramsData.id
+                    }
+                }).then((res) => {
+                    let data = res.data.data;
+                    this.fileData = data;
+                })
+            },0);
+           
 
             // 审核数据
             
@@ -254,15 +262,18 @@
                                 }
                             }
                             .el-textarea {
-                                padding: 10px;
+                                .el-textarea__inner {
+                                    padding: 10px;
+                                    resize: none;                                  
+                                }
+                            }
+                            a {
+                                cursor: pointer;
                             }
                         }
                     }
                 }
             }
-        }
-        .btn_group {
-            margin: 10px 0 30px 0;
         }
         .el-table {
             width: 1130px;

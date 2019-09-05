@@ -378,5 +378,8 @@ export default {
 				text-align: left;
 			}
 		}
+		.btn_group {
+            padding: 20px 0;
+        }
   	}
 </style>

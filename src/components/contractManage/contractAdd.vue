@@ -696,12 +696,12 @@
                 //         callback: action => {}
                 //     });
                 // }
-                // const loading = this.$loading({
-                //     lock: true,
-                //     text: '请稍后...',
-                //     spinner: 'el-icon-loading',
-                //     background: 'rgba(255,255,255,0.7)'
-                // });
+                const loading = this.$loading({
+                    lock: true,
+                    text: '请稍后...',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(255,255,255,0.7)'
+                });
                 // 主表部分
                 this.axios({
                     url: 'http://192.168.0.80:8087/environment/contract/addContractInfo',
@@ -739,7 +739,6 @@
                                 data: this.keyForm
                             }).then((res) => {
                                 // console.log(res);
-                                loading.close();
                                 // 子表四
                                 this.axios({
                                     url: 'http://192.168.0.80:8087/environment/contract/subjectfundbudget/insertInfo',
@@ -747,7 +746,7 @@
                                     data: this.budgetForm
                                 }).then((res) => {
                                     loading.close();
-                                    // console.log(res);
+                                    console.log(res);
                                     if(res.data.resultFlag == 0) {
                                         this.$alert('提交成功','提示', {
                                             confirmButtonText: '确定',

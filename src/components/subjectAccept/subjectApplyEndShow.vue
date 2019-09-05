@@ -1183,7 +1183,7 @@ export default {
             formData.append('firstInspectionFile',firstInspectionFile)
             _this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/acceptState/examine',
+                url:'http://192.168.0.80:8087/acceptState/examine',
                 data:formData
             }).then(function(res){
                 if(res.resultFlag == 1){
@@ -1214,7 +1214,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/checkApplyStyle/unitNature',
+                url:'http://192.168.0.80:8087/checkApplyStyle/unitNature',
             }).then(function(res){
                 _this.unitNatureOptions = res.data.data
                 _this.getApplicationAcceptanceModeOptions()//申请验收形式
@@ -1227,7 +1227,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/checkApplyStyle/applicationAcceptance',
+                url:'http://192.168.0.80:8087/checkApplyStyle/applicationAcceptance',
             }).then(function(res){
                 _this.applicationAcceptanceModeOptions = res.data.data
                 _this.getSubmitInventoryOptions()//验收提交资料清单接口
@@ -1240,7 +1240,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/checkApplyStyle/applicationSubmitList'
+                url:'http://192.168.0.80:8087/checkApplyStyle/applicationSubmitList'
             }).then(function(res){
                 _this.submitInventoryOptions = res.data.data
                 _this.getAchievementFormOptions()//获取成果形式
@@ -1268,7 +1268,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/checkApplyStyle/finalAcceptanceMethod',
+                url:'http://192.168.0.80:8087/checkApplyStyle/finalAcceptanceMethod',
             }).then(function(res){
                 _this.finalAcceptanceMethod = res.data.data
                 console.log(res)
@@ -1281,7 +1281,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/checkApplyStyle/queryAchievementShape',
+                url:'http://192.168.0.80:8087/checkApplyStyle/queryAchievementShape',
             }).then(function(res){
                 _this.achievementFormOptions = res.data.data
                 _this.getAchievementLevelOptions()//成果水平
@@ -1294,7 +1294,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/checkApplyStyle/queryAchievementLevel',
+                url:'http://192.168.0.80:8087/checkApplyStyle/queryAchievementLevel',
             }).then(function(res){
                 _this.achievementLevelOptions = res.data.data
                 _this.getAcceptance()//获取成果形式
@@ -1304,7 +1304,7 @@ export default {
         },
         // 下载文件
         uploadFileInventory(fileUrl,fileName){
-            window.location.href="http://192.168.0.37:8087/file/queryFileStream"+'?fileUrl=' + fileUrl + '&fileName=' + fileName
+            window.location.href="http://192.168.0.80:8087/file/queryFileStream"+'?fileUrl=' + fileUrl + '&fileName=' + fileName
         }
 
     },

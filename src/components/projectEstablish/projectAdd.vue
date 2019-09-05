@@ -66,7 +66,7 @@
                             </td>
                             <td>责任单位：</td>
                             <td>
-                                <el-input v-model="showForm.responsibleUnit"></el-input>
+                                <el-input v-model="showForm.responsibleUnit" readonly></el-input>
                             </td>
                         </tr>
                         <tr>
@@ -85,7 +85,7 @@
                             <td colspan="3">
                                 <el-input 
                                     v-model="showForm.remark"
-                                    :autosize="{ minRows: 3}"
+                                    :autosize="{ minRows:4 }"
                                     type="textarea"
                                     maxlength="200">
                                 </el-input>
@@ -162,7 +162,14 @@
                 }
             }
         },
-        methods:{ 
+        methods: {
+            errorInfo() {
+                this.$alert('提交失败','提示', {
+                    confirmButtonText: '确定',
+                    type: 'warning',
+                    callback: action => {}
+                });
+            },
             handleSubmit() {
                 // 非空验证
                 for(let i in this.showForm) {
@@ -241,36 +248,18 @@
                                         this.reload();
                                     }
                                 });
-                            }else {
-                                this.$alert('提交失败','提示', {
-                                    confirmButtonText: '确定',
-                                    type: 'warning',
-                                    callback: action => {}
-                                });
-                            }
-                        }).catch(() => {
+                            }else { this.errorInfo(); }
+                        }).catch(() => { 
                             loading.close();
-                            this.$alert('提交失败','提示', {
-                                confirmButtonText: '确定',
-                                type: 'warning',
-                                callback: action => {}
-                            });
+                            this.errorInfo(); 
                         })
-                    }else {
+                    }else { 
                         loading.close();
-                        this.$alert('提交失败','提示', {
-                            confirmButtonText: '确定',
-                            type: 'warning',
-                            callback: action => {}
-                        });
+                        this.errorInfo(); 
                     }
                 }).catch(() => {
                     loading.close();
-                    this.$alert('提交失败','提示', {
-                        confirmButtonText: '确定',
-                        type: 'warning',
-                        callback: action => {}
-                    });
+                    this.errorInfo();
                 })
             },
             getFile(event,index) {
@@ -286,6 +275,18 @@
                     this.Enclosure.otherAttachments = event.target.files[0];
                 }
             }
+        },
+        beforeCreate() {
+            // 取公司类别
+            this.axios({
+                url: 'http://192.168.0.80:8087/environment/guide/getCookieValue',
+                method: 'post',
+            }).then((res) => {
+               console.log(res);
+               this.$nextTick(() => {
+                   this.showForm.responsibleUnit = res.data.data;
+               })
+            })
         }
     }
 </script>
@@ -312,16 +313,16 @@
                                 }
                             }
                             .el-textarea {
-                                padding: 10px;
+                                .el-textarea__inner {
+                                    padding: 10px;
+                                    resize: none;
+                                }
+                                
                             }
                         }
                     }
                 }
             }
-        }
-        .btn_group {
-            padding: 10px 0 30px 0;
-            background-color: #fff;
         }
     }
 </style>

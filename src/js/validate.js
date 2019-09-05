@@ -7,10 +7,52 @@ let validatePhone = (val) => {
     return false;
 };
 
-// 验证密码（待完善）
-let validatePwd = (val) => {
-    if(val.length < 6 || val.length > 18) {
-        return "密码长度为6-18位";
+// 弱口令验证（密码）
+let validatePwd = (val,username) => {
+    let pattFlag1 = 0,
+        pattFlag2 = 0,
+        pattFlag3 = 0,
+        pattFlag4 = 0,
+        pwdFlag = 0;
+    //至少一个数字
+    let pattern1 = /(.*?)\d+(.*?)/;
+    if(pattern1.test(val) == true) {
+        pattFlag1 = 1;
+    }else{
+        pattFlag1 = 0;
+    }
+    //至少一个小写字母
+    let pattern2 = /(.*?)[a-z]+(.*?)/;
+    if(pattern2.test(val) == true) {
+        pattFlag2 = 1;
+    }else{
+        pattFlag2 = 0;
+    }
+    //至少一个大写字母
+    let pattern3 = /(.*?)[A-Z]+(.*?)/;
+    if(pattern3.test(val) == true) {
+        pattFlag3 = 1;
+    }else{
+        pattFlag3 = 0;
+    }
+    //至少一个特殊符号
+    for(let i = 0;i < val.length;i++) {
+        let charCode = val[i].charCodeAt();
+        if(( charCode >= 33 && charCode <= 47 ) || ( charCode >= 58 && charCode <= 64 ) || ( charCode >= 91 && charCode <= 96 ) || ( charCode >= 123 && charCode <= 126 )) {
+            pattFlag4 = 1;
+            break;
+        }else {
+            pattFlag4 = 0;
+        }
+    }
+    //值为几则符合几种
+    pwdFlag = pattFlag1 + pattFlag2 + pattFlag3 + pattFlag4;
+    if(val.length < 8 || val.length > 18) {
+        return "密码长度请设置为8-18位";
+    }else if(pwdFlag < 3) {
+        return "密码请包含大小写字母、数字及特殊字符中的至少三种";
+    }else if(val.indexOf(username) != -1) {
+        return "密码不能包含用户名";
     }
     return false;
 }

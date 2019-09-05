@@ -233,7 +233,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/apply/checkApplyStateQuery',
+                url:'http://192.168.0.80:8087/apply/checkApplyStateQuery',
                 params:{
                     topicName:topicName,
                     topicNumber:topicNumber,
@@ -269,7 +269,7 @@ export default {
             let _this = this
             this.axios({
                 method:"POST",
-                url:'http://192.168.0.37:8087/checkApplyStyle/unitNature',
+                url:'http://192.168.0.80:8087/checkApplyStyle/unitNature',
             }).then(function(res){
                 _this.queryForm.unitOptions = res.data.data
             })

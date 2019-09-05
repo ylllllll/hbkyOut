@@ -32,7 +32,7 @@
                             <td colspan="3">
                                 <el-input 
                                     v-model="showForm.reasonBasis"
-                                    :autosize="{ minRows:3 }"
+                                    :autosize="{ minRows:4 }"
                                     type="textarea"
                                     maxlength="300"
                                     placeholder="请输入少于300字">
@@ -44,7 +44,7 @@
                             <td colspan="3">
                                 <el-input 
                                     v-model="showForm.researchContentTechnology"
-                                    :autosize="{ minRows:3 }"
+                                    :autosize="{ minRows:4 }"
                                     type="textarea"
                                     maxlength="300"
                                     placeholder="请输入少于300字">
@@ -56,7 +56,7 @@
                             <td colspan="3">
                                 <el-input 
                                     v-model="showForm.expectedTargetOutcome"
-                                    :autosize="{ minRows:3}"
+                                    :autosize="{ minRows:4 }"
                                     type="textarea"
                                     maxlength="200"
                                     placeholder="请输入少于200字">
@@ -66,7 +66,7 @@
                         <tr>
                             <td>填报单位：</td>
                             <td>
-                                <el-input v-model="showForm.fillUnit"></el-input>
+                                <el-input v-model="showForm.fillUnit" readonly></el-input>
                             </td>
                             <td>单位负责人：</td>
                             <td>
@@ -229,6 +229,16 @@
                     }
                 }
             })
+            // 取公司类别
+            this.axios({
+                url: 'http://192.168.0.80:8087/environment/guide/getCookieValue',
+                method: 'post',
+            }).then((res) => {
+               console.log(res);
+               this.$nextTick(() => {
+                   this.showForm.fillUnit = res.data.data;
+               })
+            })
         }
     }
 </script>
@@ -256,15 +266,15 @@
                                 width: 100%;
                             }
                             .el-textarea {
-                                padding: 10px;
+                                .el-textarea__inner {
+                                    padding: 10px;
+                                    resize: none;
+                                }
                             }
                         }
                     }
                 }
             }
-        }
-        .btn_group {
-            padding: 20px 0;
         }
     }
 </style>

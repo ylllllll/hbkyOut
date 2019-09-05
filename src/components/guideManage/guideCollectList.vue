@@ -18,13 +18,10 @@
                         <el-option v-for="(item,index) in optGroup2" :key="index" :label="item.content" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
-                <!-- <el-form-item label="填报单位：" >
-                    <el-input v-model="queryForm.fillUnit"></el-input>
-                </el-form-item> -->
-                <el-form-item label="填报联系人：" >
+                <el-form-item label="填报联系人：">
                     <el-input v-model="queryForm.fillContacts"></el-input>
                 </el-form-item>
-                <el-form-item label="联系人手机：" >
+                <el-form-item label="联系人手机：">
                     <el-input v-model="queryForm.contactPhone"></el-input>
                 </el-form-item>
             </el-form>
@@ -40,10 +37,6 @@
                 :data="tableData"
                 tooltip-effect="dark"
                 style="width: 100%">
-                <!-- <el-table-column
-                    type="selection"
-                    align="center">
-                </el-table-column> -->
                 <el-table-column
                     type="index"
                     label="序号"
@@ -69,41 +62,49 @@
                 <el-table-column
                     prop="domain"
                     label="所属领域"
+                    :show-overflow-tooltip="true"
                     align="center">
                 </el-table-column>
                 <el-table-column
                     prop="category"
                     label="所属类别"
+                    :show-overflow-tooltip="true"
                     align="center">
                 </el-table-column>
                 <el-table-column
                     prop="research_fund"
                     label="研究经费"
+                    :show-overflow-tooltip="true"
                     align="center">
                 </el-table-column>
                 <el-table-column
                     prop="research_period"
                     label="研究期限"
+                    :show-overflow-tooltip="true"
                     align="center">
                 </el-table-column>
                 <el-table-column
                     prop="fill_unit"
                     label="填报单位"
+                    :show-overflow-tooltip="true"
                     align="center">
                 </el-table-column>
                 <el-table-column
                     prop="fill_contacts"
                     label="填报联系人"
+                    :show-overflow-tooltip="true"
                     align="center">
                 </el-table-column>
                 <el-table-column
                     prop="contact_phone"
                     label="联系人手机"
+                    :show-overflow-tooltip="true"
                     align="center">
                 </el-table-column>
                 <el-table-column
                     prop="is_select"
                     label="选中状态"
+                    :show-overflow-tooltip="true"
                     align="center">
                     <template slot-scope="scope">
                         <span v-show="scope.row.is_select == '0'">未选中</span>
@@ -138,8 +139,6 @@
                     fillUnit: null,
                     fillContacts: null,
                     contactPhone: null,
-                    pageNum: 1,
-                    pageSize: 10,
                     // 凑字段
                     uid: '0'
                 },
@@ -158,11 +157,11 @@
         },
         methods: {
             handleCurrentChange(val) {              //val表示当前页
-                this.queryForm.pageNum = val;
+                this.fenye.pageNum = val;
                 this._axios();
             },
             handleSizeChange(val) {                 //val表示每页展示的条数
-                this.queryForm.pageSize = val;
+                this.fenye.pageSize = val;
                 this._axios();
             },
             handleTableFresh(){
@@ -171,10 +170,13 @@
             },
             // 请求列表数据
             _axios() {
+                let data = this.queryForm;
+                data.pageNum = this.fenye.pageNum;
+                data.pageSize = this.fenye.pageSize;
                 this.axios({
                     url: 'http://192.168.0.80:8087/environment/guide/getUnitCollection',
                     method: 'post',
-                    params: this.queryForm
+                    params: data
                 }).then((res) => {
                     console.log(res)
                     this.loading = false;

@@ -133,38 +133,38 @@
         methods: {
             handleSubmit() {
                 // 非空验证
-                for(let i in this.showForm) {
-                    if(typeof(this.showForm[i]) == "string") {
-                        if(this.showForm[i].match(/^[ ]*$/)){
-                            this.$alert('请将表格填写完整','提示', {
-                                confirmButtonText: '确定',
-                                type: 'warning',
-                                callback: action => {}
-                            });
-                            return false;
-                        }
-                    }
-                }
-                for(let i in this.showForm.administratorInformation) {
-                    if((this.showForm.administratorInformation[i] + "").match(/^[ ]*$/)){
-                        this.$alert('请将表格填写完整','提示', {
-                            confirmButtonText: '确定',
-                            type: 'warning',
-                            callback: action => {}
-                        });
-                        return false;
-                    }
-                }
-                if(this.businessFile == "" || this.legalCardIdFile == "" || this.contactCardFile == "") {
-                    this.$alert('请上传全部附件','提示', {
-                        confirmButtonText: '确定',
-                        type: 'warning',
-                        callback: action => {}
-                    });
-                    return false;
-                }
+                // for(let i in this.showForm) {
+                //     if(typeof(this.showForm[i]) == "string") {
+                //         if(this.showForm[i].match(/^[ ]*$/)){
+                //             this.$alert('请将表格填写完整','提示', {
+                //                 confirmButtonText: '确定',
+                //                 type: 'warning',
+                //                 callback: action => {}
+                //             });
+                //             return false;
+                //         }
+                //     }
+                // }
+                // for(let i in this.showForm.administratorInformation) {
+                //     if((this.showForm.administratorInformation[i] + "").match(/^[ ]*$/)){
+                //         this.$alert('请将表格填写完整','提示', {
+                //             confirmButtonText: '确定',
+                //             type: 'warning',
+                //             callback: action => {}
+                //         });
+                //         return false;
+                //     }
+                // }
+                // if(this.businessFile == "" || this.legalCardIdFile == "" || this.contactCardFile == "") {
+                //     this.$alert('请上传全部附件','提示', {
+                //         confirmButtonText: '确定',
+                //         type: 'warning',
+                //         callback: action => {}
+                //     });
+                //     return false;
+                // }
                 // 密码验证
-                let validatePwd = this.validate.validatePwd(this.showForm.password);
+                let validatePwd = this.validate.validatePwd(this.showForm.password,this.showForm.loginName);
                 if(validatePwd) {
                     this.$alert(validatePwd,'提示', {
                         confirmButtonText: '确定',
@@ -211,7 +211,7 @@
                 formData.append('legalCardIdFile',this.legalCardIdFile);
                 formData.append('contactCardFile',this.contactCardFile);
                 this.axios({
-                    url: 'http://192.168.0.37:8087/company/register',
+                    url: 'http://192.168.0.80:8087/company/register',
                     method: 'post',
                     data: formData,
                     contentType: false,
@@ -257,7 +257,7 @@
         beforeMount() {
             // 请求单位性质
             this.axios({
-                url: 'http://192.168.0.37:8087/checkApplyStyle/unitNature',
+                url: 'http://192.168.0.80:8087/checkApplyStyle/unitNature',
                 method: 'post',
             }).then((res) => {
                 let data = res.data.data;

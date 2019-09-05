@@ -55,7 +55,9 @@
                                     id: scope.row.id
                                 }
                             }"> 
-                            {{ scope.row.subjectCategory }}
+                            <span v-show="scope.row.subjectCategory == 76">综合示范类</span>
+                            <span v-show="scope.row.subjectCategory == 77">技术研发类</span>
+                            <span v-show="scope.row.subjectCategory == 78">重大技术攻关类</span>
                         </router-link>
                     </template>
                 </el-table-column>

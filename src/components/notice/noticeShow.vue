@@ -167,7 +167,7 @@ export default {
             let _this = this;
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/notification/query',
+                url:'http://192.168.0.80:8087/notification/query',
                 params:{
                     page:page,
                     total:total
