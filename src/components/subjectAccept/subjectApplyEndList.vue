@@ -162,7 +162,7 @@ export default {
                 method:'POST',
                 url:'http://192.168.0.37:8087/checkApplyStyle/queryAchievementLevel',
             }).then(function(res){
-                console.log(res)
+                // console.log(res)
                 _this.achievementLevelOptions = res.data.data
             }).catch(function(err){
                 console.log(err)
@@ -185,6 +185,7 @@ export default {
                     total
                 }
             }).then((res)=>{
+                console.log(res.data.data.data)
                 if(res.data.data == null){
                     _this.tableData=[]
                     _this.loading = false
@@ -193,7 +194,6 @@ export default {
                     _this.fenye.total = res.data.data.count
                     _this.tableData = res.data.data.data
                 }
-                console.log(res)
             }).catch((err)=>{
                 console.log(err)
             })
