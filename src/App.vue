@@ -347,10 +347,6 @@ export default {
 				padding-left: 30px;
 			}
 		}
-		// el-table空数据时左边框会消失
-		.el-table__empty-block {
-			border-left: 1px solid #e0e0e0;
-		}
 		// 单选框radio
 		.el-radio__inner:hover {
 			border-color: #0abd90;

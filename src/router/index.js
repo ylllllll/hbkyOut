@@ -20,6 +20,7 @@ import ProjectAdd from '@/components/projectEstablish/projectAdd'
 import ProjectQuery from '@/components/projectEstablish/projectQuery'
 import ProjectQueryList from '@/components/projectEstablish/projectQueryList'
 import ProjectQueryShow from '@/components/projectEstablish/projectQueryShow'
+import ProjectQueryEdit from '@/components/projectEstablish/projectQueryEdit'
 
 // 合同管理
 import ContractAdd from '@/components/contractManage/contractAdd'
@@ -150,6 +151,10 @@ export default new Router({
 					path: '/index/projectQuery/projectQueryShow',
 					name: 'ProjectQueryShow',
 					component: ProjectQueryShow
+				},{
+					path: '/index/projectQuery/projectQueryEdit',
+					name: 'ProjectQueryEdit',
+					component: ProjectQueryEdit
 				}],
 				redirect: '/index/projectQuery/projectQueryList'
 			},{	// 合同提交

@@ -85,6 +85,29 @@
                     :show-overflow-tooltip="true"
                     align="center">
                 </el-table-column>
+                <el-table-column
+                    prop="auditStatus"
+                    label="审批状态"
+                    :show-overflow-tooltip="true"
+                    align="center">
+                    <template slot-scope="scope">
+                        <span v-show="scope.row.auditStatus == 0">已退回</span>
+                        <span v-show="scope.row.auditStatus == 2">未审批</span>
+                        <span v-show="scope.row.auditStatus == 3">已通过</span>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                    prop="auditStatus"
+                    label="操作"
+                    :show-overflow-tooltip="true"
+                    align="center">
+                    <template slot-scope="scope">
+                        <!-- <span v-show="scope.row.auditStatus == 0">已退回</span>
+                        <span v-show="scope.row.auditStatus == 2">未审批</span>
+                        <span v-show="scope.row.auditStatus == 3">已通过</span> -->
+                        <el-button v-show="scope.row.auditStatus == 0" @click="handleEdit(scope.row.id)">修改</el-button>
+                    </template>
+                </el-table-column>
             </el-table>
             <!-- 分页 -->
             <pages
@@ -144,6 +167,7 @@
                     method: 'get',
                     params: data
                 }).then((res) => {
+                    console.log(res)
                     this.loading = false;
                     let data = res.data.data;
                     if(data.list.length == 0) {
@@ -164,6 +188,14 @@
                 this.queryForm.pageNum = 1;
                 this._axios();
                 document.querySelector(".first-pager").click();
+            },
+            handleEdit(val) {
+                this.$router.push({
+                    name: 'ProjectQueryEdit',
+                    params: {
+                        id: val
+                    }
+                })
             }
         },
         beforeMount() {
@@ -183,6 +215,9 @@
             .el-table{
                 min-height: 630px;
                 padding-bottom: 10px;
+                .el-button {
+                    margin: 0;
+                }
             }
         }
         .pages{

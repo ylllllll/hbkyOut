@@ -63,7 +63,7 @@
 		},
 		data() {
 			return {
-				realName: '123',
+				realName: '',
 				testNav: [{
 					id: '10',
 					name: '指南管理',
@@ -354,17 +354,12 @@
 				document.querySelector(".el-main .box").style.height = mainHeight;
 			})
 			// 获取真实姓名
-			// this.realName = document.cookie;
-			console.log(document.cookie.indexOf("realName"))
-			console.log(document.cookie.split(";"))
 			let arr = document.cookie.split(";");
 			for(let i in arr) {
-				// arr2 = arr[i].split("=");
 				console.log(arr[i].split("="));
 				let arr2 = arr[i].split("=");
-				if(arr2[0].trim() == "realName") {
+				if(arr2[0].trim() == "realNameOut") {
 					this.realName = arr2[1];
-					console.log(arr2[1])
 				}
 			}
 		},

@@ -1,5 +1,5 @@
 <template>
-    <div id="projectShow">
+    <div id="projectQueryEdit">
         <div class="showForm">
             <el-form ref="showForm" :model="showForm" >
                 <table class="form_table">
@@ -10,48 +10,48 @@
                         <tr>
                             <td>项目名称：</td>
                             <td colspan="3">
-                                <el-input v-model="showForm.projectName" disabled></el-input>
+                                <el-input v-model="showForm.projectName"></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>标书编号：</td>
                             <td>
-                                <el-input v-model="showForm.tenderNo" disabled></el-input>
+                                <el-input v-model="showForm.tenderNo"></el-input>
                             </td>
                             <td>分包号：</td>
                             <td>
-                                <el-input v-model="showForm.subcontractingNo" disabled></el-input>
+                                <el-input v-model="showForm.subcontractingNo"></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>课题名称：</td>
                             <td>
-                                <el-input v-model="showForm.subjectName" disabled></el-input>
+                                <el-input v-model="showForm.subjectName"></el-input>
                             </td>
                             <td>投标人：</td>
                             <td>
-                                <el-input v-model="showForm.bidders" disabled></el-input>
+                                <el-input v-model="showForm.bidders"></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>中标（成交）金额：</td>
                             <td>
-                                <el-input v-model="showForm.winningAmount" disabled></el-input>
+                                <el-input v-model="showForm.winningAmount"></el-input>
                             </td>
                             <td>配套经费：</td>
                             <td>
-                                <el-input v-model="showForm.supportingFunds" disabled></el-input>
+                                <el-input v-model="showForm.supportingFunds"></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>课题负责人：</td>
                             <td>
-                                <el-input v-model="showForm.subjectLeader" disabled>
+                                <el-input v-model="showForm.subjectLeader">
                                 </el-input>
                             </td>
                             <td>课题负责人联系方式：</td>
                             <td>
-                                <el-input v-model="showForm.leaderContact" disabled></el-input>
+                                <el-input v-model="showForm.leaderContact"></el-input>
                             </td>
                         </tr>
                         <tr>
@@ -61,21 +61,21 @@
                                 （如有请填写）&nbsp;&nbsp;&nbsp;
                             </td>
                             <td>
-                                <el-input v-model="showForm.joinTenderUnits" disabled></el-input>
+                                <el-input v-model="showForm.joinTenderUnits"></el-input>
                             </td>
                             <td>责任单位：</td>
                             <td>
-                                <el-input v-model="showForm.responsibleUnit" disabled></el-input>
+                                <el-input v-model="showForm.responsibleUnit"></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>经办人：</td>
                             <td>
-                                <el-input v-model="showForm.operator" disabled></el-input>
+                                <el-input v-model="showForm.operator"></el-input>
                             </td>
                             <td>经办人联系方式：</td>
                             <td>
-                                <el-input v-model="showForm.operatorContact" disabled>
+                                <el-input v-model="showForm.operatorContact">
                                 </el-input>
                             </td>
                         </tr>
@@ -86,39 +86,38 @@
                                     v-model="showForm.remark"
                                     :autosize="{ minRows:4 }"
                                     type="textarea"
-                                    maxlength="200"
-                                    disabled>
+                                    maxlength="200">
                                 </el-input>
                             </td>
                         </tr>
                         <tr class="file_tr">
                             <td>中标文件附件：</td>
                             <td colspan="3" class="file_td">
-                                <a @click="handleDownload(0)">{{ fileData[0].upload_file_name }}</a>
+                                <input type="file" @change="getFile($event,1)">
                             </td>
                         </tr>
                         <tr class="file_tr">
                             <td>成交公告附件：</td>
                             <td colspan="3" class="file_td">
-                                <a @click="handleDownload(1)">{{ fileData[1].upload_file_name }}</a>
+                                <input type="file" @change="getFile($event,2)">
                             </td>
                         </tr>
                         <tr class="file_tr">
                             <td>成交通知书附件：</td>
                             <td colspan="3" class="file_td">
-                                <a @click="handleDownload(2)">{{ fileData[2].upload_file_name }}</a>
+                                <input type="file" @change="getFile($event,3)">
                             </td>
                         </tr>
                         <tr class="file_tr">
                             <td>响应文件附件：</td>
                             <td colspan="3" class="file_td">
-                                <a @click="handleDownload(3)">{{ fileData[3].upload_file_name }}</a>
+                                <input type="file" @change="getFile($event,4)">
                             </td>
                         </tr>
                         <tr class="file_tr">
                             <td>其他附件：</td>
                             <td colspan="3" class="file_td">
-                                <a @click="handleDownload(4)">{{ fileData[4].upload_file_name }}</a>
+                                <input type="file" @change="getFile($event,5)">
                             </td>
                         </tr>
                     </tbody>
@@ -127,65 +126,13 @@
             <div class="btn_group">
                 <el-button @click="handleBack">返回</el-button>
             </div>
-            <el-table
-                ref="multipleTable"
-                :data="tableData"
-                tooltip-effect="dark">
-                <el-table-column
-                    prop="fistHandler"
-                    label="交办人"
-                    :show-overflow-tooltip="true"
-                    align="center">
-                </el-table-column>
-                <el-table-column
-                    prop="secondHandler"
-                    label="处理人"
-                    :show-overflow-tooltip="true"
-                    align="center">
-                </el-table-column>
-                <el-table-column
-                    prop="auditStep"
-                    label="审核步骤"
-                    :show-overflow-tooltip="true"
-                    align="center">
-                </el-table-column>
-                <el-table-column
-                    prop="firstHandleTime"
-                    label="交办时间"
-                    :show-overflow-tooltip="true"
-                    align="center">
-                </el-table-column>
-                <el-table-column
-                    prop="state"
-                    label="状态"
-                    :show-overflow-tooltip="true"
-                    align="center">
-                </el-table-column>
-                <el-table-column
-                    prop="handleContent"
-                    label="处理内容"
-                    :show-overflow-tooltip="true"
-                    align="center">
-                </el-table-column>
-                <!-- <el-table-column
-                    prop="data7"
-                    label="处理意见"
-                    align="center">
-                </el-table-column> -->
-                <el-table-column
-                    prop="secondHandleTime"
-                    label="处理时间"
-                    :show-overflow-tooltip="true"
-                    align="center">
-                </el-table-column>
-            </el-table>
         </div>
     </div>
 </template>
 
 <script>
     export default {
-        name:'projectShow',
+        name:'projectQueryEdit',
         data(){
             return{
                 showForm:{},
@@ -234,16 +181,9 @@
                 }).then((res) => {
                     let data = res.data.data;
                     this.fileData = data;
-                    // 审核数据
-                    this.axios({
-                        url: 'http://192.168.0.80:8087//environment/tender/getAllShenHeTableRecordInfoByContractId',
-                        method: 'get',
-                        params: {
-                            oid: this.paramsData.id
-                        }
-                    }).then((res) => {
-                        this.tableData = res.data.data;
-                    })
+                    console.log(data[0].upload_file_name)
+                    console.log( document.querySelector(".file_td input").value)
+                    // document.querySelector(".file_td input").value = data[0].upload_file_name;
                 })
             })    
         }
@@ -251,10 +191,7 @@
 </script>
 
 <style lang="less">
-    #projectShow{
-        padding-bottom: 60px;
-        background-color: #fff;
-        margin-bottom: 20px;
+    #projectQueryEdit{
         .showForm{
             table.form_table{
                 @media  screen and ( max-width: 1600px ) {
