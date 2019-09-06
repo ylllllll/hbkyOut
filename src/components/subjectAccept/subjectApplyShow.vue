@@ -1311,7 +1311,7 @@ export default {
         },
         // 下载文件
         uploadFileInventory(fileUrl,fileName){
-            window.location.href="http://192.168.0.37:8087/file/queryFileStream"+'?fileUrl=' + fileUrl + '&fileName=' + fileName
+            window.location.href='http://192.168.0.37:8087/file/queryFileStream?fileUrl=' + fileUrl + '&fileName=' + fileName
         }
     },
     async mounted(){

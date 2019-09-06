@@ -171,7 +171,7 @@
                                  ></el-input>
                             </td>
                         </tr>
-                        <tr v-if="showForm.acceptancePhaseId == 3">
+                        <tr v-if="showForm.acceptancePhaseId <= 3">
                             <td>提交清单文件：</td>
                             <td colspan="3" style="height:50px;position:relative;"> 
                                 <input type="file" id="submitInventoryFile" @change="getFileNameByID('submitInventoryFile',showForm.submitInventoryUrl)">
@@ -184,7 +184,7 @@
                                 <a  @click="uploadFileInventory(showForm.submitInventoryUrl,showForm.submitInventoryUrlName)"  :download="showForm.submitInventoryUrlName">{{showForm.submitInventoryUrlName}}</a>
                             </td>
                         </tr>
-                        <tr v-if="showForm.acceptancePhaseId == 3">
+                        <tr v-if="showForm.acceptancePhaseId <= 3">
                             <td>验收申请表附件：</td>
                             <td colspan="3" style="height:50px;position:relative;">
                                  <input type="file" id="applicationAcceptanceFile" @change="getFileNameByID('applicationAcceptanceFile',showForm.applicationAcceptanceUrl)">
@@ -197,7 +197,7 @@
                                 <a  @click="uploadFileInventory(showForm.applicationAcceptanceUrl,showForm.applicationAcceptanceUrlName)"  :download="showForm.applicationAcceptanceUrlName">{{showForm.applicationAcceptanceUrlName}}</a>
                             </td>
                         </tr>
-                        <tr v-if="showForm.acceptancePhaseId == 3 ">
+                        <tr v-if="showForm.acceptancePhaseId <= 3 ">
                             <td>成果附件：</td>
                             <td colspan="3" style="height:50px;position:relative;">
                                 <input type="file" id="achievementsFile" @change="getFileNameByID('achievementsFile',showForm.achievementsUrl)">
@@ -1197,7 +1197,7 @@ export default {
         },
         // 修改点击
         handleEdit(){
-            if(this.showForm.acceptancePhaseId == 3){
+            if(this.showForm.acceptancePhaseId <= 3){
                 this.editApplySubmit()
             }else if(this.showForm.acceptancePhaseId == 5 || this.showForm.acceptancePhaseId == 8){
                 this.editExpertSubmit()
@@ -1442,7 +1442,7 @@ export default {
                         if(item.acceptanceCertificate != null || item.acceptanceCertificate !=undefined){
                             this.showForm.acceptanceCertificate.achievementForm = JSON.parse(item.acceptanceCertificate.achievementForm)
                         }
-                        if(item.acceptancePhaseId == 3){
+                        if(item.acceptancePhaseId <= 3){
                             this.isDisabled = false
                         }else if(item.acceptancePhaseId == 5 || item.acceptancePhaseId == 8){
                             this.isDisabledExpert = false
@@ -1456,7 +1456,7 @@ export default {
         },
         // 下载文件
         uploadFileInventory(fileUrl,fileName){
-            window.location.href="http://192.168.0.37:8087/file/queryFileStream"+'?fileUrl=' + fileUrl + '&fileName=' + fileName
+            window.location.href='http://192.168.0.37:8087/file/queryFileStream?fileUrl=' + fileUrl + '&fileName=' + fileName
         }
     },
     async mounted(){

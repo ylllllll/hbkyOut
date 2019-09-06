@@ -210,7 +210,14 @@
                 setTimeout(() => {
                    this.refreshFlag = true; 
                 },0);
+            },
+            // 获取后台管理的信息
+            getBackManageInfo(){
+
             }
+        },
+        created(){
+            this.getBackManageInfo()
         }
     }
 </script>
@@ -221,12 +228,9 @@
             margin: 0 auto 10px;
         }
         .showList {
-            position: relative;
-            min-height: 640px;
-            background-color: #fff;
-            padding: 10px;
+            min-height: 680px;
             .el-table {
-                min-height: 590px;
+                min-height: 640px;
                 padding-bottom: 10px;
                 table {
                     width: auto !important;
