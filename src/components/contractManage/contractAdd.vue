@@ -10,11 +10,16 @@
                         <tr>
                             <td>课题类别：</td>
                             <td>
-                                <el-input v-model="showForm.subjectCategory"></el-input>
+                                <el-select v-model="showForm.subjectCategory">
+                                    <el-option v-for="(item,index) in optGroup1" :key="index" :label="item.content" :value="item.id"></el-option>
+                                </el-select>
                             </td>
                             <td>课题编号：</td>
                             <td>
-                                <el-input v-model="showForm.projectNo"></el-input>
+                                <el-input 
+                                    v-model="showForm.projectNo"
+                                    placeholder="请选择"
+                                    @focus="handleOpenBox"></el-input>
                             </td>
                         </tr>
                         <tr>
@@ -24,13 +29,23 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>合同开始时间（精确到月）：</td>
+                            <td>合同开始时间：</td>
                             <td>
-                                <el-input v-model="showForm.contractStartTime"></el-input>
+                                <el-date-picker
+                                    v-model="showForm.contractStartTime"
+                                    type="date"
+                                    placeholder="选择日期"
+                                    value-format="yyyy-MM-dd">
+                                </el-date-picker>
                             </td>
-                            <td>合同结束时间（精确到月）：</td>
+                            <td>合同结束时间：</td>
                             <td>
-                                <el-input v-model="showForm.contractEndTime"></el-input>
+                                <el-date-picker
+                                    v-model="showForm.contractEndTime"
+                                    type="date"
+                                    placeholder="选择日期"
+                                    value-format="yyyy-MM-dd">
+                                </el-date-picker>
                             </td>
                         </tr>
                         <tr>
@@ -190,7 +205,7 @@
                                 <el-input 
                                     type="textarea"
                                     v-model="showForm.subjectSigningDescription"
-                                    :autosize="{ minRows:3 }">
+                                    :autosize="{ minRows:4 }">
                                 </el-input>
                             </td>
                         </tr>
@@ -200,7 +215,7 @@
                                 <el-input 
                                     type="textarea" 
                                     v-model="showForm.subjectObjectivesResearch"
-                                    :autosize="{ minRows:3 }">
+                                    :autosize="{ minRows:4 }">
                                 </el-input>
                             </td>
                         </tr>
@@ -210,7 +225,7 @@
                                 <el-input 
                                     type="textarea" 
                                     v-model="showForm.subjectAcceptanceAssessment"
-                                    :autosize="{ minRows:3 }">
+                                    :autosize="{ minRows:4 }">
                                 </el-input>
                             </td>
                         </tr>
@@ -485,53 +500,73 @@
             </el-form>
             <el-button @click="handleSubmit">提交</el-button>
         </div>
+        <div class="cover_box" v-show="overBoxFlag">
+            <div class="message_box">
+                <span class="btn_close" @click="handleCloseCover"></span>
+                <header class="message_box_header">
+                    <h2 class="title">课题查询</h2>
+                </header>
+                <section class="message_box_content">
+                    <messageBox @receipt="receiptChildInfo"></messageBox>
+                </section>
+                <div class="btn_group">
+                    <el-button @click="handleConfirmCover">确定</el-button>
+                    <el-button @click="handleCloseCover">取消</el-button>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
+    import ContractMessageBox from '@/components/contractManage/contractMessageBox'
     export default {
         inject: ["reload"],
         name: 'contractAdd',
+        components: {
+            messageBox: ContractMessageBox
+        },
         data() {
             return {
+                optGroup1: [],
                 showForm: {
-                    subjectCategory: '1',
-                    projectNo: '2',
-                    subjectName: '3',
-                    contractStartTime: '4',
-                    contractEndTime: '5',
-                    subjeceLeader: '6',
-                    subjectLeaderPhone: '7',
-                    subjectContact: '8',
-                    subjectContactPhone: '9',
-                    commitmentUnit: '10',
-                    commitmentUnitAddress: '11',
-                    commitmentUnitZip: '12',
-                    subjectSupervisorDepartment: '13',
-                    openBank: '14',
-                    openBankAccount: '15',
-                    email: '16',
-                    guaranteedUnits: '17',
-                    guaranteedUnitContact: '18',
-                    guaranteedContactPhone: '19',
-                    commissioningUnit: '20',
-                    legalRepresentativeEntrustingA: '21',
-                    commissionedUnitAddressA: '22',
-                    commissionedUnitZipA: '23',
-                    responsibilityUnitB: '24',
-                    responsibilityLegalRepresentativeB: '25',
-                    commitUnitAddressB: '26',
-                    commitUnitZipB: '27',
-                    commitUnitLeaderB: '28',
-                    commitunitLeadersPhoneB: '29',
-                    commitmentUnitEmailB: '30',
-                    guaranteedUnitC: '31',
-                    guaranteedUnitLeaderC: '32',
-                    guaranteedUnitZipC: '33',
-                    guaranteedUnitAddressC: '34',
-                    subjectSigningDescription: '35',
-                    subjectObjectivesResearch: '36',
-                    subjectAcceptanceAssessment: '37',
+                    subjectCategory: '',
+                    projectNo: '',
+                    subjectName: '',
+                    contractStartTime: '',
+                    contractEndTime: '',
+                    subjeceLeader: '',
+                    subjectLeaderPhone: '17777777777',
+                    subjectContact: '7',
+                    subjectContactPhone: '17777777777',
+                    commitmentUnit: '8',
+                    commitmentUnitAddress: '9',
+                    commitmentUnitZip: '10',
+                    subjectSupervisorDepartment: '11',
+                    openBank: '12',
+                    openBankAccount: '13',
+                    email: '14',
+                    guaranteedUnits: '15',
+                    guaranteedUnitContact: '16',
+                    guaranteedContactPhone: '17',
+                    commissioningUnit: '18',
+                    legalRepresentativeEntrustingA: '19',
+                    commissionedUnitAddressA: '20',
+                    commissionedUnitZipA: '21',
+                    responsibilityUnitB: '22',
+                    responsibilityLegalRepresentativeB: '23',
+                    commitUnitAddressB: '24',
+                    commitUnitZipB: '25',
+                    commitUnitLeaderB: '26',
+                    commitunitLeadersPhoneB: '27',
+                    commitmentUnitEmailB: '28',
+                    guaranteedUnitC: '29',
+                    guaranteedUnitLeaderC: '30',
+                    guaranteedUnitZipC: '31',
+                    guaranteedUnitAddressC: '32',
+                    subjectSigningDescription: '33',
+                    subjectObjectivesResearch: '34',
+                    subjectAcceptanceAssessment: '35',
                 },
                 progressForm: [{
                     contractId: 0,
@@ -652,10 +687,24 @@
                     dailyAfterBudget: '9',
                     dailySupportingBudget: '10',
                     dailyNoteBudget: '11'
-                }
+                },
+                overBoxFlag: false,
+                refreshFlag: true,
+                messageBoxData: {}
             }
         },
-        methods:{
+        methods: {
+            handleOpenBox(event) {
+                this.overBoxFlag = true;
+                event.target.blur();
+            },
+            errorInfo() {
+                this.$alert('提交失败','提示', {
+                    confirmButtonText: '确定',
+                    type: 'warning',
+                    callback: action => {}
+                });
+            },
             handleSubmit() {
                 // 非空验证
                 let obj = {};
@@ -687,6 +736,22 @@
                         }
                     }
                 }
+                // 手机号验证
+                let validatePhone = [   this.validate.validatePhone(this.showForm.subjectLeaderPhone),
+                                        this.validate.validatePhone(this.showForm.subjectContactPhone)];
+                for(let i in validatePhone) {
+                    if(validatePhone[i]) {
+                        this.$alert(validatePhone[i],'提示', {
+                            confirmButtonText: '确定',
+                            type: 'warning',
+                            callback: action => {}
+                        });
+                        return false;
+                    }
+                }
+
+
+
                 //数字验证
                 // let validateNum = this.validate.validateNum(this.budgetForm);
                 // if(validateNum) {
@@ -708,99 +773,101 @@
                     method: 'post',
                     data: this.showForm
                 }).then((res) => {
-                    // console.log(res);
-                    let id = res.data.data;
-                    for(let i in this.progressForm) {
-                        this.progressForm[i].contractId = id;
-                    }
-                    this.unitForm.contractId = id;
-                    for(let i in this.keyForm) {
-                        this.keyForm[i].contractId = id;
-                    }
-                    this.budgetForm.contractId = id;
-                    // 子表一
-                    this.axios({
-                        url: 'http://192.168.0.80:8087/environment/contentindicators/insertCI',
-                        method: 'post',
-                        data: this.progressForm
-                    }).then((res) => {
-                        // console.log(res);
-                        // 子表二
+                    console.log(0)
+                    console.log(res);
+                    if(res.data.resultFlag == 0) {
+                        // 给子表加id
+                        let id = res.data.data;
+                        for(let i in this.progressForm) {
+                            this.progressForm[i].contractId = id;
+                        }
+                        this.unitForm.contractId = id;
+                        for(let i in this.keyForm) {
+                            this.keyForm[i].contractId = id;
+                        }
+                        this.budgetForm.contractId = id;
+                        // 子表一
                         this.axios({
-                            url: 'http://192.168.0.80:8087/environment/contract/subject_participa_unit/insertInfo',
+                            url: 'http://192.168.0.80:8087/environment/contentindicators/insertCI',
                             method: 'post',
-                            data: this.unitForm
+                            data: this.progressForm
                         }).then((res) => {
+                            console.log(1)
                             console.log(res);
-                            // 子表三
-                            this.axios({
-                                url: 'http://192.168.0.80:8087/environment/contract/keydev/insertKeyDev',
-                                method: 'post',
-                                data: this.keyForm
-                            }).then((res) => {
-                                // console.log(res);
-                                // 子表四
+                            if(res.data.resultFlag == 0) {
+                                // 子表二
                                 this.axios({
-                                    url: 'http://192.168.0.80:8087/environment/contract/subjectfundbudget/insertInfo',
+                                    url: 'http://192.168.0.80:8087/environment/contract/subject_participa_unit/insertInfo',
                                     method: 'post',
-                                    data: this.budgetForm
+                                    data: this.unitForm
                                 }).then((res) => {
-                                    loading.close();
+                                    console.log(2)
                                     console.log(res);
                                     if(res.data.resultFlag == 0) {
-                                        this.$alert('提交成功','提示', {
-                                            confirmButtonText: '确定',
-                                            type: 'success',
-                                            callback: action => {
-                                                this.reload();
+                                        // 子表三
+                                        this.axios({
+                                            url: 'http://192.168.0.80:8087/environment/contract/keydev/insertKeyDev',
+                                            method: 'post',
+                                            data: this.keyForm
+                                        }).then((res) => {
+                                            console.log(3)
+                                            console.log(res);
+                                            if(res.data.resultFlag == 0) {
+                                                // 子表四
+                                                this.axios({
+                                                    url: 'http://192.168.0.80:8087/environment/contract/subjectfundbudget/insertInfo',
+                                                    method: 'post',
+                                                    data: this.budgetForm
+                                                }).then((res) => {
+                                                    loading.close();
+                                                    console.log(4)
+                                                    console.log(res);
+                                                    if(res.data.resultFlag == 0) {
+                                                        this.$alert('提交成功','提示', {
+                                                            confirmButtonText: '确定',
+                                                            type: 'success',
+                                                            callback: action => {
+                                                                this.reload();
+                                                            }
+                                                        });
+                                                    }else {
+                                                        this.errorInfo();
+                                                    }
+                                                }).catch(() => {
+                                                    loading.close();
+                                                    this.errorInfo();
+                                                })
+                                            }else {
+                                                loading.close();
+                                                this.errorInfo();
                                             }
-                                        });
+                                        }).catch(() => {
+                                            loading.close();
+                                            this.errorInfo();
+                                        })
                                     }else {
-                                        this.$alert('提交失败','提示', {
-                                            confirmButtonText: '确定',
-                                            type: 'warning',
-                                            callback: action => {}
-                                        });
+                                        loading.close();
+                                        this.errorInfo();
                                     }
                                 }).catch(() => {
                                     loading.close();
-                                    this.$alert('提交失败','提示', {
-                                        confirmButtonText: '确定',
-                                        type: 'warning',
-                                        callback: action => {}
-                                    });
+                                    this.errorInfo();
                                 })
-                            }).catch(() => {
+                            }else {
                                 loading.close();
-                                this.$alert('提交失败','提示', {
-                                    confirmButtonText: '确定',
-                                    type: 'warning',
-                                    callback: action => {}
-                                });
-                            })
+                                this.errorInfo();
+                            }
                         }).catch(() => {
                             loading.close();
-                            this.$alert('提交失败','提示', {
-                                confirmButtonText: '确定',
-                                type: 'warning',
-                                callback: action => {}
-                            });
+                            this.errorInfo();
                         })
-                    }).catch(() => {
+                    }else {
                         loading.close();
-                        this.$alert('提交失败','提示', {
-                            confirmButtonText: '确定',
-                            type: 'warning',
-                            callback: action => {}
-                        });
-                    })
+                        this.errorInfo();
+                    }
                 }).catch(() => {
                     loading.close();
-                    this.$alert('提交失败','提示', {
-                        confirmButtonText: '确定',
-                        type: 'warning',
-                        callback: action => {}
-                    });
+                    this.errorInfo();
                 })
             },
             handleTrAdd(val) {
@@ -854,7 +921,35 @@
                                                      + parseFloat(this.budgetForm.departmentBudget) * 10000
                                                      + parseFloat(this.budgetForm.bearBudget) * 10000
                                                      + parseFloat(this.budgetForm.otherBudget) * 10000) / 10000;
+            },
+            receiptChildInfo(val) {
+                this.messageBoxData = val;
+            },
+            handleCloseCover() {
+                this.overBoxFlag = false;
+            },
+            handleConfirmCover() {
+                this.overBoxFlag = false;
+                this.showForm.projectNo = this.messageBoxData.projectNo;
+                this.showForm.subjectName = this.messageBoxData.subjectName;
+                this.showForm.subjeceLeader = this.messageBoxData.subjectLeader;
+                this.showForm.subjectLeaderPhone = this.messageBoxData.leaderContact;
             }
+            
+        },
+        beforeMount() {
+            // 请求所属领域、所属类别
+            this.axios({
+                url: 'http://192.168.0.80:8087/environment/guide/getCategoryAndDomain',
+                method: 'get',
+            }).then((res) => {
+                let data = res.data.data;
+                for(let i in data) {
+                    if(data[i].classification == "所属类别") {
+                        this.optGroup1.push(data[i]);
+                    }
+                }
+            })
         },
         mounted() {
             let currentYear = new Date().getFullYear(),
@@ -910,7 +1005,20 @@
                 }
             }
             .el-textarea {
-                padding: 10px;
+                .el-textarea__inner {
+                    padding: 10px;
+                    resize: none;
+                }
+                
+            }
+            .el-date-editor {
+                width: 100%;
+                .el-input__inner {
+                    width: 100%;
+                }
+            }
+            .el-select {
+                width: 100%;
             }
         }
     }

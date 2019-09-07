@@ -10,12 +10,12 @@
                     <el-input v-model="queryForm.commitmentUnit"></el-input>
                 </el-form-item>
                 <el-form-item label="调整类型：">
-                    <el-select v-model="queryForm.adjustTypId">
+                    <el-select v-model="queryForm.adjustTypId" @change="bug">
                         <el-option v-for="(item,index) in optGroup1" :key="index" :label="item.adjustType" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="调整事项：">
-                    <el-select v-if="queryForm.adjustTypId == ''" v-model="queryForm.adjustmentMattersId">
+                    <el-select placeholder="请先选择调整类型" v-if="queryForm.adjustTypId == ''" v-model="queryForm.adjustmentMattersId">
                     </el-select>
                     <el-select v-if="queryForm.adjustTypId == 1" v-model="queryForm.adjustmentMattersId">
                         <el-option v-for="(item,index) in optGroup2" :key="index" :label="item.adjustmentMatters" :value="item.id"></el-option>
@@ -142,6 +142,9 @@
             }
         },
         methods: {
+            bug() {
+                this.queryForm.adjustmentMattersId = "";
+            },
             handleCurrentChange(val) {              //val表示当前页
                 this.queryForm.pageNum = val;
                 this._axios();
@@ -160,14 +163,14 @@
             // 请求列表数据
             _axios() {
                 this.axios({
-                    url: 'http://192.168.0.80:8087/enviroment/daily/major/getAllMajorInfoByUid',
+                    url: 'http://192.168.0.80:8087/enviroment/daily/majormatter/getAllMajorInfoByUid',
                     method: 'get',
                     params: this.queryForm
                 }).then((res) => {
-                    console.log(res);
+                    // console.log(res);
                     this.loading = false;
                     let data = res.data.data;
-                    if(data.list.length == 0) {
+                    if(data == "没有查到相关信息") {
                         this.tableData = []; 
                         this.$alert('没有查到相关信息','提示',{
                             confirmButtonText: '确定',
@@ -190,16 +193,17 @@
         beforeMount() {
             // 请求调整类型
             this.axios({
-                url: 'http://192.168.0.80:8087/enviroment/daily/major/getAllAdjustType',
+                url: 'http://192.168.0.80:8087/enviroment/daily/majormatter/getAllAdjustType',
                 method: 'get',
             }).then((res) => { 
                 let data = res.data.data;
                 this.optGroup1 = data;
                 // 请求调整事项
                 this.axios({
-                    url: 'http://192.168.0.80:8087/enviroment/daily/major/getAllAdjustmentMatters',
+                    url: 'http://192.168.0.80:8087/enviroment/daily/majormatter/getAllAdjustmentMatters',
                     method: 'get',
                 }).then((res) => { 
+                    console.log(res)
                     let data = res.data.data;
                     for(let i in data) {
                         if(data[i].adjustTypeId == "1") {

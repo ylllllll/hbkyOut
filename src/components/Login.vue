@@ -1,23 +1,23 @@
 <template>
     <div id="login">
 		<div class="login_box">
-			<el-form ref="ruleForm" :model="ruleForm" label-width="90px" :rules="rules">
-				<div class="header">
-					<img src="../assets/images/login_tlt02.png" alt="" class="tlt02">	
-				</div> 
-				<el-form-item label="用户名:" prop="name">
+			<div class="header">
+				<img src="../assets/images/login_tlt02.png" alt="">	
+			</div>
+			<el-form ref="ruleForm" :model="ruleForm" :rules="rules"> 
+				<el-form-item prop="name">
 					<el-input placeholder="请输入用户名" v-model="ruleForm.name" clearable @keyup.enter.native="submitForm('ruleForm')"></el-input>
 				</el-form-item>
-				<el-form-item label="密码:" prop="pwd">
+				<el-form-item prop="pwd">
 					<el-input placeholder="请输入密码" v-model="ruleForm.pwd" show-password @keyup.enter.native="submitForm('ruleForm')"></el-input>
 				</el-form-item>
-				<el-form-item label="用户类型:" prop="type">
+				<el-form-item prop="type">
 					<el-select placeholder="请选择用户类型" v-model="ruleForm.type">
 						<el-option label="企业" value="0"></el-option>
 						<el-option label="专家" value="1"></el-option>
 					</el-select>
 				</el-form-item>
-				<el-form-item label="验证码:" prop="code" class="code">
+				<el-form-item prop="code" class="code">
 					<el-input placeholder="请输入验证码" v-model="ruleForm.code" @keyup.enter.native="submitForm('ruleForm')"></el-input>
 					<img :src="codeUrl" alt="" @click="handleChangeCode" />
 				</el-form-item>
@@ -25,9 +25,9 @@
 					<div class="checkbox">
 						<el-checkbox v-model="rememberPwd"></el-checkbox>记住密码
 					</div>
-					<router-link to="/register">注册</router-link>
+					<router-link to="/register">账号注册</router-link>
 				</div>
-				<el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
+				<el-button @click="submitForm('ruleForm')">登录</el-button>
 			</el-form>
 		</div>
     </div>
@@ -192,17 +192,121 @@
 		background-size: cover;
 		background-position: center;
 		.login_box {
-			width: 26.5%;
-			height: 57%;
+			@media screen and ( min-width: 1500px ) {
+				width: 508px;
+				height: 552px;
+			}
+			@media  screen and ( max-width: 1499px ) {
+				width: 360px;
+				height: 375px;               
+			}
 			border: 1px solid #ededed;
 			margin: auto;
+			padding: 1.6% 3.15% 0 3.15%;
 			background-color: #fff;
-
 			position: absolute;
-			top: 170px;
+			top: 17.6%;
 			bottom: 0;
 			left: 0;
 			right: 0;
+			.header {
+				margin-bottom: 7.8%;
+				img {
+					width: 100%;
+				}
+			}
+			.el-form {
+				width: 95%;
+				margin: auto;
+			}
+			
+			.el-form-item {
+				@media screen and ( min-width: 1500px ) {
+					height: 44px;
+					line-height: 44px;
+				}
+				@media  screen and ( max-width: 1499px ) {
+                    height: 32px;
+					line-height: 32px;               
+                }
+				
+				margin-bottom: 26px;
+				.el-select {
+					@media screen and ( min-width: 1500px ) {
+						height: 44px;
+					}
+					@media  screen and ( max-width: 1499px ) {
+						height: 32px;               
+					}
+					width: 100%;
+				}
+				.el-input {
+					@media screen and ( min-width: 1500px ){
+						height: 44px;
+					}
+					@media  screen and ( max-width: 1499px ) {
+						height: 32px;               
+					}
+					.el-input__inner {
+						height: 100%;
+					}
+				}
+			}
+			.code {
+				.el-form-item__content {
+					display: flex;
+					align-items: center;
+					.el-input {
+						width: 65%;
+						margin-right: 5px;
+						.el-input__inner {
+							@media  screen and ( max-width: 1499px ) {
+								position: relative;
+								top: -3px;
+							}
+						}
+					}
+					img {
+						width: 34%;
+						height: auto;
+						cursor: pointer;
+					}
+				}	
+			}
+			.handle_group {
+				display: flex;
+				justify-content: space-between;
+				margin-top: -10px;
+				.checkbox {
+					color: #dcdfe6;
+					letter-spacing: 2px;
+					.el-checkbox {
+						margin-right: 10px;
+					}
+				}
+				a {
+					color: #0abd90;
+					letter-spacing: 2px;
+				}
+			}
+			.el-button {
+				width: 100%;
+				@media screen and ( min-width: 1500px ){
+					height: 50px;
+					margin-top: 60px;
+				}
+				@media  screen and ( max-width: 1499px ) {
+					height: 38px;               
+				}
+				span {
+					font-size: 24px;
+					letter-spacing: 12px;
+					padding-left: 12px;
+				}
+			}
+			.el-input__icon {
+				height: auto;
+			}
 		}
     }
 </style>

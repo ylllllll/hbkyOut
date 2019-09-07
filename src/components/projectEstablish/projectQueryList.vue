@@ -26,8 +26,11 @@
                 v-loading="loading"
                 ref="multipleTable"
                 :data="tableData"
+                stripe
                 tooltip-effect="dark"
-                style="width: 100%">
+                style="width: 100%"
+                highlight-current-row
+                @current-change="handleSelectionChange">
                 <el-table-column
                     type="index"
                     label="序号"
@@ -38,16 +41,6 @@
                     label="项目名称"
                     :show-overflow-tooltip="true"
                     align="center">
-                    <template slot-scope="scope">
-                        <router-link :to="{
-                            name: 'ProjectQueryShow',
-                            params:{
-                                id: scope.row.id
-                            }
-                        }"> 
-                        {{ scope.row.projectName }}
-                        </router-link>
-                    </template>
                 </el-table-column>
                 <el-table-column
                     prop="subjectName"
@@ -102,9 +95,6 @@
                     :show-overflow-tooltip="true"
                     align="center">
                     <template slot-scope="scope">
-                        <!-- <span v-show="scope.row.auditStatus == 0">已退回</span>
-                        <span v-show="scope.row.auditStatus == 2">未审批</span>
-                        <span v-show="scope.row.auditStatus == 3">已通过</span> -->
                         <el-button v-show="scope.row.auditStatus == 0" @click="handleEdit(scope.row.id)">修改</el-button>
                     </template>
                 </el-table-column>
@@ -144,7 +134,15 @@
                 }
             }
         },
-        methods:{
+        methods: {
+            handleSelectionChange(val) {
+                this.$router.push({
+                    name: 'ProjectQueryShow',
+                    params:{
+                        id: val.id
+                    }
+                })
+            },
             handleCurrentChange(val) {              //val表示当前页
                 this.fenye.pageNum = val;
                 this._axios();
@@ -170,7 +168,7 @@
                     console.log(res)
                     this.loading = false;
                     let data = res.data.data;
-                    if(data.list.length == 0) {
+                    if(data == "没有查到相关信息") {
                         this.tableData = []; 
                         this.$alert('没有查到相关信息','提示',{
                             confirmButtonText: '确定',

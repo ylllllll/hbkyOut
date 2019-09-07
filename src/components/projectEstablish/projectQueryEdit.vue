@@ -65,7 +65,7 @@
                             </td>
                             <td>责任单位：</td>
                             <td>
-                                <el-input v-model="showForm.responsibleUnit"></el-input>
+                                <el-input v-model="showForm.responsibleUnit" readonly></el-input>
                             </td>
                         </tr>
                         <tr>
@@ -124,8 +124,56 @@
                 </table>
             </el-form>
             <div class="btn_group">
+                <el-button @click="handleSubmit">提交</el-button>
                 <el-button @click="handleBack">返回</el-button>
             </div>
+            <el-table
+                ref="multipleTable"
+                :data="tableData"
+                tooltip-effect="dark">
+                <el-table-column
+                    prop="fistHandler"
+                    label="交办人"
+                    :show-overflow-tooltip="true"
+                    align="center">
+                </el-table-column>
+                <el-table-column
+                    prop="secondHandler"
+                    label="处理人"
+                    :show-overflow-tooltip="true"
+                    align="center">
+                </el-table-column>
+                <el-table-column
+                    prop="auditStep"
+                    label="审核步骤"
+                    :show-overflow-tooltip="true"
+                    align="center">
+                </el-table-column>
+                <el-table-column
+                    prop="firstHandleTime"
+                    label="交办时间"
+                    :show-overflow-tooltip="true"
+                    align="center">
+                </el-table-column>
+                <el-table-column
+                    prop="state"
+                    label="状态"
+                    :show-overflow-tooltip="true"
+                    align="center">
+                </el-table-column>
+                <el-table-column
+                    prop="handleContent"
+                    label="处理内容"
+                    :show-overflow-tooltip="true"
+                    align="center">
+                </el-table-column>
+                <el-table-column
+                    prop="secondHandleTime"
+                    label="处理时间"
+                    :show-overflow-tooltip="true"
+                    align="center">
+                </el-table-column>
+            </el-table>
         </div>
     </div>
 </template>
@@ -147,10 +195,122 @@
                     {upload_file_name: ''},
                     {upload_file_name: ''},
                     {upload_file_name: ''}
-                ]
+                ],
+                Enclosure: {
+                    winningDocument:'',
+                    transactionAnnouncement:'',
+                    noticeTransaction:'',
+                    responseFile:'',
+                    otherAttachments:'',
+                }
             }
         },
-        methods: { 
+        methods: {
+            errorInfo() {
+                this.$alert('提交失败','提示', {
+                    confirmButtonText: '确定',
+                    type: 'warning',
+                    callback: action => {}
+                });
+            },
+            handleSubmit() {
+                // 非空验证
+                for(let i in this.showForm) {
+                    if(typeof(this.showForm[i]) == "string") {
+                        if(this.showForm[i].match(/^[ ]*$/)){
+                            this.$alert('请将表格填写完整','提示', {
+                                confirmButtonText: '确定',
+                                type: 'warning',
+                                callback: action => {}
+                            });
+                            return false;
+                        }
+                    }
+                }
+                // 数字验证
+                let validateNum = [ this.validate.validateNum(this.showForm.winningAmount),
+                                    this.validate.validateNum(this.showForm.supportingFunds)];
+                for(let i in validateNum) {
+                    if(validateNum[i]) {
+                        this.$alert(validateNum[i],'提示', {
+                            confirmButtonText: '确定',
+                            type: 'warning',
+                            callback: action => {}
+                        });
+                        return false;
+                    }
+                }
+                // 手机号验证
+                let validatePhone = [   this.validate.validatePhone(this.showForm.leaderContact),
+                                        this.validate.validatePhone(this.showForm.operatorContact)];
+                for(let i in validatePhone) {
+                    if(validatePhone[i]) {
+                        this.$alert(validatePhone[i],'提示', {
+                            confirmButtonText: '确定',
+                            type: 'warning',
+                            callback: action => {}
+                        });
+                        return false;
+                    }
+                }
+                const loading = this.$loading({
+                    lock: true,
+                    text: '请稍后...',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(255,255,255,0.7)'
+                });
+                let formData = new FormData(),
+                    openTender = JSON.stringify(this.showForm);
+                formData.append('openTender',new Blob([openTender],{type:"application/json"}));
+                if(this.Enclosure.winningDocument) {
+                    formData.append('oldWinningDocumentFileUrl',this.fileData[0].upload_file_address);
+                    console.log(0)
+                }
+                if(this.Enclosure.transactionAnnouncement) {
+                    formData.append('oldTransactionAnnouncementFileUrl',this.fileData[1].upload_file_address);
+                    console.log(1)
+
+                }
+                if(this.Enclosure.noticeTransaction) {
+                    formData.append('oldNoticeTransactionFileUrl',this.fileData[2].upload_file_address);
+                    console.log(2)
+                }
+                if(this.Enclosure.responseFile) {
+                    formData.append('oldResponseFileFileUrl',this.fileData[3].upload_file_address);
+                    console.log(3)
+                }
+                if(this.Enclosure.otherAttachments) {
+                    formData.append('oldOtherAttachmentsFileUrl',this.fileData[4].upload_file_address);
+                    console.log(4)
+                }
+                formData.append('winningDocument',this.Enclosure.winningDocument);
+                formData.append('transactionAnnouncement',this.Enclosure.transactionAnnouncement);
+                formData.append('noticeTransaction',this.Enclosure.noticeTransaction);
+                formData.append('responseFile',this.Enclosure.responseFile);
+                formData.append('otherAttachments',this.Enclosure.otherAttachments);
+                this.axios({
+                    url: 'http://192.168.0.80:8087/environment/tender/updateTenderStatusByReturnCommit',
+                    method: 'post',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    usecredensives: true
+                }).then((res) => {
+                    loading.close();
+                    if(res.data.resultFlag == 0) {
+                        this.$alert('提交成功','提示', {
+                            confirmButtonText: '确定',
+                            type: 'success',
+                            callback: action => {
+                                this.$router.go(-1);
+                            }
+                        });
+                    }else { this.errorInfo(); }
+                }).catch(() => { 
+                    loading.close();
+                    this.errorInfo(); 
+                })
+            },
             handleBack() {
                 this.$router.go(-1);
             },
@@ -159,6 +319,19 @@
                                      + this.fileData[val].upload_file_address 
                                      + '&fileName=' 
                                      + this.fileData[val].upload_file_name;
+            },
+            getFile(event,index) {
+                if(index == 1) {
+                    this.Enclosure.winningDocument = event.target.files[0];
+                }else if(index == 2) {
+                    this.Enclosure.transactionAnnouncement = event.target.files[0];
+                }else if(index == 3) {
+                    this.Enclosure.noticeTransaction = event.target.files[0];
+                }else if(index == 4) {
+                    this.Enclosure.responseFile = event.target.files[0];
+                }else if(index == 5) {
+                    this.Enclosure.otherAttachments = event.target.files[0];
+                }
             }
         },
         mounted() {
@@ -181,9 +354,16 @@
                 }).then((res) => {
                     let data = res.data.data;
                     this.fileData = data;
-                    console.log(data[0].upload_file_name)
-                    console.log( document.querySelector(".file_td input").value)
-                    // document.querySelector(".file_td input").value = data[0].upload_file_name;
+                    // 审核数据
+                    this.axios({
+                        url: 'http://192.168.0.80:8087//environment/tender/getAllShenHeTableRecordInfoByContractId',
+                        method: 'get',
+                        params: {
+                            oid: this.paramsData.id
+                        }
+                    }).then((res) => {
+                        this.tableData = res.data.data;
+                    })
                 })
             })    
         }
@@ -192,6 +372,9 @@
 
 <style lang="less">
     #projectQueryEdit{
+        padding-bottom: 60px;
+        background-color: #fff;
+        margin-bottom: 20px;
         .showForm{
             table.form_table{
                 @media  screen and ( max-width: 1600px ) {

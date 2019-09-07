@@ -198,9 +198,6 @@ export default {
 					}
 				}
 			}
-			.over_box_active {
-				display: none;
-			}
 		}
 		.el-button{
             padding: 7px 20px;

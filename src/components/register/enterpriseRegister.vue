@@ -206,7 +206,7 @@
                 // 文件格式验证和社会信用号验证是后端做的
                 let formData = new FormData(),
                     userInformation = JSON.stringify(this.showForm);
-                formData.append('userInformation',new Blob([userInformation],{type: "application/json"}));
+                formData.append('userInformation',new Blob([userInformation],{type:"application/json"}));
                 formData.append('businessFile',this.businessFile);
                 formData.append('legalCardIdFile',this.legalCardIdFile);
                 formData.append('contactCardFile',this.contactCardFile);

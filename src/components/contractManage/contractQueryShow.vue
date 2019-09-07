@@ -297,7 +297,7 @@
                                     type="textarea" 
                                     v-model="showForm.subjectSigningDescription"
                                     :disabled="true"
-                                    :autosize="{ minRows:3 }">
+                                    :autosize="{ minRows:4 }">
                                 </el-input>
                             </td>
                         </tr>
@@ -308,7 +308,7 @@
                                     type="textarea" 
                                     v-model="showForm.subjectObjectivesResearch"
                                     :disabled="true"
-                                    :autosize="{ minRows:3 }">
+                                    :autosize="{ minRows:4 }">
                                 </el-input>
                             </td>
                         </tr>
@@ -319,7 +319,7 @@
                                     type="textarea" 
                                     v-model="showForm.subjectAcceptanceAssessment"
                                     :disabled="true"
-                                    :autosize="{ minRows:3 }">
+                                    :autosize="{ minRows:4 }">
                                 </el-input>
                             </td>
                         </tr>
@@ -578,7 +578,9 @@
                     </tbody>
                 </table>
             </el-form>
-            <el-button @click = "handleBack">返回</el-button>
+            <div class="btn_group">
+                <el-button @click = "handleBack">返回</el-button>
+            </div>
         </div>
     </div>
 </template>
@@ -680,7 +682,10 @@
                     width: 87.4%;
                 }
                 .el-textarea {
-                    padding: 10px;
+                    .el-textarea__inner {
+                        padding: 10px;
+                        resize: none;
+                    }
                 }
             }
             .qianding{

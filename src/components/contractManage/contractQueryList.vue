@@ -3,8 +3,11 @@
         <!-- 搜索 -->
         <div class="queryForm">
             <el-form ref="queryForm" :model="queryForm" >
-                <el-form-item label="课程类别：" >
-                    <el-input v-model="queryForm.subjectCategory"></el-input>
+                <el-form-item label="课题类别：" >
+                    <el-select v-model="queryForm.subjectCategory">
+                        <el-option label="所有类别" value=""></el-option>
+                        <el-option v-for="(item,index) in optGroup1" :key="index" :label="item.content" :value="item.id"></el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item label="课程名称：">
                     <el-input v-model="queryForm.subjectName"></el-input>
@@ -32,15 +35,20 @@
                 v-loading="loading"
                 ref="multipleTable"
                 :data="tableData"
+                stripe
                 tooltip-effect="dark"
-                style="width: 100%">
-                <!-- <el-table-column
-                    type="selection"
-                    align="center">
-                </el-table-column> -->
+                width="100%"
+                highlight-current-row
+                @current-change="handleSelectionChange">
                 <el-table-column
                     type="index"
                     label="序号"
+                    align="center">
+                </el-table-column>
+                <el-table-column
+                    prop="subjectName"
+                    label="课题名称"
+                    :show-overflow-tooltip="true"
                     align="center">
                 </el-table-column>
                 <el-table-column
@@ -49,48 +57,62 @@
                     :show-overflow-tooltip="true"
                     align="center">
                     <template slot-scope="scope">
-                        <router-link :to="{
-                                name: 'ContractQueryShow',
-                                params: {
-                                    id: scope.row.id
-                                }
-                            }"> 
-                            <span v-show="scope.row.subjectCategory == 76">综合示范类</span>
-                            <span v-show="scope.row.subjectCategory == 77">技术研发类</span>
-                            <span v-show="scope.row.subjectCategory == 78">重大技术攻关类</span>
-                        </router-link>
+                        <span v-show="scope.row.subjectCategory == 76">综合示范类</span>
+                        <span v-show="scope.row.subjectCategory == 77">技术研发类</span>
+                        <span v-show="scope.row.subjectCategory == 78">重大技术攻关类</span>
                     </template>
                 </el-table-column>
                 <el-table-column
-                prop="subjectName"
-                label="课题名称"
-                align="center">
+                    prop="subjectObjectivesResearch"
+                    min-width="135"
+                    label="课题的目标和主要研究内容"
+                    :show-overflow-tooltip="true"
+                    align="center">
                 </el-table-column>
                 <el-table-column
-                prop="subjectObjectivesResearch"
-                min-width="135"
-                label="课题的目标和主要研究内容"
-                align="center">
+                    prop="subjectContact"
+                    label="课题联系人"
+                    :show-overflow-tooltip="true"
+                    align="center">
                 </el-table-column>
                 <el-table-column
-                prop="subjectContact"
-                label="课题联系人"
-                align="center">
+                    prop="subjectContactPhone"
+                    label="联系人手机"
+                    :show-overflow-tooltip="true"
+                    align="center">
                 </el-table-column>
                 <el-table-column
-                prop="subjectContactPhone"
-                label="联系人手机"
-                align="center">
+                    prop="commitmentUnit"
+                    label="承担单位"
+                    :show-overflow-tooltip="true"
+                    align="center">
                 </el-table-column>
                 <el-table-column
-                prop="commitmentUnit"
-                label="承担单位"
-                align="center">
+                    prop="subjectSupervisorDepartment"
+                    label="课题主管部门"
+                    :show-overflow-tooltip="true"
+                    align="center">
                 </el-table-column>
                 <el-table-column
-                prop="subjectSupervisorDepartment"
-                label="课题主管部门"
-                align="center">
+                    prop="approvalStatus"
+                    label="审核状态"
+                    :show-overflow-tooltip="true"
+                    align="center">
+                    <template slot-scope="scope">
+                        <span v-show="scope.row.approvalStatus == 0">已退回</span>
+                        <span v-show="scope.row.approvalStatus == 2">未审核</span>
+                        <span v-show="scope.row.approvalStatus == 3">法规中心未审核</span>
+                        <span v-show="scope.row.approvalStatus == 4">已审核</span>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                    prop="approvalStatus"
+                    label="操作"
+                    :show-overflow-tooltip="true"
+                    align="center">
+                    <template slot-scope="scope">
+                        <el-input v-show="scope.row.approvalStatus == 0">修改</el-input>
+                    </template>
                 </el-table-column>
             </el-table>
             <!-- 分页 -->
@@ -111,20 +133,18 @@
     export default {
         name:'contractQueryList',
         data(){
-            return {
+            return { 
                 queryForm: {
-                    subjectCategory: '',
+                    subjectCategory: null,
                     subjectName: '',
                     subjectContact: '',
                     commitmentUnit: '',
                     subjectSupervisorDepartment: '',
-                    subjectContactPhone:'',
-                    pageNum: 1,
-                    pageSize: 10
+                    subjectContactPhone:''
                 },
+                optGroup1: [],
                 loading: true,
                 tableData: [],
-                currentPage: 4,
                 fenye: {
                     total: 0, //共有数据多少条
                     pageNum: 1,
@@ -133,13 +153,21 @@
                 }
             }
         },
-        methods:{
+        methods: {
+            handleSelectionChange(val) {
+                this.$router.push({
+                    name: 'ContractQueryShow',
+                    params: {
+                        id: val.id
+                    }
+                })
+            },
             handleCurrentChange(val) {              //val表示当前页
-                this.queryForm.pageNum = val;
+                this.fenye.pageNum = val;
                 this._axios();
             },
             handleSizeChange(val) {                 //val表示每页展示的条数
-                this.queryForm.pageSize = val;
+                this.fenye.pageSize = val;
                 this._axios();
             },
             handleTableFresh(){
@@ -148,14 +176,18 @@
             },
             // 请求列表数据
             _axios() {
+                let data = this.queryForm;
+                    data.pageNum = this.fenye.pageNum;
+                    data.pageSize = this.fenye.pageSize;
                 this.axios({
                     url: 'http://192.168.0.80:8087/environment/contract/getAllInfo',
                     method: 'get',
-                    params: this.queryForm
+                    params: data
                 }).then((res) => {
+                    console.log(res)
                     this.loading = false;
                     let data = res.data.data;
-                    if(data.list.length == 0) {
+                    if(data == "没有查到相关信息") {
                         this.tableData = []; 
                         this.$alert('没有查到相关信息','提示',{
                             confirmButtonText: '确定',
@@ -176,6 +208,18 @@
             }
         },
         beforeMount() {
+            // 请求课题类别
+            this.axios({
+                url: 'http://192.168.0.80:8087/environment/guide/getCategoryAndDomain',
+                method: 'get',
+            }).then((res) => {
+                let data = res.data.data;
+                for(let i in data) {
+                    if(data[i].classification == "所属类别") {
+                        this.optGroup1.push(data[i]);
+                    }
+                }
+            })
             this._axios();
         }
     }

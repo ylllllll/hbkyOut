@@ -35,8 +35,11 @@
                 v-loading="loading"
                 ref="multipleTable"
                 :data="tableData"
+                stripe
                 tooltip-effect="dark"
-                style="width: 100%">
+                style="width: 100%"
+                highlight-current-row
+                @current-change="handleSelectionChange">
                 <el-table-column
                     type="index"
                     label="序号"
@@ -47,17 +50,6 @@
                     label="指南建议名称"
                     :show-overflow-tooltip="true"
                     align="center">
-                 <template slot-scope="scope">
-                    <router-link :to="{
-                            name: 'GuideCollectShow',
-                            params: {
-                                id: scope.row.id,
-                                data: tableData
-                            }
-                        }"> 
-                        {{ scope.row.guide_name }}
-                    </router-link>
-                </template>
                 </el-table-column>
                 <el-table-column
                     prop="domain"
@@ -146,7 +138,6 @@
                 optGroup2: [],
                 loading: true,
                 tableData: [],
-                currentPage: 4,
                 fenye: {
                     total: 0, //共有数据多少条
                     pageNum: 1,
@@ -156,6 +147,15 @@
             }
         },
         methods: {
+            handleSelectionChange(val) {
+                this.$router.push({
+                    name: 'GuideCollectShow',
+                    params: {
+                        id: val.id,
+                        data: this.tableData
+                    }
+                })
+            },
             handleCurrentChange(val) {              //val表示当前页
                 this.fenye.pageNum = val;
                 this._axios();
@@ -171,8 +171,8 @@
             // 请求列表数据
             _axios() {
                 let data = this.queryForm;
-                data.pageNum = this.fenye.pageNum;
-                data.pageSize = this.fenye.pageSize;
+                    data.pageNum = this.fenye.pageNum;
+                    data.pageSize = this.fenye.pageSize;
                 this.axios({
                     url: 'http://192.168.0.80:8087/environment/guide/getUnitCollection',
                     method: 'post',

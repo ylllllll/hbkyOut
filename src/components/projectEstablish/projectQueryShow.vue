@@ -167,11 +167,6 @@
                     :show-overflow-tooltip="true"
                     align="center">
                 </el-table-column>
-                <!-- <el-table-column
-                    prop="data7"
-                    label="处理意见"
-                    align="center">
-                </el-table-column> -->
                 <el-table-column
                     prop="secondHandleTime"
                     label="处理时间"
