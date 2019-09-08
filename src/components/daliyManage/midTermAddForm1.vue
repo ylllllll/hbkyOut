@@ -186,7 +186,7 @@
                 },2000);
             },
             handleBack() {
-                this.$router.go(-1);
+                this.$router.push("/index/midTerm/midTermList");
             }
         },
         // beforeMount() {

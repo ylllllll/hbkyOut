@@ -111,7 +111,7 @@
                     :show-overflow-tooltip="true"
                     align="center">
                     <template slot-scope="scope">
-                        <el-input v-show="scope.row.approvalStatus == 0">修改</el-input>
+                        <el-button v-show="scope.row.approvalStatus == 0" @click="handleEdit(scope.row.id)">修改</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -180,7 +180,7 @@
                     data.pageNum = this.fenye.pageNum;
                     data.pageSize = this.fenye.pageSize;
                 this.axios({
-                    url: 'http://192.168.0.80:8087/environment/contract/getAllInfo',
+                    url: 'http://192.168.0.80:8087/environment/contract/getManageInfoByUid',
                     method: 'get',
                     params: data
                 }).then((res) => {
@@ -205,6 +205,14 @@
                 this.queryForm.pageNum = 1;
                 this._axios();
                 document.querySelector(".first-pager").click();
+            },
+            handleEdit(val) {
+                this.$router.push({
+                    name: 'ContractQueryEdit',
+                    params: {
+                        id: val
+                    }
+                })
             }
         },
         beforeMount() {
@@ -232,6 +240,9 @@
             .el-table{
                 min-height: 630px;
                 padding-bottom: 10px;
+                .el-button {
+                    margin: 0;
+                }
             }
         }
         .pages{

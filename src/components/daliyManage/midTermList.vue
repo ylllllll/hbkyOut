@@ -43,6 +43,7 @@
             <el-table
                 ref="multipleTable"
                 :data="tableData"
+                stripe
                 tooltip-effect="dark"
                 style="width: 100%">
                 <!-- <el-table-column

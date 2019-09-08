@@ -37,12 +37,11 @@
                 v-loading="loading"
                 ref="multipleTable"
                 :data="tableData"
+                stripe
                 tooltip-effect="dark"
-                style="width: 100%">
-                <!-- <el-table-column
-                    type="selection"
-                    align="center">
-                </el-table-column> -->
+                style="width: 100%"
+                highlight-current-row
+                @current-change="handleSelectionChange">
                 <el-table-column
                     type="index"
                     label="序号"
@@ -53,35 +52,29 @@
                     label="课题名称"
                     :show-overflow-tooltip="true"
                     align="center">
-                    <template slot-scope="scope">
-                        <router-link :to="{
-                            name: 'MattersReportShow',
-                            params: {
-                                id: scope.row.id
-                            }
-                        }"> 
-                        {{ scope.row.subjectName }}
-                        </router-link>
-                    </template>
                 </el-table-column>
                 <el-table-column
                     prop="commitmentUnit"
                     label="承担单位"
+                    :show-overflow-tooltip="true"
                     align="center">
                 </el-table-column>
                 <el-table-column
                     prop="adjustType"
                     label="调整类型"
+                    :show-overflow-tooltip="true"
                     align="center">
                 </el-table-column>
                 <el-table-column
                     prop="adjustmentMatters"
+                    :show-overflow-tooltip="true"
                     label="调整事项"
                     align="center">
                 </el-table-column>
                 <el-table-column
                     prop="unitHead"
                     label="单位负责人"
+                    :show-overflow-tooltip="true"
                     align="center">
                 </el-table-column>
                 <!-- <el-table-column
@@ -92,6 +85,7 @@
                 <el-table-column
                     prop="shenheStatus"
                     label="审核状态"
+                    :show-overflow-tooltip="true"
                     align="center">
                     <template slot-scope="scope">
                         <span v-show="scope.row.shenheStatus == '0'">未审批</span>
@@ -123,18 +117,14 @@
                     commitmentUnit: '',
                     adjustTypId: '',
                     adjustmentMattersId: '',
-                    pageNum: 1,
-                    pageSize: 10,
-                    uid: '1'
                 },
                 optGroup1: [],
                 optGroup2: [],
                 optGroup3: [],
                 loading: true,
                 tableData: [],
-                currentPage: 4,
                 fenye: {
-                    total: 400, //共有数据多少条
+                    total: 0, //共有数据多少条
                     pageNum: 1,
                     pageSize: 10, //每页显示的条数
                     pageSizes: [10,20,30,40,50] //选择每页显示多少条
@@ -145,12 +135,20 @@
             bug() {
                 this.queryForm.adjustmentMattersId = "";
             },
+            handleSelectionChange(val) {
+                this.$router.push({
+                    name: 'MattersReportShow',
+                    params: {
+                        id: val.id
+                    }
+                })
+            },
             handleCurrentChange(val) {              //val表示当前页
-                this.queryForm.pageNum = val;
+                this.fenye.pageNum = val;
                 this._axios();
             },
             handleSizeChange(val) {                 //val表示每页展示的条数
-                this.queryForm.pageSize = val;
+                this.fenye.pageSize = val;
                 this._axios();
             },
             handleTableFresh(){
@@ -162,12 +160,15 @@
             },
             // 请求列表数据
             _axios() {
+                let data = this.queryForm;
+                    data.pageNum = this.fenye.pageNum;
+                    data.pageSize = this.fenye.pageSize;
                 this.axios({
                     url: 'http://192.168.0.80:8087/enviroment/daily/majormatter/getAllMajorInfoByUid',
                     method: 'get',
-                    params: this.queryForm
+                    params: data
                 }).then((res) => {
-                    // console.log(res);
+                    console.log(res);
                     this.loading = false;
                     let data = res.data.data;
                     if(data == "没有查到相关信息") {

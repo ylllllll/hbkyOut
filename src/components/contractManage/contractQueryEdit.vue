@@ -1,18 +1,16 @@
 <template>
-    <div id="contractAdd">
+    <div id="contractQueryEdit">
         <div class="showForm">
             <el-form ref="showForm" >
                 <table class="form_table" :model="showForm">
                     <thead>
-                        <tr><th colspan="4">合同提交</th></tr>
+                        <tr><th colspan="4">合同中心详情页</th></tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>课题类别：</td>
                             <td>
-                                <el-select v-model="showForm.subjectCategory">
-                                    <el-option v-for="(item,index) in optGroup1" :key="index" :label="item.content" :value="item.id"></el-option>
-                                </el-select>
+                                <el-input v-model="showForm.subjectCategory"></el-input>
                             </td>
                             <td>课题编号：</td>
                             <td>
@@ -149,7 +147,8 @@
                             </td>
                             <td>承担单位法定代表人：</td>
                             <td>
-                                <el-input v-model="showForm.responsibilityLegalRepresentativeB"></el-input>
+                                <el-input v-model="showForm.responsibilityLegalRepresentativeB">
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
@@ -204,7 +203,7 @@
                             <td>课题签订说明：</td>
                             <td colspan="3">
                                 <el-input 
-                                    type="textarea"
+                                    type="textarea" 
                                     v-model="showForm.subjectSigningDescription"
                                     :autosize="{ minRows:4 }">
                                 </el-input>
@@ -233,7 +232,7 @@
                     </tbody>
                 </table>
                 <!-- 三、课题进度及考核指标（进度安排区间一般按3个月） -->
-                <table class="form_table1" :model="progressForm">
+                <table class="form_table1" :model="progressForm" >
                     <thead>
                         <tr>
                             <th colspan="4">课题进度及考核指标（进度安排区间一般按3个月）</th>
@@ -244,7 +243,7 @@
                             <td style="height:50px;line-height:50px;">时间</td>
                             <td colspan="3" style="position:relative;">
                                 计划内容及考核指标
-                                <i class="el-icon-circle-plus-outline" @click="handleTrAdd(1)"></i>
+                                <i class="el-icon-circle-plus-outline" @click="handleTrAdd(1)"></i>    
                             </td>
                         </tr>
                         <tr v-for="(item,index) in progressForm" :key="index">
@@ -285,29 +284,28 @@
                 <table class="form_table1" :model="unitForm" style="margin-top:10px;">
                     <tbody>
                         <tr style="background-color:#e5f3ff;">
-                           <td><span>姓名</span></td>
-                           <td><span>所在单位</span></td>
-                           <td><span>性别</span></td>
-                           <td><span>年龄</span></td>
-                           <td><span>职称</span></td>
-                           <td><span>从事专业</span></td>
-                           <td style="padding:0 10px;"><span style="white-space:nowrap;">本课题中承担工作</span></td>
-                           <td style="padding:0 10px;"><span style="white-space:nowrap;">为本课题工作时间（%）</span></td>
-                           <!-- <td><span>本人签名</span></td> -->
+                            <td><span>姓名</span></td>
+                            <td><span>所在单位</span></td>
+                            <td><span>性别</span></td>
+                            <td><span>年龄</span></td>
+                            <td><span>职称</span></td>
+                            <td><span>从事专业</span></td>
+                            <td style="padding:0 10px;"><span style="white-space:nowrap;">本课题中承担工作</span></td>
+                            <td style="padding:0 10px;"><span style="white-space:nowrap;">为本课题工作时间（%）</span></td>
                         </tr>
                         <tr>
                             <td colspan="8" style="text-align:left;padding-left:10px;background-color:#fff;">课题负责人：</td>
                         </tr>
                         <tr>
-                           <td><el-input v-model="unitForm.leaderName"></el-input></td>
-                           <td><el-input v-model="unitForm.unitName"></el-input></td>
-                           <td><el-input v-model="unitForm.gender"></el-input></td>
-                           <td><el-input v-model="unitForm.age"></el-input></td>
-                           <td><el-input v-model="unitForm.professionalTitle"></el-input></td>
-                           <td><el-input v-model="unitForm.professional"></el-input></td>
-                           <td><el-input v-model="unitForm.workTask"></el-input></td>
-                           <td><el-input v-model="unitForm.workingTime"></el-input></td>
-                           <!-- <td><el-input v-model="unitForm.name"></el-input></td> -->
+                            <td><el-input v-model="unitForm.leaderName"></el-input></td>
+                            <td><el-input v-model="unitForm.unitName"></el-input></td>
+                            <td><el-input v-model="unitForm.gender"></el-input></td>
+                            <td><el-input v-model="unitForm.age"></el-input></td>
+                            <td><el-input v-model="unitForm.professionalTitle"></el-input></td>
+                            <td><el-input v-model="unitForm.professional"></el-input></td>
+                            <td><el-input v-model="unitForm.workTask"></el-input></td>
+                            <td><el-input v-model="unitForm.workingTime"></el-input></td>
+                            <!-- <td><el-input v-model="unitForm.name"></el-input></td> -->
                         </tr>
                         <tr>
                             <td colspan="8" style="text-align:left;padding-left:10px;position:relative;">
@@ -327,10 +325,6 @@
                                 <el-input v-model="item.workingTime"></el-input>
                                 <i class="el-icon-remove-outline" @click="handleTrRemove(2,index)"></i>
                             </td>
-                            <!-- <td style="position:relative;">
-                                <el-input v-model="unitForm.keyResearchDevelopers"></el-input>
-                                <i class="el-icon-remove-outline" @click="handleTrRemove(index)"></i>
-                            </td> -->
                         </tr>
                     </tbody>
                 </table>
@@ -364,7 +358,7 @@
                         </tr>
                         <tr>
                             <td>1、省环保科研课题经费</td>
-                            <td><el-input v-model="budgetForm.provincialBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.provincialBudget"></el-input></td>
                             <td><el-input v-model="budgetForm.provincialCurrentBudget"></el-input></td>
                             <td><el-input v-model="budgetForm.provincialNextBudget"></el-input></td>
                             <td><el-input v-model="budgetForm.provincialAfterBudget"></el-input></td>
@@ -372,7 +366,7 @@
                         </tr>
                         <tr>
                             <td>2、部门、地方配套</td>
-                            <td><el-input v-model="budgetForm.departmentBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.departmentBudget"></el-input></td>
                             <td><el-input v-model="budgetForm.departmentCurrentBudget"></el-input></td>
                             <td><el-input v-model="budgetForm.departmentNextBudget"></el-input></td>
                             <td><el-input v-model="budgetForm.departmentAfterBudget"></el-input></td>
@@ -380,7 +374,7 @@
                         </tr>
                         <tr>
                             <td>3、承担单位自筹</td>
-                            <td><el-input v-model="budgetForm.bearBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.bearBudget"></el-input></td>
                             <td><el-input v-model="budgetForm.bearCurrentBudget"></el-input></td>
                             <td><el-input v-model="budgetForm.bearNextBudget"></el-input></td>
                             <td><el-input v-model="budgetForm.bearAfterBudget"></el-input></td>
@@ -388,7 +382,7 @@
                         </tr>
                         <tr >
                             <td>4、其他来源</td>
-                            <td><el-input v-model="budgetForm.otherBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.otherBudget"></el-input></td>
                             <td><el-input v-model="budgetForm.otherCurrentBudget"></el-input></td>
                             <td><el-input v-model="budgetForm.otherNextBudget"></el-input></td>
                             <td><el-input v-model="budgetForm.otherAfterBudget"></el-input></td>
@@ -498,7 +492,10 @@
                     </tbody>
                 </table>
             </el-form>
-            <el-button @click="handleSubmit">提交</el-button>
+            <div class="btn_group">
+                <el-button @click="handleSubmit">提交</el-button>
+                <el-button @click="handleBack">返回</el-button>
+            </div>
         </div>
         <div class="cover_box" v-show="overBoxFlag">
             <div class="message_box">
@@ -521,172 +518,19 @@
 <script>
     import ContractMessageBox from '@/components/contractManage/contractMessageBox'
     export default {
-        inject: ["reload"],
-        name: 'contractAdd',
+        name: 'contractQueryEdit',
         components: {
             messageBox: ContractMessageBox
         },
         data() {
             return {
-                optGroup1: [],
-                showForm: {
-                    subjectCategory: '',
-                    projectNo: '',
-                    subjectName: '',
-                    contractStartTime: '',
-                    contractEndTime: '',
-                    subjeceLeader: '',
-                    subjectLeaderPhone: '17777777777',
-                    subjectContact: '7',
-                    subjectContactPhone: '17777777777',
-                    commitmentUnit: '8',
-                    commitmentUnitAddress: '9',
-                    commitmentUnitZip: '10',
-                    subjectSupervisorDepartment: '11',
-                    openBank: '12',
-                    openBankAccount: '13',
-                    email: '14',
-                    guaranteedUnits: '15',
-                    guaranteedUnitContact: '16',
-                    guaranteedContactPhone: '17',
-                    commissioningUnit: '18',
-                    legalRepresentativeEntrustingA: '19',
-                    commissionedUnitAddressA: '20',
-                    commissionedUnitZipA: '21',
-                    responsibilityUnitB: '22',
-                    responsibilityLegalRepresentativeB: '23',
-                    commitUnitAddressB: '24',
-                    commitUnitZipB: '25',
-                    commitUnitLeaderB: '26',
-                    commitunitLeadersPhoneB: '27',
-                    commitmentUnitEmailB: '28',
-                    guaranteedUnitC: '29',
-                    guaranteedUnitLeaderC: '30',
-                    guaranteedUnitZipC: '31',
-                    guaranteedUnitAddressC: '32',
-                    subjectSigningDescription: '33',
-                    subjectObjectivesResearch: '34',
-                    subjectAcceptanceAssessment: '35',
-                },
-                progressForm: [{
-                    contractId: 0,
-                    time: "2018-8到2018-12",
-                    programContentAssessmentIndicators: "让法国人tyre"
-                },{
-                    contractId: 0,
-                    time: "2018-8到2019-1",
-                    programContentAssessmentIndicators: "现代风格的人体感染"
-                }],
-                unitForm: {
-                    contractId: 0,
-                    bearingUnits: '1',
-                    participatingUnits: '2',
-                    overseasCooperationUnits: '3',
-                    country: '4',
-                    leaderName: '5',
-                    unitName: '6',
-                    gender: '7',
-                    age: '8',
-                    professionalTitle: '9',
-                    professional: '10',
-                    workTask: '11',
-                    workingTime: '12'
-                },
-                keyForm: [{
-                    contractId: 0,
-                    keyDevName: '1',
-                    unitName: '2',
-                    gender: '3',
-                    age: '4',
-                    professionalTitle: '5',
-                    professional: '6',
-                    workTask: '7',
-                    workingTime: '8'
-                }],
-                budgetForm: {
-                    contractId: 0,
-                    currentYear: '',
-                    nextYear: '',
-                    afterYear: '',
-                    fundingSourcesBudget: 0,
-                    currentYearSourceTotal: '1',
-                    nextYearSourceTotal: '1',
-                    afterYearSourceTotal: '1',
-                    fundingSourcesNote: '1',
-                    provincialBudget: 0,
-                    provincialCurrentBudget: '13',
-                    provincialNextBudget: '14',
-                    provincialAfterBudget: '15',
-                    provincialNoteBudget: '16',
-                    departmentBudget: 0,
-                    departmentCurrentBudget: '13',
-                    departmentNextBudget: '14',
-                    departmentAfterBudget: '15',
-                    departmentNoteBudget: '16',
-                    bearBudget: 0,
-                    bearCurrentBudget: '2',
-                    bearNextBudget: '3',
-                    bearAfterBudget: '4',
-                    bearNoteBudget: '5',
-                    otherBudget: 0,
-                    otherCurrentBudget: '2',
-                    otherNextBudget: '3',
-                    otherAfterBudget: '4',
-                    otherNoteBudget: '5',
-                    expenditureBudget: '119',
-                    currentYearExpenditureTotal: '11',
-                    nextYearExpenditureTotal: '12',
-                    afterYearExpenditureTotal: '13',
-                    selfTotalExpenditures: '14',
-                    totalExpendituresNote: '15',
-                    equipmentBudget: '17',
-                    equipmentCurrentBudget: '18',
-                    equipmentNextBudget: '19',
-                    equipmentAfterBudget: '20',
-                    equipmentSupportingBudget: '21',
-                    equipmentNoteBudget: '22',
-                    materialBudget: '317',
-                    materialCurrentBudget: '318',
-                    materialNextBudget: '319',
-                    materialAfterBudget: '320',
-                    materialSupportingBudget: '321',
-                    materialNoteBudget: '322',
-                    testBudget: '1',
-                    testCurrentBudget: '2',
-                    testNextBudget: '3',
-                    testAfterBudget: '4',
-                    testSupportingBudget: '5',
-                    testNoteBudget: '6',
-                    fuelBudget: '117',
-                    fuelCurrentBudget: '118',
-                    fuelNextBudget: '119',
-                    fuelAfterBudget: '120',
-                    fuelSupportingBudget: '121',
-                    fuelNoteBudget: '122',
-                    mettingBudget: '917',
-                    mettingCurrentBudget: '918',
-                    mettingNextBudget: '919',
-                    mettingAfterBudget: '920',
-                    mettingSupportingBudget: '921',
-                    mettingNoteBudget: '922',
-                    laborBudget: '0117',
-                    laborCurrentBudget: '0118',
-                    laborNextBudget: '0119',
-                    laborAfterBudget: '0120',
-                    laborSupportingBudget: '0121',
-                    laborNoteBudget: '0122',
-                    expertsBudget: '16',
-                    expertsCurrentBudget: '17',
-                    expertsNextBudget: '18',
-                    expertsAfterBudget: '19',
-                    expertsSupportingBudget: '20',
-                    expertsNoteBudget: '21',
-                    dailyBudget: '6',
-                    dailyCurrentBudget: '7',
-                    dailyNextBudget: '8',
-                    dailyAfterBudget: '9',
-                    dailySupportingBudget: '10',
-                    dailyNoteBudget: '11'
+                showForm: {},
+                progressForm:[],
+                unitForm: {},
+                keyForm: [],
+                budgetForm:{},
+                paramsData: {
+                    id: this.$route.params.id
                 },
                 overBoxFlag: false,
                 messageBoxData: {}
@@ -697,12 +541,8 @@
                 this.overBoxFlag = true;
                 event.target.blur();
             },
-            errorInfo() {
-                this.$alert('提交失败','提示', {
-                    confirmButtonText: '确定',
-                    type: 'warning',
-                    callback: action => {}
-                });
+            handleBack() {
+                this.$router.go(-1);
             },
             handleSubmit() {
                 // 非空验证
@@ -766,107 +606,33 @@
                     spinner: 'el-icon-loading',
                     background: 'rgba(255,255,255,0.7)'
                 });
-                // 主表部分
+                let formData = new FormData(),
+                    totalContract = {
+                        contractManageDTO: this.showForm,
+                        contentIndicatorsDTO: this.progressForm,
+                        subjectParticipatingUnitDTO: this.unitForm,
+                        keyResearchDevelopersDTO: this.keyForm,
+                        subjectFundsBudgetDTO: this.budgetForm
+                    };
+                formData.append('totalContract',totalContract);
                 this.axios({
-                    url: 'http://192.168.0.80:8087/environment/contract/addContractInfo',
+                    url: 'http://192.168.0.80:8087/environment/contract/updateContractStatusByReturnCommit',
                     method: 'post',
-                    data: this.showForm
+                    data: formData
                 }).then((res) => {
-                    console.log(0)
-                    console.log(res);
-                    if(res.data.resultFlag == 0) {
-                        // 给子表加id
-                        let id = res.data.data;
-                        for(let i in this.progressForm) {
-                            this.progressForm[i].contractId = id;
-                        }
-                        this.unitForm.contractId = id;
-                        for(let i in this.keyForm) {
-                            this.keyForm[i].contractId = id;
-                        }
-                        this.budgetForm.contractId = id;
-                        // 子表一
-                        this.axios({
-                            url: 'http://192.168.0.80:8087/environment/contentindicators/insertCI',
-                            method: 'post',
-                            data: this.progressForm
-                        }).then((res) => {
-                            console.log(1)
-                            console.log(res);
-                            if(res.data.resultFlag == 0) {
-                                // 子表二
-                                this.axios({
-                                    url: 'http://192.168.0.80:8087/environment/contract/subject_participa_unit/insertInfo',
-                                    method: 'post',
-                                    data: this.unitForm
-                                }).then((res) => {
-                                    console.log(2)
-                                    console.log(res);
-                                    if(res.data.resultFlag == 0) {
-                                        // 子表三
-                                        this.axios({
-                                            url: 'http://192.168.0.80:8087/environment/contract/keydev/insertKeyDev',
-                                            method: 'post',
-                                            data: this.keyForm
-                                        }).then((res) => {
-                                            console.log(3)
-                                            console.log(res);
-                                            if(res.data.resultFlag == 0) {
-                                                // 子表四
-                                                this.axios({
-                                                    url: 'http://192.168.0.80:8087/environment/contract/subjectfundbudget/insertInfo',
-                                                    method: 'post',
-                                                    data: this.budgetForm
-                                                }).then((res) => {
-                                                    loading.close();
-                                                    console.log(4)
-                                                    console.log(res);
-                                                    if(res.data.resultFlag == 0) {
-                                                        this.$alert('提交成功','提示', {
-                                                            confirmButtonText: '确定',
-                                                            type: 'success',
-                                                            callback: action => {
-                                                                this.reload();
-                                                            }
-                                                        });
-                                                    }else {
-                                                        this.errorInfo();
-                                                    }
-                                                }).catch(() => {
-                                                    loading.close();
-                                                    this.errorInfo();
-                                                })
-                                            }else {
-                                                loading.close();
-                                                this.errorInfo();
-                                            }
-                                        }).catch(() => {
-                                            loading.close();
-                                            this.errorInfo();
-                                        })
-                                    }else {
-                                        loading.close();
-                                        this.errorInfo();
-                                    }
-                                }).catch(() => {
-                                    loading.close();
-                                    this.errorInfo();
-                                })
-                            }else {
-                                loading.close();
-                                this.errorInfo();
-                            }
-                        }).catch(() => {
-                            loading.close();
-                            this.errorInfo();
-                        })
-                    }else {
-                        loading.close();
-                        this.errorInfo();
-                    }
+                    loading.close();
+                    this.$alert('提交成功','提示', {
+                        confirmButtonText: '确定',
+                        type: 'success',
+                        callback: action => {}
+                    });
                 }).catch(() => {
                     loading.close();
-                    this.errorInfo();
+                    this.$alert('提交失败','提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning',
+                        callback: action => {}
+                    });
                 })
             },
             handleTrAdd(val) {
@@ -915,12 +681,6 @@
                     }
                 }
             },
-            computed() {
-                this.budgetForm.fundingSourcesBudget = (parseFloat(this.budgetForm.provincialBudget) * 10000
-                                                     + parseFloat(this.budgetForm.departmentBudget) * 10000
-                                                     + parseFloat(this.budgetForm.bearBudget) * 10000
-                                                     + parseFloat(this.budgetForm.otherBudget) * 10000) / 10000;
-            },
             receiptChildInfo(val) {
                 this.messageBoxData = val;
             },
@@ -934,48 +694,88 @@
                 this.showForm.subjeceLeader = this.messageBoxData.subjectLeader;
                 this.showForm.subjectLeaderPhone = this.messageBoxData.leaderContact;
             }
-            
         },
         beforeMount() {
-            // 请求所属领域、所属类别
+            // 主表
             this.axios({
-                url: 'http://192.168.0.80:8087/environment/guide/getCategoryAndDomain',
+                url: 'http://192.168.0.80:8087/environment/contract/getManageInfoById',
                 method: 'get',
+                params: {
+                    id: this.paramsData.id
+                }
             }).then((res) => {
                 let data = res.data.data;
-                for(let i in data) {
-                    if(data[i].classification == "所属类别") {
-                        this.optGroup1.push(data[i]);
-                    }
+                this.showForm = data;
+            }).catch(() => {})
+            // 子表一
+            this.axios({
+                url: 'http://192.168.0.80:8087/environment/contentindicators/getIndicatorById',
+                method: 'get',
+                params: {
+                    id: this.paramsData.id
                 }
-            })
-        },
-        mounted() {
-            let currentYear = new Date().getFullYear(),
-                nextYear = currentYear + 1,
-                afterYear = nextYear + 1;
-            this.budgetForm.currentYear = currentYear;
-            this.budgetForm.nextYear = nextYear;
-            this.budgetForm.afterYear = afterYear;
+            }).then((res) => {
+                let data = res.data.data;
+                this.progressForm = data;
+            }).catch(() => {})
+            // 子表二
+            this.axios({
+                url: 'http://192.168.0.80:8087/environment/contract/subject_participa_unit/getDeveloperInfoById',
+                method: 'get',
+                params: {
+                    id: this.paramsData.id
+                }
+            }).then((res) => {
+                let data = res.data.data;
+                this.unitForm = data;
+            }).catch(() => {})
+            // 子表三
+            this.axios({
+                url: 'http://192.168.0.80:8087/environment/contract/keydev/getKeyDevInfoById',
+                method: 'get',
+                params: {
+                    cid: this.paramsData.id
+                }
+            }).then((res) => {
+                let data = res.data.data;
+                this.keyForm = data;
+            }).catch(() => {})
+            // 子表四
+            this.axios({
+                url: 'http://192.168.0.80:8087/environment/contract/subjectfundbudget/getInfoById',
+                method: 'get',
+                params: {
+                    id: this.paramsData.id
+                }
+            }).then((res) => {
+                let data = res.data.data;
+                this.budgetForm = data;
+            }).catch(() => {})
         }
     }
 </script>
 
 <style lang="less">
-    #contractAdd {
-        .showForm {
+    #contractQueryEdit{
+        .showForm{
             table.form_table,
             table.form_table1,
-            table.form_table2 {
+            table.form_table2{
                 min-width: 1000px;
                 width: 65.4%;
-                thead {
-                    th {
+                thead{
+                    th{
                         font-weight: bold;
                     }
                 }
                 @media  screen and ( max-width: 1600px ) {
                     width: 87.4%;
+                }
+                .el-textarea {
+                    .el-textarea__inner {
+                        padding: 10px;
+                        resize: none;
+                    }
                 }
             }
             .form_table1 {
@@ -1002,13 +802,6 @@
                         height: 30px;
                     }
                 }
-            }
-            .el-textarea {
-                .el-textarea__inner {
-                    padding: 10px;
-                    resize: none;
-                }
-                
             }
             .el-date-editor {
                 width: 100%;

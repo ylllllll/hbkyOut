@@ -35,14 +35,14 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>合同开始时间（精确到月）：</td>
+                            <td>合同开始时间：</td>
                             <td>
                                 <el-input 
                                 v-model="showForm.contractStartTime" 
                                 :disabled="true">
                                 </el-input>
                             </td>
-                            <td>合同结束时间（精确到月）：</td>
+                            <td>合同结束时间：</td>
                             <td>
                                 <el-input 
                                  v-model="showForm.contractEndTime" 

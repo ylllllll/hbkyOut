@@ -61,15 +61,16 @@
                                 <el-radio v-model="showForm.progress" label="47">滞后</el-radio>
                             </td>
                         </tr>
+                        <!-- 一、合同要求研发任务 -->
                         <tr class="item">
                             <td colspan="4">
                                 <h4>一、合同要求研发任务</h4>
-                                <p>合同要求研发任务共{{ taskForm.length }}项，具体如下：</p>
+                                <p>合同要求研发任务共{{ taskForm.length - 1 }}项，具体如下：</p>
                                 <ol>
                                     <li v-for="(item,index) in taskForm" :key="index">
                                         <span class="index">{{ index + 1 }}.</span>
                                         <el-input 
-                                            v-model="taskForm[index]"
+                                            v-model="taskForm[index].requireStoddTaskContent"
                                             :autosize="{ minRows:1 }"
                                             type="textarea"
                                             @input="autoAdd">
@@ -83,15 +84,15 @@
                             <td colspan="4">
                                 <h4>二、目前进展情况</h4>
                                 <p>
-                                    已完成研发任务{{ progressForm.dataList.length - 1}}项，完成工作进度
+                                    已完成研发任务{{ progressForm.length - 1}}项，完成工作进度
                                     <el-input class="_inline" v-model="showForm.progressCompletedPercentage"></el-input>
                                     %。
                                     </p>
                                 <ol>
-                                    <li v-for="(item,index) in progressForm.dataList" :key="index">
+                                    <li v-for="(item,index) in progressForm" :key="index">
                                         <span class="index">{{ index + 1 }}.</span>
                                         <el-input 
-                                            v-model="progressForm.dataList[index]"
+                                            v-model="progressForm[index].currentProgressContent"
                                             :autosize="{ minRows:1 }"
                                             type="textarea"
                                             @input="autoAdd">
@@ -130,7 +131,7 @@
                                     <li v-for="(item,index) in problemForm" :key="index">
                                         <span class="index">{{ index + 1 }}.</span>
                                         <el-input 
-                                            v-model="problemForm[index]"
+                                            v-model="problemForm[index].mainProblems"
                                             :autosize="{ minRows:1 }"
                                             type="textarea"
                                             @input="autoAdd">
@@ -147,7 +148,7 @@
                                     <li v-for="(item,index) in planForm" :key="index">
                                         <span class="index">{{ index + 1 }}.</span>
                                         <el-input 
-                                            v-model="planForm[index]"
+                                            v-model="planForm[index].nextWorkPlan"
                                             :autosize="{ minRows:1 }"
                                             type="textarea"
                                             @input="autoAdd">
@@ -244,16 +245,22 @@
                     // 单位核审意见
                     unitAuditComments: '22'
                 },
-                taskForm: [''],
-                progressForm: {
-                    progress: '60',
-                    dataList: ['']
-                },
-                fundsForm: {
-                    num: 50
-                },
-                problemForm: [''],
-                planForm: [''],
+                taskForm: [{
+                    progressId: 0,
+                    requireStoddTaskContent: ''
+                }],
+                progressForm: [{
+                    progressId: 0,
+                    currentProgressContent: ''
+                }],
+                problemForm: [{
+                    progressId: 0,
+                    mainProblems: ''
+                }],
+                planForm: [{
+                    progressId: 0,
+                    nextWorkPlan: ''
+                }],
                 timeForm: {
                     date: "2019年8月24日",
                     radio: ''
@@ -264,34 +271,130 @@
             }
         },
         methods:{
+            errorInfo() {
+                this.$alert('提交失败','提示', {
+                    confirmButtonText: '确定',
+                    type: 'warning',
+                    callback: action => {}
+                });
+            },
+            successInfo() {
+                this.$alert('提交成功','提示', {
+                    confirmButtonText: '确定',
+                    type: 'success',
+                    callback: action => {
+                        this.$router.go(-1);
+                    }
+                });
+            },
             handleSubmit() {
+                const loading = this.$loading({
+                    lock: true,
+                    text: '请稍后...',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(255,255,255,0.7)'
+                });
                 this.axios({
                     url: 'http://192.168.0.80:8087/environment/progress/insertProgress',
                     method: 'post',
                     data: this.showForm
                 }).then((res) => {
+                    console.log(0)
                     console.log(res);
-                    let id = res.data.data;
-                    // 一、合同要求研发任务
+                    if(res.data.resultFlag == 0) {
+                        let id = res.data.data;
+                        for(let i in this.taskForm) {
+                            this.taskForm[i].progressId = id;
+                        }
+                        for(let i in this.progressForm) {
+                            this.progressForm[i].progressId = id;
+                        }
+                        for(let i in this.problemForm) {
+                            this.problemForm[i].progressId = id;
+                        }
+                        // 一、合同要求研发任务
+                        let data = this.taskForm.slice(0,-1);
+                        this.axios({
+                            url: 'http://192.168.0.80:8087/environment/progress/insertCRDT',
+                            method: 'post',
+                            data
+                        }).then((res) => {
+                            console.log(1)
+                            console.log(res)
+                            if(res.data.resultFlag == 0) {
+                                // 二、目前进展情况
+                                let data = this.progressForm.slice(0,-1);
+                                this.axios({
+                                    url: 'http://192.168.0.80:8087/environment/progress/insertCP',
+                                    method: 'post',
+                                    data
+                                }).then((res) => {
+                                    console.log(2)
+                                    console.log(res);
+                                    if(res.data.resultFlag == 0) {
+                                        // 四、课题实施中存在的主要问题
+                                        let data = this.problemForm.slice(0,-1);
+                                        this.axios({
+                                            url: 'http://192.168.0.80:8087/environment/progress/insertPMP',
+                                            method: 'post',
+                                            data
+                                        }).then((res) => {
+                                            console.log(3)
+                                            console.log(res);
+                                            if(res.data.resultFlag == 0) {
+                                                // 五、下一步研发工作安排
+                                                let data = this.planForm.slice(0,-1);
+                                                this.axios({
+                                                    url: 'http://192.168.0.80:8087/environment/progress/insertNWP',
+                                                    method: 'post',
+                                                    data
+                                                }).then((res) => {
+                                                    console.log(4)
+                                                    console.log(res);
+                                                    loading.close();
+                                                    if(res.data.resultFlag == 0) {
+                                                        // 提交成功
+                                                        this.successInfo();
+                                                    } else {
+                                                        // 提交失败
+                                                        this.errorInfo();
+                                                    }
+                                                }).catch(() => {
+                                                    loading.close();
+                                                    this.errorInfo();
+                                                })
+                                            }else {
+                                                loading.close();
+                                                this.errorInfo();
+                                            }
+                                        }).catch(() => {
+                                            loading.close();
+                                            this.errorInfo();
+                                        })
+                                    }else {
+                                        loading.close();
+                                        this.errorInfo();
+                                    }
+                                }).catch(() => {
+                                    loading.close();
+                                    this.errorInfo();
+                                })
+                            }else {
+                                loading.close();
+                                this.errorInfo();
+                            }
+                        }).catch(() => {
+                            loading.close();
+                            this.errorInfo();
+                        })
+                    }else {
+                        loading.close();
+                        this.errorInfo();
+                    }
+                }).catch(() => {
+                    loading.close();
+                    this.errorInfo();
                 })
-
-
-                // const loading = this.$loading({
-                //     lock: true,
-                //     text: '请稍后...',
-                //     spinner: 'el-icon-loading',
-                //     background: 'rgba(255,255,255,0.7)'
-                // });
-                // setTimeout(() => {
-                //     loading.close();
-                //     this.$alert('审核通过', '提示', {
-                //         confirmButtonText: '确定',
-                //         type: 'success',
-                //         callback: action => {
-                //             this.$router.go(-1);
-                //         }
-                //     });
-                // },2000);
             },
             handleBack() {
                 this.$router.go(-1);
@@ -299,30 +402,55 @@
             autoAdd() {
                 let taskFormFlag = true;
                 for(let i in this.taskForm) {
-                    if(this.taskForm[i].match(/^[ ]*$/)) {
+                    if((this.taskForm[i].requireStoddTaskContent + "").match(/^[ ]*$/)) {
                         taskFormFlag = false;
                     }
                 }
                 if(taskFormFlag) {
-                    this.taskForm.push("");
+                    this.taskForm.push({
+                        progressId: 0,
+                        requireStoddTaskContent: ''
+                    });
                 }
+
                 let progressFormFlag = true;
-                for(let i in this.progressForm.dataList) {
-                    if(this.progressForm.dataList[i].match(/^[ ]*$/)) {
+                for(let i in this.progressForm) {
+                    if((this.progressForm[i].currentProgressContent + "").match(/^[ ]*$/)) {
                         progressFormFlag = false;
                     }
                 }
                 if(progressFormFlag) {
-                    this.progressForm.dataList.push("");
+                    this.progressForm.push({
+                        progressId: 0,
+                        currentProgressContent: ''
+                    });
                 }
+                
+                let problemFormFlag = true;
+                for(let i in this.problemForm) {
+                    if((this.problemForm[i].mainProblems + "").match(/^[ ]*$/)) {
+                        problemFormFlag = false;
+                    }
+                }
+                if(problemFormFlag) {
+                    this.problemForm.push({
+                        progressId: 0,
+                        mainProblems: ''
+                    });
+                }
+
+
                 let planFormFlag = true;
                 for(let i in this.planForm) {
-                    if(this.planForm[i].match(/^[ ]*$/)) {
+                    if((this.planForm[i].nextWorkPlan + "").match(/^[ ]*$/)) {
                         planFormFlag = false;
                     }
                 }
                 if(planFormFlag) {
-                    this.planForm.push("");
+                    this.planForm.push({
+                        progressId: 0,
+                        nextWorkPlan: ''
+                    });
                 }
             }
         }
@@ -401,12 +529,16 @@
                 ._inline_date{
                     width: 300px;
                     height: 28px;
-                    // line-height: 30px;
                     .el-input__icon {
                         display: none;
                     }
                     .el-input__inner {
                         height: 100%;
+                    }
+                }
+                .el-textarea {
+                    .el-textarea__inner {
+                        resize: none;
                     }
                 }
             }

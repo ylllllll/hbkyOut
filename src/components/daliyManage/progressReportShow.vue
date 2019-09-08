@@ -56,7 +56,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>主要联系人:</td>
+                            <td>主要联系人：</td>
                             <td>
                                 <el-input 
                                  v-model="showForm.subjectContact"
@@ -161,7 +161,7 @@
 
 <script>
     export default {
-        name:'progressReportShow',
+        name: 'progressReportShow',
         data(){
             return{
                 radio: '',
@@ -206,6 +206,17 @@
             handleBack() {
                 this.$router.go(-1);//返回上一页
             }
+        },
+        beforeMount() {
+            this.axios({
+                url: 'http://192.168.0.80:8087/environment/progress/getInfoById',
+                method: 'get',
+                params: {
+                    id: this.paramsData.id
+                }
+            }).then((res) => {
+                console.log(res);
+            })
         }
     }
 </script>
@@ -242,6 +253,9 @@
                     }
                     .el-textarea {
                         margin-bottom: 10px;
+                        .el-textarea__inner {
+                            resize: none;
+                        }
                     }
                 }
             }
@@ -258,10 +272,6 @@
                     }
                 }
             }
-        }
-        .btn_group {
-            margin-top: 10px;
-            padding-bottom: 30px;
         }
     }
 </style>

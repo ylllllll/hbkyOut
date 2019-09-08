@@ -29,7 +29,7 @@
                         </tr>
                         <tr style="height:50px;">
                             <td>申请类型：</td>
-                            <td colspan="3">
+                            <td colspan="3" @click="radioChange">
                                 <el-radio v-model="showForm.adjustTypeId" label="1">变更</el-radio>
                                 <el-radio v-model="showForm.adjustTypeId" label="2">备案</el-radio>
                             </td>
@@ -80,13 +80,31 @@
                                 </el-checkbox-group>
                             </td>
                         </tr>
+                        <!-- <tr class="file_tr" v-if="showForm.adjustTypeId == 1">
+                            <td>变更申请表附件：</td>
+                            <td class="file_td" colspan="3">
+                                <input type="file" />
+                            </td>
+                        </tr>
+                        <tr class="file_tr" v-if="showForm.adjustTypeId == 2">
+                            <td>备案申请表附件：</td>
+                            <td class="file_td" colspan="3">
+                                <input type="file" />
+                            </td>
+                        </tr>
+                        <tr class="file_tr">
+                            <td>专家论证意见附件：</td>
+                            <td class="file_td" colspan="3">
+                                <input type="file" />
+                            </td>
+                        </tr> -->
                         <tr>
                             <td>具体情况：<br>（说明需备案的事项及其原因）
                             </td>
                             <td colspan="3">
                                 <el-input 
                                     v-model="showForm.specificFacts"
-                                    :autosize="{ minRows:10 }"
+                                    :autosize="{ minRows:11 }"
                                     type="textarea"
                                     maxlength="200">
                                 </el-input>
@@ -124,6 +142,16 @@
             }
         },
         methods: { 
+            errorInfo() {
+                this.$alert('提交失败','提示', {
+                    confirmButtonText: '确定',
+                    type: 'warning',
+                    callback: action => {}
+                });
+            },
+            radioChange() {
+                this.checkbox = [];
+            },
             handleSubmit() {
                 const loading = this.$loading({
                     lock: true,
@@ -132,10 +160,8 @@
                     background: 'rgba(255,255,255,0.7)'
                 });
                 this.showForm.adjustmentMattersId = this.checkbox.toString();
-                
-                console.log(this.showForm);
                 this.axios({
-                    url: 'http://192.168.0.80:8087/enviroment/daily/major/insertMajor',
+                    url: 'http://192.168.0.80:8087/enviroment/daily/majormatter/insertMajor',
                     method: 'post',
                     data: this.showForm
                 }).then((res) => {
@@ -149,18 +175,11 @@
                             }
                         });
                     }else {
-                        this.$alert('提交失败','提示', {
-                            confirmButtonText: '确定',
-                            type: 'warning',
-                            callback: action => {}
-                        });
+                        this.errorInfo();
                     }
                 }).catch(() => {
-                    this.$alert('提交失败','提示', {
-                        confirmButtonText: '确定',
-                        type: 'warning',
-                        callback: action => {}
-                    });
+                    loading.close();
+                    this.errorInfo();
                 })
             },
             handleBack() {
@@ -209,12 +228,13 @@
                     }
                 }
                 .el-textarea {
-                    padding: 10px;
+                    .el-textarea__inner {
+                        padding: 10px;
+                        resize: none;
+                    }
+                    
                 }
             }
-        }
-        .btn_group {
-            margin: 10px 0 30px 0;
         }
     }
 </style>

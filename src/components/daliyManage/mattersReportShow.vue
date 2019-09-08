@@ -98,7 +98,7 @@
                             <td colspan="3">
                                 <el-input 
                                     v-model="showForm.specificFacts"
-                                    :autosize="{ minRows:10 }"
+                                    :autosize="{ minRows:11 }"
                                     type="textarea"
                                     maxlength="200"
                                     disabled>
@@ -135,7 +135,7 @@
         },
         beforeMount() {
             this.axios({
-                url: 'http://192.168.0.80:8087/enviroment/daily/major/getMajorById',
+                url: 'http://192.168.0.80:8087/enviroment/daily/majormatter/getMajorById',
                 method: 'get',
                 params: {
                     id: this.paramsData.id
@@ -144,7 +144,7 @@
                 res.data.data.adjustTypeId = res.data.data.adjustTypeId + "";
                 console.log(res);
                 this.showForm = res.data.data;
-                this.checkbox = this.showForm.adjustmentMattersId.split(",");
+                this.checkbox = (this.showForm.adjustmentMattersId + "").split(",");
             })
         }
     }
@@ -189,7 +189,11 @@
                     }
                 }
                 .el-textarea {
-                    padding: 10px;
+                    .el-textarea__inner {
+                        padding: 10px;
+                        resize: none;
+                    }
+                    
                 }
             }
         }

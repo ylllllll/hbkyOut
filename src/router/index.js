@@ -27,6 +27,7 @@ import ContractAdd from '@/components/contractManage/contractAdd'
 import ContractQuery from '@/components/contractManage/contractQuery'
 import ContractQueryList from '@/components/contractManage/contractQueryList'
 import ContractQueryShow from '@/components/contractManage/contractQueryShow'
+import ContractQueryEdit from '@/components/contractManage/contractQueryEdit'
 
 // 日常管理
 import MidTerm from '@/components/daliyManage/midTerm'
@@ -173,6 +174,10 @@ export default new Router({
 					path: '/index/contractQuery/contractQueryShow',
 					name: 'ContractQueryShow',
 					component: ContractQueryShow
+				},{
+					path: '/index/contractQuery/contractQueryEdit',
+					name: 'ContractQueryEdit',
+					component: ContractQueryEdit
 				}],
 				redirect: '/index/contractQuery/contractQueryList'
 			},{	// 中期检查

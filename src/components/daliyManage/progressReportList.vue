@@ -4,33 +4,29 @@
         <div class="queryForm">
             <el-form ref="queryForm" :model="queryForm">
                 <el-form-item label="课题名称：" >
-                    <el-input v-model="queryForm.name"></el-input>
+                    <el-input v-model="queryForm.subjectName"></el-input>
                 </el-form-item>
                 <el-form-item label="承担单位：">
-                    <el-input v-model="queryForm.unit"></el-input>
+                    <el-input v-model="queryForm.bearerUnit"></el-input>
                 </el-form-item>
                 <el-form-item label="进展情况：">
-                    <el-select v-model="queryForm.region" placeholder="请选择">
-                        <el-option
-                                v-for="item in queryForm.reginOptions"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
-                        </el-option>
+                    <el-select v-model="queryForm.progress" placeholder="请选择">
+                        <el-option label="全部情况" value=""></el-option>
+                        <el-option label="超前" value="45"></el-option>
+                        <el-option label="正常" value="46"></el-option>
+                        <el-option label="滞后" value="47"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="合同签订时间：">
-                    <el-select v-model="queryForm.category">
-                        <el-option 
-                                v-for="item in queryForm.categoryOptions"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
+                <!-- <el-form-item label="合同签订时间：">
+                    <el-date-picker
+                        v-model="showForm.contractAgreedClosingTime"
+                        type="date"
+                        value-format="yyyy-MM-dd"
+                        placeholder="选择日期">
+                    </el-date-picker>
+                </el-form-item> -->
             </el-form>
-            <el-button>搜索</el-button>
+            <el-button @click="handleSearch">搜索</el-button>
         </div>
 
         <el-button @click="handleAudited">申请</el-button>
@@ -39,58 +35,52 @@
         <div class="showList">
             <!-- 表格 -->
             <el-table
+                v-loading="loading"
                 ref="multipleTable"
                 :data="tableData"
+                stripe
                 tooltip-effect="dark"
-                style="width: 100%">
-                <!-- <el-table-column
-                    type="selection"
-                    align="center">
-                </el-table-column> -->
+                style="width: 100%"
+                highlight-current-row
+                @current-change="handleSelectionChange">
                 <el-table-column
                     type="index"
                     label="序号"
                     align="center">
                 </el-table-column>
                 <el-table-column
-                    prop="name"
+                    prop="subject_name"
                     label="课题名称"
                     :show-overflow-tooltip="true"
                     align="center">
-                    <template slot-scope="scope">
-                        <router-link :to="{
-                            name: 'ProgressReportShow',
-                            params: {
-                                id: scope.row.id
-                            }
-                        }"> 
-                        {{ scope.row.name }}
-                        </router-link>
-                    </template>
                 </el-table-column>
                 <el-table-column
-                    prop="danwei"
+                    prop="bearer_unit"
                     label="承担单位"
+                    :show-overflow-tooltip="true"
                     align="center">
                 </el-table-column>
                 <el-table-column
-                    prop="state"
+                    prop="progress"
                     label="进展情况"
+                    :show-overflow-tooltip="true"
                     align="center">
                     <template slot-scope="scope">
-                        <span class="orange" v-show="scope.row.state == '0'">超前</span>
-                        <span class="green" v-show="scope.row.state == '1'">正常</span>
-                        <span class="red" v-show="scope.row.state == '2'">之后</span>
+                        <span class="orange" v-show="scope.row.progress == '45'">超前</span>
+                        <span class="green" v-show="scope.row.progress == '46'">正常</span>
+                        <span class="red" v-show="scope.row.progress == '47'">滞后</span>
                     </template>
                 </el-table-column>
-                <el-table-column
+                <!-- <el-table-column
                     prop="time1"
                     label="合同签订时间"
+                    :show-overflow-tooltip="true"
                     align="center">
-                </el-table-column>
+                </el-table-column> -->
                 <el-table-column
-                    prop="time2"
+                    prop="commit_time"
                     label="进展情况报告提交时间"
+                    :show-overflow-tooltip="true"
                     align="center">
                 </el-table-column>
             </el-table>
@@ -101,7 +91,8 @@
                 :pageSize='fenye.pageSize'
                 :pageSizes="fenye.pageSizes"
                 @handleCurrentChangeNum="handleCurrentChange"
-                @handleSizeChangeNum="handleSizeChange">
+                @handleSizeChangeNum="handleSizeChange"
+                @handleTableFreshNum="handleTableFresh">
             </pages>
         </div>
     </div>
@@ -113,83 +104,78 @@
         data() {
             return {
                 queryForm: {
-                    name:'',
-                    unit:'',
-                    contacts:'',
-                    phone:'',
-                    reginOptions:[{
-                        value:'0',
-                        label:'情况1'
-                    },{
-                        value:'1',
-                        label:'情况2'
-                    }],
-                    region:'',
-                    categoryOptions:[{
-                        value:'0',
-                        label:'时间？'
-                    },{
-                        value:'1',
-                        label:'时间？'
-                    }],
-                    category:''
+                    subjectName: '',
+                    bearerUnit: '',
+                    progress: null
                 },
-                tableData: [{
-                    id: '1001',
-                    name: '名称1名称1名称1名称1名称1名称1名称1名称1',
-                    danwei: '单位1',
-                    state: '0',
-                    time1: '2019-08-14',
-                    time2: '2019-08-15'
-                },{
-                    id: '1002',
-                    name: '名称2',
-                    danwei: '单位2',
-                    state: '1',
-                    time1: '2019-08-14',
-                    time2: '2019-08-15'
-                },{
-                    id: '1003',
-                    name: '名称3',
-                    danwei: '单位3',
-                    state: '0',
-                    time1: '2019-08-14',
-                    time2: '2019-08-15'
-                },{
-                    id: '1004',
-                    name: '名称4',
-                    danwei: '单位4',
-                    state: '2',
-                    time1: '2019-08-14',
-                    time2: '2019-08-15'
-                }],
-                currentPage: 4,
+                loading: true,
+                tableData: [],
                 fenye: {
-                    total: 400, //共有数据多少条
+                    total: 0, //共有数据多少条
                     pageNum: 1,
-                    pageSize: 100, //每页显示的条数
-                    pageSizes: [100,30,40,50] //选择每页显示多少条
+                    pageSize: 10, //每页显示的条数
+                    pageSizes: [10,20,30,40,50] //选择每页显示多少条
                 }
             }
         },
         methods: {
-            // handleSelectionChange(val) {
-            //     this.multipleSelection = val;
-            //     let ids = [];
-            //     this.multipleSelection.map((item)=> {
-            //         ids.push(item.id);
-            //     })
-            //     this.selectedIDs = ids;
-            // },
+            handleSelectionChange(val) {
+                this.$router.push({
+                    name: 'ProgressReportShow',
+                    params: {
+                        id: val.id
+                    }
+                })
+            },
             handleCurrentChange:function(val) {//val表示当前页
-                console.log(val)
+                this.fenye.pageNum = val;
+                this._axios();
             },
             handleSizeChange(val) {//val表示每页展示的条数
-                console.log(val)
+                this.fenye.pageSize = val;
+                this._axios();
+            },
+            handleTableFresh(){
+                this._axios;
+                document.querySelector(".first-pager").click();
+            },
+            _axios() {
+                let data = this.queryForm;
+                    data.pageNum = this.fenye.pageNum;
+                    data.pageSize = this.fenye.pageSize;
+                this.axios({
+                    url: 'http://192.168.0.80:8087/environment/progress/getInfoByParam',
+                    method: 'get',
+                    params: data
+                }).then((res) => {
+                    console.log(res)
+                    this.loading = false;
+                    let data = res.data.data;
+                    if(data == "没有查到相关信息") {
+                        this.tableData = []; 
+                        this.$alert('没有查到相关信息','提示',{
+                            confirmButtonText: '确定',
+                            type: 'warning',
+                            callback: action => {}
+                        });
+                    }else {
+                        this.tableData = data.list;
+                        this.fenye.total = data.total;
+                    }
+                })
             },
             handleAudited() {
                 this.$router.push("/index/progressReport/progressReportAdd");
+            },
+            handleSearch() {
+                this.loading = true;
+                this.queryForm.pageNum = 1;
+                this._axios();
+                document.querySelector(".first-pager").click();
             }
+        },
+        beforeMount() {
+            this._axios();
         }
     }
 </script>
@@ -205,11 +191,9 @@
             margin: 10px auto;
         }
         .showList {
-            // margin-top: 10px;
-            min-height: 640px;;
-            padding: 10px;
+            min-height: 690px;
             .el-table {
-                min-height: 590px;
+                min-height: 640px;
                 .orange {
                     color: #f2a50b;
                 }
