@@ -9,12 +9,12 @@
                     <tbody>
                         <tr>
                             <td>课题类别：</td>
-                            <td>
-                                <el-input
-                                 v-model="showForm.subjectCategory"
-                                 :disabled="true"
-                                 >
-                                </el-input>
+                            <td style="text-align:left;padding-left:10px;">
+                                <span v-for="(item,index) in optGroup1" 
+                                    :key="index" 
+                                    v-show="showForm.subjectCategory == item.id">
+                                    {{ item.content }}
+                                </span>
                             </td>
                             <td>课题编号：</td>
                             <td>
@@ -590,6 +590,7 @@
         name: 'contractQueryShow',
         data() {
             return {
+                optGroup1: [],
                 showForm: {},
                 progressForm:[],
                 unitForm: {},
@@ -606,6 +607,18 @@
             }
         },
         beforeMount() {
+            // 请求所属领域、所属类别
+            this.axios({
+                url: 'http://192.168.0.80:8087/environment/guide/getCategoryAndDomain',
+                method: 'get',
+            }).then((res) => {
+                let data = res.data.data;
+                for(let i in data) {
+                    if(data[i].classification == "所属类别") {
+                        this.optGroup1.push(data[i]);
+                    }
+                }
+            })
             // 主表
             this.axios({
                 url: 'http://192.168.0.80:8087/environment/contract/getManageInfoById',

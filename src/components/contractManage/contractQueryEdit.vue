@@ -614,7 +614,8 @@
                         keyResearchDevelopersDTO: this.keyForm,
                         subjectFundsBudgetDTO: this.budgetForm
                     };
-                formData.append('totalContract',totalContract);
+                totalContract = JSON.stringify(totalContract);
+                formData.append('totalContract',new Blob([totalContract],{type:"application/json"}));
                 this.axios({
                     url: 'http://192.168.0.80:8087/environment/contract/updateContractStatusByReturnCommit',
                     method: 'post',

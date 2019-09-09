@@ -312,6 +312,9 @@
                         for(let i in this.problemForm) {
                             this.problemForm[i].progressId = id;
                         }
+                        for(let i in this.planForm) {
+                            this.planForm[i].progressId = id;
+                        }
                         // 一、合同要求研发任务
                         let data = this.taskForm.slice(0,-1);
                         this.axios({

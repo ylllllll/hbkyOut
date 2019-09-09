@@ -128,13 +128,13 @@
             return {
                 checkbox: [],
                 showForm: {
-                    subjectName: '1',
-                    projectNo: '2',
-                    commitmentUnit: '3',
-                    unitHead: '4',
+                    subjectName: '',
+                    projectNo: '',
+                    commitmentUnit: '',
+                    unitHead: '',
                     adjustTypeId: '1',
                     adjustmentMattersId: '',
-                    specificFacts: '5'
+                    specificFacts: ''
                 },
                 paramsData: {
                     id: this.$route.params.id

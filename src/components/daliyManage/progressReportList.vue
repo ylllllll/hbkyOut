@@ -144,7 +144,7 @@
                     data.pageNum = this.fenye.pageNum;
                     data.pageSize = this.fenye.pageSize;
                 this.axios({
-                    url: 'http://192.168.0.80:8087/environment/progress/getInfoByParam',
+                    url: 'http://192.168.0.80:8087/environment/progress/getProgressInfoByUid',
                     method: 'get',
                     params: data
                 }).then((res) => {

@@ -1248,7 +1248,7 @@ export default {
             formData.append('contractId',_this.contractId)
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/apply/modify',
+                url:'http://192.168.0.80:8087/apply/modify',
                 data:formData
             }).then(function(res){
                 let data = res.data.data
@@ -1301,7 +1301,7 @@ export default {
             formData.append('extranetExpertGroupComment',new Blob([extranetExpertGroupComment],{type:'application/json'}))
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/apply/ExpertGroupModify',
+                url:'http://192.168.0.80:8087/apply/ExpertGroupModify',
                 data:formData
             }).then(function(res){
                 _this.$alert(res.data.data, '提示', {
@@ -1330,7 +1330,7 @@ export default {
             formData.append('acceptanceCertificate',new Blob([_acceptanceCertificate],{type:'application/json'}))
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/apply/lastReportModify',
+                url:'http://192.168.0.80:8087/apply/lastReportModify',
                 data:formData
             }).then((res)=>{
                 _this.$alert(res.data.data, '提示', {
@@ -1358,7 +1358,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/checkApplyStyle/unitNature',
+                url:'http://192.168.0.80:8087/checkApplyStyle/unitNature',
             }).then(function(res){
                 _this.unitNatureOptions = res.data.data
                 _this.getApplicationAcceptanceModeOptions()
@@ -1371,7 +1371,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/checkApplyStyle/applicationAcceptance',
+                url:'http://192.168.0.80:8087/checkApplyStyle/applicationAcceptance',
             }).then(function(res){
                 _this.applicationAcceptanceModeOptions = res.data.data
                 _this.getSubmitInventoryOptions()
@@ -1384,7 +1384,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/checkApplyStyle/applicationSubmitList'
+                url:'http://192.168.0.80:8087/checkApplyStyle/applicationSubmitList'
             }).then(function(res){
                 _this.submitInventoryOptions = res.data.data
                 _this.getFinalAcceptanceMethod()
@@ -1397,7 +1397,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/checkApplyStyle/queryAchievementShape',
+                url:'http://192.168.0.80:8087/checkApplyStyle/queryAchievementShape',
             }).then(function(res){
                 _this.achievementFormOptions = res.data.data
                 _this.getAchievementLevelOptions()
@@ -1410,7 +1410,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/checkApplyStyle/queryAchievementLevel',
+                url:'http://192.168.0.80:8087/checkApplyStyle/queryAchievementLevel',
             }).then(function(res){
                 _this.achievementLevelOptions = res.data.data
                 // _this.getAcceptance()
@@ -1423,7 +1423,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.37:8087/checkApplyStyle/finalAcceptanceMethod',
+                url:'http://192.168.0.80:8087/checkApplyStyle/finalAcceptanceMethod',
             }).then(function(res){
                 _this.finalAcceptanceMethod = res.data.data
                 _this.getAchievementFormOptions()
@@ -1456,7 +1456,7 @@ export default {
         },
         // 下载文件
         uploadFileInventory(fileUrl,fileName){
-            window.location.href='http://192.168.0.37:8087/file/queryFileStream?fileUrl=' + fileUrl + '&fileName=' + fileName
+            window.location.href='http://192.168.0.80:8087/file/queryFileStream?fileUrl=' + fileUrl + '&fileName=' + fileName
         }
     },
     async mounted(){

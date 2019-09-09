@@ -146,7 +146,7 @@ export default {
         console.log(111)
         this.axios({
             method:"POST",
-            url:'http://192.168.0.37/achievement/addAchievementQuery?page=1&total=11',
+            url:'http://192.168.0.80/achievement/addAchievementQuery?page=1&total=11',
             headers:{
 				'Content-Type':'application/x-www-form-urlencoded'
             },
