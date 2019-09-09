@@ -5,7 +5,7 @@
                 <table class="form_table">
                      <thead>
                         <tr><th colspan="4">江苏省环保科研课题验收证书</th></tr>
-                        <tr><th colspan="4">苏环验字<el-input v-model="title1"></el-input> 第<el-input v-model="title2"></el-input>号</th></tr>
+                        <tr><th colspan="4">苏环验字<el-input v-model="title1"></el-input>第<el-input v-model="title2"></el-input>号</th></tr>
                     </thead>
                     <tbody>
                         <tr>
@@ -15,8 +15,6 @@
                         <tr>
                             <td>课题编号：</td>
                             <td colspan="3"><el-input disabled v-model="showForm.topicNumber"></el-input></td>
-                            <!-- <td>课题负责人：</td>
-                            <td><el-input disabled v-model="showForm.projectLeader"></el-input></td> -->
                         </tr>
                         <tr>
                             <td>完成单位：</td>
@@ -32,6 +30,7 @@
                             <td>验收日期：</td>
                             <td>
                                 <el-date-picker
+                                disabled
                                 v-model="showForm.acceptanceTime"
                                 align="right"
                                 type="date"
@@ -52,15 +51,15 @@
                         <tr>
                             <td style="width:20.8%;">单位名称：</td>
                             <td colspan="6">
-                                <el-input v-model="showForm.unitName"></el-input>
+                                <el-input disabled v-model="showForm.unitName"></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>单位性质：</td>
                             <td colspan="6" style="text-align:center;font-size:0;">
                                  <el-radio-group v-model="showForm.unitNature">
-                                     <span v-for="(item,index) in unitNatureOptions">
-                                        <el-radio :label="item.id">{{item.content}}</el-radio>
+                                     <span v-for="(item,index) in unitNatureOptions" :key="index">
+                                        <el-radio disabled :label="item.id">{{item.content}}</el-radio>
                                      </span>
                                 </el-radio-group>
                             </td>
@@ -146,7 +145,7 @@
                             <td colspan="2"><span>成果形式(可选多项，另页附成果资料清单)：</span></td>
                             <td colspan="5">
                                  <el-checkbox-group v-model="showForm.achievementForm">
-                                     <span v-for="(item,index) in achievementFormOptions">
+                                     <span v-for="(item,index) in achievementFormOptions" :key="index">
                                         <el-checkbox :label="item.id">{{item.content}}</el-checkbox>
                                      </span>
                                 </el-checkbox-group>
@@ -156,7 +155,7 @@
                             <td colspan="2">成果水平：</td>
                             <td colspan="6">
                                  <el-radio-group v-model="showForm.achievementLevel" class="level">
-                                     <span v-for="(item,index) in achievementLevelOptions">
+                                     <span v-for="(item,index) in achievementLevelOptions" :key="index">
                                         <el-radio :label="item.id">{{item.content}}</el-radio>
                                      </span>
                                 </el-radio-group>
@@ -265,7 +264,7 @@
                             <td>职称</td>
                             <td>联系电话</td>
                         </tr>
-                        <tr v-for="(item,index) in showForm.acceptanceCertificateSubjectPeopleList">
+                        <tr v-for="(item,index) in showForm.acceptanceCertificateSubjectPeopleList" :key="index">
 
                             <td>
                                 <el-input v-model="item.name"></el-input>
@@ -316,31 +315,31 @@
                         <tr>
                             <td>其中:博士</td>
                             <td  colspan="3">
-                                <el-input v-model="showForm.doctorTotalNumber"></el-input>
+                                <el-input v-model="showForm.doctorTotalNumber" v-on:input="watchNum"></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>硕士</td>
                             <td  colspan="3">
-                                <el-input v-model="showForm.masterTotalNumber"></el-input>
+                                <el-input v-model="showForm.masterTotalNumber" v-on:input="watchNum"></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>其中:高级职称</td>
                             <td  colspan="3">
-                                <el-input v-model="showForm.seniorTotalNumber"></el-input>
+                                <el-input v-model="showForm.seniorTotalNumber" v-on:input="watchNum"></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>中级职称</td>
                             <td  colspan="3">
-                                <el-input v-model="showForm.intermediateTotalNumber"></el-input>
+                                <el-input v-model="showForm.intermediateTotalNumber" v-on:input="watchNum"></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>其中:在校研究生</td>
                             <td  colspan="3">
-                                <el-input v-model="showForm.schoolMasterNumber"></el-input>
+                                <el-input v-model="showForm.schoolMasterNumber" v-on:input="watchNum"></el-input>
                             </td>
                         </tr>
                     </tbody>
@@ -388,57 +387,57 @@
                             </td>
                             <td>6.会议费：</td>
                             <td>
-                                <el-input  v-model="showForm.conferenceFee"></el-input>
+                                <el-input  v-model="showForm.conferenceFee" v-on:input="watchNum"></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>1.设备费：</td>
                             <td>
-                                <el-input  v-model="showForm.equipmentCost"></el-input>
+                                <el-input  v-model="showForm.equipmentCost" v-on:input="watchNum"></el-input>
                             </td>
                             <td>7.国际合作交流费：</td>
                             <td>
-                                <el-input  v-model="showForm.internationalCommunication"></el-input>
+                                <el-input  v-model="showForm.internationalCommunication" v-on:input="watchNum"></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>2.材料费：</td>
                             <td>
-                                <el-input  v-model="showForm.materialFee"></el-input>
+                                <el-input  v-model="showForm.materialFee" v-on:input="watchNum"></el-input>
                             </td>
                             <td>8.专家咨询费：</td>
                             <td>
-                                <el-input  v-model="showForm.expertConsult"></el-input>
+                                <el-input  v-model="showForm.expertConsult" v-on:input="watchNum"></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>3.测试化验加工费：</td>
                             <td>
-                                <el-input  v-model="showForm.laboratoryFees"></el-input>
+                                <el-input  v-model="showForm.laboratoryFees" v-on:input="watchNum"></el-input>
                             </td>
                             <td>9.管理及人员费：</td>
                             <td>
-                                <el-input  v-model="showForm.managementExpense"></el-input>
+                                <el-input  v-model="showForm.managementExpense" v-on:input="watchNum"></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>4.燃料动力费：</td>
                             <td>
-                                <el-input  v-model="showForm.fuelCosts"></el-input>
+                                <el-input  v-model="showForm.fuelCosts" v-on:input="watchNum"></el-input>
                             </td>
                             <td>10.其他费用：</td>
                             <td>
-                                <el-input  v-model="showForm.otherExpenditureMoney"></el-input>
+                                <el-input  v-model="showForm.otherExpenditureMoney" v-on:input="watchNum"></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>5. 差旅费：</td>
                             <td>
-                                <el-input  v-model="showForm.travelExpenses"></el-input>
+                                <el-input  v-model="showForm.travelExpenses" v-on:input="watchNum"></el-input>
                             </td>
-                            <td><el-input></el-input> </td>
+                            <td><el-input disabled></el-input> </td>
                             <td>
-                                <el-input></el-input>
+                                <el-input disabled></el-input>
                             </td>
                         </tr>
                     </tbody>
@@ -582,97 +581,97 @@ export default {
     data(){
         return{
             showForm:{
-                translate:'1',
-                topicName:'1',
-                topicNumber:'1',
-                completionUnit:'1',
+                translate:'',
+                topicName:'',
+                topicNumber:'',
+                completionUnit:'',
                 acceptanceDepartment:'江苏省生态环境厅',
                 acceptanceTime:'',
-                unitName:'1',
-                unitNature:'1',
-                location:'1',
-                legalRepresentative:'1',
-                legalRepresentativePhone:'1',
-                contacts:'1',
-                contactsPhone:'1',
-                postalCode:'1',
-                mail:'1',
-                mailingAddress:'1',
-                competentDepartment:'1',
+                unitName:'',
+                unitNature:'',
+                location:'',
+                legalRepresentative:'',
+                legalRepresentativePhone:'',
+                contacts:'',
+                contactsPhone:'',
+                postalCode:'',
+                mail:'',
+                mailingAddress:'',
+                competentDepartment:'',
                 projectStartTime:'',
                 projectCompletionTime:'',
                 achievementForm:[],
-                achievementLevel:'1',
+                achievementLevel:'',
                 developmentTotalNumber:0,
-                doctorTotalNumber:'1',
-                masterTotalNumber:'1',
-                seniorTotalNumber:'1',
-                intermediateTotalNumber:'1',
-                schoolMasterNumber:'1',
-                totalProjectFunds:'1',
-                environmentTopicFunds:'1',
-                competentDepartmentMatch:'1',
-                bankLoans:'1',
-                unitRaiseMoney:'1',
-                otherActualMoney:'1',
-                equipmentCost:'1',
-                materialFee:'1',
-                laboratoryFees:'1',
-                fuelCosts:'1',
-                travelExpenses:'1',
-                conferenceFee:'1',
-                internationalCommunication:'1',
-                expertConsult:'1',
-                managementExpense:'1',
-                otherExpenditureMoney:'1',
+                doctorTotalNumber:'',
+                masterTotalNumber:'',
+                seniorTotalNumber:'',
+                intermediateTotalNumber:'',
+                schoolMasterNumber:'',
+                totalProjectFunds:'',
+                environmentTopicFunds:'',
+                competentDepartmentMatch:'',
+                bankLoans:'',
+                unitRaiseMoney:'',
+                otherActualMoney:'',
+                equipmentCost:'',
+                materialFee:'',
+                laboratoryFees:'',
+                fuelCosts:'',
+                travelExpenses:'',
+                conferenceFee:'',
+                internationalCommunication:'',
+                expertConsult:'',
+                managementExpense:'',
+                otherExpenditureMoney:'',
                 totalExpenditure:0,
-                newOutput:'1',
-                newSalesVolume:'1',
-                newProfitTax:'1',
-                exitEarn:'1',
-                mainSolveTechnology:'1',
-                mainCompletion:'1',
-                implementationAchievement:'1',
-                scienceDepartmentOpinion:'1',
-                checkDepartmentOpinion:'1',
-                environmentOfficeOpinion:'1',
+                newOutput:'',
+                newSalesVolume:'',
+                newProfitTax:'',
+                exitEarn:'',
+                mainSolveTechnology:'',
+                mainCompletion:'',
+                implementationAchievement:'',
+                scienceDepartmentOpinion:'',
+                checkDepartmentOpinion:'',
+                environmentOfficeOpinion:'',
                 // 验收证书集合
                 acceptanceCertificatePatentList:[{
-                    applicationInvention:'1',
-                    useNewType:'1',
-                    patentAppearance:'1',
-                    patentInvention:'1',
-                    empowerNewType:'1',
-                    empowerAppearanceDesign:'1',
-                    paperNumber:'1',
-                    scienceIndexe:'1',
-                    engineerIndex:'1',
-                    publishWork:'1',
-                    technicalStandard:'1',
-                    newProduct:'1',
-                    policySystem:'1',
-                    newDevice:'1',
-                    newTechnology:'1'
+                    applicationInvention:'',
+                    useNewType:'',
+                    patentAppearance:'',
+                    patentInvention:'',
+                    empowerNewType:'',
+                    empowerAppearanceDesign:'',
+                    paperNumber:'',
+                    scienceIndexe:'',
+                    engineerIndex:'',
+                    publishWork:'',
+                    technicalStandard:'',
+                    newProduct:'',
+                    policySystem:'',
+                    newDevice:'',
+                    newTechnology:''
                 }],
                 // 主要参加人员
                 acceptanceCertificateSubjectPeopleList:[{
-                    name:'1',
-                    sex:'1',
+                    name:'',
+                    sex:'',
                     birthDate:'',
-                    major:'1',
-                    education:'1',
-                    title:'1',
-                    phone:'1'
+                    major:'',
+                    education:'',
+                    title:'',
+                    phone:''
                 }],
                 // 课题负责人集合
                 acceptanceCertificatePrincipalPersonnelList:[{
-                    participantName:'1',
-                    participantSex:'1',
+                    participantName:'',
+                    participantSex:'',
                     participantBirthDate:'',
-                    participantTechnicalTitle:'1',
-                    participantEducation:'1',
-                    participantWorkUnit:'1',
-                    taskTaking:'1'
+                    participantTechnicalTitle:'',
+                    participantEducation:'',
+                    participantWorkUnit:'',
+                    taskTaking:''
                 }],
             },
             // 单位性质
@@ -705,9 +704,28 @@ export default {
             title2:''
         }
     },
+    
     methods:{
+        watchNum(){
+            if(this.showForm.doctorTotalNumber != '' && this.showForm.masterTotalNumber !='' && this.showForm.seniorTotalNumber !='' && this.showForm.intermediateTotalNumber != '' && this.showForm.schoolMasterNumber != ''){
+                let realVal = parseFloat(this.showForm.doctorTotalNumber) + parseFloat(this.showForm.masterTotalNumber)  + parseFloat(this.showForm.seniorTotalNumber) 
+                                                + parseFloat(this.showForm.intermediateTotalNumber) +  parseFloat(this.showForm.schoolMasterNumber);
+                this.showForm.developmentTotalNumber = realVal
+            }
+            if(this.showForm.equipmentCost != '' && this.showForm.laboratoryFees != '' && this.showForm.fuelCosts !='' && 
+              this.showForm.travelExpenses !='' && this.showForm.conferenceFee != '' && this.showForm.internationalCommunication != ''&& 
+             this.showForm.expertConsult !='' && this.showForm.managementExpense && this.showForm.otherExpenditureMoney && this.showForm.materialFee){
+                let countFunds = parseFloat(this.showForm.equipmentCost) + parseFloat(this.showForm.laboratoryFees)  + parseFloat(this.showForm.fuelCosts) + 
+                                 parseFloat(this.showForm.travelExpenses) +  parseFloat(this.showForm.conferenceFee) + parseFloat(this.showForm.internationalCommunication)+
+                                 parseFloat(this.showForm.expertConsult) + parseFloat(this.showForm.managementExpense) + parseFloat(this.showForm.otherExpenditureMoney) + 
+                                 parseFloat(this.showForm.materialFee);
+                this.showForm.totalExpenditure = parseFloat(countFunds).toFixed(2)
+            }
+        },
         // 点击提交
         handleSubmit(){
+            let str = '苏环验字'+ this.title1 +'第'+ this.title2+'号'
+            this.showForm.translate = str
             for(let i in this.showForm) {
                 if(typeof(this.showForm[i]) == "string" ) {
                     if(this.showForm[i].match(/^[ ]*$/) || this.showForm[i] == undefined){
@@ -741,7 +759,6 @@ export default {
         },
         submitAxios(lastReport){
             let _this = this
-            console.log(_this.showForm.acceptanceCertificatePatentList)
             let _achievementForm = JSON.stringify(_this.showForm.achievementForm)
             _this.showForm.achievementForm = _achievementForm
             var formData = new FormData()
@@ -786,6 +803,10 @@ export default {
                         this.showForm.topicNumber = item.topicNumber
                         this.showForm.projectLeader = item.projectLeader
                         this.showForm.subjectUndertakingUnit = item.subjectUndertakingUnit
+                        this.showForm.unitNature = item.unitNature
+                        this.showForm.completionUnit = item.subjectUndertakingUnit
+                        this.showForm.unitName = item.subjectUndertakingUnit
+                        this.showForm.acceptanceTime = item.applicationAcceptanceTime
                         return;
                     }
                 })
@@ -800,6 +821,7 @@ export default {
                 url:'http://192.168.0.37:8087/checkApplyStyle/unitNature'
             }).then(function(res){
                 _this.unitNatureOptions = res.data.data
+                _this.getAchievementFormOptions()
             }).catch(function(err){
                 console.log(err)
             })
@@ -812,6 +834,7 @@ export default {
                 url:'http://192.168.0.37:8087/checkApplyStyle/queryAchievementShape'
             }).then(function(res){
                 _this.achievementFormOptions = res.data.data
+                _this.getAchievementLevelOptions()
             }).catch(function(err){
                 console.log(err)
             })
@@ -832,8 +855,8 @@ export default {
     async created(){
         await this.getShowForm(this.params.arrays)
         await this.getUnitNaturesOptions()
-        await this.getAchievementFormOptions()
-        await this.getAchievementLevelOptions()
+        // await this.getAchievementFormOptions()
+        // await this.getAchievementLevelOptions()
     }
 }
 </script>
@@ -895,7 +918,7 @@ export default {
                     }
                 }
             }
-            table.form_table2 {
+            table.form_table2{
                 tbody {
                     tr{
                         td:first-child{
