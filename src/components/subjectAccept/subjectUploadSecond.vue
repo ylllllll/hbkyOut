@@ -30,6 +30,7 @@
                             <td>验收日期：</td>
                             <td>
                                 <el-date-picker
+                                disabled
                                 v-model="showForm.acceptanceTime"
                                 align="right"
                                 type="date"
@@ -50,7 +51,7 @@
                         <tr>
                             <td style="width:20.8%;">单位名称：</td>
                             <td colspan="6">
-                                <el-input v-model="showForm.unitName"></el-input>
+                                <el-input disabled v-model="showForm.unitName"></el-input>
                             </td>
                         </tr>
                         <tr>
@@ -58,7 +59,7 @@
                             <td colspan="6" style="text-align:center;font-size:0;">
                                  <el-radio-group v-model="showForm.unitNature">
                                      <span v-for="(item,index) in unitNatureOptions" :key="index">
-                                        <el-radio :label="item.id">{{item.content}}</el-radio>
+                                        <el-radio disabled :label="item.id">{{item.content}}</el-radio>
                                      </span>
                                 </el-radio-group>
                             </td>
@@ -434,9 +435,9 @@
                             <td>
                                 <el-input  v-model="showForm.travelExpenses" v-on:input="watchNum"></el-input>
                             </td>
-                            <td><el-input></el-input> </td>
+                            <td><el-input disabled></el-input> </td>
                             <td>
-                                <el-input></el-input>
+                                <el-input disabled></el-input>
                             </td>
                         </tr>
                     </tbody>
@@ -580,97 +581,97 @@ export default {
     data(){
         return{
             showForm:{
-                translate:'1',
-                topicName:'1',
-                topicNumber:'1',
-                completionUnit:'1',
+                translate:'',
+                topicName:'',
+                topicNumber:'',
+                completionUnit:'',
                 acceptanceDepartment:'江苏省生态环境厅',
                 acceptanceTime:'',
-                unitName:'1',
-                unitNature:'1',
-                location:'1',
-                legalRepresentative:'1',
-                legalRepresentativePhone:'1',
-                contacts:'1',
-                contactsPhone:'1',
-                postalCode:'1',
-                mail:'1',
-                mailingAddress:'1',
-                competentDepartment:'1',
+                unitName:'',
+                unitNature:'',
+                location:'',
+                legalRepresentative:'',
+                legalRepresentativePhone:'',
+                contacts:'',
+                contactsPhone:'',
+                postalCode:'',
+                mail:'',
+                mailingAddress:'',
+                competentDepartment:'',
                 projectStartTime:'',
                 projectCompletionTime:'',
                 achievementForm:[],
-                achievementLevel:'1',
+                achievementLevel:'',
                 developmentTotalNumber:0,
-                doctorTotalNumber:'1',
-                masterTotalNumber:'1',
-                seniorTotalNumber:'1',
-                intermediateTotalNumber:'1',
-                schoolMasterNumber:'1',
-                totalProjectFunds:'1',
-                environmentTopicFunds:'1',
-                competentDepartmentMatch:'1',
-                bankLoans:'1',
-                unitRaiseMoney:'1',
-                otherActualMoney:'1',
-                equipmentCost:'1',
-                materialFee:'1',
-                laboratoryFees:'1',
-                fuelCosts:'1',
-                travelExpenses:'1',
-                conferenceFee:'1',
-                internationalCommunication:'1',
-                expertConsult:'1',
-                managementExpense:'1',
-                otherExpenditureMoney:'1',
+                doctorTotalNumber:'',
+                masterTotalNumber:'',
+                seniorTotalNumber:'',
+                intermediateTotalNumber:'',
+                schoolMasterNumber:'',
+                totalProjectFunds:'',
+                environmentTopicFunds:'',
+                competentDepartmentMatch:'',
+                bankLoans:'',
+                unitRaiseMoney:'',
+                otherActualMoney:'',
+                equipmentCost:'',
+                materialFee:'',
+                laboratoryFees:'',
+                fuelCosts:'',
+                travelExpenses:'',
+                conferenceFee:'',
+                internationalCommunication:'',
+                expertConsult:'',
+                managementExpense:'',
+                otherExpenditureMoney:'',
                 totalExpenditure:0,
-                newOutput:'1',
-                newSalesVolume:'1',
-                newProfitTax:'1',
-                exitEarn:'1',
-                mainSolveTechnology:'1',
-                mainCompletion:'1',
-                implementationAchievement:'1',
-                scienceDepartmentOpinion:'1',
-                checkDepartmentOpinion:'1',
-                environmentOfficeOpinion:'1',
+                newOutput:'',
+                newSalesVolume:'',
+                newProfitTax:'',
+                exitEarn:'',
+                mainSolveTechnology:'',
+                mainCompletion:'',
+                implementationAchievement:'',
+                scienceDepartmentOpinion:'',
+                checkDepartmentOpinion:'',
+                environmentOfficeOpinion:'',
                 // 验收证书集合
                 acceptanceCertificatePatentList:[{
-                    applicationInvention:'1',
-                    useNewType:'1',
-                    patentAppearance:'1',
-                    patentInvention:'1',
-                    empowerNewType:'1',
-                    empowerAppearanceDesign:'1',
-                    paperNumber:'1',
-                    scienceIndexe:'1',
-                    engineerIndex:'1',
-                    publishWork:'1',
-                    technicalStandard:'1',
-                    newProduct:'1',
-                    policySystem:'1',
-                    newDevice:'1',
-                    newTechnology:'1'
+                    applicationInvention:'',
+                    useNewType:'',
+                    patentAppearance:'',
+                    patentInvention:'',
+                    empowerNewType:'',
+                    empowerAppearanceDesign:'',
+                    paperNumber:'',
+                    scienceIndexe:'',
+                    engineerIndex:'',
+                    publishWork:'',
+                    technicalStandard:'',
+                    newProduct:'',
+                    policySystem:'',
+                    newDevice:'',
+                    newTechnology:''
                 }],
                 // 主要参加人员
                 acceptanceCertificateSubjectPeopleList:[{
-                    name:'1',
-                    sex:'1',
+                    name:'',
+                    sex:'',
                     birthDate:'',
-                    major:'1',
-                    education:'1',
-                    title:'1',
-                    phone:'1'
+                    major:'',
+                    education:'',
+                    title:'',
+                    phone:''
                 }],
                 // 课题负责人集合
                 acceptanceCertificatePrincipalPersonnelList:[{
-                    participantName:'1',
-                    participantSex:'1',
+                    participantName:'',
+                    participantSex:'',
                     participantBirthDate:'',
-                    participantTechnicalTitle:'1',
-                    participantEducation:'1',
-                    participantWorkUnit:'1',
-                    taskTaking:'1'
+                    participantTechnicalTitle:'',
+                    participantEducation:'',
+                    participantWorkUnit:'',
+                    taskTaking:''
                 }],
             },
             // 单位性质
@@ -723,6 +724,8 @@ export default {
         },
         // 点击提交
         handleSubmit(){
+            let str = '苏环验字'+ this.title1 +'第'+ this.title2+'号'
+            this.showForm.translate = str
             for(let i in this.showForm) {
                 if(typeof(this.showForm[i]) == "string" ) {
                     if(this.showForm[i].match(/^[ ]*$/) || this.showForm[i] == undefined){
@@ -758,8 +761,6 @@ export default {
             let _this = this
             let _achievementForm = JSON.stringify(_this.showForm.achievementForm)
             _this.showForm.achievementForm = _achievementForm
-            let str = '苏环验字'+ _this.title1 +'第'+ _this.title2+'号'
-            _this.showForm.translate = str
             var formData = new FormData()
             formData.append('caId',_this.params.id)
             formData.append('lastReport',lastReport)
@@ -802,6 +803,10 @@ export default {
                         this.showForm.topicNumber = item.topicNumber
                         this.showForm.projectLeader = item.projectLeader
                         this.showForm.subjectUndertakingUnit = item.subjectUndertakingUnit
+                        this.showForm.unitNature = item.unitNature
+                        this.showForm.completionUnit = item.subjectUndertakingUnit
+                        this.showForm.unitName = item.subjectUndertakingUnit
+                        this.showForm.acceptanceTime = item.applicationAcceptanceTime
                         return;
                     }
                 })

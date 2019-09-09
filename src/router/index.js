@@ -58,11 +58,9 @@ import SubjectApplyEnd from '@/components/subjectAccept/subjectApplyEnd'
 import SubjectApplyEndList from '@/components/subjectAccept/subjectApplyEndList'
 import SubjectApplyEndShow from '@/components/subjectAccept/subjectApplyEndShow'
 
+import SubjectApplyEdit from '@/components/subjectAccept/subjectApplyEdit'
 // import SubjectAudited from '@/components/subjectAccept/subjectAudited'
 // import SubjectAuditedList from '@/components/subjectAccept/subjectAuditedList'
-// 验收查询--管理员
-// import SubjectApplyEndManage from '@/components/subjectAccept/subjectApplyEndManage'
-// import SubjectApplyEndManageList from '@/components/subjectAccept/subjectApplyEndManageList'
 
 // 成果管理
 // import ResultsAdd from '@/components/resultsManage/resultsAdd'
@@ -253,6 +251,10 @@ export default new Router({
 					path:'/index/subjectNotAudited/subjectApplyShow',
 					name:'SubjectApplyShow',
 					component:SubjectApplyShow
+				},{
+					path:'/index/subjectNotAudited/subjectApplyEdit',
+					name:'SubjectApplyEdit',
+					component:SubjectApplyEdit
 				},{
 					path:'/index/subjectNotAudited/subjectUploadFirst',
 					name:'SubjectUploadFirst',

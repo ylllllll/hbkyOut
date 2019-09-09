@@ -33,7 +33,7 @@
                 label="序号"
                 align="center">
                 </el-table-column>
-                <el-table-column
+                <el-table-column>
                 prop="topicName"
                 label="课题名称"
                 :show-overflow-tooltip="true"
@@ -54,7 +54,7 @@
                 <el-table-column
                 prop="subjectUndertakingUnit"
                 label="承担单位"
-                align="center">
+                align="center"
                 </el-table-column>
                 <el-table-column
                 prop="unitNature"
@@ -97,8 +97,8 @@
                 align="center"
                 v-if="identity==1" >
                     <template slot-scope="scope">
-                        <el-button class="btnEdit" v-show="scope.row.acceptancePhaseId >2" @click="handleUpload(scope.row.id,scope.row.acceptancePhaseId)">上传附件</el-button>
-                        <el-button class="btnEdit" v-show="scope.row.acceptancePhaseId <=2" @click="handleUpload(scope.row.id,scope.row.acceptancePhaseId)">修改</el-button>
+                        <el-button class="btnEdit" v-show="scope.row.acceptancePhaseId ==4 || scope.row.acceptancePhaseId == 6" @click="handleUpload(scope.row.id,scope.row.acceptancePhaseId)">上传附件</el-button>
+                        <el-button class="btnEdit" v-show="scope.row.acceptancePhaseId <=3 || scope.row.acceptancePhaseId == 5 || scope.row.acceptancePhaseId == 7 || scope.row.acceptancePhaseId == 8 || scope.row.acceptancePhaseId == 9" @click="handleUpload(scope.row.id,scope.row.acceptancePhaseId)">修改</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -166,8 +166,15 @@ export default {
                         arrays:this.tableData,
                     }
                 })
-            }else if(num <=2){
-                console.log('修改')
+            }else if(num <=3 || num == 5 || num == 7 || num == 8 || num == 9){
+                this.$router.push({
+                    name:'SubjectApplyEdit',
+                    params:{
+                        id:id,
+                        isShow:3,//修改按钮显示
+                        arrays:this.tableData,
+                    }
+                })
             }
         },
         // 搜索
@@ -244,14 +251,7 @@ export default {
                     'Content-Type':'application/x-www-form-urlencoded'
                 }
             }).then(function(res){
-                if(res.data.resultFlag == 1){
-                    _this.$alert(res.data.data, '提示', {
-                    confirmButtonText: '确定',
-                    type: 'warning'
-                    }).then(() => {
-                    }).catch(() => {
-                    }); //一定别忘了这个
-                }else{
+                    console.log(res)
                     if(res.data.data == null){
                         _this.tableData=[]
                         _this.loading = false
@@ -260,7 +260,6 @@ export default {
                         _this.loading = false
                         _this.fenye.total = res.data.data.count
                     }
-                }
             }).catch(function(err){
                 console.log(err)
             })

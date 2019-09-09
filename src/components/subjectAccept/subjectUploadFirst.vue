@@ -89,9 +89,6 @@
                         <tr><td colspan="4">三、验收结论</td></tr>
                         <tr>
                             <td colspan="4">
-                                <!-- <el-radio v-model="showForm.acceptanceConclusionId" label="1">通过验收</el-radio>
-                                <el-radio v-model="showForm.acceptanceConclusionId" label="2">结题</el-radio>
-                                <el-radio v-model="showForm.acceptanceConclusionId" label="3">不通过验收</el-radio> -->
                                 <el-radio-group v-model="showForm.acceptanceConclusionId">
                                     <span v-for="(item,index) in finalAcceptanceMethod" :key="index">
                                         <el-radio :label="item.id">{{item.content}}</el-radio>
