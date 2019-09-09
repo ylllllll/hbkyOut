@@ -166,7 +166,7 @@
 	        },
 	        handleChangeCode() {
 	        	let num = Math.random();
-	        	this.codeUrl = "http://192.168.0.37:8087/extranetCode/checkCode?"+num;
+	        	this.codeUrl = "http://192.168.0.80:8087/extranetCode/checkCode?"+num;
 	        }
 		},
 		beforeMount() {
