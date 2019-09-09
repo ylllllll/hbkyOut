@@ -33,7 +33,7 @@
                 label="序号"
                 align="center">
                 </el-table-column>
-                <el-table-column
+                <el-table-column>
                 prop="topicName"
                 label="课题名称"
                 :show-overflow-tooltip="true"
@@ -54,7 +54,7 @@
                 <el-table-column
                 prop="subjectUndertakingUnit"
                 label="承担单位"
-                align="center">
+                align="center"
                 </el-table-column>
                 <el-table-column
                 prop="unitNature"

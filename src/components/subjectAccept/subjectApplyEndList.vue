@@ -62,7 +62,7 @@
                 prop="acceptanceCertificate.projectCompletionTime"
                 label="课题完成时间"
                 align="center">
-                </el-table-column>
+                </el-table-column><s></s>
                 <el-table-column
                 prop="acceptanceCertificate.achievementLevel"
                 label="成果水平"
