@@ -1,5 +1,5 @@
 <template>
-    <div id="subjectApplyShow">
+    <div id="subjectApplyEdit">
          <div class="showForm">
             <el-form ref="showForm" :model="showForm">
                 <table class="form_table">
@@ -69,7 +69,7 @@
                                 <el-date-picker
                                     v-model="showForm.applicationAcceptanceTime"
                                     type="date"
-                                    disabled
+                                    :disabled="isDisabled"
                                     value-format="yyyy-MM-dd"
                                     placeholder="选择日期">
                                 </el-date-picker>
@@ -78,7 +78,7 @@
                             <td>
                                 <el-radio-group v-model="showForm.applicationAcceptanceMode" >
                                     <span v-for="(item,index) in applicationAcceptanceModeOptions" :key = index>
-                                        <el-radio disabled :label="item.id">{{item.content}}</el-radio>
+                                        <el-radio :disabled="isDisabled" :label="item.id">{{item.content}}</el-radio>
                                     </span>
                                 </el-radio-group>
                             </td>
@@ -86,24 +86,24 @@
                         <tr>
                             <td>申请验收地点：</td>
                             <td colspan="3">
-                                <el-input disabled v-model="showForm.applicationAcceptancePlace" ></el-input>
+                                <el-input  :disabled="isDisabled" v-model="showForm.applicationAcceptancePlace" ></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>验收联系人：</td>
                             <td>
-                                <el-input disabled v-model="showForm.acceptanceContact" ></el-input>
+                                <el-input  :disabled="isDisabled" v-model="showForm.acceptanceContact" ></el-input>
                             </td>
                             <td>验收联系人联系电话：</td>
                             <td>
-                                <el-input disabled v-model="showForm.acceptanceContactPhone" ></el-input>
+                                <el-input  :disabled="isDisabled" v-model="showForm.acceptanceContactPhone" ></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>主要研究内容完成情况：</td>
                             <td colspan="3">
                                 <el-input 
-                                  disabled
+                                  :disabled="isDisabled"
                                   type="textarea"
                                   v-model="showForm.mainContentSituation"
                                   >
@@ -114,7 +114,7 @@
                             <td>提交成果情况（合同规定提交成果完成情况及其它取得成果）：</td>
                             <td colspan="3">
                                 <el-input 
-                                 disabled
+                                 :disabled="isDisabled"
                                  type="textarea"
                                  v-model="showForm.submissionAchievementsSituation"
                                  >
@@ -126,7 +126,7 @@
                             <td colspan="3"> 
                                 <el-checkbox-group v-model="showForm.submitInventory">
                                     <span v-for="(item,index) in submitInventoryOptions" :key="index">
-                                        <el-checkbox disabled :label="item.id">{{item.content}}</el-checkbox>
+                                        <el-checkbox  :disabled="isDisabled" :label="item.id">{{item.content}}</el-checkbox>
                                     </span>
                                 </el-checkbox-group>
                             </td>
@@ -136,7 +136,7 @@
                             <td colspan="3">
                                 <el-input 
                                  type="textarea"
-                                 disabled
+                                 :disabled="isDisabled"
                                  v-model="showForm.subjectUndertakingUnitOpinion"
                                  ></el-input>
                             </td>
@@ -145,7 +145,7 @@
                             <td>所在地环保部门意见：</td>
                             <td colspan="3">
                                 <el-input 
-                                 disabled
+                                 :disabled="isDisabled"
                                  type="textarea"
                                  v-model="showForm.environmentalDepartmentsOpinion"
                                  ></el-input>
@@ -155,7 +155,7 @@
                             <td>省生态环境评估中心初审意见：</td>
                             <td colspan="3">
                                 <el-input 
-                                 disabled
+                                 :disabled="isDisabled"
                                  type="textarea"
                                  v-model="showForm.provinceAssessmentCenterOpinion"
                                  ></el-input>
@@ -165,25 +165,46 @@
                             <td>省环保厅主管部门意见：</td>
                             <td colspan="3">
                                 <el-input 
-                                 disabled
+                                 :disabled="isDisabled"
                                  type="textarea"
                                  v-model="showForm.competentDepartmentOinion"
                                  ></el-input>
                             </td>
                         </tr>
-                        <tr>
+                        <tr v-if="showForm.acceptancePhaseId <= 3">
+                            <td>提交清单文件：</td>
+                            <td colspan="3" style="height:50px;position:relative;"> 
+                                <input type="file" id="submitInventoryFile" @change="getFileNameByID('submitInventoryFile',showForm.submitInventoryUrl)">
+                                <input type="text" id="submitInventoryFile1" style="position: absolute;left: 94px;border: 0;line-height: 48px;top: 1px;" v-model="showForm.submitInventoryUrlName">
+                            </td>
+                        </tr>
+                        <tr v-else>
                             <td>提交清单文件：</td>
                             <td colspan="3" style="height:50px;padding-left:10px;">
                                 <a  @click="uploadFileInventory(showForm.submitInventoryUrl,showForm.submitInventoryUrlName)"  :download="showForm.submitInventoryUrlName">{{showForm.submitInventoryUrlName}}</a>
                             </td>
                         </tr>
-                        <tr>
+                        <tr v-if="showForm.acceptancePhaseId <= 3">
+                            <td>验收申请表附件：</td>
+                            <td colspan="3" style="height:50px;position:relative;">
+                                 <input type="file" id="applicationAcceptanceFile" @change="getFileNameByID('applicationAcceptanceFile',showForm.applicationAcceptanceUrl)">
+                                 <input type="text" id="applicationAcceptanceFile1" style="position: absolute;left: 94px;border: 0;line-height: 48px;top: 1px;" v-model="showForm.applicationAcceptanceUrlName">
+                            </td>
+                        </tr>
+                        <tr v-else>
                             <td>验收申请表附件：</td>
                             <td colspan="3" style="height:50px;padding-left:10px;">
                                 <a  @click="uploadFileInventory(showForm.applicationAcceptanceUrl,showForm.applicationAcceptanceUrlName)"  :download="showForm.applicationAcceptanceUrlName">{{showForm.applicationAcceptanceUrlName}}</a>
                             </td>
                         </tr>
-                        <tr>
+                        <tr v-if="showForm.acceptancePhaseId <= 3 ">
+                            <td>成果附件：</td>
+                            <td colspan="3" style="height:50px;position:relative;">
+                                <input type="file" id="achievementsFile" @change="getFileNameByID('achievementsFile',showForm.achievementsUrl)">
+                                <input type="text" id="achievementsFile1" style="position: absolute;left: 94px;border: 0;line-height: 48px;top: 1px;" v-model="showForm.achievementsName">
+                            </td>
+                        </tr>
+                        <tr v-else>
                             <td>成果附件：</td>
                             <td colspan="3" style="height:50px;padding-left:10px;">
                                 <a  @click="uploadFileInventory(showForm.achievementsUrl,showForm.achievementsName)"  :download="showForm.achievementsName">{{showForm.achievementsName}}</a>
@@ -245,7 +266,7 @@
                             <tr>
                                 <td style="width:13%;background-color: #e5f3ff;"><span>验收专家人数：</span></td>
                                 <td colspan="7" >
-                                    <el-input disabled v-model="showForm.extranetExpertGroupComment.acceptanceExpertNumber"></el-input>
+                                    <el-input :disabled="isDisabledExpert" v-model="showForm.extranetExpertGroupComment.acceptanceExpertNumber"></el-input>
                                 </td>
                             </tr>
                             <tr>
@@ -260,13 +281,13 @@
                             </tr>
                             <tr>
                                 <td style="background-color: #e5f3ff;"><span>专家评分：</span></td>
-                                <td><el-input disabled v-model="showForm.extranetExpertGroupComment.expertOneGrade" ></el-input></td>
-                                <td><el-input disabled v-model="showForm.extranetExpertGroupComment.expertTwoGrade" ></el-input></td>
-                                <td><el-input disabled v-model="showForm.extranetExpertGroupComment.expertThreeGrade" ></el-input></td>
-                                <td><el-input disabled v-model="showForm.extranetExpertGroupComment.expertFourGrade" ></el-input></td>
-                                <td><el-input disabled v-model="showForm.extranetExpertGroupComment.expertFiveGrade" ></el-input></td>
-                                <td><el-input disabled v-model="showForm.extranetExpertGroupComment.expertSixGrade" ></el-input></td>
-                                <td><el-input disabled v-model="showForm.extranetExpertGroupComment.expertSevenGrade" ></el-input></td>
+                                <td><el-input :disabled="isDisabledExpert" v-model="showForm.extranetExpertGroupComment.expertOneGrade" ></el-input></td>
+                                <td><el-input :disabled="isDisabledExpert" v-model="showForm.extranetExpertGroupComment.expertTwoGrade" ></el-input></td>
+                                <td><el-input :disabled="isDisabledExpert" v-model="showForm.extranetExpertGroupComment.expertThreeGrade" ></el-input></td>
+                                <td><el-input :disabled="isDisabledExpert" v-model="showForm.extranetExpertGroupComment.expertFourGrade" ></el-input></td>
+                                <td><el-input :disabled="isDisabledExpert" v-model="showForm.extranetExpertGroupComment.expertFiveGrade" ></el-input></td>
+                                <td><el-input :disabled="isDisabledExpert" v-model="showForm.extranetExpertGroupComment.expertSixGrade" ></el-input></td>
+                                <td><el-input :disabled="isDisabledExpert" v-model="showForm.extranetExpertGroupComment.expertSevenGrade" ></el-input></td>
                             </tr>
                             <tr>
                                 <td style="background-color: #e5f3ff;"><span>综合得分：</span></td>
@@ -283,13 +304,13 @@
                             <tr>
                                 <td style="width:25.8%;"><span>（一）对课题情况的总体评价：</span></td>
                                 <td colspan="3">
-                                    <el-input disabled type="textarea" v-model="showForm.extranetExpertGroupComment.topicOverallEvaluation"></el-input>
+                                    <el-input :disabled="isDisabledExpert" type="textarea" v-model="showForm.extranetExpertGroupComment.topicOverallEvaluation"></el-input>
                                 </td>
                             </tr>
                             <tr>
                                 <td><span>（二）建议：</span></td>
                                 <td colspan="3">
-                                    <el-input disabled type="textarea" v-model="showForm.extranetExpertGroupComment.suggest"></el-input>
+                                    <el-input :disabled="isDisabledExpert" type="textarea" v-model="showForm.extranetExpertGroupComment.suggest"></el-input>
                                 </td>
                             </tr>
                         </tbody>
@@ -301,7 +322,7 @@
                                 <td colspan="4" style="text-align:center;font-size:0;">
                                     <el-radio-group v-model="showForm.extranetExpertGroupComment.acceptanceConclusionId">
                                         <span v-for="(item,index) in finalAcceptanceMethod" :key="index">
-                                            <el-radio disabled :label="item.id">{{item.content}}</el-radio>
+                                            <el-radio :disabled="isDisabledExpert" :label="item.id">{{item.content}}</el-radio>
                                         </span>
                                     </el-radio-group>
                                 </td>
@@ -318,18 +339,18 @@
                                 <td style="text-align:center;">职务/职称</td>
                             </tr>
                             <tr v-for="(item,index) in showForm.extranetExpertGroupComment.extranetExpertGroupCommentsNameList" :key="index">
-                                <td><el-input disabled v-model="item.expertName"></el-input></td>
-                                <td><el-input disabled v-model="item.companyName"></el-input></td>
-                                <td><el-input disabled v-model="item.major"></el-input></td>
-                                <td><el-input disabled v-model="item.job"></el-input></td>
+                                <td><el-input :disabled="isDisabledExpert" v-model="item.expertName"></el-input></td>
+                                <td><el-input :disabled="isDisabledExpert" v-model="item.companyName"></el-input></td>
+                                <td><el-input :disabled="isDisabledExpert" v-model="item.major"></el-input></td>
+                                <td><el-input :disabled="isDisabledExpert" v-model="item.job"></el-input></td>
                             </tr>
                             <tr>
                                 <td><span>验收专家组组长签字：</span></td>
-                                <td><el-input disabled v-model="showForm.extranetExpertGroupComment.expertLeader"></el-input></td>
+                                <td><el-input :disabled="isDisabledExpert" v-model="showForm.extranetExpertGroupComment.expertLeader"></el-input></td>
                                 <td>日期：</td>
                                 <td>
                                     <el-date-picker
-                                        disabled
+                                        :disabled="isDisabledExpert"
                                         v-model="showForm.extranetExpertGroupComment.writeDate"
                                         type="date"
                                         value-format="yyyy-MM-dd"
@@ -337,13 +358,27 @@
                                     </el-date-picker>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr v-if="showForm.acceptancePhaseId == 5 || showForm.acceptancePhaseId == 8">
+                                <td>专家组意见表文件：</td>
+                                <td colspan="3" style="height:50px;position:relative;text-align:left;padding-left:10px;">
+                                    <input type="file" id="expertGroupCommentsFile" @change="getFileNameByID('expertGroupCommentsFile',showForm.expertGroupCommentsUrl)">
+                                    <input type="text" id="expertGroupCommentsFile1" style="position: absolute;left: 94px;border: 0;line-height: 48px;top: 1px;" v-model="showForm.expertGroupCommentsUrlName">
+                                </td>
+                            </tr>
+                            <tr v-else>
                                 <td>专家组意见表文件：</td>
                                 <td colspan="3" style="height:50px;text-align:left;padding-left:10px;">
                                     <a  @click="uploadFileInventory(showForm.expertGroupCommentsUrl,showForm.expertGroupCommentsUrlName)"  :download="showForm.expertGroupCommentsUrlName">{{showForm.expertGroupCommentsUrlName}}</a>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr v-if="showForm.acceptancePhaseId == 5 || showForm.acceptancePhaseId == 8">
+                                <td>专家评议表文件：</td>
+                                <td colspan="3" style="height:50px;position:relative;text-align:left;padding-left:10px;">
+                                    <input type="file" id="expertAcceptanceFormFile" @change="getFileNameByID('expertAcceptanceFormFile',showForm.expertAcceptanceFormUrl)">
+                                    <input type="text" id="expertAcceptanceFormFile1" style="position: absolute;left: 94px;border: 0;line-height: 48px;top: 1px;" v-model="showForm.expertAcceptanceFormUrlName">
+                                </td>
+                            </tr>
+                            <tr v-else>
                                 <td>专家评议表文件：</td>
                                 <td colspan="3" style="height:50px;text-align:left;padding-left:10px;">
                                     <a  @click="uploadFileInventory(showForm.expertAcceptanceFormUrl,showForm.expertAcceptanceFormUrlName)"  :download="showForm.expertAcceptanceFormUrlName">{{showForm.expertAcceptanceFormUrlName}}</a>
@@ -354,7 +389,7 @@
                 </div>
 
                 <!-- 提交 课题验收证书 step4-->
-                <div class="step4" v-if="showForm.acceptancePhaseId>=7">
+                <div class="step4" v-if="showForm.acceptancePhaseId ==7 || showForm.acceptancePhaseId == 9 ">
                     <p>江苏省环保科研课题验收证书</p>
                     <table class="form_table">
                         <thead>
@@ -384,7 +419,7 @@
                                 <td>验收日期：</td>
                                 <td>
                                     <el-date-picker
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="showForm.acceptanceCertificate.acceptanceTime"
                                     align="right"
                                     type="date"
@@ -426,7 +461,7 @@
                                 <td>所在地区：</td>
                                 <td colspan="6">
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="showForm.acceptanceCertificate.location">
                                     </el-input>
                                 </td>
@@ -435,14 +470,14 @@
                                 <td>法定代表人：</td>
                                 <td colspan="2">
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="showForm.acceptanceCertificate.legalRepresentative">
                                     </el-input>
                                 </td>
                                 <td style="width:20.8%">电话：</td>
                                 <td colspan="2">
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="showForm.acceptanceCertificate.legalRepresentativePhone">
                                     </el-input>
                                 </td>
@@ -451,14 +486,14 @@
                                 <td>联系人：</td>
                                 <td colspan="2">
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="showForm.acceptanceCertificate.contacts">
                                     </el-input>
                                 </td>
                                 <td style="width:20.8%">电话：</td>
                                 <td colspan="2">
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="showForm.acceptanceCertificate.contactsPhone">
                                     </el-input>
                                 </td>
@@ -467,14 +502,14 @@
                                 <td>邮政编码：</td>
                                 <td colspan="2">
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="showForm.acceptanceCertificate.postalCode">
                                     </el-input>
                                 </td>
                                 <td style="width:20.8%">电子信箱：</td>
                                 <td colspan="2">
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="showForm.acceptanceCertificate.mail">
                                     </el-input>
                                 </td>
@@ -483,7 +518,7 @@
                                 <td>通信地址：</td>
                                 <td colspan="6">
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="showForm.acceptanceCertificate.mailingAddress">
                                     </el-input>
                                 </td>
@@ -492,7 +527,7 @@
                                 <td>主管部门：</td>
                                 <td colspan="6">
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="showForm.acceptanceCertificate.competentDepartment">
                                     </el-input>
                                 </td>
@@ -501,7 +536,7 @@
                                 <td colspan="2">课题起始时间：</td>
                                 <td colspan="2">
                                     <el-date-picker
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="showForm.acceptanceCertificate.projectStartTime"
                                     type="date"
                                     value-format="yyyy-MM-dd"
@@ -511,7 +546,7 @@
                                 <td style="width:20.8%">课题完成时间：</td>
                                 <td colspan="2">
                                     <el-date-picker
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="showForm.acceptanceCertificate.projectCompletionTime"
                                     type="date"
                                     value-format="yyyy-MM-dd"
@@ -525,7 +560,7 @@
                                     <el-checkbox-group v-model="showForm.acceptanceCertificate.achievementForm">
                                         <span v-for="(item,index) in achievementFormOptions" :key="index">
                                             <el-checkbox 
-                                            disabled
+                                            :disabled="isDisabledAccept"
                                             :label="item.id">{{item.content}}</el-checkbox>
                                         </span>
                                     </el-checkbox-group>
@@ -537,7 +572,7 @@
                                     <el-radio-group v-model="showForm.acceptanceCertificate.achievementLevel" class="level">
                                         <span v-for="(item,index) in achievementLevelOptions" :key="index">
                                             <el-radio 
-                                            disabled
+                                            :disabled="isDisabledAccept"
                                             :label="item.id">{{item.content}}</el-radio>
                                         </span>
                                     </el-radio-group>
@@ -550,19 +585,19 @@
                                 <td colspan="2">发明：</td>
                                 <td>
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="showForm.acceptanceCertificate.acceptanceCertificatePatentList[0].applicationInvention"></el-input>
                                 </td>
                                 <td style="width:10%;"><span>实用新型：</span></td>
                                 <td>
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="showForm.acceptanceCertificate.acceptanceCertificatePatentList[0].useNewType"></el-input>
                                 </td>
                                 <td style="width:10%;"><span>外观设计：</span></td>
                                 <td>
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="showForm.acceptanceCertificate.acceptanceCertificatePatentList[0].patentAppearance"></el-input>
                                 </td>
                             </tr>
@@ -573,19 +608,19 @@
                                 <td colspan="2">发明：</td>
                                 <td>
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="showForm.acceptanceCertificate.acceptanceCertificatePatentList[0].patentInvention"></el-input>
                                 </td>
                                 <td><span>实用新型：</span></td>
                                 <td>
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="showForm.acceptanceCertificate.acceptanceCertificatePatentList[0].empowerNewType"></el-input>
                                 </td>
                                 <td><span>外观设计：</span></td>
                                 <td>
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="showForm.acceptanceCertificate.acceptanceCertificatePatentList[0].empowerAppearanceDesign"></el-input>
                                 </td>
                             </tr>
@@ -600,17 +635,17 @@
                             <tr>
                                 <td>
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="showForm.acceptanceCertificate.acceptanceCertificatePatentList[0].paperNumber"></el-input>
                                 </td>
                                 <td colspan="2">
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="showForm.acceptanceCertificate.acceptanceCertificatePatentList[0].scienceIndexe"></el-input>
                                 </td>
                                 <td colspan="2">
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="showForm.acceptanceCertificate.acceptanceCertificatePatentList[0].engineerIndex"></el-input>
                                 </td>
                             </tr>
@@ -618,14 +653,14 @@
                                 <td colspan="2">出版科技著作：</td>
                                 <td>
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="showForm.acceptanceCertificate.acceptanceCertificatePatentList[0].publishWork"></el-input>
                                     <span>(部)</span>
                                 </td>
                                 <td colspan="2">制定技术标准：</td>
                                 <td colspan="2">
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="showForm.acceptanceCertificate.acceptanceCertificatePatentList[0].technicalStandard"></el-input>
                                     <span>(个)</span>
                                 </td>
@@ -634,14 +669,14 @@
                                 <td colspan="2">新产品：</td>
                                 <td>
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="showForm.acceptanceCertificate.acceptanceCertificatePatentList[0].newProduct"></el-input>
                                     <span>(个)</span>
                                 </td>
                                 <td colspan="2">制定政策制度：</td>
                                 <td colspan="2">
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="showForm.acceptanceCertificate.acceptanceCertificatePatentList[0].policySystem"></el-input>
                                     <span>(项)</span>
                                 </td>
@@ -650,14 +685,14 @@
                                 <td colspan="2">建成新装置：</td>
                                 <td>
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="showForm.acceptanceCertificate.acceptanceCertificatePatentList[0].newDevice"></el-input>
                                     <span>(套)</span>
                                 </td>
                                 <td colspan="2">新工艺：</td>
                                 <td colspan="2">
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="showForm.acceptanceCertificate.acceptanceCertificatePatentList[0].newTechnology"></el-input>
                                     <span>(项)</span>
                                 </td>
@@ -679,12 +714,12 @@
                             <tr v-for="(item,index) in showForm.acceptanceCertificate.acceptanceCertificateSubjectPeopleList" :key="index">
                                 <td>
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="item.name"></el-input>
                                 </td>
                                 <td>
                                     <el-select
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="item.sex" placeholder="请选择">
                                         <el-option
                                         v-for="item in sexOptions"
@@ -696,7 +731,7 @@
                                 </td>
                                 <td>
                                     <el-date-picker
-                                        disabled
+                                        :disabled="isDisabledAccept"
                                         v-model="item.birthDate"
                                         type="date"
                                         value-format="yyyy-MM-dd"
@@ -705,64 +740,64 @@
                                 </td>
                                 <td>
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="item.major"></el-input>
                                 </td>
                                 <td>
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="item.education"></el-input>
                                 </td>
                                 <td>
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="item.title"></el-input>
                                 </td>
                                 <td>
                                     <el-input 
-                                    disabled
+                                    :disabled="isDisabledAccept"
                                     v-model="item.phone"></el-input>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                     <p>3.课题研发人员情况：</p>
-                    <table class="form_table2">
+                    <table class="form_table2 ">
                         <tbody>
                             <tr>
                                 <td style="width:25.8%;">课题研发人员总数</td>
                                 <td colspan="3">
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.developmentTotalNumber"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.developmentTotalNumber"></el-input>
                                 </td>
                             </tr>
                             <tr>
                                 <td>其中:博士</td>
                                 <td  colspan="3">
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.doctorTotalNumber"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.doctorTotalNumber"></el-input>
                                 </td>
                             </tr>
                             <tr>
                                 <td>硕士</td>
                                 <td  colspan="3">
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.masterTotalNumber"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.masterTotalNumber"></el-input>
                                 </td>
                             </tr>
                             <tr>
                                 <td>其中:高级职称</td>
                                 <td  colspan="3">
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.seniorTotalNumber"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.seniorTotalNumber"></el-input>
                                 </td>
                             </tr>
                             <tr>
                                 <td>中级职称</td>
                                 <td  colspan="3">
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.intermediateTotalNumber"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.intermediateTotalNumber"></el-input>
                                 </td>
                             </tr>
                             <tr>
                                 <td>其中:在校研究生</td>
                                 <td  colspan="3">
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.schoolMasterNumber"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.schoolMasterNumber"></el-input>
                                 </td>
                             </tr>
                         </tbody>
@@ -780,22 +815,22 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.totalProjectFunds"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.totalProjectFunds"></el-input>
                                 </td>
                                 <td>
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.environmentTopicFunds"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.environmentTopicFunds"></el-input>
                                 </td>
                                 <td>
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.competentDepartmentMatch"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.competentDepartmentMatch"></el-input>
                                 </td>
                                 <td>
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.bankLoans"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.bankLoans"></el-input>
                                 </td>
                                 <td>
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.unitRaiseMoney"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.unitRaiseMoney"></el-input>
                                 </td>
                                 <td>
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.otherActualMoney"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.otherActualMoney"></el-input>
                                 </td>
                             </tr>
                         </tbody>
@@ -806,61 +841,61 @@
                             <tr>
                                 <td>合计：</td>
                                 <td>
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.totalExpenditure"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.totalExpenditure"></el-input>
                                 </td>
                                 <td>6.会议费：</td>
                                 <td>
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.conferenceFee"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.conferenceFee"></el-input>
                                 </td>
                             </tr>
                             <tr>
                                 <td>1.设备费：</td>
                                 <td>
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.equipmentCost"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.equipmentCost"></el-input>
                                 </td>
                                 <td>7.国际合作交流费：</td>
                                 <td>
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.internationalCommunication"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.internationalCommunication"></el-input>
                                 </td>
                             </tr>
                             <tr>
                                 <td>2.材料费：</td>
                                 <td>
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.materialFee"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.materialFee"></el-input>
                                 </td>
                                 <td>8.专家咨询费：</td>
                                 <td>
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.expertConsult"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.expertConsult"></el-input>
                                 </td>
                             </tr>
                             <tr>
                                 <td>3.测试化验加工费：</td>
                                 <td>
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.laboratoryFees"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.laboratoryFees"></el-input>
                                 </td>
                                 <td>9.管理及人员费：</td>
                                 <td>
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.managementExpense"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.managementExpense"></el-input>
                                 </td>
                             </tr>
                             <tr>
                                 <td>4.燃料动力费：</td>
                                 <td>
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.fuelCosts"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.fuelCosts"></el-input>
                                 </td>
                                 <td>10.其他费用：</td>
                                 <td>
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.otherExpenditureMoney"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.otherExpenditureMoney"></el-input>
                                 </td>
                             </tr>
                             <tr>
                                 <td>5. 差旅费：</td>
                                 <td>
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.travelExpenses"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.travelExpenses"></el-input>
                                 </td>
-                                <td><el-input disabled></el-input> </td>
+                                <td><el-input :disabled="isDisabledAccept"></el-input> </td>
                                 <td>
-                                    <el-input disabled></el-input>
+                                    <el-input :disabled="isDisabledAccept"></el-input>
                                 </td>
                             </tr>
                         </tbody>
@@ -871,21 +906,21 @@
                             <tr>
                                 <td>新增产值（万元）</td>
                                 <td>
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.newOutput"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.newOutput"></el-input>
                                 </td>
                                 <td>新增销售额（万元）</td>
                                 <td>
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.newSalesVolume"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.newSalesVolume"></el-input>
                                 </td>
                             </tr>
                             <tr>
                                 <td>新增利税（万元）</td>
                                 <td>
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.newProfitTax"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.newProfitTax"></el-input>
                                 </td>
                                 <td>出口创汇（万美元）</td>
                                 <td>
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.exitEarn"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.exitEarn"></el-input>
                                 </td>
                             </tr>
                         </tbody>
@@ -896,19 +931,19 @@
                             <tr>
                                 <td>1. 主要解决的关键技术与创新点：</td>
                                 <td colspan="3">
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.mainSolveTechnology" type="textarea"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.mainSolveTechnology" type="textarea"></el-input>
                                 </td>
                             </tr>
                             <tr>
                                 <td>2. 主要技术、经济与环境指标完成情况：</td>
                                 <td colspan="3">
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.mainCompletion" type="textarea"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.mainCompletion" type="textarea"></el-input>
                                 </td>
                             </tr>
                             <tr>
                                 <td>3. 课题实施的绩效：</td>
                                 <td colspan="3">
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.implementationAchievement" type="textarea"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.implementationAchievement" type="textarea"></el-input>
                                 </td>
                             </tr>
                         </tbody>
@@ -927,10 +962,10 @@
                             </tr>
                             <tr v-for="(item,index) in showForm.acceptanceCertificate.acceptanceCertificatePrincipalPersonnelList" :key="index">
                                 <td>
-                                    <el-input disabled v-model="item.participantName"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="item.participantName"></el-input>
                                 </td>
                                 <td>
-                                    <el-select disabled v-model="item.participantSex" placeholder="请选择">
+                                    <el-select :disabled="isDisabledAccept" v-model="item.participantSex" placeholder="请选择">
                                         <el-option
                                         v-for="item in sexOptions"
                                         :key="item.value"
@@ -941,7 +976,7 @@
                                 </td>
                                 <td>
                                     <el-date-picker
-                                        disabled
+                                        :disabled="isDisabledAccept"
                                         v-model="item.participantBirthDate"
                                         type="date"
                                         value-format="yyyy-MM-dd"
@@ -949,16 +984,16 @@
                                     </el-date-picker>
                                 </td>
                                 <td>
-                                    <el-input disabled v-model="item.participantTechnicalTitle"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="item.participantTechnicalTitle"></el-input>
                                 </td>
                                 <td>
-                                    <el-input disabled v-model="item.participantEducation"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="item.participantEducation"></el-input>
                                 </td>
                                 <td>
-                                    <el-input disabled v-model="item.participantWorkUnit"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="item.participantWorkUnit"></el-input>
                                 </td>
                                 <td>
-                                    <el-input disabled v-model="item.taskTaking"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="item.taskTaking"></el-input>
                                 </td>
                             </tr>
                         </tbody>
@@ -969,25 +1004,32 @@
                             <tr>
                                 <td>完成单位科技部门意见：</td>
                                 <td colspan="3">
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.scienceDepartmentOpinion"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.scienceDepartmentOpinion"></el-input>
                                 </td>
                             </tr>
                             <tr>
                                 <td>组织验收部门意见：</td>
                                 <td colspan="3">
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.checkDepartmentOpinion"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.checkDepartmentOpinion"></el-input>
                                 </td>
                             </tr>
                             <tr>
                                 <td>省生态环境厅意见：</td>
                                 <td colspan="3">
-                                    <el-input disabled v-model="showForm.acceptanceCertificate.environmentOfficeOpinion"></el-input>
+                                    <el-input :disabled="isDisabledAccept" v-model="showForm.acceptanceCertificate.environmentOfficeOpinion"></el-input>
                                 </td>
                             </tr>
-                            <tr>
+                            <!-- <tr>
                                 <td>上传的最终证书文件：</td>
                                 <td colspan="3" style="height:50px;">
                                     <a @click="uploadFileInventory(showForm.acceptanceCertificateUrl,showForm.acceptanceCertificateUrlName)"  :download="showForm.acceptanceCertificateUrlName" >{{showForm.acceptanceCertificateUrlName}}</a>
+                                </td>
+                            </tr> -->
+                            <tr>
+                                <td>专家评议表文件：</td>
+                                <td colspan="3" style="height:50px;position:relative;text-align:left;padding-left:10px;">
+                                    <input type="file" id="acceptanceCertificateUrl" @change="getFileNameByID('acceptanceCertificateUrl',showForm.acceptanceCertificateUrl)">
+                                    <input type="text" id="acceptanceCertificateUrl1" style="position: absolute;left: 94px;border: 0;line-height: 48px;top: 1px;" v-model="showForm.acceptanceCertificateUrlName">
                                 </td>
                             </tr>
                         </tbody>
@@ -1029,33 +1071,14 @@
                     </tr>
                 </table>
             </el-form>
-            <el-button type="primary" v-show="this.$route.params.isShow == 2"  @click="handleExime">通过</el-button>
-            <el-button type="primary" v-show="this.$route.params.isShow == 2"  @click="handleReject">驳回</el-button>
+            <el-button type="primary" v-show="this.$route.params.isShow == 3"  @click="handleEdit">提交</el-button>
             <el-button type="primary" class="btnBack"  @click="handleBack">返回</el-button>
         </div>
-        <!-- 驳回理由弹框 -->
-        <el-dialog
-            title="请输入退回理由"
-            :visible.sync="dialogVisible"
-            width="30%"
-            :before-close="handleClose">
-            <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-                <el-form-item label="请输入驳回理由：" prop="reason">
-                    <el-input 
-                     type="textarea" 
-                     v-model="form.reason"></el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="handleBtnConfirm('form')">确 定</el-button>
-            </span>
-        </el-dialog>
     </div>
 </template>
 <script>
 export default {
-    name:'subjectApplyShow',
+    name:'subjectApplyEdit',
     data(){
         return{
             showForm:{
@@ -1081,9 +1104,13 @@ export default {
                 environmentalDepartmentsOpinion:'',
                 provinceAssessmentCenterOpinion:'',
                 competentDepartmentOinion:'',
-                // applicationAcceptanceUrl:'',
-                // achievementsUrl:''
             },
+            oldSubmitInventoryFileUrl:'',
+            oldApplicationAcceptanceFileUrl:'',
+            oldAchievementsFileUrl:'',
+            oldExpertGroupFileUrl:'',  //旧的专家组文件
+            oldExpertAcceptanceFormFile:'',// 旧的专家组评议
+            oldLastReportFileUrl:'',//旧的最终验收报告文件
             unitNatureOptions:[{//单位性质接口
                 "id": 1,
                 "classification": null,
@@ -1134,82 +1161,193 @@ export default {
                     { required: true, message: '请输入驳回理由', trigger: 'blur' }
                 ],
             },
+            isDisabled:true,
+            isDisabledExpert:true,
+            isDisabledAccept:true,
             dialogVisible:false,
-            
         }
     },
     methods:{
-        // 审核通过
-        handleExime(){
+        getFileNameByID(id,url){
+            let _name = document.getElementById(id).files[0].name
+            if(id == 'submitInventoryFile'){
+                this.showForm.submitInventoryUrlName = _name
+                this.oldSubmitInventoryFileUrl = url
+                return
+            }else if(id == 'applicationAcceptanceFile'){
+                this.showForm.applicationAcceptanceUrlName = _name
+                this.oldApplicationAcceptanceFileUrl = url
+                return
+            }else if(id == 'achievementsFile'){
+                this.showForm.achievementsName = _name
+                this.oldAchievementsFileUrl = url
+                return
+            }else if(id == 'expertGroupCommentsFile'){
+                this.showForm.expertGroupCommentsUrlName = _name
+                this.oldExpertGroupFileUrl = url
+                return
+            }else if(id == 'expertAcceptanceFormFile'){
+                this.showForm.expertAcceptanceFormUrlName = _name
+                this.oldExpertAcceptanceFormFile = url
+                return
+            }else if(id == 'acceptanceCertificateUrl'){
+                this.showForm.acceptanceCertificateUrlName = _name
+                this.oldLastReportFileUrl = url
+            }
+        },
+        // 修改点击
+        handleEdit(){
+            if(this.showForm.acceptancePhaseId <= 3){
+                this.editApplySubmit()
+            }else if(this.showForm.acceptancePhaseId == 5 || this.showForm.acceptancePhaseId == 8){
+                this.editExpertSubmit()
+            }else if(this.showForm.acceptancePhaseId == 7 || this.showForm.acceptancePhaseId == 9){
+                this.editExpertAccept()
+            }
+        },
+        // 验收申请修改提交
+        editApplySubmit(){
             let _this = this
+            console.log(_this.oldApplicationAcceptanceFileUrl)
+            let formData = new FormData()
+            let submitInventoryFile = document.getElementById('submitInventoryFile').files[0]
+            let applicationAcceptanceFile = document.getElementById('applicationAcceptanceFile').files[0]
+            let achievementsFile = document.getElementById('achievementsFile').files[0]
+            formData.append('oldSubmitInventoryFileUrl',_this.oldSubmitInventoryFileUrl)
+            formData.append('oldApplicationAcceptanceFileUrl',_this.oldApplicationAcceptanceFileUrl)
+            formData.append('oldAchievementsFileUrl',_this.oldAchievementsFileUrl)
+            formData.append('submitInventoryFile',submitInventoryFile)
+            formData.append('applicationAcceptanceFile',applicationAcceptanceFile)
+            formData.append('achievementsFile',achievementsFile)
+            let extranetCheckApply = JSON.stringify({
+                id:_this.paramsData.id,
+                topicName:_this.showForm.topicName,
+                topicNumber:_this.showForm.topicNumber,
+                subjectUndertakingUnit:_this.showForm.subjectUndertakingUnit,
+                unitNature:_this.showForm.unitNature,
+                projectLeader:_this.showForm.projectLeader,
+                projectLeaderPhone:_this.showForm.projectLeaderPhone,
+                projectLeaderMail:_this.showForm.projectLeaderMail,
+                postalAddress:_this.showForm.postalAddress,
+                agreementStartTime:_this.showForm.agreementStartTime,
+                agreementEndTime:_this.showForm.agreementEndTime,
+                applicationAcceptanceTime:_this.showForm.applicationAcceptanceTime,
+                applicationAcceptanceMode:_this.showForm.applicationAcceptanceMode,
+                applicationAcceptancePlace:_this.showForm.applicationAcceptancePlace,
+                acceptanceContact:_this.showForm.acceptanceContact,
+                acceptanceContactPhone:_this.showForm.acceptanceContactPhone,
+                mainContentSituation:_this.showForm.mainContentSituation,
+                submissionAchievementsSituation:_this.showForm.submissionAchievementsSituation,
+                subjectUndertakingUnitOpinion:_this.showForm.subjectUndertakingUnitOpinion,
+                environmentalDepartmentsOpinion:_this.showForm.environmentalDepartmentsOpinion,
+                provinceAssessmentCenterOpinion:_this.showForm.provinceAssessmentCenterOpinion,
+                competentDepartmentOinion:_this.showForm.competentDepartmentOinion,
+                submitInventory:JSON.stringify(_this.showForm.submitInventory),
+            })
+            formData.append('extranetCheckApply', new Blob([extranetCheckApply], {type: "application/json"}))
+            formData.append('contractId',_this.contractId)
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.80:8087/apply/examine',
-                params:{
-                    id:_this.paramsData.id[0],
-                    type:true
-                }
+                url:'http://192.168.0.37:8087/apply/modify',
+                data:formData
             }).then(function(res){
-                if(res.data.resultFlag == 1){
-                    _this.$alert('请先登录', '提示', {
-                        confirmButtonText: '确定',
-                        type: 'warning'
-                        }).then(() => {
-                        _this.$router.push('/');
-                    }).catch(() => {
-                        _this.$router.push('/');
-                    });
-                }else{
-                    _this.$alert('审核通过', '提示', {
-                        confirmButtonText: '确定',
-                        type: 'warning'
-                        }).then(() => {
-                        _this.$router.back(0)
-                    }).catch(() => {
-                        _this.$router.back(0)
-                    });
-                }
+                let data = res.data.data
+                _this.$alert(data, '提示', {
+                    confirmButtonText: '确定',
+                    type:'info',
+                    callback: action => {
+                        _this.$router.back(-1)
+                    }
+                });
             }).catch(function(err){
                 console.log(err)
             })
         },
-        // 驳回
-        handleReject(){
-            this.dialogVisible = true
+        // 专家意见表修改提交
+        editExpertSubmit(){
+            let _this = this
+            console.log(_this.showForm.extranetExpertGroupComment.extranetExpertGroupCommentsNameList)
+            var formData = new FormData()
+            formData.append('caId',_this.paramsData.id)
+            formData.append('oldExpertGroupFileUrl',_this.oldExpertGroupFileUrl)
+            formData.append('oldExpertAcceptanceFormFile',_this.oldExpertAcceptanceFormFile)
+            let expertGroupCommentsFile = document.getElementById('expertGroupCommentsFile').files[0]
+            let expertAcceptanceFormFile = document.getElementById('expertAcceptanceFormFile').files[0]
+            formData.append('expertGroupFile',expertGroupCommentsFile)
+            formData.append('expertAcceptanceFormFile',expertAcceptanceFormFile)
+            let extranetExpertGroupComment = JSON.stringify({
+                'egcId':_this.showForm.extranetExpertGroupComment.egcId,
+                'caId':_this.showForm.extranetExpertGroupComment.caId,
+                'topicName':_this.showForm.extranetExpertGroupComment.topicName,
+                'topicNumber':_this.showForm.extranetExpertGroupComment.topicNumber,
+                'projectLeader':_this.showForm.extranetExpertGroupComment.projectLeader,
+                'subjectUndertakingUnit':_this.showForm.extranetExpertGroupComment.subjectUndertakingUnit,
+                'acceptanceExpertNumber':_this.showForm.extranetExpertGroupComment.acceptanceExpertNumber,
+                'expertOneGrade':_this.showForm.extranetExpertGroupComment.expertOneGrade,
+                'expertTwoGrade':_this.showForm.extranetExpertGroupComment.expertTwoGrade,
+                'expertThreeGrade':_this.showForm.extranetExpertGroupComment.expertThreeGrade,
+                'expertFourGrade':_this.showForm.extranetExpertGroupComment.expertFourGrade,
+                'expertFiveGrade':_this.showForm.extranetExpertGroupComment.expertFiveGrade,
+                'expertSixGrade':_this.showForm.extranetExpertGroupComment.expertSixGrade,
+                'expertSevenGrade':_this.showForm.extranetExpertGroupComment.expertSevenGrade,
+                'synthesizeGrade':_this.showForm.extranetExpertGroupComment.synthesizeGrade,
+                'topicOverallEvaluation':_this.showForm.extranetExpertGroupComment.topicOverallEvaluation,
+                'suggest':_this.showForm.extranetExpertGroupComment.suggest,
+                'acceptanceConclusionId':_this.showForm.extranetExpertGroupComment.acceptanceConclusionId,
+                'extranetExpertGroupCommentsNameList':_this.showForm.extranetExpertGroupComment.extranetExpertGroupCommentsNameList,
+                'expertLeader':_this.showForm.extranetExpertGroupComment.expertLeader,
+                'writeDate':_this.showForm.extranetExpertGroupComment.writeDate
+            })
+            formData.append('extranetExpertGroupComment',new Blob([extranetExpertGroupComment],{type:'application/json'}))
+            this.axios({
+                method:'POST',
+                url:'http://192.168.0.37:8087/apply/ExpertGroupModify',
+                data:formData
+            }).then(function(res){
+                _this.$alert(res.data.data, '提示', {
+                    confirmButtonText: '确定',
+                    type:'warning',
+                }).then(() => {
+                    _this.$router.back(0)
+                }).catch(() => {
+                    _this.$router.back(0)
+                })
+            }).catch(function(err){
+                console.log(err)
+            })
+        },
+        // 最终验收报告的修改提交
+        editExpertAccept(){
+            let _this = this
+            let formData = new FormData()
+            formData.append('caId',_this.paramsData.id)
+            let lastReportFile = document.getElementById('acceptanceCertificateUrl').files[0]
+            formData.append('lastReportFile',lastReportFile)
+            formData.append('oldLastReportFileUrl',_this.oldLastReportFileUrl)
+             let _achievementForm = JSON.stringify(_this.showForm.acceptanceCertificate.achievementForm)
+            _this.showForm.acceptanceCertificate.achievementForm = _achievementForm
+            let _acceptanceCertificate = JSON.stringify(_this.showForm.acceptanceCertificate)
+            formData.append('acceptanceCertificate',new Blob([_acceptanceCertificate],{type:'application/json'}))
+            this.axios({
+                method:'POST',
+                url:'http://192.168.0.37:8087/apply/lastReportModify',
+                data:formData
+            }).then((res)=>{
+                _this.$alert(res.data.data, '提示', {
+                    confirmButtonText: '确定',
+                    type:'warning',
+                }).then(() => {
+                    _this.$router.back(0)
+                }).catch(() => {
+                    _this.$router.back(0)
+                })
+            }).catch((err) =>{
+                console.log(err)
+            })
         },
         //弹框的关闭按钮点击事件
         handleClose(){
             this.dialogVisible = false
-        },
-        // 弹框的确认驳回
-        handleBtnConfirm(formReason){
-            let _this = this
-            _this.$refs[formReason].validate((valid) => {
-                if (valid) {
-                   this.axios({
-                        method:'POST',
-                        url:'http://192.168.0.80:8087/apply/examine',
-                        params:{
-                            type:false,
-                            reason:_this.form.reason,
-                            id:_this.paramsData.id[0]
-                        }
-                    }).then(function(res){
-                        _this.$alert('审核成功', '提示', {
-                            confirmButtonText: '确定',
-                            type:'warning',
-                        }).then(() => {
-                            _this.$router.back(0)
-                        }).catch(() => {
-                            _this.$router.back(0)
-                        })
-                    }).catch(function(err){
-                        console.log(err)
-                    })
-                } else {
-                    return false;
-                }
-            });
         },
         // 返回
         handleBack(){
@@ -1220,7 +1358,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.80:8087/checkApplyStyle/unitNature',
+                url:'http://192.168.0.37:8087/checkApplyStyle/unitNature',
             }).then(function(res){
                 _this.unitNatureOptions = res.data.data
                 _this.getApplicationAcceptanceModeOptions()
@@ -1233,7 +1371,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.80:8087/checkApplyStyle/applicationAcceptance',
+                url:'http://192.168.0.37:8087/checkApplyStyle/applicationAcceptance',
             }).then(function(res){
                 _this.applicationAcceptanceModeOptions = res.data.data
                 _this.getSubmitInventoryOptions()
@@ -1246,7 +1384,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.80:8087/checkApplyStyle/applicationSubmitList'
+                url:'http://192.168.0.37:8087/checkApplyStyle/applicationSubmitList'
             }).then(function(res){
                 _this.submitInventoryOptions = res.data.data
                 _this.getFinalAcceptanceMethod()
@@ -1259,7 +1397,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.80:8087/checkApplyStyle/queryAchievementShape',
+                url:'http://192.168.0.37:8087/checkApplyStyle/queryAchievementShape',
             }).then(function(res){
                 _this.achievementFormOptions = res.data.data
                 _this.getAchievementLevelOptions()
@@ -1272,7 +1410,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.80:8087/checkApplyStyle/queryAchievementLevel',
+                url:'http://192.168.0.37:8087/checkApplyStyle/queryAchievementLevel',
             }).then(function(res){
                 _this.achievementLevelOptions = res.data.data
                 // _this.getAcceptance()
@@ -1285,7 +1423,7 @@ export default {
             let _this = this
             this.axios({
                 method:'POST',
-                url:'http://192.168.0.80:8087/checkApplyStyle/finalAcceptanceMethod',
+                url:'http://192.168.0.37:8087/checkApplyStyle/finalAcceptanceMethod',
             }).then(function(res){
                 _this.finalAcceptanceMethod = res.data.data
                 _this.getAchievementFormOptions()
@@ -1304,6 +1442,13 @@ export default {
                         if(item.acceptanceCertificate != null || item.acceptanceCertificate !=undefined){
                             this.showForm.acceptanceCertificate.achievementForm = JSON.parse(item.acceptanceCertificate.achievementForm)
                         }
+                        if(item.acceptancePhaseId <= 3){
+                            this.isDisabled = false
+                        }else if(item.acceptancePhaseId == 5 || item.acceptancePhaseId == 8){
+                            this.isDisabledExpert = false
+                        }else if(item.acceptancePhaseId == 7 || item.acceptancePhaseId == 9){
+                            this.isDisabledAccept = false
+                        }
                         return;
                     }
                 })
@@ -1321,7 +1466,7 @@ export default {
 }
 </script>
 <style lang="less">
-#subjectApplyShow{
+#subjectApplyEdit{
     .showForm{
         .el-form{
              p,h1{
@@ -1367,6 +1512,30 @@ export default {
                         td{
                             background-color:#e5f3ff;
                         }
+                    }
+                }
+            }
+            .form_table,.form_table1,.form_table2{
+                min-width: 900px;
+                td{
+                    height: 50px;
+                }
+                .textalignCenter{
+                    td{
+                        text-align: center;
+                    }
+                }
+            }
+            table.form_table2 {
+                tbody {
+                    tr{
+                        td:first-child{
+                            text-align: right;
+                            padding-right: 20px;
+                        }
+                    }
+                    tr:first-child td{
+                        border: 1px solid #e0e0e0;
                     }
                 }
             }
@@ -1470,26 +1639,6 @@ export default {
     }
     .btnBack{
         margin: 10px auto;
-    }
-    .el-dialog__wrapper{
-        .el-dialog{
-            margin-top: 0 !important;
-        }
-        .el-form{
-            .el-form-item__label{
-                width: 200px !important;
-            }
-            .el-form-item__content{
-                margin-left: 200px !important;
-            }
-            textarea{
-                min-height: 278px !important;
-                padding: 10px;
-            }
-        }
-        .el-dialog__footer{
-            text-align: center;
-        }
     }
 }
 </style>
