@@ -144,7 +144,7 @@ export default {
             selectedIDs:[],
             acceptancePhaseIds:[],
             isShowExamine:true,
-            identity:parseInt(document.cookie.substring(document.cookie.length-1))
+            identity: null
         }
     },
     methods:{
@@ -277,10 +277,20 @@ export default {
             });
         }
     },
+    beforeMount() {
+        // 获取身份
+        let arr = document.cookie.split(";");
+        for(let i in arr) {
+            let arr2 = arr[i].split("=");
+            if(arr2[0].trim() == "identityIn") {
+                this.identity = arr2[1];
+            }
+        }
+    },
     mounted(){
         this.getTableData(this.queryForm.name,this.queryForm.topicNumber,this.fenye.pageNum,this.fenye.pageSize)
         this.getUnitNatureData()
-        
+
     }
 }
 </script>

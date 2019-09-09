@@ -625,7 +625,9 @@
                     this.$alert('提交成功','提示', {
                         confirmButtonText: '确定',
                         type: 'success',
-                        callback: action => {}
+                        callback: action => {
+                            this.$router.go(-1);
+                        }
                     });
                 }).catch(() => {
                     loading.close();
@@ -707,7 +709,7 @@
             }).then((res) => {
                 let data = res.data.data;
                 this.showForm = data;
-            }).catch(() => {})
+            })
             // 子表一
             this.axios({
                 url: 'http://192.168.0.80:8087/environment/contentindicators/getIndicatorById',
@@ -718,7 +720,7 @@
             }).then((res) => {
                 let data = res.data.data;
                 this.progressForm = data;
-            }).catch(() => {})
+            })
             // 子表二
             this.axios({
                 url: 'http://192.168.0.80:8087/environment/contract/subject_participa_unit/getDeveloperInfoById',
@@ -729,7 +731,7 @@
             }).then((res) => {
                 let data = res.data.data;
                 this.unitForm = data;
-            }).catch(() => {})
+            })
             // 子表三
             this.axios({
                 url: 'http://192.168.0.80:8087/environment/contract/keydev/getKeyDevInfoById',
@@ -740,7 +742,7 @@
             }).then((res) => {
                 let data = res.data.data;
                 this.keyForm = data;
-            }).catch(() => {})
+            })
             // 子表四
             this.axios({
                 url: 'http://192.168.0.80:8087/environment/contract/subjectfundbudget/getInfoById',
@@ -751,7 +753,7 @@
             }).then((res) => {
                 let data = res.data.data;
                 this.budgetForm = data;
-            }).catch(() => {})
+            })
         }
     }
 </script>

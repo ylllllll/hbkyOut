@@ -228,16 +228,16 @@
                         this.optGroup2.push(data[i]);
                     }
                 }
-            })
-            // 取公司类别
-            this.axios({
-                url: 'http://192.168.0.80:8087/environment/guide/getCookieValue',
-                method: 'post',
-            }).then((res) => {
-               console.log(res);
-               this.$nextTick(() => {
-                   this.showForm.fillUnit = res.data.data;
-               })
+                // 取公司类别
+                this.axios({
+                    url: 'http://192.168.0.80:8087/environment/guide/getCookieValue',
+                    method: 'post',
+                }).then((res) => {
+                    console.log(res);
+                    this.$nextTick(() => {
+                        this.showForm.fillUnit = res.data.data;
+                    })
+                })
             })
         }
     }

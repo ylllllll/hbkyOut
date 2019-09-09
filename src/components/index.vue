@@ -31,8 +31,8 @@
 						<div class="header_top_right">
 							<a class="user_solid"></a>
 							<span class="welcome">欢迎{{ realName }}登录！</span>
-							<!-- <a class="tools"></a> -->
-							<!-- <a class="question"></a> -->
+							<a class="tools"></a>
+							<a class="question"></a>
 							<a class="switch" @click="handleLogOut"></a>
 						</div>
 					</div>
