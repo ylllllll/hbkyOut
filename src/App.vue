@@ -368,11 +368,27 @@ export default {
 			height: 50px;
 			.file_td {
 				padding-left: 10px;
-				text-align: left;
+				text-align: left !important;
+				position: relative;
+				overflow: hidden;
+				.file_show {
+					position: absolute;
+					width: 100%;
+					height: 50px;
+					top: 0;
+					left: 0;
+					margin-left: 92px;
+					background-color: #fff;
+					line-height: 50px;
+					padding-left: 3px;
+				}
 			}
 		}
 		.btn_group {
             padding: 20px 0;
-        }
+		}
+		.el-table__row {
+			cursor: pointer;
+		}
   	}
 </style>

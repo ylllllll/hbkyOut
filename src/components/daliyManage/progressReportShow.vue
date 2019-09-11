@@ -154,6 +154,31 @@
                                 </el-input>
                             </td>
                         </tr>
+                        <!-- 附件 -->
+                        <tr class="file_tr">
+                            <td>专家意见附件：</td>
+                            <td class="file_td" colspan="3">
+                                <a @click="handleDownload(1)">{{ fileData[1].upload_file_name }}</a>
+                            </td>
+                        </tr>
+                        <tr class="file_tr">
+                            <td>进度经费使用情况附件：</td>
+                            <td class="file_td" colspan="3">
+                                <a @click="handleDownload(4)">{{ fileData[3].upload_file_name }}</a>
+                            </td>
+                        </tr>
+                        <tr class="file_tr">
+                            <td>开题报告附件：</td>
+                            <td class="file_td" colspan="3">
+                                <a @click="handleDownload(0)">{{ fileData[0].upload_file_name }}</a>
+                            </td>
+                        </tr>
+                        <tr class="file_tr">
+                            <td>课题进展附件：</td>
+                            <td class="file_td" colspan="3">
+                                <a @click="handleDownload(2)">{{ fileData[2].upload_file_name }}</a>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </el-form>
@@ -177,10 +202,25 @@
                 planForm: [],
                 paramsData: {
                     id: this.$route.params.id
-                }
+                },
+                fileData: [{
+                    upload_file_name: ''
+                },{
+                    upload_file_name: ''
+                },{
+                    upload_file_name: ''
+                },{
+                    upload_file_name: ''
+                }]
             }
         },
         methods:{
+            handleDownload(val) {
+                window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
+                                     + this.fileData[val].upload_file_address 
+                                     + '&fileName=' 
+                                     + this.fileData[val].upload_file_name;
+            },
             handleBack() {
                 this.$router.go(-1);//返回上一页
             }
@@ -242,6 +282,18 @@
                                 console.log(4)
                                 console.log(res);
                                 this.planForm = res.data.data;
+                                // 附件信息
+                                this.axios({
+                                    url: 'http://192.168.0.80:8087/environment/progress/getProgressFileInfo',
+                                    method: 'get',
+                                    params: {
+                                        pid :this.paramsData.id
+                                    }
+                                }).then((res) => {
+                                    console.log(5)
+                                    console.log(res);
+                                    this.fileData = res.data.data;
+                                })
                             })
                         })
                     })

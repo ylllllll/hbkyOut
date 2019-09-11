@@ -68,7 +68,6 @@
 		methods: {
 		},
 		mounted() {	
-
 			// 请求验收待审核
 			this.axios({
 				url: 'http://192.168.0.80:8087/extranet/subjectTotal',
@@ -87,7 +86,6 @@
 				}
 				
 			})
-
 			// 请求通知公告列表数据
 			this.axios({
 				url: 'http://192.168.0.80:8087/notification/ExtranetQuery',
@@ -110,7 +108,7 @@
 
 <style lang="less">
 	#home {
-		overflow-y: hidden;
+		// overflow-y: hidden;
 		.home_header {
 			display: flex;
 			justify-content: space-between;

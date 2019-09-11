@@ -201,6 +201,31 @@
                                 </el-input>
                             </td>
                         </tr>
+                        <!-- 附件 -->
+                        <tr class="file_tr">
+                            <td>专家意见附件：</td>
+                            <td class="file_td" colspan="3">
+                                <input type="file" @change="getFile($event,1)" />
+                            </td>
+                        </tr>
+                        <tr class="file_tr">
+                            <td>进度经费使用情况附件：</td>
+                            <td class="file_td" colspan="3">
+                                <input type="file" @change="getFile($event,2)" />
+                            </td>
+                        </tr>
+                        <tr class="file_tr">
+                            <td>开题报告附件：</td>
+                            <td class="file_td" colspan="3">
+                                <input type="file" @change="getFile($event,3)" />
+                            </td>
+                        </tr>
+                        <tr class="file_tr">
+                            <td>课题进展附件：</td>
+                            <td class="file_td" colspan="3">
+                                <input type="file" @change="getFile($event,4)" />
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </el-form>
@@ -261,9 +286,11 @@
                     progressId: 0,
                     nextWorkPlan: ''
                 }],
-                timeForm: {
-                    date: "2019年8月24日",
-                    radio: ''
+                file: {
+                    expertSuggestAnnex: '',
+                    fundProgressAnnex: '',
+                    openReportAnnex: '',
+                    subjectProgressAnnex: ''
                 },
                 paramsData: {
                     id: this.$route.params.id
@@ -286,6 +313,17 @@
                         this.$router.go(-1);
                     }
                 });
+            },
+            getFile(event,index) {
+                if(index == 1) {
+                    this.file.expertSuggestAnnex = event.target.files[0];
+                }else if(index == 2) {
+                    this.file.fundProgressAnnex = event.target.files[0];
+                }else if(index == 3) {
+                    this.file.openReportAnnex = event.target.files[0];
+                }else if(index == 4) {
+                    this.file.subjectProgressAnnex = event.target.files[0];
+                }
             },
             handleSubmit() {
                 const loading = this.$loading({
@@ -354,12 +392,33 @@
                                                 }).then((res) => {
                                                     console.log(4)
                                                     console.log(res);
-                                                    loading.close();
                                                     if(res.data.resultFlag == 0) {
-                                                        // 提交成功
-                                                        this.successInfo();
-                                                    } else {
-                                                        // 提交失败
+                                                        // 附件
+                                                        let formData = new FormData();
+                                                        formData.append('pid',id);
+                                                        formData.append('expertSuggestAnnex',this.file.expertSuggestAnnex);
+                                                        formData.append('fundProgressAnnex',this.file.fundProgressAnnex);
+                                                        formData.append('openReportAnnex',this.file.openReportAnnex);
+                                                        formData.append('subjectProgressAnnex',this.file.subjectProgressAnnex);
+                                                        this.axios({
+                                                            url: 'http://192.168.0.80:8087/environment/progress/ProgressMultiUpload',
+                                                            method: 'post',
+                                                            data: formData
+                                                        }).then((res) => {
+                                                            loading.close();
+                                                            console.log(5)
+                                                            console.log(res);
+                                                            if(res.data.resultFlag == 0) {
+                                                                this.successInfo();
+                                                            }else {
+                                                                this.errorInfo();
+                                                            }
+                                                        }).catch(() => {
+                                                            loading.close();
+                                                            this.errorInfo();
+                                                        })
+                                                    }else {
+                                                        loading.close();
                                                         this.errorInfo();
                                                     }
                                                 }).catch(() => {

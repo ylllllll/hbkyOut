@@ -92,6 +92,30 @@
                                 </el-checkbox-group>
                             </td>
                         </tr>
+                        <tr class="file_tr" v-if="showForm.adjustTypeId == 1">
+                            <td>变更申请表附件：</td>
+                            <td class="file_td" colspan="3">
+                                <a @click="handleDownload(0)">{{ fileData[0].upload_file_name }}</a>
+                            </td>
+                        </tr>
+                        <tr class="file_tr" v-if="showForm.adjustTypeId == 2">
+                            <td>备案申请表附件：</td>
+                            <td class="file_td" colspan="3">
+                                <a @click="handleDownload(0)">{{ fileData[0].upload_file_name }}</a>
+                            </td>
+                        </tr>
+                        <tr class="file_tr">
+                            <td>专家论证意见附件：</td>
+                            <td class="file_td" colspan="3">
+                                <a @click="handleDownload(1)">{{ fileData[1].upload_file_name }}</a>
+                            </td>
+                        </tr>
+                        <tr class="file_tr">
+                            <td>批准文件附件：</td>
+                            <td class="file_td" colspan="3">
+                                <a @click="handleDownload(2)">{{ fileData[2].upload_file_name }}</a>
+                            </td>
+                        </tr>
                         <tr>
                             <td>具体情况：<br>（说明需备案的事项及其原因）
                             </td>
@@ -125,10 +149,23 @@
                 },
                 paramsData: {
                     id: this.$route.params.id
-                }
+                },
+                fileData: [{ 
+                    upload_file_name: '' 
+                },{ 
+                    upload_file_name: '' 
+                },{ 
+                    upload_file_name: '' 
+                }]
             }
         },
         methods: { 
+            handleDownload(val) {
+                window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
+                                     + this.fileData[val].upload_file_address 
+                                     + '&fileName=' 
+                                     + this.fileData[val].upload_file_name;
+            },
             handleBack() {
                 this.$router.go(-1);
             }
@@ -145,6 +182,18 @@
                 console.log(res);
                 this.showForm = res.data.data;
                 this.checkbox = (this.showForm.adjustmentMattersId + "").split(",");
+                // 请求附件信息
+                let id = res.data.data.id;
+                this.axios({
+                    url: 'http://192.168.0.80:8087/enviroment/daily/majormatter/getMajorFileInfo',
+                    method: 'get',
+                    params: {
+                        id
+                    }
+                }).then((res) => {
+                    console.log(res.data.data);
+                    this.fileData = res.data.data;
+                })
             })
         }
     }
@@ -152,9 +201,6 @@
 
 <style lang="less">
     #mattersReportShow{
-        padding-bottom: 60px;
-        background-color: #fff;
-        margin-bottom: 20px;
         .showForm{
             table.form_table{
                 @media  screen and ( max-width: 1600px ) {
@@ -196,9 +242,6 @@
                     
                 }
             }
-        }
-        .btn_group {
-            margin: 10px 0 30px 0;
         }
     }
 </style>

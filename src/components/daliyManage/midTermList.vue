@@ -1,7 +1,7 @@
 <template>
     <div id="midTermList">
         <!-- 搜索 -->
-        <div class="queryForm">
+        <!-- <div class="queryForm">
             <el-form ref="queryForm" :model="queryForm">
                 <el-form-item label="课题名称：" >
                     <el-input v-model="queryForm.name"></el-input>
@@ -30,12 +30,8 @@
                     <el-input v-model="queryForm.unit"></el-input>
                 </el-form-item>
             </el-form>
-            <el-button type="primary">搜索</el-button>
-        </div>
-
-        <!-- 按钮 -->
-        <!-- <el-button @click="handleLaunchInspect">发起检查</el-button> -->
-        <!-- <el-button @click="handleUploadEnclosure">上传附件</el-button> -->
+            <el-button>搜索</el-button>
+        </div> -->
 
         <!-- 展示列表 -->
         <div class="showList">
@@ -45,42 +41,40 @@
                 :data="tableData"
                 stripe
                 tooltip-effect="dark"
-                style="width: 100%">
-                <!-- <el-table-column
-                    type="selection"
-                    align="center">
-                </el-table-column> -->
+                style="width: 100%"
+                highlight-current-row
+                @current-change="handleSelectionChange">
                 <el-table-column
                     type="index"
                     label="序号"
                     align="center">
                 </el-table-column>
                 <el-table-column
-                    prop="name"
-                    label="中期检查名称"
+                    prop="subjectName"
+                    label="课题名称"
                     :show-overflow-tooltip="true"
                     align="center">
                 </el-table-column>
                 <el-table-column
-                    prop="time"
-                    label="中期检查发起时间"
+                    prop="subjectObjectivesResearch"
+                    label="课题目标和主要研究内容"
+                    :show-overflow-tooltip="true"
                     align="center">
                 </el-table-column>
                 <el-table-column
-                    prop="state"
+                    prop="contractStartTime"
+                    label="合同开始时间"
+                    :show-overflow-tooltip="true"
+                    align="center">
+                </el-table-column>
+                <el-table-column
+                    prop="midCheckStatus"
                     label="是否完成"
+                    :show-overflow-tooltip="true"
                     align="center">
                     <template slot-scope="scope">
-                        <span class="green" v-show="scope.row.state == '0'">已全部上传</span>
-                        <span class="red" v-show="scope.row.state == '1'">未全部上传</span>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                    prop="state"
-                    label="操作"
-                    align="center">
-                    <template slot-scope="scope">
-                        <el-button @click="handleUploadEnclosure(scope.row.id)" v-show="scope.row.state == '1'">上传附件</el-button>
+                        <span class="red" v-show="scope.row.midCheckStatus == '0'">未全部上传</span>
+                        <span class="green" v-show="scope.row.midCheckStatus == '1'">已全部上传</span>
                     </template>
                 </el-table-column>
             </el-table>
@@ -91,7 +85,8 @@
                 :pageSize='fenye.pageSize'
                 :pageSizes="fenye.pageSizes"
                 @handleCurrentChangeNum="handleCurrentChange"
-                @handleSizeChangeNum="handleSizeChange">
+                @handleSizeChangeNum="handleSizeChange"
+                @handleTableFreshNum="handleTableFresh">
             </pages>
         </div>
     </div>
@@ -124,30 +119,9 @@
                     }],
                     category:''
                 },
-                tableData: [{
-                    id: '1001',
-                    name: '名称1名称1名称1名称1名称1名称1名称1名称1',
-                    time: '2019-08-14',
-                    state: '0'
-                },{
-                    id: '1002',
-                    name: '名称2',
-                    time: '2019-08-14',
-                    state: '1'
-                },{
-                    id: '1003',
-                    name: '名称3',
-                    time: '2019-08-14',
-                    state: '0'
-                },{
-                    id: '1004',
-                    name: '名称4',
-                    time: '2019-08-14',
-                    state: '1'
-                }],
-                currentPage: 4,
+                tableData: [],
                 fenye: {
-                    total: 400, //共有数据多少条
+                    total: 0, //共有数据多少条
                     pageNum: 1,
                     pageSize: 10, //每页显示的条数
                     pageSizes: [10,20,30,40,50] //选择每页显示多少条
@@ -155,31 +129,79 @@
             }
         },
         methods: {
-            // handleLaunchInspect() {
-            //     this.$router.push("/index/midTerm/midTermAdd");
-            // },
-            handleUploadEnclosure(val) {
+            handleSelectionChange(val) {
+                let state = val.midCheckStatus;
+
                 this.$router.push({
-                    name: 'MidTermAdd',
+                    name: 'MidTermShow',
                     params: {
-                        id: val
+                        id: val.id
+                    }
+                })
+
+                // this.$router.push({
+                //     name: 'MidTermAdd',
+                //     params: {
+                //         id: val.id
+                //     }
+                // })
+
+                // if(state == 0) {
+                //     this.$router.push({
+                //         name: 'MidTermAdd',
+                //         params: {
+                //             id: val.id
+                //         }
+                //     })
+                // }else if(state == 1) {
+                //     this.$router.push({
+                //         name: 'MidTermShow',
+                //         params: {
+                //             id: val.id
+                //         }
+                //     })
+                // }
+            },
+            handleCurrentChange:function(val) {//val表示当前页
+                this.fenye.pageNum = val;
+                this._axios();
+            },
+            handleSizeChange(val) {//val表示每页展示的条数
+                this.fenye.pageSize = val;
+                this._axios();
+            },
+            handleTableFresh() {
+                this._axios;
+                document.querySelector(".first-pager").click();
+            },
+            _axios() {
+                this.axios({
+                    url: 'http://192.168.0.80:8087/environment/contract/getContractByUid',
+                    method: 'get',
+                    params: {
+                        pageNum: this.fenye.pageNum,
+                        pageSize: this.fenye.pageSize
+                    }
+                }).then((res) => {
+                    console.log(res)
+                    this.loading = false;
+                    let data = res.data.data;
+                    if(data == "没有查到相关信息") {
+                        this.tableData = []; 
+                        this.$alert('没有查到相关信息','提示',{
+                            confirmButtonText: '确定',
+                            type: 'warning',
+                            callback: action => {}
+                        });
+                    }else {
+                        this.tableData = data.list;
+                        this.fenye.total = data.total;
                     }
                 })
             },
-            // handleSelectionChange(val) {
-            //     this.multipleSelection = val;
-            //     let ids = [];
-            //     this.multipleSelection.map((item)=> {
-            //         ids.push(item.id);
-            //     })
-            //     this.selectedIDs = ids;
-            // },
-            handleCurrentChange:function(val) {//val表示当前页
-                console.log(val)
-            },
-            handleSizeChange(val) {//val表示每页展示的条数
-                console.log(val)
-            }
+        },
+        beforeMount() {
+            this._axios();
         }
     }
 </script>
@@ -195,11 +217,12 @@
             margin: 10px auto;
         }
         .showList {
-            min-height: 680px;;
-            padding: 10px;
+            // min-height: 680px;
+            min-height: 800px;
             margin-top: 10px;
             .el-table {
-                min-height: 630px;
+                // min-height: 630px;
+                min-height: 750px;
                 .green {
                     color: #09bd90;
                 }

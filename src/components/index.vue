@@ -376,6 +376,10 @@
 			// 		fullScreen.style.display = "none";
 			// 	}
 			// }
+			$route() {
+				this.reload();
+				console.log(0)
+			}
 		}
 	}
 </script>

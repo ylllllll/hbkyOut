@@ -75,8 +75,7 @@
                             </td>
                             <td>经办人联系方式：</td>
                             <td>
-                                <el-input v-model="showForm.operatorContact">
-                                </el-input>
+                                <el-input v-model="showForm.operatorContact"></el-input>
                             </td>
                         </tr>
                         <tr>
@@ -93,31 +92,36 @@
                         <tr class="file_tr">
                             <td>中标文件附件：</td>
                             <td colspan="3" class="file_td">
-                                <input type="file" @change="getFile($event,1)">
+                                <input type="file" @change="getFile($event,1)" />
+                                <div class="file_show">{{ fileData[0].upload_file_name }}</div>
                             </td>
                         </tr>
                         <tr class="file_tr">
                             <td>成交公告附件：</td>
                             <td colspan="3" class="file_td">
-                                <input type="file" @change="getFile($event,2)">
+                                <input type="file" @change="getFile($event,2)" />
+                                <div class="file_show">{{ fileData[1].upload_file_name }}</div>
                             </td>
                         </tr>
                         <tr class="file_tr">
                             <td>成交通知书附件：</td>
                             <td colspan="3" class="file_td">
-                                <input type="file" @change="getFile($event,3)">
+                                <input type="file" @change="getFile($event,3)" />
+                                <div class="file_show">{{ fileData[2].upload_file_name }}</div>
                             </td>
                         </tr>
                         <tr class="file_tr">
                             <td>响应文件附件：</td>
                             <td colspan="3" class="file_td">
-                                <input type="file" @change="getFile($event,4)">
+                                <input type="file" @change="getFile($event,4)" />
+                                <div class="file_show">{{ fileData[3].upload_file_name }}</div>
                             </td>
                         </tr>
                         <tr class="file_tr">
                             <td>其他附件：</td>
                             <td colspan="3" class="file_td">
-                                <input type="file" @change="getFile($event,5)">
+                                <input type="file" @change="getFile($event,5)" />
+                                <div class="file_show">{{ fileData[4].upload_file_name }}</div>
                             </td>
                         </tr>
                     </tbody>
@@ -264,24 +268,18 @@
                 formData.append('openTender',new Blob([openTender],{type:"application/json"}));
                 if(this.Enclosure.winningDocument) {
                     formData.append('oldWinningDocumentFileUrl',this.fileData[0].upload_file_address);
-                    console.log(0)
                 }
                 if(this.Enclosure.transactionAnnouncement) {
                     formData.append('oldTransactionAnnouncementFileUrl',this.fileData[1].upload_file_address);
-                    console.log(1)
-
                 }
                 if(this.Enclosure.noticeTransaction) {
                     formData.append('oldNoticeTransactionFileUrl',this.fileData[2].upload_file_address);
-                    console.log(2)
                 }
                 if(this.Enclosure.responseFile) {
                     formData.append('oldResponseFileFileUrl',this.fileData[3].upload_file_address);
-                    console.log(3)
                 }
                 if(this.Enclosure.otherAttachments) {
                     formData.append('oldOtherAttachmentsFileUrl',this.fileData[4].upload_file_address);
-                    console.log(4)
                 }
                 formData.append('winningDocument',this.Enclosure.winningDocument);
                 formData.append('transactionAnnouncement',this.Enclosure.transactionAnnouncement);
@@ -305,7 +303,9 @@
                                 this.$router.go(-1);
                             }
                         });
-                    }else { this.errorInfo(); }
+                    }else { 
+                        this.errorInfo();
+                    }
                 }).catch(() => { 
                     loading.close();
                     this.errorInfo(); 
@@ -323,14 +323,19 @@
             getFile(event,index) {
                 if(index == 1) {
                     this.Enclosure.winningDocument = event.target.files[0];
+                    this.fileData[0].upload_file_name = event.target.files[0].name;
                 }else if(index == 2) {
                     this.Enclosure.transactionAnnouncement = event.target.files[0];
+                    this.fileData[1].upload_file_name = event.target.files[0].name;
                 }else if(index == 3) {
                     this.Enclosure.noticeTransaction = event.target.files[0];
+                    this.fileData[2].upload_file_name = event.target.files[0].name;
                 }else if(index == 4) {
                     this.Enclosure.responseFile = event.target.files[0];
+                    this.fileData[3].upload_file_name = event.target.files[0].name;
                 }else if(index == 5) {
                     this.Enclosure.otherAttachments = event.target.files[0];
+                    this.fileData[4].upload_file_name = event.target.files[0].name;
                 }
             }
         },
@@ -354,6 +359,7 @@
                 }).then((res) => {
                     let data = res.data.data;
                     this.fileData = data;
+                    console.log(this.fileData);
                     // 审核数据
                     this.axios({
                         url: 'http://192.168.0.80:8087//environment/tender/getAllShenHeTableRecordInfoByContractId',
@@ -434,5 +440,6 @@
                 }
             }
         }
+        
     }
 </style>

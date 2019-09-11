@@ -80,24 +80,30 @@
                                 </el-checkbox-group>
                             </td>
                         </tr>
-                        <!-- <tr class="file_tr" v-if="showForm.adjustTypeId == 1">
+                        <tr class="file_tr" v-if="showForm.adjustTypeId == 1">
                             <td>变更申请表附件：</td>
                             <td class="file_td" colspan="3">
-                                <input type="file" />
+                                <input type="file" @change="getFile($event,1)" />
                             </td>
                         </tr>
                         <tr class="file_tr" v-if="showForm.adjustTypeId == 2">
                             <td>备案申请表附件：</td>
                             <td class="file_td" colspan="3">
-                                <input type="file" />
+                                <input type="file" @change="getFile($event,2)" />
                             </td>
                         </tr>
                         <tr class="file_tr">
                             <td>专家论证意见附件：</td>
                             <td class="file_td" colspan="3">
-                                <input type="file" />
+                                <input type="file" @change="getFile($event,3)" />
                             </td>
-                        </tr> -->
+                        </tr>
+                        <tr class="file_tr">
+                            <td>批准文件附件：</td>
+                            <td class="file_td" colspan="3">
+                                <input type="file" @change="getFile($event,4)" />
+                            </td>
+                        </tr>
                         <tr>
                             <td>具体情况：<br>（说明需备案的事项及其原因）
                             </td>
@@ -138,6 +144,12 @@
                 },
                 paramsData: {
                     id: this.$route.params.id
+                },
+                file: {
+                    changeApplicationAttachment: '',
+                    filingApplicationAttachment: '',
+                    expertArgumentationAttachment: '',
+                    approvalDocumentsAttachment: ''
                 }
             }
         },
@@ -152,6 +164,26 @@
             radioChange() {
                 this.checkbox = [];
             },
+            getFile(event,index) {
+                console.log(this.showForm.adjustTypeId);
+                console.log(this.file)
+                let radio = this.showForm.adjustTypeId;
+                if(radio == 1) {
+                    this.file.filingApplicationAttachment = "";
+                }else if(radio == 2) {
+                    this.file.changeApplicationAttachment = "";
+                }
+                if(index == 1) {
+                    this.file.changeApplicationAttachment = event.target.files[0];
+                }else if(index == 2) {
+                    this.file.filingApplicationAttachment = event.target.files[0];
+                }else if(index == 3) {
+                    this.file.expertArgumentationAttachment = event.target.files[0];
+                }else if(index == 4) {
+                    this.file.approvalDocumentsAttachment = event.target.files[0];
+                }
+                console.log(this.file);
+            },
             handleSubmit() {
                 const loading = this.$loading({
                     lock: true,
@@ -165,16 +197,48 @@
                     method: 'post',
                     data: this.showForm
                 }).then((res) => {
-                    loading.close();
+                    console.log(res)
+                    let id = res.data.data;
                     if(res.data.resultFlag == 0) {
-                        this.$alert('提交成功','提示', {
-                            confirmButtonText: '确定',
-                            type: 'success',
-                            callback: action => {
-                                this.$router.go(-1);
+                        // 上传附件
+                        let formData = new FormData(),
+                            type = this.showForm.adjustTypeId;
+                        formData.append('majorid',id);
+                        formData.append('typeid',type);
+                        if(type == 1) {
+                            formData.append('changeApplicationAttachment',this.file.changeApplicationAttachment);
+                        }else if(type == 2) {
+                            formData.append('filingApplicationAttachment',this.file.filingApplicationAttachment);
+                        }
+                        formData.append('expertArgumentationAttachment',this.file.expertArgumentationAttachment);
+                        formData.append('approvalDocumentsAttachment',this.file.approvalDocumentsAttachment);
+                        this.axios({
+                            url: 'http://192.168.0.80:8087/enviroment/daily/majormatter/majorFileUpload',
+                            method: 'post',
+                            data: formData,
+                            contentType: false,
+                            processData: false,
+                            usecredensives: true
+                        }).then((res) => {
+                            console.log(res)
+                            loading.close();
+                            if(res.data.resultFlag == 0) {
+                                this.$alert('提交成功','提示', {
+                                    confirmButtonText: '确定',
+                                    type: 'success',
+                                    callback: action => {
+                                        this.$router.go(-1);
+                                    }
+                                });
+                            }else { 
+                                this.errorInfo();
                             }
-                        });
+                        }).catch(() => {
+                            loading.close();
+                            this.errorInfo();
+                        })
                     }else {
+                        loading.close();
                         this.errorInfo();
                     }
                 }).catch(() => {
@@ -191,9 +255,6 @@
 
 <style lang="less">
     #mattersReportAdd{
-        padding-bottom: 60px;
-        background-color: #fff;
-        margin-bottom: 20px;
         .showForm{
             table.form_table{
                 @media  screen and ( max-width: 1600px ) {

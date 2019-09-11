@@ -1,5 +1,5 @@
 <template>
-    <div id="midTermAddForm1">
+    <div id="midTermShowForm1">
         <div class="showForm">
             <el-form ref="showForm" :model="showForm" >
                 <table class="form_table">
@@ -158,7 +158,7 @@
 
 <script>
     export default {
-        name: 'midTermAddForm1',
+        name: 'midTermShowForm1',
         data() {
             return {
                 showForm:{
@@ -195,7 +195,7 @@
 </script>
 
 <style lang="less">
-    #midTermAddForm1{
+    #midTermShowForm1{
         .showForm{
             table.form_table{
                 @media  screen and ( max-width: 1600px ) {

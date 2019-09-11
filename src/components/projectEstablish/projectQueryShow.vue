@@ -221,12 +221,13 @@
                 this.showForm = res.data.data;
                 // 附件信息
                 this.axios({
-                    url: 'http://192.168.0.80:8087/environment/tender/updateTenderStatusByReturnCommit',
+                    url: 'http://192.168.0.80:8087/environment/tender/getTenderFileInfo',
                     method: 'get',
                     params: {
-                        id: this.paramsData.id
+                        oid: this.paramsData.id
                     }
                 }).then((res) => {
+                    console.log(res)
                     let data = res.data.data;
                     this.fileData = data;
                     // 审核数据

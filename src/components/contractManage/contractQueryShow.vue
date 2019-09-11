@@ -575,12 +575,65 @@
                             <td><el-input v-model="budgetForm.dailySupportingBudget" disabled></el-input></td>
                             <td><el-input v-model="budgetForm.dailyNoteBudget" disabled></el-input></td>
                         </tr>
+                        <tr class="file_tr">
+                            <td>附件：</td>
+                            <td class="file_td" colspan="6">
+                                <a @click="handleDownload">{{ fileData.upload_file_name }}</a>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </el-form>
             <div class="btn_group">
-                <el-button @click = "handleBack">返回</el-button>
+                <el-button @click="handleBack">返回</el-button>
             </div>
+            <el-table
+                ref="multipleTable"
+                :data="tableData"
+                tooltip-effect="dark">
+                <el-table-column
+                    prop="fistHandler"
+                    label="交办人"
+                    :show-overflow-tooltip="true"
+                    align="center">
+                </el-table-column>
+                <el-table-column
+                    prop="secondHandler"
+                    label="处理人"
+                    :show-overflow-tooltip="true"
+                    align="center">
+                </el-table-column>
+                <el-table-column
+                    prop="auditStep"
+                    label="审核步骤"
+                    :show-overflow-tooltip="true"
+                    align="center">
+                </el-table-column>
+                <el-table-column
+                    prop="firstHandleTime"
+                    label="交办时间"
+                    :show-overflow-tooltip="true"
+                    align="center">
+                </el-table-column>
+                <el-table-column
+                    prop="state"
+                    label="状态"
+                    :show-overflow-tooltip="true"
+                    align="center">
+                </el-table-column>
+                <el-table-column
+                    prop="handleContent"
+                    label="处理内容"
+                    :show-overflow-tooltip="true"
+                    align="center">
+                </el-table-column>
+                <el-table-column
+                    prop="secondHandleTime"
+                    label="处理时间"
+                    :show-overflow-tooltip="true"
+                    align="center">
+                </el-table-column>
+            </el-table>
         </div>
     </div>
 </template>
@@ -590,6 +643,9 @@
         name: 'contractQueryShow',
         data() {
             return {
+                fileData: {
+                    upload_file_name: ''
+                },
                 optGroup1: [],
                 showForm: {},
                 progressForm:[],
@@ -598,12 +654,19 @@
                 budgetForm:{},
                 paramsData: {
                     id: this.$route.params.id
-                }
+                },
+                tableData: []
             }
         },
         methods: {
             handleBack() {
                 this.$router.go(-1);
+            },
+            handleDownload() {
+                window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
+                                     + this.fileData.upload_file_address 
+                                     + '&fileName=' 
+                                     + this.fileData.upload_file_name;
             }
         },
         beforeMount() {
@@ -618,68 +681,91 @@
                         this.optGroup1.push(data[i]);
                     }
                 }
+                // 主表
+                this.axios({
+                    url: 'http://192.168.0.80:8087/environment/contract/getManageInfoById',
+                    method: 'get',
+                    params: {
+                        id: this.paramsData.id
+                    }
+                }).then((res) => {
+                    let data = res.data.data;
+                    this.showForm = data;
+                    // 子表一
+                    this.axios({
+                        url: 'http://192.168.0.80:8087/environment/contentindicators/getIndicatorById',
+                        method: 'get',
+                        params: {
+                            id: this.paramsData.id
+                        }
+                    }).then((res) => {
+                        let data = res.data.data;
+                        this.progressForm = data;
+                        // 子表二
+                        this.axios({
+                            url: 'http://192.168.0.80:8087/environment/contract/subject_participa_unit/getDeveloperInfoById',
+                            method: 'get',
+                            params: {
+                                id: this.paramsData.id
+                            }
+                        }).then((res) => {
+                            let data = res.data.data;
+                            this.unitForm = data;
+                            // 子表三
+                            this.axios({
+                                url: 'http://192.168.0.80:8087/environment/contract/keydev/getKeyDevInfoById',
+                                method: 'get',
+                                params: {
+                                    cid: this.paramsData.id
+                                }
+                            }).then((res) => {
+                                let data = res.data.data;
+                                this.keyForm = data;
+                                // 子表四
+                                this.axios({
+                                    url: 'http://192.168.0.80:8087/environment/contract/subjectfundbudget/getInfoById',
+                                    method: 'get',
+                                    params: {
+                                        id: this.paramsData.id
+                                    }
+                                }).then((res) => {
+                                    let data = res.data.data;
+                                    this.budgetForm = data;
+                                    // 附件
+                                    this.axios({
+                                        url: 'http://192.168.0.80:8087/environment/contract/getContractAnnexInfo',
+                                        method: 'get',
+                                        params: {
+                                            cid: this.paramsData.id
+                                        }
+                                    }).then((res) => {
+                                        this.fileData = res.data.data[0];
+                                        // 审核记录
+                                        this.axios({
+                                            url: 'http://192.168.0.80:8087/environment/contract/getRecordInfoByContractId',
+                                            method: 'get',
+                                            params: {
+                                                cid: this.paramsData.id
+                                            }
+                                        }).then((res) => {
+                                            this.tableData = res.data.data;
+                                        })
+                                    })
+                                })
+                            })
+                        })
+                    })
+                })
             })
-            // 主表
-            this.axios({
-                url: 'http://192.168.0.80:8087/environment/contract/getManageInfoById',
-                method: 'get',
-                params: {
-                    id: this.paramsData.id
-                }
-            }).then((res) => {
-                let data = res.data.data;
-                this.showForm = data;
-            }).catch(() => {})
-            // 子表一
-            this.axios({
-                url: 'http://192.168.0.80:8087/environment/contentindicators/getIndicatorById',
-                method: 'get',
-                params: {
-                    id: this.paramsData.id
-                }
-            }).then((res) => {
-                let data = res.data.data;
-                this.progressForm = data;
-            }).catch(() => {})
-            // 子表二
-            this.axios({
-                url: 'http://192.168.0.80:8087/environment/contract/subject_participa_unit/getDeveloperInfoById',
-                method: 'get',
-                params: {
-                    id: this.paramsData.id
-                }
-            }).then((res) => {
-                let data = res.data.data;
-                this.unitForm = data;
-            }).catch(() => {})
-            // 子表三
-            this.axios({
-                url: 'http://192.168.0.80:8087/environment/contract/keydev/getKeyDevInfoById',
-                method: 'get',
-                params: {
-                    cid: this.paramsData.id
-                }
-            }).then((res) => {
-                let data = res.data.data;
-                this.keyForm = data;
-            }).catch(() => {})
-            // 子表四
-            this.axios({
-                url: 'http://192.168.0.80:8087/environment/contract/subjectfundbudget/getInfoById',
-                method: 'get',
-                params: {
-                    id: this.paramsData.id
-                }
-            }).then((res) => {
-                let data = res.data.data;
-                this.budgetForm = data;
-            }).catch(() => {})
         }
     }
 </script>
 
 <style lang="less">
     #contractQueryShow{
+        padding-bottom: 60px;
+        background-color: #fff;
+        margin-bottom: 20px;
         .showForm{
             table.form_table,
             table.form_table1,
@@ -713,6 +799,38 @@
                         height: 30px;
                     }
                 }
+            }
+        }
+        .el-table {
+            width: 1130px;
+            margin: auto;
+            border-right: 1px solid #e0e0e0;
+            border-collapse: collapse;
+            tr {
+                height: 50px;
+                th {
+                    background-color: #e5f3ff;
+                }
+            }
+            .el-table__header-wrapper {
+                table {
+                    border-collapse: collapse;
+                    th {
+                        border: 1px solid #e0e0e0;
+                        border-bottom: none;
+                    }
+                }
+            }
+            .el-table__body-wrapper {
+                table {
+                    border-collapse: collapse;
+                    td {
+                        border: 1px solid #e0e0e0;
+                    }
+                }
+            }
+            .el-table__empty-block {
+                border-left: 1px solid #e0e0e0;
             }
         }
     }

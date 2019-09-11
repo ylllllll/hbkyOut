@@ -495,10 +495,18 @@
                             <td><el-input v-model="budgetForm.dailySupportingBudget"></el-input></td>
                             <td><el-input v-model="budgetForm.dailyNoteBudget"></el-input></td>
                         </tr>
+                        <tr class="file_tr">
+                            <td>附件：</td>
+                            <td class="file_td" colspan="6">
+                                <input type="file" @change="getFile($event)">
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </el-form>
-            <el-button @click="handleSubmit">提交</el-button>
+            <div class="btn_group">
+                <el-button @click="handleSubmit">提交</el-button>
+            </div>
         </div>
         <div class="cover_box" v-show="overBoxFlag">
             <div class="message_box">
@@ -528,6 +536,7 @@
         },
         data() {
             return {
+                file: '',
                 optGroup1: [],
                 showForm: {
                     subjectCategory: '',
@@ -818,18 +827,40 @@
                                                     method: 'post',
                                                     data: this.budgetForm
                                                 }).then((res) => {
-                                                    loading.close();
                                                     console.log(4)
                                                     console.log(res);
                                                     if(res.data.resultFlag == 0) {
-                                                        this.$alert('提交成功','提示', {
-                                                            confirmButtonText: '确定',
-                                                            type: 'success',
-                                                            callback: action => {
-                                                                this.reload();
+                                                        // 附件
+                                                        let formData = new FormData();
+                                                            formData.append('cid',id);
+                                                            formData.append('file',this.file);
+                                                        this.axios({
+                                                            url: 'http://192.168.0.80:8087/environment/contract/contractFileUpload',
+                                                            method: 'post',
+                                                            data: formData,
+                                                            contentType: false,
+                                                            processData: false,
+                                                            usecredensives: true
+                                                        }).then((res) => {
+                                                            loading.close();
+                                                            console.log(res);
+                                                            if(res.data.resultFlag == 0) {
+                                                                this.$alert('提交成功','提示', {
+                                                                    confirmButtonText: '确定',
+                                                                    type: 'success',
+                                                                    callback: action => {
+                                                                        this.reload();
+                                                                    }
+                                                                });
+                                                            }else {  
+                                                                this.errorInfo();
                                                             }
-                                                        });
+                                                        }).catch(() => {
+                                                            loading.close();
+                                                            this.errorInfo();
+                                                        })
                                                     }else {
+                                                        loading.close();
                                                         this.errorInfo();
                                                     }
                                                 }).catch(() => {
@@ -933,8 +964,10 @@
                 this.showForm.subjectName = this.messageBoxData.subjectName;
                 this.showForm.subjeceLeader = this.messageBoxData.subjectLeader;
                 this.showForm.subjectLeaderPhone = this.messageBoxData.leaderContact;
+            },
+            getFile(event) {
+                this.file = event.target.files[0];
             }
-            
         },
         beforeMount() {
             // 请求所属领域、所属类别
