@@ -95,14 +95,14 @@
                             <td>研究经费预测：</td>
                             <td>
                                 <el-input 
-                                    v-model="showForm.research_period"
+                                    v-model="showForm.research_fund"
                                     :disabled="true">
                                 </el-input>
                             </td>
                             <td>研究期限（年）：</td>
                             <td>
-                                <el-input 
-                                    v-model="showForm.research_fund"
+                                <el-input
+                                    v-model="showForm.research_period"
                                     :disabled="true">
                                 </el-input>
                             </td>

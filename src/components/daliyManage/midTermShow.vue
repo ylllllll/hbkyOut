@@ -6,7 +6,7 @@
         </div>
         <form1 ref="form1" v-show="toggleFlag == 1"></form1>
         <form2 ref="form2" v-show="toggleFlag == 2"></form2>
-        <div class="file_box">专家意见附件：<input type="file" @change="getFile($event)" /></div>
+        <div class="file_box">专家意见附件：a</div>
         <div class="btn_group">
             <el-button @click="handleBack">返回</el-button>
         </div>
@@ -34,9 +34,6 @@
         methods: {
             handleToggleForm(val) {
                 this.toggleFlag = val;
-            },
-            getFile(event) {
-                this.subjectSuggestAnnex = event.target.files[0];
             },
             handleBack() {
                 this.$router.go(-1);

@@ -131,36 +131,21 @@
         methods: {
             handleSelectionChange(val) {
                 let state = val.midCheckStatus;
-
-                this.$router.push({
-                    name: 'MidTermShow',
-                    params: {
-                        id: val.id
-                    }
-                })
-
-                // this.$router.push({
-                //     name: 'MidTermAdd',
-                //     params: {
-                //         id: val.id
-                //     }
-                // })
-
-                // if(state == 0) {
-                //     this.$router.push({
-                //         name: 'MidTermAdd',
-                //         params: {
-                //             id: val.id
-                //         }
-                //     })
-                // }else if(state == 1) {
-                //     this.$router.push({
-                //         name: 'MidTermShow',
-                //         params: {
-                //             id: val.id
-                //         }
-                //     })
-                // }
+                if(state == 0) {
+                    this.$router.push({
+                        name: 'MidTermAdd',
+                        params: {
+                            id: val.id
+                        }
+                    })
+                }else if(state == 1) {
+                    this.$router.push({
+                        name: 'MidTermShow',
+                        params: {
+                            id: val.id
+                        }
+                    })
+                }
             },
             handleCurrentChange:function(val) {//val表示当前页
                 this.fenye.pageNum = val;

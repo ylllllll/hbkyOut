@@ -545,157 +545,153 @@
                     contractStartTime: '',
                     contractEndTime: '',
                     subjeceLeader: '',
-                    subjectLeaderPhone: '17777777777',
-                    subjectContact: '7',
-                    subjectContactPhone: '17777777777',
-                    commitmentUnit: '8',
-                    commitmentUnitAddress: '9',
-                    commitmentUnitZip: '10',
-                    subjectSupervisorDepartment: '11',
-                    openBank: '12',
-                    openBankAccount: '13',
-                    email: '14',
-                    guaranteedUnits: '15',
-                    guaranteedUnitContact: '16',
-                    guaranteedContactPhone: '17',
-                    commissioningUnit: '18',
-                    legalRepresentativeEntrustingA: '19',
-                    commissionedUnitAddressA: '20',
-                    commissionedUnitZipA: '21',
-                    responsibilityUnitB: '22',
-                    responsibilityLegalRepresentativeB: '23',
-                    commitUnitAddressB: '24',
-                    commitUnitZipB: '25',
-                    commitUnitLeaderB: '26',
-                    commitunitLeadersPhoneB: '27',
-                    commitmentUnitEmailB: '28',
-                    guaranteedUnitC: '29',
-                    guaranteedUnitLeaderC: '30',
-                    guaranteedUnitZipC: '31',
-                    guaranteedUnitAddressC: '32',
-                    subjectSigningDescription: '33',
-                    subjectObjectivesResearch: '34',
-                    subjectAcceptanceAssessment: '35',
+                    subjectLeaderPhone: '',
+                    subjectContact: '',
+                    subjectContactPhone: '',
+                    commitmentUnit: '',
+                    commitmentUnitAddress: '',
+                    commitmentUnitZip: '',
+                    subjectSupervisorDepartment: '',
+                    openBank: '',
+                    openBankAccount: '',
+                    email: '',
+                    guaranteedUnits: '',
+                    guaranteedUnitContact: '',
+                    guaranteedContactPhone: '',
+                    commissioningUnit: '',
+                    legalRepresentativeEntrustingA: '',
+                    commissionedUnitAddressA: '',
+                    commissionedUnitZipA: '',
+                    responsibilityUnitB: '',
+                    responsibilityLegalRepresentativeB: '',
+                    commitUnitAddressB: '',
+                    commitUnitZipB: '',
+                    commitUnitLeaderB: '',
+                    commitunitLeadersPhoneB: '',
+                    commitmentUnitEmailB: '',
+                    guaranteedUnitC: '',
+                    guaranteedUnitLeaderC: '',
+                    guaranteedUnitZipC: '',
+                    guaranteedUnitAddressC: '',
+                    subjectSigningDescription: '',
+                    subjectObjectivesResearch: '',
+                    subjectAcceptanceAssessment: '',
                 },
                 progressForm: [{
                     contractId: 0,
-                    time: "2018-8到2018-12",
-                    programContentAssessmentIndicators: "让法国人tyre"
-                },{
-                    contractId: 0,
-                    time: "2018-8到2019-1",
-                    programContentAssessmentIndicators: "现代风格的人体感染"
+                    time: '',
+                    programContentAssessmentIndicators: ''
                 }],
                 unitForm: {
                     contractId: 0,
-                    bearingUnits: '1',
-                    participatingUnits: '2',
-                    overseasCooperationUnits: '3',
-                    country: '4',
-                    leaderName: '5',
-                    unitName: '6',
-                    gender: '7',
-                    age: '8',
-                    professionalTitle: '9',
-                    professional: '10',
-                    workTask: '11',
-                    workingTime: '12'
+                    bearingUnits: '',
+                    participatingUnits: '',
+                    overseasCooperationUnits: '',
+                    country: '',
+                    leaderName: '',
+                    unitName: '',
+                    gender: '',
+                    age: '',
+                    professionalTitle: '',
+                    professional: '',
+                    workTask: '',
+                    workingTime: ''
                 },
                 keyForm: [{
                     contractId: 0,
-                    keyDevName: '1',
-                    unitName: '2',
-                    gender: '3',
-                    age: '4',
-                    professionalTitle: '5',
-                    professional: '6',
-                    workTask: '7',
-                    workingTime: '8'
+                    keyDevName: '',
+                    unitName: '',
+                    gender: '',
+                    age: '',
+                    professionalTitle: '',
+                    professional: '',
+                    workTask: '',
+                    workingTime: ''
                 }],
                 budgetForm: {
-                    contractId: 0,
+                    contractId: '',
                     currentYear: '',
                     nextYear: '',
                     afterYear: '',
-                    fundingSourcesBudget: 0,
-                    currentYearSourceTotal: '1',
-                    nextYearSourceTotal: '1',
-                    afterYearSourceTotal: '1',
-                    fundingSourcesNote: '1',
-                    provincialBudget: 0,
-                    provincialCurrentBudget: '13',
-                    provincialNextBudget: '14',
-                    provincialAfterBudget: '15',
-                    provincialNoteBudget: '16',
-                    departmentBudget: 0,
-                    departmentCurrentBudget: '13',
-                    departmentNextBudget: '14',
-                    departmentAfterBudget: '15',
-                    departmentNoteBudget: '16',
-                    bearBudget: 0,
-                    bearCurrentBudget: '2',
-                    bearNextBudget: '3',
-                    bearAfterBudget: '4',
-                    bearNoteBudget: '5',
-                    otherBudget: 0,
-                    otherCurrentBudget: '2',
-                    otherNextBudget: '3',
-                    otherAfterBudget: '4',
-                    otherNoteBudget: '5',
-                    expenditureBudget: '119',
-                    currentYearExpenditureTotal: '11',
-                    nextYearExpenditureTotal: '12',
-                    afterYearExpenditureTotal: '13',
-                    selfTotalExpenditures: '14',
-                    totalExpendituresNote: '15',
-                    equipmentBudget: '17',
-                    equipmentCurrentBudget: '18',
-                    equipmentNextBudget: '19',
-                    equipmentAfterBudget: '20',
-                    equipmentSupportingBudget: '21',
-                    equipmentNoteBudget: '22',
-                    materialBudget: '317',
-                    materialCurrentBudget: '318',
-                    materialNextBudget: '319',
-                    materialAfterBudget: '320',
-                    materialSupportingBudget: '321',
-                    materialNoteBudget: '322',
-                    testBudget: '1',
-                    testCurrentBudget: '2',
-                    testNextBudget: '3',
-                    testAfterBudget: '4',
-                    testSupportingBudget: '5',
-                    testNoteBudget: '6',
-                    fuelBudget: '117',
-                    fuelCurrentBudget: '118',
-                    fuelNextBudget: '119',
-                    fuelAfterBudget: '120',
-                    fuelSupportingBudget: '121',
-                    fuelNoteBudget: '122',
-                    mettingBudget: '917',
-                    mettingCurrentBudget: '918',
-                    mettingNextBudget: '919',
-                    mettingAfterBudget: '920',
-                    mettingSupportingBudget: '921',
-                    mettingNoteBudget: '922',
-                    laborBudget: '0117',
-                    laborCurrentBudget: '0118',
-                    laborNextBudget: '0119',
-                    laborAfterBudget: '0120',
-                    laborSupportingBudget: '0121',
-                    laborNoteBudget: '0122',
-                    expertsBudget: '16',
-                    expertsCurrentBudget: '17',
-                    expertsNextBudget: '18',
-                    expertsAfterBudget: '19',
-                    expertsSupportingBudget: '20',
-                    expertsNoteBudget: '21',
-                    dailyBudget: '6',
-                    dailyCurrentBudget: '7',
-                    dailyNextBudget: '8',
-                    dailyAfterBudget: '9',
-                    dailySupportingBudget: '10',
-                    dailyNoteBudget: '11'
+                    fundingSourcesBudget: '',
+                    currentYearSourceTotal: '',
+                    nextYearSourceTotal: '',
+                    afterYearSourceTotal: '',
+                    fundingSourcesNote: '',
+                    provincialBudget: '',
+                    provincialCurrentBudget: '',
+                    provincialNextBudget: '',
+                    provincialAfterBudget: '',
+                    provincialNoteBudget: '',
+                    departmentBudget: '',
+                    departmentCurrentBudget: '',
+                    departmentNextBudget: '',
+                    departmentAfterBudget: '',
+                    departmentNoteBudget: '',
+                    bearBudget: '',
+                    bearCurrentBudget: '',
+                    bearNextBudget: '',
+                    bearAfterBudget: '',
+                    bearNoteBudget: '',
+                    otherBudget: '',
+                    otherCurrentBudget: '',
+                    otherNextBudget: '',
+                    otherAfterBudget: '',
+                    otherNoteBudget: '',
+                    expenditureBudget: '',
+                    currentYearExpenditureTotal: '',
+                    nextYearExpenditureTotal: '',
+                    afterYearExpenditureTotal: '',
+                    selfTotalExpenditures: '',
+                    totalExpendituresNote: '',
+                    equipmentBudget: '',
+                    equipmentCurrentBudget: '',
+                    equipmentNextBudget: '',
+                    equipmentAfterBudget: '',
+                    equipmentSupportingBudget: '',
+                    equipmentNoteBudget: '',
+                    materialBudget: '',
+                    materialCurrentBudget: '',
+                    materialNextBudget: '',
+                    materialAfterBudget: '',
+                    materialSupportingBudget: '',
+                    materialNoteBudget: '',
+                    testBudget: '',
+                    testCurrentBudget: '',
+                    testNextBudget: '',
+                    testAfterBudget: '',
+                    testSupportingBudget: '',
+                    testNoteBudget: '',
+                    fuelBudget: '',
+                    fuelCurrentBudget: '',
+                    fuelNextBudget: '',
+                    fuelAfterBudget: '',
+                    fuelSupportingBudget: '',
+                    fuelNoteBudget: '',
+                    mettingBudget: '',
+                    mettingCurrentBudget: '',
+                    mettingNextBudget: '',
+                    mettingAfterBudget: '',
+                    mettingSupportingBudget: '',
+                    mettingNoteBudget: '',
+                    laborBudget: '',
+                    laborCurrentBudget: '',
+                    laborNextBudget: '',
+                    laborAfterBudget: '',
+                    laborSupportingBudget: '',
+                    laborNoteBudget: '',
+                    expertsBudget: '',
+                    expertsCurrentBudget: '',
+                    expertsNextBudget: '',
+                    expertsAfterBudget: '',
+                    expertsSupportingBudget: '',
+                    expertsNoteBudget: '',
+                    dailyBudget: '',
+                    dailyCurrentBudget: '',
+                    dailyNextBudget: '',
+                    dailyAfterBudget: '',
+                    dailySupportingBudget: '',
+                    dailyNoteBudget: ''
                 },
                 overBoxFlag: false,
                 messageBoxData: {}
@@ -715,35 +711,35 @@
             },
             handleSubmit() {
                 // 非空验证
-                let obj = {};
-                Object.assign(obj,this.showForm);
-                Object.assign(obj,this.unitForm);
-                Object.assign(obj,this.budgetForm);
-                for(let i in obj) {
-                    if((obj[i] + "").match(/^[ ]*$/)) {
-                        this.$alert('请将表格填写完整','提示', {
-                            confirmButtonText: '确定',
-                            type: 'warning',
-                            callback: action => {}
-                        });
-                        return false;
-                    }
-                }
-                let arr = [];
-                arr.push(...this.progressForm);
-                arr.push(...this.keyForm);
-                for(let i in arr) {
-                    for(let j in arr[i]) {
-                        if((arr[i][j] + "").match(/^[ ]*$/)) {
-                            this.$alert('请将表格填写完整','提示', {
-                                confirmButtonText: '确定',
-                                type: 'warning',
-                                callback: action => {}
-                            });
-                            return false;
-                        }
-                    }
-                }
+                // let obj = {};
+                // Object.assign(obj,this.showForm);
+                // Object.assign(obj,this.unitForm);
+                // Object.assign(obj,this.budgetForm);
+                // for(let i in obj) {
+                //     if((obj[i] + "").match(/^[ ]*$/)) {
+                //         this.$alert('请将表格填写完整','提示', {
+                //             confirmButtonText: '确定',
+                //             type: 'warning',
+                //             callback: action => {}
+                //         });
+                //         return false;
+                //     }
+                // }
+                // let arr = [];
+                // arr.push(...this.progressForm);
+                // arr.push(...this.keyForm);
+                // for(let i in arr) {
+                //     for(let j in arr[i]) {
+                //         if((arr[i][j] + "").match(/^[ ]*$/)) {
+                //             this.$alert('请将表格填写完整','提示', {
+                //                 confirmButtonText: '确定',
+                //                 type: 'warning',
+                //                 callback: action => {}
+                //             });
+                //             return false;
+                //         }
+                //     }
+                // }
                 // 手机号验证
                 let validatePhone = [   this.validate.validatePhone(this.showForm.subjectLeaderPhone),
                                         this.validate.validatePhone(this.showForm.subjectContactPhone)];
@@ -849,7 +845,8 @@
                                                                     confirmButtonText: '确定',
                                                                     type: 'success',
                                                                     callback: action => {
-                                                                        this.reload();
+                                                                        // this.reload();
+                                                                        document.querySelector(".is-active").nextSibling.click()
                                                                     }
                                                                 });
                                                             }else {  

@@ -34,7 +34,7 @@
         },
         methods: {
             errorInfo() {
-                this.$alert('审批失败','提示', {
+                this.$alert('提交失败','提示', {
                     confirmButtonText: '确定',
                     type: 'warning',
                     callback: action => {}
@@ -80,10 +80,14 @@
                         }).then((res) => {
                             loading.close();
                             if(res.data.resultFlag == 0) {
-                                this.$alert('审批通过','提示', {
+                                this.$alert('提交通过','提示', {
                                     confirmButtonText: '确定',
                                     type: 'success',
                                     callback: action => {
+                                        this.axios({
+                                            url: 'http://192.168.0.80:8087/environment/daily/updateContractMidCheckStateOne',
+                                            method: 'post'
+                                        })
                                         this.$router.go(-1);
                                     }
                                 });

@@ -167,6 +167,26 @@
                         return false;
                     } 
                 }
+                //数字验证
+                let validateNum1 = this.validate.validateNum(this.showForm.researchFund);
+                if(validateNum1) {
+                     this.$alert('研究经费' + validateNum1,'提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning',
+                        callback: action => {}
+                    });
+                    return false;
+                }
+                let validateNum2 = this.validate.validateNum(this.showForm.researchPeriod);
+                if(validateNum2) {
+                     this.$alert('研究期限' + validateNum2,'提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning',
+                        callback: action => {}
+                    });
+                    return false;
+                }
+                return false;
                 // 手机验证
                 let validatePhone = this.validate.validatePhone(this.showForm.contactPhone);
                 if(validatePhone) {

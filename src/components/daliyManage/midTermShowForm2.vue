@@ -10,63 +10,53 @@
                         <tr>
                             <td>课题编号：</td>
                             <td>
-                                <el-input v-model="showForm.subjectNo"></el-input>
+                                <el-input v-model="showForm.subjectNo" disabled></el-input>
                             </td>
                             <td>课题名称：</td>
                             <td>
-                                <el-input v-model="showForm.subjectName"></el-input>
+                                <el-input v-model="showForm.subjectName" disabled></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>开始时间：</td>
                             <td>
-                                <el-date-picker
-                                    v-model="showForm.subjectStartTime"
-                                    type="date"
-                                    placeholder="选择日期"
-                                    value-format="yyyy-MM-dd">
-                                </el-date-picker>
+                                <el-input v-model="showForm.subjectStartTime" disabled></el-input>
                             </td>
                             <td>结束时间：</td>
                             <td>
-                                <el-date-picker
-                                    v-model="showForm.subjectEndTime"
-                                    type="date"
-                                    placeholder="选择日期"
-                                    value-format="yyyy-MM-dd">
-                                </el-date-picker>
+                                <el-input v-model="showForm.subjectEndTime" disabled></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>承担单位：</td>
                             <td colspan="3">
-                                <el-input v-model="showForm.commitmentUnit"></el-input>
+                                <el-input v-model="showForm.commitmentUnit" disabled></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>参加单位：</td>
                             <td colspan="3">
-                                <el-input v-model="showForm.participatingUnits"></el-input>
+                                <el-input v-model="showForm.participatingUnits" disabled></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>课题负责人：</td>
                             <td>
-                                <el-input v-model="showForm.subjectLeader"></el-input>
+                                <el-input v-model="showForm.subjectLeader" disabled></el-input>
                             </td>
                             <td>课题负责人联系电话：</td>
                             <td>
-                                <el-input v-model="showForm.leaderPhone"></el-input>
+                                <el-input v-model="showForm.leaderPhone" disabled></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>课题联系人：</td>
                             <td>
-                                <el-input v-model="showForm.topicContact"></el-input>
+                                <el-input v-model="showForm.topicContact" disabled></el-input>
                             </td>
                             <td>课题联系人联系电话：</td>
                             <td>
-                                <el-input v-model="showForm.subjectContactPhone"></el-input>
+                                <el-input v-model="showForm.subjectContactPhone" disabled></el-input>
                             </td>
                         </tr>
                     </tbody>
@@ -81,10 +71,10 @@
                         <tr style="height:50px;">
                             <td>课题按合同计划进度执行情况：</td>
                             <td colspan="3" class="radio_group">
-                                <el-radio v-model="showForm.contractPlanCrogressExecution" label="41">超额完成</el-radio>
-                                <el-radio v-model="showForm.contractPlanCrogressExecution" label="42">完成</el-radio>
-                                <el-radio v-model="showForm.contractPlanCrogressExecution" label="43">基本完成</el-radio>
-                                <el-radio v-model="showForm.contractPlanCrogressExecution" label="44">未完成</el-radio>
+                                <el-radio v-model="showForm.contractPlanCrogressExecution" label="41" disabled>超额完成</el-radio>
+                                <el-radio v-model="showForm.contractPlanCrogressExecution" label="42" disabled>完成</el-radio>
+                                <el-radio v-model="showForm.contractPlanCrogressExecution" label="43" disabled>基本完成</el-radio>
+                                <el-radio v-model="showForm.contractPlanCrogressExecution" label="44" disabled>未完成</el-radio>
                             </td>
                         </tr>
                         <tr style="height:50px;">
@@ -92,23 +82,23 @@
                             <td colspan="3">
                                 <el-checkbox-group v-model="showForm.notCompletingReason">
                                     <div class="item">
-                                        <el-checkbox label="48"></el-checkbox>
+                                        <el-checkbox label="48" disabled></el-checkbox>
                                         <label>技术变化</label>
                                     </div>
                                     <div class="item">
-                                        <el-checkbox label="49"></el-checkbox>
+                                        <el-checkbox label="49" disabled></el-checkbox>
                                         <label>经济未落实</label>
                                     </div>
                                     <div class="item">
-                                        <el-checkbox label="50"></el-checkbox>
+                                        <el-checkbox label="50" disabled></el-checkbox>
                                         <label>协作关系影响</label>
                                     </div>
                                     <div class="item">
-                                        <el-checkbox label="51"></el-checkbox>
+                                        <el-checkbox label="51" disabled></el-checkbox>
                                         <label>其他原因</label>
                                     </div>
                                     <div class="item">
-                                        <el-checkbox label="52"></el-checkbox>
+                                        <el-checkbox label="52" disabled></el-checkbox>
                                         <label>项目负责人或技术骨干变动</label>
                                     </div>
                                 </el-checkbox-group>
@@ -133,31 +123,31 @@
                         <tr>
                             <td>课题编号：</td>
                             <td>
-                                <el-input v-model="showForm.totalBudget"></el-input>
+                                <el-input v-model="showForm.totalBudget" disabled></el-input>
                             </td>
                             <td colspan="2">
-                                <el-input v-model="showForm.provincialSubjectBudget"></el-input>
+                                <el-input v-model="showForm.provincialSubjectBudget" disabled></el-input>
                             </td>
                             <td>
-                                <el-input v-model="showForm.unitFinancingBudget"></el-input>
+                                <el-input v-model="showForm.unitFinancingBudget" disabled></el-input>
                             </td>
                             <td colspan="2">
-                                <el-input v-model="showForm.otherBudgets"></el-input>
+                                <el-input v-model="showForm.otherBudgets" disabled></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>已到位数：</td>
                             <td>
-                                <el-input v-model="showForm.totalExpenditure"></el-input>
+                                <el-input v-model="showForm.totalExpenditure" disabled></el-input>
                             </td>
                             <td colspan="2">
-                                <el-input v-model="showForm.provincialSubjectExpenditureBudget"></el-input>
+                                <el-input v-model="showForm.provincialSubjectExpenditureBudget" disabled></el-input>
                             </td>
                             <td>
-                                <el-input v-model="showForm.unitInancingExpenditureBudget"></el-input>
+                                <el-input v-model="showForm.unitInancingExpenditureBudget" disabled></el-input>
                             </td>
                             <td colspan="2">
-                                <el-input v-model="showForm.otherExpenditureBudget"></el-input>
+                                <el-input v-model="showForm.otherExpenditureBudget" disabled></el-input>
                             </td>
                         </tr>
                         <tr style="height:50px;" id="my_tr2">
@@ -174,25 +164,25 @@
                         </tr>
                         <tr>
                             <td>
-                                <el-input v-model="showForm.equipmentUsage"></el-input>
+                                <el-input v-model="showForm.equipmentUsage" disabled></el-input>
                             </td>
                             <td>
-                                <el-input v-model="showForm.materialUsage"></el-input>
+                                <el-input v-model="showForm.materialUsage" disabled></el-input>
                             </td>
                             <td>
-                                <el-input v-model="showForm.processingFeeUsage"></el-input>
+                                <el-input v-model="showForm.processingFeeUsage" disabled></el-input>
                             </td>
                             <td>
-                                <el-input v-model="showForm.fuelUsage"></el-input>
+                                <el-input v-model="showForm.fuelUsage" disabled></el-input>
                             </td>
                             <td>
-                                <el-input v-model="showForm.travelExpenses"></el-input>
+                                <el-input v-model="showForm.travelExpenses" disabled></el-input>
                             </td>
                             <td>
-                                <el-input v-model="showForm.meetingFeeUsage"></el-input>
+                                <el-input v-model="showForm.meetingFeeUsage" disabled></el-input>
                             </td>
                             <td>
-                                <el-input v-model="showForm.expertConsultationFeesUsage"></el-input>
+                                <el-input v-model="showForm.expertConsultationFeesUsage" disabled></el-input>
                             </td>
                         </tr>
                         <tr style="height:50px;" id="my_tr">
@@ -204,19 +194,19 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <el-input v-model="showForm.publicationDocumentationNewsIntellectualproperty"></el-input>
+                                <el-input v-model="showForm.publicationDocumentationNewsIntellectualproperty" disabled></el-input>
                             </td>
                             <td>
-                                <el-input v-model="showForm.labourCostsUsage"></el-input>
+                                <el-input v-model="showForm.labourCostsUsage" disabled></el-input>
                             </td>
                             <td>
-                                <el-input v-model="showForm.otherExpenseUsage"></el-input>
+                                <el-input v-model="showForm.otherExpenseUsage" disabled></el-input>
                             </td>
                             <td colspan="2">
-                                <el-input v-model="showForm.indirectCostsUsage"></el-input>
+                                <el-input v-model="showForm.indirectCostsUsage" disabled></el-input>
                             </td>
                             <td>
-                                <el-input v-model="showForm.externalCooperationFees"></el-input>
+                                <el-input v-model="showForm.externalCooperationFees" disabled></el-input>
                             </td>
                         </tr>
                     </tbody>
@@ -232,114 +222,114 @@
                             <td rowspan="3" style="text-align:center;">经济社会效益情况</td>
                             <td>新增销售额<br>（万元）</td>
                             <td>
-                                <el-input v-model="showForm.newSales"></el-input>
+                                <el-input v-model="showForm.newSales" disabled></el-input>
                             </td>
                             <td>新增利润<br>（万元）</td>
                             <td>
-                                <el-input v-model="showForm.newProfit"></el-input>
+                                <el-input v-model="showForm.newProfit" disabled></el-input>
                             </td>
                             <td>新增税金<br>（万元）</td>
                             <td>
-                                <el-input v-model="showForm.newTax"></el-input>
+                                <el-input v-model="showForm.newTax" disabled></el-input>
                             </td>
                         </tr>
                         <tr id="my_tr3">
                             <td>创汇<br>（万美元）</td>
                             <td>
-                                <el-input v-model="showForm.foreignExchange"></el-input>
+                                <el-input v-model="showForm.foreignExchange" disabled></el-input>
                             </td>
                             <td>新产品<br>（个）</td>
                             <td>
-                                <el-input v-model="showForm.newProducts"></el-input>
+                                <el-input v-model="showForm.newProducts" disabled></el-input>
                             </td>
                             <td>新增装备（装置）（台）</td>
                             <td>
-                                <el-input v-model="showForm.newEquipment"></el-input>
+                                <el-input v-model="showForm.newEquipment" disabled></el-input>
                             </td>
                         </tr>
                         <tr id="my_tr3">
                             <td>新材料<br>（件）</td>
                             <td>
-                                <el-input v-model="showForm.newMaterials"></el-input>
+                                <el-input v-model="showForm.newMaterials" disabled></el-input>
                             </td>
                             <td>新工艺<br>（项）</td>
                             <td>
-                                <el-input v-model="showForm.newProcess"></el-input>
+                                <el-input v-model="showForm.newProcess" disabled></el-input>
                             </td>
                             <td>新品种<br>（个）</td>
                             <td>
-                                <el-input v-model="showForm.newVarieties"></el-input>
+                                <el-input v-model="showForm.newVarieties" disabled></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td rowspan="4" style="text-align:center;">取得成果情况</td>
                             <td>发明专利</td>
                             <td>
-                                <el-input v-model="showForm.inventionPatents"></el-input>
+                                <el-input v-model="showForm.inventionPatents" disabled></el-input>
                             </td>
                             <td>实用新型</td>
                             <td>
-                                <el-input v-model="showForm.utilityModel"></el-input>
+                                <el-input v-model="showForm.utilityModel" disabled></el-input>
                             </td>
                             <td>外观设计</td>
                             <td>
-                                <el-input v-model="showForm.design"></el-input>
+                                <el-input v-model="showForm.design" disabled></el-input>
                             </td>
                         </tr>
                         <tr id="my_tr3">
                             <td>国外专利</td>
                             <td>
-                                <el-input v-model="showForm.foreignPatents"></el-input>
+                                <el-input v-model="showForm.foreignPatents" disabled></el-input>
                             </td>
                             <td>论文总数<br>（篇）</td>
                             <td>
-                                <el-input v-model="showForm.totalNumberPapers"></el-input>
+                                <el-input v-model="showForm.totalNumberPapers" disabled></el-input>
                             </td>
                             <td>核心期刊<br>（篇）</td>
                             <td>
-                                <el-input v-model="showForm.coreJournals"></el-input>
+                                <el-input v-model="showForm.coreJournals" disabled></el-input>
                             </td>
                         </tr>
                         <tr id="my_tr3">
                             <td>SCI索引<br>（篇）</td>
                             <td>
-                                <el-input v-model="showForm.sciIndex"></el-input>
+                                <el-input v-model="showForm.sciIndex" disabled></el-input>
                             </td>
                             <td>EI索引<br>（篇）</td>
                             <td>
-                                <el-input v-model="showForm.eiIndex"></el-input>
+                                <el-input v-model="showForm.eiIndex" disabled></el-input>
                             </td>
                             <td>出版专著<br>（部）</td>
                             <td>
-                                <el-input v-model="showForm.publicationMonograph"></el-input>
+                                <el-input v-model="showForm.publicationMonograph" disabled></el-input>
                             </td>
                         </tr>
                         <tr id="my_tr3">
                             <td>研究（咨询）<br>报告（份）</td>
                             <td>
-                                <el-input v-model="showForm.report"></el-input>
+                                <el-input v-model="showForm.report" disabled></el-input>
                             </td>
                             <td>制定技术标准（个）</td>
                             <td>
-                                <el-input v-model="showForm.developTechnicalStandards"></el-input>
+                                <el-input v-model="showForm.developTechnicalStandards" disabled></el-input>
                             </td>
                             <td>出台文件<br>（个）</td>
                             <td>
-                                <el-input v-model="showForm.releaseDocuments"></el-input>
+                                <el-input v-model="showForm.releaseDocuments" disabled></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td rowspan="2" style="text-align:center;">人才培养情况（人）</td>
                             <td>高级人才<br>（人）</td>
                             <td>
-                                <el-input v-model="showForm.seniorTalent"></el-input>
+                                <el-input v-model="showForm.seniorTalent" disabled></el-input>
                             </td>
                             <td colspan="4"></td>
                         </tr>
                         <tr id="my_tr3">
                             <td>培养研究生人数</td>
                             <td>
-                                <el-input v-model="showForm.graduateStudentsNumber"></el-input>
+                                <el-input v-model="showForm.graduateStudentsNumber" disabled></el-input>
                             </td>
                             <td colspan="4"></td>
                         </tr>
@@ -359,7 +349,8 @@
                                     v-model="showForm.actualProgressProject"
                                     :autosize="{ minRows:6 }"
                                     type="textarea"
-                                    maxlength="300">
+                                    maxlength="300"
+                                    disabled>
                                 </el-input>
                             </td>
                         </tr>
@@ -370,7 +361,8 @@
                                     v-model="showForm.projectFundsUsage"
                                     :autosize="{ minRows:6 }"
                                     type="textarea"
-                                    maxlength="200">
+                                    maxlength="200"
+                                    disabled>
                                 </el-input>
                             </td>
                         </tr>
@@ -381,7 +373,8 @@
                                     v-model="showForm.recommendationsProblemsSolutions"
                                     :autosize="{ minRows:6 }"
                                     type="textarea"
-                                    maxlength="200">
+                                    maxlength="200"
+                                    disabled>
                                 </el-input>
                             </td>
                         </tr>
@@ -400,7 +393,8 @@
                                     v-model="showForm.remark"
                                     :autosize="{ minRows:6 }"
                                     type="textarea"
-                                    maxlength="300">
+                                    maxlength="300"
+                                    disabled>
                                 </el-input>
                             </td>
                         </tr>
@@ -411,7 +405,7 @@
                         <tr class="file_tr" style="border-top:none;">
                             <td>中期检查表附件：</td>
                             <td colspan="3" class="file_td">
-                                <input type="file" @change="getFile($event)" />
+                                a
                             </td>
                         </tr>
                     </tbody>
@@ -491,11 +485,6 @@
                 paramsData: {
                     id: this.$route.params.id
                 }
-            }
-        },
-        methods: {
-            getFile(event) {
-                this.midCheckAnnex = event.target.files[0];
             }
         }
     }

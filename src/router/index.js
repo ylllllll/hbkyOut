@@ -164,7 +164,21 @@ export default new Router({
 			},{	// 合同查询
 				path: '/index/contractQuery',
 				name: 'ContractQuery',
-				component: ContractQuery
+				component: ContractQuery,
+				children: [{
+					path: '/index/contractQuery/contractQueryList',
+					name: 'ContractQueryList',
+					component: ContractQueryList
+				},{
+					path: '/index/contractQuery/contractQueryShow',
+					name: 'ContractQueryShow',
+					component: ContractQueryShow
+				},{
+					path: '/index/contractQuery/contractQueryEdit',
+					name: 'ContractQueryEdit',
+					component: ContractQueryEdit
+				}],
+				redirect: '/index/contractQuery/contractQueryList'
 			},{	// 中期检查
 				path: '/index/midTerm',
 				name: 'MidTerm',
@@ -180,17 +194,7 @@ export default new Router({
 				},{
 					path: '/index/midTerm/midTermShow',
 					name: 'MidTermShow',
-					component: MidTermShow,
-					children: [{
-						path: '/index/midTerm/midTermShow/midTermShowForm1',
-						name: 'MidTermShowForm1',
-						component: MidTermShowForm1
-					},{
-						path: '/index/midTerm/midTermShow/midTermShowForm2',
-						name: 'MidTermShowForm2',
-						component: MidTermShowForm2
-					}],
-					redirect: '/index/midTerm/midTermShow/midTermShowForm1'
+					component: MidTermShow
 				}],
 				redirect: '/index/midTerm/midTermList'
 			},{ // 进展情况报告

@@ -201,9 +201,9 @@ let validateEmail = (val) => {
 
 // 数字验证
 let validateNum = (val) => {
-    let reg = /(.*?)\d+(.*?)/;
-    if(!reg.test(val)) {
-        return "金额请输入数字";
+    let pattern = /(.*?)\d+(.*?)/;
+    if(!pattern.test(val)) {
+        return "请输入数字";
     }else {
         return false;
     }

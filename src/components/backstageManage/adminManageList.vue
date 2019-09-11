@@ -71,7 +71,7 @@
                 @handleSizeChangeNum="handleSizeChange">
             </pages>
         </div>
-        <div class="cover_box" :class="{over_box_active:overBoxHide}">
+        <div class="cover_box" v-show="overBoxFlag">
             <div class="message_box">
                 <span class="btn_close" @click="handleCloseCover"></span>
                 <header class="message_box_header">
@@ -102,7 +102,7 @@
                 },
                 selectedIDs: [],
                 refreshFlag: true,
-                overBoxHide: true,
+                overBoxFlag: false,
                 tableData: [{
                     id: '1001',
                     name: '姓名1',
@@ -138,7 +138,7 @@
         },
         methods: {
             handleAdd() {
-                this.overBoxHide = false;
+                this.overBoxFlag = true;
                 this.titleFlag.add = true;
                 this.btnState = "add";
             },
@@ -149,7 +149,7 @@
                         type: 'warning'
                         }).then(() => {}).catch(() => {}); //一定别忘了这个
                 }else {
-                    this.overBoxHide = false;
+                    this.overBoxFlag = true;
                     this.titleFlag.edit = true;
                     this.btnState = "edit";
                 }
@@ -201,7 +201,7 @@
                 console.log(val)
             },
             handleCloseCover() {
-                this.overBoxHide = true;
+                this.overBoxFlag = false;
                 this.titleFlag.add = false;
                 this.titleFlag.edit = false;
             },
