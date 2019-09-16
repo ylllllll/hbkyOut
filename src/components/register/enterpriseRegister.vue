@@ -7,37 +7,46 @@
                     <table class="form_table">
                         <tbody>
                             <tr>
-                                <td>真实姓名：</td>
-                                <td style="width:70%;">
-                                    <el-input v-model="showForm.realName"></el-input>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>登录名：</td>
+                                <td>登录账号 <span class="required">*</span>：</td>
                                 <td>
                                     <el-input v-model="showForm.loginName"></el-input>
                                 </td>
                             </tr>
                             <tr>
-                                <td>密码：</td>
+                                <td>登录密码 <span class="required">*</span>：</td>
                                 <td>
-                                    <el-input type="password" v-model="showForm.password"></el-input>
+                                    <el-input 
+                                        type="password" 
+                                        v-model="showForm.password"
+                                        placeholder="密码请包含大、小写字母，数字、特殊符号中的至少三种"
+                                        @blur="validatePwd">
+                                    </el-input>
                                 </td>
                             </tr>
                             <tr>
-                                <td>公司名称：</td>
+                                <td>确认密码 <span class="required">*</span>：</td>
+                                <td>
+                                    <el-input 
+                                        type="password" 
+                                        v-model="repassword"
+                                        @blur="validateRePwd">
+                                    </el-input>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>公司名称 <span class="required">*</span>：</td>
                                 <td>
                                     <el-input v-model="showForm.administratorInformation.companyName"></el-input>
                                 </td>
                             </tr>
                             <tr>
-                                <td>公司地址：</td>
+                                <td>公司地址 <span class="required">*</span>：</td>
                                 <td>
                                     <el-input v-model="showForm.administratorInformation.companyAddress"></el-input>
                                 </td>
                             </tr>
                             <tr>
-                                <td>单位性质：</td>
+                                <td>单位性质 <span class="required">*</span>：</td>
                                 <td>
                                     <el-select v-model="showForm.administratorInformation.unitNature">
                                         <el-option v-for="(item,index) in optGroup" :key="index" :label="item.content" :value="item.id"></el-option>
@@ -45,51 +54,74 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>社会信用号：</td>
+                                <td>统一社会信用代码 <span class="required">*</span>：</td>
                                 <td>
                                     <el-input v-model="showForm.administratorInformation.socialCreditCode"></el-input>
                                 </td>
                             </tr>
                             <tr>
-                                <td>法人姓名：</td>
-                                <td>
-                                    <el-input v-model="showForm.administratorInformation.legalPerson"></el-input>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>联系人身份证号：</td>
-                                <td>
-                                    <el-input v-model="showForm.administratorInformation.contactIdCard"></el-input>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>联系人手机号：</td>
-                                <td>
-                                    <el-input v-model="showForm.administratorInformation.contactPhone"></el-input>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>电子邮件：</td>
-                                <td>
-                                    <el-input v-model="showForm.administratorInformation.email"></el-input>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>营业执照扫描件：</td>
+                                <td>营业执照扫描件 <span class="required">*</span>：</td>
                                 <td class="file">
                                     <input type="file" @change="getFile($event,1)">
                                 </td>
                             </tr>
                             <tr>
-                                <td>法人身份证文件：</td>
+                                <td>法人姓名 <span class="required">*</span>：</td>
+                                <td>
+                                    <el-input v-model="showForm.administratorInformation.legalPerson"></el-input>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>法人身份证号 <span class="required">*</span>：</td>
+                                <td>
+                                    <el-input 
+                                        v-model="showForm.administratorInformation.legalPersonIdCard"
+                                        @blur="validateCard">
+                                    </el-input>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>法人身份证文件 <span class="required">*</span>：</td>
                                 <td class="file">
                                     <input type="file" @change="getFile($event,2)">
                                 </td>
                             </tr>
                             <tr>
-                                <td>联系人身份证文件：</td>
+                                <td>联系人姓名 <span class="required">*</span>：</td>
+                                <td style="width:70%;">
+                                    <el-input v-model="showForm.realName"></el-input>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>联系人身份证号 <span class="required">*</span>：</td>
+                                <td>
+                                    <el-input 
+                                        v-model="showForm.administratorInformation.contactIdCard"
+                                        @blur="validateCard">
+                                    </el-input>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>联系人身份证文件 <span class="required">*</span>：</td>
                                 <td class="file">
                                     <input type="file" @change="getFile($event,3)">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>联系人手机号 <span class="required">*</span>：</td>
+                                <td>
+                                    <el-input 
+                                        v-model="showForm.administratorInformation.contactPhone"
+                                        @blur="validatePhone"></el-input>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>联系人电子邮件 <span class="required">*</span>：</td>
+                                <td>
+                                    <el-input 
+                                        v-model="showForm.administratorInformation.email"
+                                        @blur="validateEmail">
+                                    </el-input>
                                 </td>
                             </tr>
                         </tbody>
@@ -109,6 +141,7 @@
         name: 'enterpriseRegister',
         data() {
             return {
+                repassword: '',
                 showForm: {
                     realName: '',
                     loginName: '',
@@ -122,6 +155,7 @@
                         contactIdCard: '',
                         contactPhone: '',
                         email: '',
+                        legalPersonIdCard: ''
                     },
                 },
                 businessFile: '',
@@ -163,47 +197,16 @@
                     });
                     return false;
                 }
-                // 密码验证
-                let validatePwd = this.validate.validatePwd(this.showForm.password,this.showForm.loginName);
-                if(validatePwd) {
-                    this.$alert(validatePwd,'提示', {
-                        confirmButtonText: '确定',
-                        type: 'warning',
-                        callback: action => {}
-                    });
-                    return false;
-                }
-                // 身份证验证
-                let validateCard = this.validate.validateCard(this.showForm.administratorInformation.contactIdCard);
-                if(validateCard) {
-                    this.$alert(validateCard,'提示', {
-                        confirmButtonText: '确定',
-                        type: 'warning',
-                        callback: action => {}
-                    });
-                    return false;
-                }
-                // 手机号验证
-                let validatePhone = this.validate.validatePhone(this.showForm.administratorInformation.contactPhone);
-                if(validatePhone) {
-                    this.$alert(validatePhone,'提示', {
-                        confirmButtonText: '确定',
-                        type: 'warning',
-                        callback: action => {}
-                    });
-                    return false;
-                }
-                // 邮箱验证
-                let validateEmail = this.validate.validateEmail(this.showForm.administratorInformation.email);
-                if(validateEmail) {
-                    this.$alert(validateEmail,'提示', {
-                        confirmButtonText: '确定',
-                        type: 'warning',
-                        callback: action => {}
-                    });
-                    return false;
-                }
-                // 文件格式验证和社会信用号验证是后端做的
+                // // 邮箱验证
+                // let validateEmail = this.validate.validateEmail(this.showForm.administratorInformation.email);
+                // if(validateEmail) {
+                //     this.$alert(validateEmail,'提示', {
+                //         confirmButtonText: '确定',
+                //         type: 'warning',
+                //         callback: action => {}
+                //     });
+                //     return false;
+                // }
                 let formData = new FormData(),
                     userInformation = JSON.stringify(this.showForm);
                 formData.append('userInformation',new Blob([userInformation],{type:"application/json"}));
@@ -245,6 +248,15 @@
                 this.$router.go(-1);
             },
             getFile(event,index) {
+                // 附件格式验证
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validateFile = this.validate.validateFile(event.target.files[0].name);
+                if(validateFile) {
+                    this.alertInfo(validateFile,"warning");
+                    _event.value = "";
+                    return false;
+                }
                 if(index == 1) {
                     this.businessFile = event.target.files[0];
                 }else if(index == 2) {
@@ -252,6 +264,64 @@
                 }else if(index == 3) {
                     this.contactCardFile = event.target.files[0];
                 }
+            },
+            // 验证信息提示
+            alertInfo(val,type) {
+                this.$alert(val,'提示', {
+                    confirmButtonText: '确定',
+                    type: type,
+                    callback: action => {}
+                });
+                return false;
+            },
+            // 密码验证
+            validatePwd(event) {
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validatePwd = this.validate.validatePwd(val,this.showForm.loginName);
+                if(validatePwd) {
+                    this.alertInfo(validatePwd,"warning");
+                    _event.value = "";
+                    return false;
+                }
+            },
+            // 确认密码验证
+            validateRePwd(event) {
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    password = this.showForm.password;
+                if(password != val) {
+                    this.alertInfo("确认密码与登录密码不一致","warning");
+                    _event.value = "";
+                    return false;
+                }
+            },
+            // 统一社会信用代码验证(前端暂无，后端验证)
+            // 身份证号验证
+            validateCard(event) {
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validateCard = this.validate.validateCard(val);
+                if(validateCard) {
+                    this.alertInfo(validateCard,"warning");
+                    _event.value = "";
+                    return false;
+                }
+            },
+            // 手机号验证
+            validatePhone(event) {
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validatePhone = this.validate.validatePhone(val);
+                if(validatePhone) {
+                    this.alertInfo(validatePhone,"warning");
+                    _event.value = "";
+                    return false;
+                }
+            },
+            // 邮箱验证
+            validateEmail(event) {
+                
             }
         },
         beforeMount() {
@@ -326,9 +396,6 @@
                             margin: 6.5px;
                         }
                     }
-                }
-                .btn_group{
-                    margin: 20px;
                 }
             }
         }

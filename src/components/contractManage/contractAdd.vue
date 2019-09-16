@@ -54,7 +54,7 @@
                             <td>
                                 <el-input v-model="showForm.subjeceLeader"></el-input>
                             </td>
-                            <td>课题负责人电话及手机：</td>
+                            <td>课题负责人手机：</td>
                             <td>
                                 <el-input v-model="showForm.subjectLeaderPhone"></el-input>
                             </td>
@@ -64,7 +64,7 @@
                             <td>
                                 <el-input v-model="showForm.subjectContact"></el-input>
                             </td>
-                            <td>课题联系人电话及手机：</td>
+                            <td>课题联系人手机：</td>
                             <td>
                                 <el-input v-model="showForm.subjectContactPhone"></el-input>
                             </td>
@@ -116,7 +116,7 @@
                             <td>
                                 <el-input v-model="showForm.guaranteedUnitContact"></el-input>
                             </td>
-                            <td>保证单位联系人电话：</td>
+                            <td>保证单位联系人手机：</td>
                             <td>
                                 <el-input v-model="showForm.guaranteedContactPhone"></el-input>
                             </td>
@@ -169,7 +169,7 @@
                             <td> 
                                 <el-input v-model="showForm.commitUnitLeaderB"></el-input>
                             </td>
-                            <td>承担单位课题负责人电话（手机号）：</td>
+                            <td>承担单位课题负责人手机：</td>
                             <td>
                                 <el-input v-model="showForm.commitunitLeadersPhoneB"></el-input>
                             </td>
@@ -285,28 +285,36 @@
                 <table class="form_table1" :model="unitForm" style="margin-top:10px;">
                     <tbody>
                         <tr style="background-color:#e5f3ff;">
-                           <td><span>姓名</span></td>
-                           <td><span>所在单位</span></td>
-                           <td><span>性别</span></td>
-                           <td><span>年龄</span></td>
-                           <td><span>职称</span></td>
-                           <td><span>从事专业</span></td>
-                           <td style="padding:0 10px;"><span style="white-space:nowrap;">本课题中承担工作</span></td>
-                           <td style="padding:0 10px;"><span style="white-space:nowrap;">为本课题工作时间（%）</span></td>
-                           <!-- <td><span>本人签名</span></td> -->
+                            <td><span>姓名</span></td>
+                            <td><span>所在单位</span></td>
+                            <td><span>性别</span></td>
+                            <td><span>年龄</span></td>
+                            <td><span>职称</span></td>
+                            <td><span>从事专业</span></td>
+                            <td style="padding:0 10px;"><span style="white-space:nowrap;">本课题中承担工作</span></td>
+                            <td style="padding:0 10px;"><span style="white-space:nowrap;">为本课题工作时间（%）</span></td>
+                            <!-- <td><span>本人签名</span></td> -->
                         </tr>
                         <tr>
                             <td colspan="8" style="text-align:left;padding-left:10px;background-color:#fff;">课题负责人：</td>
                         </tr>
                         <tr>
-                           <td><el-input v-model="unitForm.leaderName"></el-input></td>
-                           <td><el-input v-model="unitForm.unitName"></el-input></td>
-                           <td><el-input v-model="unitForm.gender"></el-input></td>
-                           <td><el-input v-model="unitForm.age"></el-input></td>
-                           <td><el-input v-model="unitForm.professionalTitle"></el-input></td>
-                           <td><el-input v-model="unitForm.professional"></el-input></td>
-                           <td><el-input v-model="unitForm.workTask"></el-input></td>
-                           <td><el-input v-model="unitForm.workingTime"></el-input></td>
+                            <td><el-input v-model="unitForm.leaderName"></el-input></td>
+                            <td><el-input v-model="unitForm.unitName"></el-input></td>
+                            <!-- <td><el-input v-model="unitForm.gender"></el-input></td> -->
+                            <td>
+                                <!-- <el-input v-model="unitForm.gender"></el-input> -->
+
+                                <el-select v-model="unitForm.gender" placeholder="请选择">
+                                    <el-option value="男"></el-option>
+                                    <el-option value="女"></el-option>
+                                </el-select>
+                            </td>
+                            <td><el-input v-model="unitForm.age"></el-input></td>
+                            <td><el-input v-model="unitForm.professionalTitle"></el-input></td>
+                            <td><el-input v-model="unitForm.professional"></el-input></td>
+                            <td><el-input v-model="unitForm.workTask"></el-input></td>
+                            <td><el-input v-model="unitForm.workingTime"></el-input></td>
                            <!-- <td><el-input v-model="unitForm.name"></el-input></td> -->
                         </tr>
                         <tr>
@@ -318,7 +326,14 @@
                         <tr v-for="(item,index) in keyForm" :key="index">
                             <td><el-input v-model="item.keyDevName"></el-input></td>
                             <td><el-input v-model="item.unitName"></el-input></td>
-                            <td><el-input v-model="item.gender"></el-input></td>
+                            <td>
+                                <!-- <el-input v-model="item.gender"></el-input> -->
+                                <el-select v-model="item.gender" placeholder="请选择">
+                                    <el-option value="男"></el-option>
+                                    <el-option value="女"></el-option>
+                                </el-select>
+                            </td>
+                            
                             <td><el-input v-model="item.age"></el-input></td>
                             <td><el-input v-model="item.professionalTitle"></el-input></td>
                             <td><el-input v-model="item.professional"></el-input></td>
@@ -755,7 +770,6 @@
                 }
 
 
-
                 //数字验证
                 // let validateNum = this.validate.validateNum(this.budgetForm);
                 // if(validateNum) {
@@ -846,7 +860,7 @@
                                                                     type: 'success',
                                                                     callback: action => {
                                                                         // this.reload();
-                                                                        document.querySelector(".is-active").nextSibling.click()
+                                                                        document.querySelector(".is-active").nextSibling.click();
                                                                     }
                                                                 });
                                                             }else {  
@@ -908,14 +922,14 @@
                 }else if(val == 2) {
                     let item = {
                         contractId: 0,
-                        keyDevName: '1',
-                        unitName: '2',
-                        gender: '3',
-                        age: '4',
-                        professionalTitle: '5',
-                        professional: '6',
-                        workTask: '7',
-                        workingTime: '8'
+                        keyDevName: '',
+                        unitName: '',
+                        gender: '',
+                        age: '',
+                        professionalTitle: '',
+                        professional: '',
+                        workTask: '',
+                        workingTime: ''
                     };
                     this.keyForm.push(item);
                 }
@@ -944,10 +958,10 @@
                 }
             },
             computed() {
-                this.budgetForm.fundingSourcesBudget = (parseFloat(this.budgetForm.provincialBudget) * 10000
-                                                     + parseFloat(this.budgetForm.departmentBudget) * 10000
-                                                     + parseFloat(this.budgetForm.bearBudget) * 10000
-                                                     + parseFloat(this.budgetForm.otherBudget) * 10000) / 10000;
+                // this.budgetForm.fundingSourcesBudget = (parseFloat(this.budgetForm.provincialBudget) * 10000
+                //                                      + parseFloat(this.budgetForm.departmentBudget) * 10000
+                //                                      + parseFloat(this.budgetForm.bearBudget) * 10000
+                //                                      + parseFloat(this.budgetForm.otherBudget) * 10000) / 10000;
             },
             receiptChildInfo(val) {
                 this.messageBoxData = val;
@@ -994,6 +1008,7 @@
 <style lang="less">
     #contractAdd {
         .showForm {
+            margin-bottom: 30px;
             table.form_table,
             table.form_table1,
             table.form_table2 {
@@ -1038,7 +1053,6 @@
                     padding: 10px;
                     resize: none;
                 }
-                
             }
             .el-date-editor {
                 width: 100%;

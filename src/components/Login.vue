@@ -104,8 +104,8 @@
 										localStorage.setItem("usertype",this.ruleForm.type);
 									}
 									// 身份(保留)
-									let i = res.data.data.identity
-									document.cookie="identity="+i;
+									// let i = res.data.data.identity
+									// document.cookie="identity="+i;
 									// 身份
 									let identity = res.data.data.identity;
 									document.cookie="identityIn="+identity;

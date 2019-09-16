@@ -8,19 +8,19 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>指南建议名称：</td>
+                            <td><span class="required">*</span>指南建议名称：</td>
                             <td colspan="3">
                                 <el-input v-model="showForm.guideName"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>所属领域：</td>
+                            <td><span class="required">*</span>所属领域：</td>
                             <td>
                                 <el-select v-model="showForm.domain">
                                     <el-option v-for="(item,index) in optGroup1" :key="index" :label="item.content" :value="item.id"></el-option>
                                 </el-select>
                             </td>
-                            <td>所属类别：</td>
+                            <td><span class="required">*</span>所属类别：</td>
                             <td>
                                 <el-select v-model="showForm.category">
                                     <el-option v-for="(item,index) in optGroup2" :key="index" :label="item.content" :value="item.id"></el-option>
@@ -28,7 +28,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>建议理由及依据：</td>
+                            <td><span class="required">*</span>建议理由及依据：</td>
                             <td colspan="3">
                                 <el-input 
                                     v-model="showForm.reasonBasis"
@@ -40,7 +40,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>主要研究内容和关键技术：</td>
+                            <td><span class="required">*</span>主要研究内容和关键技术：</td>
                             <td colspan="3">
                                 <el-input 
                                     v-model="showForm.researchContentTechnology"
@@ -52,7 +52,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>预期目标和成果：</td>
+                            <td><span class="required">*</span>预期目标和成果：</td>
                             <td colspan="3">
                                 <el-input 
                                     v-model="showForm.expectedTargetOutcome"
@@ -64,54 +64,55 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>填报单位：</td>
+                            <td><span class="required">*</span>填报单位：</td>
                             <td>
                                 <el-input v-model="showForm.fillUnit" readonly></el-input>
                             </td>
-                            <td>单位负责人：</td>
+                            <td><span class="required">*</span>单位负责人：</td>
                             <td>
                                 <el-input v-model="showForm.unitPrincipal"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>拟出标准、技术规范、法规名称：</td>
+                            <td><span class="required">*</span>拟出标准、技术规范、法规名称：</td>
                             <td colspan="3">
                                 <el-input v-model="showForm.standardsSpecificationsRegulatory"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>研究经费预测（万元）：</td>
+                            <td><span class="required" tip="研究经费">*</span>研究经费预测（万元）：</td>
                             <td>
-                                <el-input v-model="showForm.researchFund">
-                                </el-input>
+                                <el-input 
+                                v-model="showForm.researchFund"
+                                @blur="fun"></el-input>
                             </td>
-                            <td>研究期限（年）：</td>
+                            <td><span class="required" tip="研究期限">*</span>研究期限（年）：</td>
                             <td>
                                 <el-input v-model="showForm.researchPeriod"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>示范工程规模：</td>
+                            <td><span class="required">*</span>示范工程规模：</td>
                             <td>
                                 <el-input v-model="showForm.demonstrationScale"></el-input>
                             </td>
-                            <td>示范工程点：</td>
+                            <td><span class="required">*</span>示范工程点：</td>
                             <td>
                                 <el-input v-model="showForm.demonstrationPoint"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>省内从事该领域的主要研究机构：</td>
+                            <td><span class="required">*</span>省内从事该领域的主要研究机构：</td>
                             <td colspan="3">
                                 <el-input v-model="showForm.provinceDomainMechanism"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>填报联系人：</td>
+                            <td><span class="required">*</span>填报联系人：</td>
                             <td>
                                 <el-input v-model="showForm.fillContacts"></el-input>
                             </td>
-                            <td>联系电话（手机）：</td>
+                            <td><span class="required">*</span>联系人手机：</td>
                             <td>
                                 <el-input v-model="showForm.contactPhone"></el-input>
                             </td>
@@ -154,7 +155,11 @@
                 optGroup2: []
             }
         },
-        methods:{
+        methods: {
+            fun(event) {
+                let _event = event.srcElement || event.target;
+                console.log(_event.value)
+            },
             handleSubmit() {
                 // 非空验证
                 for(let i in this.showForm) {
@@ -186,7 +191,6 @@
                     });
                     return false;
                 }
-                return false;
                 // 手机验证
                 let validatePhone = this.validate.validatePhone(this.showForm.contactPhone);
                 if(validatePhone) {
@@ -215,7 +219,8 @@
                             confirmButtonText: '确定',
                             type: 'success',
                             callback: action => {
-                                this.reload();
+                                // this.reload();
+                                document.querySelector(".is-active").nextSibling.click();
                             }
                         });
                     }else {
@@ -265,8 +270,8 @@
 
 <style lang="less">
     #guideCollectAdd{
-        background-color: #fff;
         .showForm{
+            margin-bottom: 30px;
             table.form_table{
                 @media  screen and ( max-width: 1600px ) {
                     width: 72.4%;

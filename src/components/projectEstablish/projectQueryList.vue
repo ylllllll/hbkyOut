@@ -169,12 +169,7 @@
                     this.loading = false;
                     let data = res.data.data;
                     if(data == "没有查到相关信息") {
-                        this.tableData = []; 
-                        this.$alert('没有查到相关信息','提示',{
-                            confirmButtonText: '确定',
-                            type: 'warning',
-                            callback: action => {}
-                        });
+                        this.tableData = [];
                     }else {
                         this.tableData = data.list;
                         this.fenye.total = data.total;

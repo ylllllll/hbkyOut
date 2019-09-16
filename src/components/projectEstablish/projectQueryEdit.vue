@@ -93,35 +93,35 @@
                             <td>中标文件附件：</td>
                             <td colspan="3" class="file_td">
                                 <input type="file" @change="getFile($event,1)" />
-                                <div class="file_show">{{ fileData[0].upload_file_name }}</div>
+                                <div class="file_show">{{ fileData.winningDocumentFileName }}</div>
                             </td>
                         </tr>
                         <tr class="file_tr">
                             <td>成交公告附件：</td>
                             <td colspan="3" class="file_td">
                                 <input type="file" @change="getFile($event,2)" />
-                                <div class="file_show">{{ fileData[1].upload_file_name }}</div>
+                                <div class="file_show">{{ fileData.transactionAnnouncementName }}</div>
                             </td>
                         </tr>
                         <tr class="file_tr">
                             <td>成交通知书附件：</td>
                             <td colspan="3" class="file_td">
                                 <input type="file" @change="getFile($event,3)" />
-                                <div class="file_show">{{ fileData[2].upload_file_name }}</div>
+                                <div class="file_show">{{ fileData.noticeTransactionName }}</div>
                             </td>
                         </tr>
                         <tr class="file_tr">
                             <td>响应文件附件：</td>
                             <td colspan="3" class="file_td">
                                 <input type="file" @change="getFile($event,4)" />
-                                <div class="file_show">{{ fileData[3].upload_file_name }}</div>
+                                <div class="file_show">{{ fileData.responseFileName }}</div>
                             </td>
                         </tr>
                         <tr class="file_tr">
                             <td>其他附件：</td>
                             <td colspan="3" class="file_td">
                                 <input type="file" @change="getFile($event,5)" />
-                                <div class="file_show">{{ fileData[4].upload_file_name }}</div>
+                                <div class="file_show">{{ fileData.otherAttachmentsName }}</div>
                             </td>
                         </tr>
                     </tbody>
@@ -193,13 +193,13 @@
                 },
                 tableData: [],
                 // 解决报错
-                fileData: [
-                    {upload_file_name: ''},
-                    {upload_file_name: ''},
-                    {upload_file_name: ''},
-                    {upload_file_name: ''},
-                    {upload_file_name: ''}
-                ],
+                fileData: {
+                    winningDocumentFileName: '',
+                    transactionAnnouncementName: '',
+                    noticeTransactionName: '',
+                    responseFileName: '',
+                    otherAttachmentsName: ''
+                },
                 Enclosure: {
                     winningDocument:'',
                     transactionAnnouncement:'',
@@ -267,19 +267,19 @@
                     openTender = JSON.stringify(this.showForm);
                 formData.append('openTender',new Blob([openTender],{type:"application/json"}));
                 if(this.Enclosure.winningDocument) {
-                    formData.append('oldWinningDocumentFileUrl',this.fileData[0].upload_file_address);
+                    formData.append('oldWinningDocumentFileUrl',this.fileData.winningDocumentFileUrl);
                 }
                 if(this.Enclosure.transactionAnnouncement) {
-                    formData.append('oldTransactionAnnouncementFileUrl',this.fileData[1].upload_file_address);
+                    formData.append('oldTransactionAnnouncementFileUrl',this.fileData.transactionAnnouncementUrl);
                 }
                 if(this.Enclosure.noticeTransaction) {
-                    formData.append('oldNoticeTransactionFileUrl',this.fileData[2].upload_file_address);
+                    formData.append('oldNoticeTransactionFileUrl',this.fileData.noticeTransactionUrl);
                 }
                 if(this.Enclosure.responseFile) {
-                    formData.append('oldResponseFileFileUrl',this.fileData[3].upload_file_address);
+                    formData.append('oldResponseFileFileUrl',this.fileData.responseFiletUrl);
                 }
                 if(this.Enclosure.otherAttachments) {
-                    formData.append('oldOtherAttachmentsFileUrl',this.fileData[4].upload_file_address);
+                    formData.append('oldOtherAttachmentsFileUrl',this.fileData.otherAttachmentsUrl);
                 }
                 formData.append('winningDocument',this.Enclosure.winningDocument);
                 formData.append('transactionAnnouncement',this.Enclosure.transactionAnnouncement);
@@ -294,6 +294,7 @@
                     processData: false,
                     usecredensives: true
                 }).then((res) => {
+                    console.log(res);
                     loading.close();
                     if(res.data.resultFlag == 0) {
                         this.$alert('提交成功','提示', {
@@ -315,27 +316,49 @@
                 this.$router.go(-1);
             },
             handleDownload(val) {
-                window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
-                                     + this.fileData[val].upload_file_address 
+                if(val == 0) {
+                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
+                                     + this.fileData.winningDocumentFileUrl 
                                      + '&fileName=' 
-                                     + this.fileData[val].upload_file_name;
+                                     + this.fileData.winningDocumentFileName;
+                }else if(val == 1) {
+                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
+                                     + this.fileData.transactionAnnouncementUrl 
+                                     + '&fileName=' 
+                                     + this.fileData.transactionAnnouncementName;
+                }else if(val == 2) {
+                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
+                                     + this.fileData.noticeTransactionUrl 
+                                     + '&fileName=' 
+                                     + this.fileData.noticeTransactionName;
+                }else if(val == 3) {
+                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
+                                     + this.fileData.responseFiletUrl 
+                                     + '&fileName=' 
+                                     + this.fileData.responseFileName;
+                }else if(val == 4) {
+                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
+                                     + this.fileData.otherAttachmentsUrl 
+                                     + '&fileName=' 
+                                     + this.fileData.otherAttachmentsName;
+                }
             },
             getFile(event,index) {
                 if(index == 1) {
                     this.Enclosure.winningDocument = event.target.files[0];
-                    this.fileData[0].upload_file_name = event.target.files[0].name;
+                    this.fileData.winningDocumentFileName = event.target.files[0].name;
                 }else if(index == 2) {
                     this.Enclosure.transactionAnnouncement = event.target.files[0];
-                    this.fileData[1].upload_file_name = event.target.files[0].name;
+                    this.fileData.transactionAnnouncementName = event.target.files[0].name;
                 }else if(index == 3) {
                     this.Enclosure.noticeTransaction = event.target.files[0];
-                    this.fileData[2].upload_file_name = event.target.files[0].name;
+                    this.fileData.noticeTransactionName = event.target.files[0].name;
                 }else if(index == 4) {
                     this.Enclosure.responseFile = event.target.files[0];
-                    this.fileData[3].upload_file_name = event.target.files[0].name;
+                    this.fileData.responseFileName = event.target.files[0].name;
                 }else if(index == 5) {
                     this.Enclosure.otherAttachments = event.target.files[0];
-                    this.fileData[4].upload_file_name = event.target.files[0].name;
+                    this.fileData.otherAttachmentsName = event.target.files[0].name;
                 }
             }
         },

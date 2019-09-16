@@ -382,6 +382,9 @@ export default {
 					line-height: 50px;
 					padding-left: 3px;
 				}
+				a {
+					cursor: pointer;
+				}
 			}
 		}
 		.btn_group {
@@ -389,6 +392,9 @@ export default {
 		}
 		.el-table__row {
 			cursor: pointer;
+		}
+		.required {
+			color: #f00;
 		}
   	}
 </style>

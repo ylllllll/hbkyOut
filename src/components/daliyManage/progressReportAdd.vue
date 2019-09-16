@@ -521,7 +521,8 @@
 
 <style lang="less">
     #progressReportAdd{
-        .showForm{
+        .showForm {
+            margin-bottom: 30px;
             table.form_table{
                 min-width: 1000px;
                 width: 65.4%;
@@ -617,10 +618,6 @@
                     }
                 }
             }
-        }
-        .btn_group {
-            margin-top: 10px;
-            padding-bottom: 30px;
         }
     }
 </style>

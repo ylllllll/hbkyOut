@@ -140,7 +140,7 @@
                                     :disabled="true">
                                 </el-input>
                             </td>
-                            <td>联系电话（手机）：</td>
+                            <td>联系人手机：</td>
                             <td>
                                 <el-input 
                                     v-model="showForm.contact_phone"
@@ -192,7 +192,8 @@
 
 <style lang="less">
     #guideCollectShow{
-        .showForm{
+        .showForm {
+            margin-bottom: 30px;
             table.form_table{
                 @media  screen and ( max-width: 1600px ) {
                     width: 72.4%;

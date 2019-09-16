@@ -62,7 +62,6 @@ let validatePwd = (val,username) => {
             code2 = val.charCodeAt(index + 1),
             code3 = val.charCodeAt(index + 2);
         if((code >= 48) && (code <= 57)) {
-            console.log(code,code2,code3)
             if((code2 == code) && (code3 == code)) {
                 return "密码不能包含连续的三位以上的相同的数字";
             }
@@ -209,10 +208,21 @@ let validateNum = (val) => {
     }
 }
 
+// 验证附件(完整)
+let validateFile = (val) => {
+    let ext = val.slice(val.lastIndexOf(".") + 1).toLowerCase();  
+    if ("doc" == ext || "docx" == ext || "zip" == ext || "rar" == ext || "jpg" == ext || "jpeg" == ext || "png" == ext || "gif" == ext || "xls" == ext || "xlsx" == ext || "pdf" == ext || "ceb" == ext || "mp3" == ext || "mp4" == ext || "asf" == ext || "swf" == ext || "txt" == ext || "" == ext) {  
+        return false;
+    }else {
+        return "该文件格式不支持上传";  
+    }
+}
+
 export default {
     validatePhone,
     validatePwd,
     validateCard,
     validateEmail,
-    validateNum
+    validateNum,
+    validateFile
 }

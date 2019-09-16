@@ -672,8 +672,11 @@
                     };
                 totalContract = JSON.stringify(totalContract);
                 formData.append('totalContract',new Blob([totalContract],{type:"application/json"}));
-                formData.append('contractAnnex',this.contractAnnex);
-                formData.append('oldcontractAnnexUrl',this.file.upload_file_address);
+                console.log(this.contractAnnex)
+                if(this.contractAnnex) {
+                    formData.append('contractAnnex',this.contractAnnex);
+                    formData.append('oldcontractAnnexUrl',this.file.upload_file_address);
+                }
                 this.axios({
                     url: 'http://192.168.0.80:8087/environment/contract/updateContractStatusByReturnCommit',
                     method: 'post',

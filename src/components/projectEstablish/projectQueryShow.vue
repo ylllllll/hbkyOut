@@ -94,31 +94,31 @@
                         <tr class="file_tr">
                             <td>中标文件附件：</td>
                             <td colspan="3" class="file_td">
-                                <a @click="handleDownload(0)">{{ fileData[0].upload_file_name }}</a>
+                                <a @click="handleDownload(0)">{{ fileData.winningDocumentFileName }}</a>
                             </td>
                         </tr>
                         <tr class="file_tr">
                             <td>成交公告附件：</td>
                             <td colspan="3" class="file_td">
-                                <a @click="handleDownload(1)">{{ fileData[1].upload_file_name }}</a>
+                                <a @click="handleDownload(1)">{{ fileData.transactionAnnouncementName }}</a>
                             </td>
                         </tr>
                         <tr class="file_tr">
                             <td>成交通知书附件：</td>
                             <td colspan="3" class="file_td">
-                                <a @click="handleDownload(2)">{{ fileData[2].upload_file_name }}</a>
+                                <a @click="handleDownload(2)">{{ fileData.noticeTransactionName }}</a>
                             </td>
                         </tr>
                         <tr class="file_tr">
                             <td>响应文件附件：</td>
                             <td colspan="3" class="file_td">
-                                <a @click="handleDownload(3)">{{ fileData[3].upload_file_name }}</a>
+                                <a @click="handleDownload(3)">{{ fileData.responseFileName }}</a>
                             </td>
                         </tr>
                         <tr class="file_tr">
                             <td>其他附件：</td>
                             <td colspan="3" class="file_td">
-                                <a @click="handleDownload(4)">{{ fileData[4].upload_file_name }}</a>
+                                <a @click="handleDownload(4)">{{ fileData.otherAttachmentsName }}</a>
                             </td>
                         </tr>
                     </tbody>
@@ -180,8 +180,8 @@
 
 <script>
     export default {
-        name:'projectShow',
-        data(){
+        name: 'projectShow',
+        data() {
             return{
                 showForm:{},
                 paramsData: {
@@ -189,13 +189,13 @@
                 },
                 tableData: [],
                 // 解决报错
-                fileData: [
-                    {upload_file_name: ''},
-                    {upload_file_name: ''},
-                    {upload_file_name: ''},
-                    {upload_file_name: ''},
-                    {upload_file_name: ''}
-                ]
+                fileData: {
+                    winningDocumentFileName: '',
+                    transactionAnnouncementName: '',
+                    noticeTransactionName: '',
+                    responseFileName: '',
+                    otherAttachmentsName: ''
+                }
             }
         },
         methods: { 
@@ -203,10 +203,32 @@
                 this.$router.go(-1);
             },
             handleDownload(val) {
-                window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
-                                     + this.fileData[val].upload_file_address 
+                if(val == 0) {
+                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
+                                     + this.fileData.winningDocumentFileUrl 
                                      + '&fileName=' 
-                                     + this.fileData[val].upload_file_name;
+                                     + this.fileData.winningDocumentFileName;
+                }else if(val == 1) {
+                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
+                                     + this.fileData.transactionAnnouncementUrl 
+                                     + '&fileName=' 
+                                     + this.fileData.transactionAnnouncementName;
+                }else if(val == 2) {
+                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
+                                     + this.fileData.noticeTransactionUrl 
+                                     + '&fileName=' 
+                                     + this.fileData.noticeTransactionName;
+                }else if(val == 3) {
+                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
+                                     + this.fileData.responseFiletUrl 
+                                     + '&fileName=' 
+                                     + this.fileData.responseFileName;
+                }else if(val == 4) {
+                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
+                                     + this.fileData.otherAttachmentsUrl 
+                                     + '&fileName=' 
+                                     + this.fileData.otherAttachmentsName;
+                }
             }
         },
         mounted() {
@@ -227,9 +249,11 @@
                         oid: this.paramsData.id
                     }
                 }).then((res) => {
+                    console.log(12)
                     console.log(res)
                     let data = res.data.data;
                     this.fileData = data;
+                    console.log(this.fileData)
                     // 审核数据
                     this.axios({
                         url: 'http://192.168.0.80:8087//environment/tender/getAllShenHeTableRecordInfoByContractId',

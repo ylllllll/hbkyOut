@@ -245,7 +245,8 @@
                                     confirmButtonText: '确定',
                                     type: 'success',
                                     callback: action => {
-                                        this.reload();
+                                        // this.reload();
+                                        document.querySelector(".is-active").nextSibling.click();
                                     }
                                 });
                             }else { this.errorInfo(); }
@@ -293,10 +294,8 @@
 
 <style lang="less">
     #projectAdd {
-        padding-bottom: 60px;
-        background-color: #fff;
-        margin-bottom: 20px;
-        .showForm{
+        .showForm {
+            margin-bottom: 20px;
             table.form_table{
                 @media  screen and ( max-width: 1600px ) {
                     width: 72.4%;

@@ -305,7 +305,8 @@
 
 <style lang="less">
     #progressReportShow{
-        .showForm{
+        .showForm {
+            margin-bottom: 30px;
             table.form_table{
                 min-width: 1000px;
                 width: 65.4%;
