@@ -266,8 +266,8 @@
                 }
             },
             // 验证信息提示
-            alertInfo(val,type) {
-                this.$alert(val,'提示', {
+            alertInfo(info,type) {
+                this.$alert(info,'提示', {
                     confirmButtonText: '确定',
                     type: type,
                     callback: action => {}

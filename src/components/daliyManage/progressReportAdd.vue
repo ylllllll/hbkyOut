@@ -61,142 +61,172 @@
                                 <el-radio v-model="showForm.progress" label="47">滞后</el-radio>
                             </td>
                         </tr>
-                        <!-- 一、合同要求研发任务 -->
-                        <tr class="item">
-                            <td colspan="4">
-                                <h4>一、合同要求研发任务</h4>
-                                <p>合同要求研发任务共{{ taskForm.length - 1 }}项，具体如下：</p>
-                                <ol>
-                                    <li v-for="(item,index) in taskForm" :key="index">
-                                        <span class="index">{{ index + 1 }}.</span>
-                                        <el-input 
-                                            v-model="taskForm[index].requireStoddTaskContent"
-                                            :autosize="{ minRows:1 }"
-                                            type="textarea"
-                                            @input="autoAdd">
-                                        </el-input>
-                                    </li>
-                                </ol>
+                        <tr class="file_tr">
+                            <td>课题进展附件：</td>
+                            <td class="file_td" colspan="3">
+                                <input type="file" @change="getFile($event,4)" />
                             </td>
                         </tr>
-                        <!-- 二、目前进展情况 -->
-                        <tr class="item">
-                            <td colspan="4">
-                                <h4>二、目前进展情况</h4>
-                                <p>
-                                    已完成研发任务{{ progressForm.length - 1}}项，完成工作进度
-                                    <el-input class="_inline" v-model="showForm.progressCompletedPercentage"></el-input>
-                                    %。
-                                    </p>
-                                <ol>
-                                    <li v-for="(item,index) in progressForm" :key="index">
-                                        <span class="index">{{ index + 1 }}.</span>
-                                        <el-input 
-                                            v-model="progressForm[index].currentProgressContent"
-                                            :autosize="{ minRows:1 }"
-                                            type="textarea"
-                                            @input="autoAdd">
-                                        </el-input>
-                                    </li>
-                                </ol>
+                    </tbody>
+                </table>
+                <!-- 一、合同要求研发任务 -->
+                <table class="form_table1" :model="taskForm">
+                    <thead>
+                        <tr>
+                            <th colspan="2">一、合同要求研发任务</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2" style="position:relative;">
+                                合同要求研发任务共{{ taskForm.length }}项，具体如下：
+                                <i class="el-icon-circle-plus-outline" @click="handleTrAdd(1)"></i>
                             </td>
                         </tr>
-                        <!-- 三、使用经费情况 -->
-                        <tr class="item">
-                            <td colspan="4">
-                                <h4>三、使用经费情况</h4>
-                                <ol style="line-height:1.8;">
-                                    <li>已到位课题总经费
-                                        <el-input class="_inline" v-model="showForm.totalFundsInplace"></el-input>
-                                        万元；已使用课题经费
-                                        <el-input class="_inline" v-model="showForm.projectFundsUsed"></el-input>
-                                        万元，占总经费
-                                        <el-input class="_inline" v-model="showForm.totalFunding"></el-input>
-                                        %。
-                                    </li>
-                                    <li>其中：已使用省环保课题经费
-                                        <el-input class="_inline" v-model="showForm.provincialEnvironmentalFundsUsed"></el-input>
-                                        万元，占省环保课题经费
-                                        <el-input class="_inline" v-model="showForm.provincialEnvironmentalFundsPercent"></el-input>
-                                        %。
-                                    </li>
-                                </ol>
+                        <tr v-for="(item,index) in taskForm" :key="'a' + index">
+                            <td style="width:5%">{{ index + 1 }}</td>
+                            <td style="position:relative;" class="align_left">
+                                <el-input v-model="taskForm[index].requireStoddTaskContent"></el-input>
+                                <i class="el-icon-remove-outline" @click="handleTrRemove(1,index)"></i>
                             </td>
                         </tr>
-                        <!-- 四、课题实施中存在的主要问题 -->
-                        <tr class="item">
+                    </tbody>
+                </table>
+                <!-- 二、目前进展情况 -->
+                <table class="form_table1" :model="progressForm">
+                    <thead>
+                        <tr>
+                            <th colspan="2">二、目前进展情况</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2" style="position:relative;">
+                                已完成研发任务{{ progressForm.length }}项，完成工作进度
+                                <el-input class="_inline2" v-model="showForm.progressCompletedPercentage"></el-input>
+                                %。
+                                <i class="el-icon-circle-plus-outline" @click="handleTrAdd(2)"></i>
+                            </td>
+                        </tr>
+                        <tr v-for="(item,index) in progressForm" :key="'b' + index">
+                            <td style="width:5%">{{ index + 1 }}</td>
+                            <td style="position:relative;" class="align_left">
+                                <el-input v-model="progressForm[index].currentProgressContent"></el-input>
+                                <i class="el-icon-remove-outline" @click="handleTrRemove(2,index)"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- 三、使用经费情况 -->
+                <table class="form_table1" :model="progressForm">
+                    <thead>
+                        <tr>
+                            <th colspan="4">三、使用经费情况</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="4" style="background-color:#fff;">
+                                已到位课题总经费
+                                <el-input class="_inline" v-model="showForm.totalFundsInplace"></el-input>
+                                万元；已使用课题经费
+                                <el-input class="_inline" v-model="showForm.projectFundsUsed"></el-input>
+                                万元，占总经费
+                                <el-input class="_inline" v-model="showForm.totalFunding"></el-input>
+                                %。
+                            </td>
+                        </tr>
+                        <tr>
                             <td colspan="4">
-                                <h4>四、课题实施中存在的主要问题（研究遇到的困难及技术、方案、人员等变动情况）</h4>
-                                <ol>
-                                    <li v-for="(item,index) in problemForm" :key="index">
-                                        <span class="index">{{ index + 1 }}.</span>
-                                        <el-input 
-                                            v-model="problemForm[index].mainProblems"
-                                            :autosize="{ minRows:1 }"
-                                            type="textarea"
-                                            @input="autoAdd">
-                                        </el-input>
-                                    </li>
-                                </ol>
+                                其中：已使用省环保课题经费
+                                <el-input class="_inline" v-model="showForm.provincialEnvironmentalFundsUsed"></el-input>
+                                万元，占省环保课题经费
+                                <el-input class="_inline" v-model="showForm.provincialEnvironmentalFundsPercent"></el-input>
+                                %。
+                            </td>
+                        </tr>
+                        <tr class="file_tr">
+                            <td style="width:25%;background-color:#e5f3ff;">进度经费使用情况附件：</td>
+                            <td colspan="3" class="file_td">
+                                <input type="file" @change="getFile($event,2)" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- 四、课题实施中存在的主要问题 -->
+                <table class="form_table1" :model="problemForm" style="margin-top:10px;">
+                    <tbody>
+                        <tr>
+                            <td colspan="4" style="position:relative;" class="td_head">
+                                四、课题实施中存在的主要问题（研究遇到的困难及技术、方案、人员等变动情况）
+                                <i class="el-icon-circle-plus-outline" @click="handleTrAdd(3)"></i>
+                            </td>
+                        </tr>
+                        <tr v-for="(item,index) in problemForm" :key="'c' + index">
+                            <td style="width:5%">{{ index + 1 }}</td>
+                            <td colspan="3" style="position:relative;" class="align_left">
+                                <el-input v-model="problemForm[index].mainProblems"></el-input>
+                                <i class="el-icon-remove-outline" @click="handleTrRemove(3,index)"></i>
                             </td>
                         </tr>
                         <!-- 五、下一步研发工作安排 -->
-                        <tr class="item">
-                            <td colspan="4">
-                                <h4>五、下一步研发工作安排</h4>
-                                <ol>
-                                    <li v-for="(item,index) in planForm" :key="index">
-                                        <span class="index">{{ index + 1 }}.</span>
-                                        <el-input 
-                                            v-model="planForm[index].nextWorkPlan"
-                                            :autosize="{ minRows:1 }"
-                                            type="textarea"
-                                            @input="autoAdd">
-                                        </el-input>
-                                    </li>
-                                </ol>
+                        <tr>
+                            <td colspan="4" style="position:relative;" class="td_head">
+                                五、下一步研发工作安排
+                                <i class="el-icon-circle-plus-outline" @click="handleTrAdd(4)"></i>
                             </td>
                         </tr>
-                        <!-- 六、课题预计完成时间 -->
-                        <tr class="item">
-                            <td colspan="4">
-                                <h4>六、课题预计完成时间</h4>
-                                <ol style="line-height:1.8;">
-                                    <li>
-                                        1. 合同约定结题时间：
-                                        <el-date-picker
-                                            class="_inline_date"
-                                            v-model="showForm.contractAgreedClosingTime"
-                                            type="date"
-                                            value-format="yyyy-MM-dd"
-                                            placeholder="选择日期">
-                                        </el-date-picker>
-                                    </li>
-                                    <li>
-                                        2. 能否按合同约定时间完成课题？
-                                        <el-radio v-model="showForm.isComplateContract" label="0" style="line-height:28px;">能</el-radio>
-                                        <el-radio v-model="showForm.isComplateContract" label="1" style="line-height:28px;">不能</el-radio>
-                                    </li>
-                                    <li>
-                                        3. 预计申请课题验收时间：
-                                        <el-date-picker
-                                            class="_inline_date"
-                                            v-model="showForm.estimatedAcceptanceTime"
-                                            type="date"
-                                            value-format="yyyy-MM-dd"
-                                            placeholder="选择日期">
-                                        </el-date-picker>
-                                    </li>
-                                </ol>
+                        <tr v-for="(item,index) in planForm" :key="'d' + index">
+                            <td style="width:5%">{{ index + 1 }}</td>
+                            <td colspan="3" style="position:relative;" class="align_left">
+                                <el-input v-model="planForm[index].nextWorkPlan"></el-input>
+                                <i class="el-icon-remove-outline" @click="handleTrRemove(4,index)"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- 六、课题预计完成时间 -->
+                <table class="form_table" :model="showForm">
+                    <thead>
+                        <tr><th colspan="4">六、课题预计完成时间</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>合同约定结题时间：</td>
+                            <td>
+                                <el-date-picker
+                                    v-model="showForm.contractAgreedClosingTime"
+                                    type="date"
+                                    value-format="yyyy-MM-dd"
+                                    placeholder="选择日期">
+                                </el-date-picker>
+                            </td>
+                            <td>预计申请课题验收时间：</td>
+                            <td>
+                                <el-date-picker
+                                    v-model="showForm.estimatedAcceptanceTime"
+                                    type="date"
+                                    value-format="yyyy-MM-dd"
+                                    placeholder="选择日期">
+                                </el-date-picker>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>能否按合同约定时间完成课题：</td>
+                            <td colspan="3" style="height:50px;">
+                                <el-radio v-model="showForm.isComplateContract" label="0" style="line-height:28px;">能</el-radio>
+                                <el-radio v-model="showForm.isComplateContract" label="1" style="line-height:28px;">不能</el-radio>
                             </td>
                         </tr>
                         <!-- 七、单位审核意见 -->
-                        <tr class="item">
+                        <tr>
+                            <td colspan="4" class="td_head"> 七、单位审核意见</td>
+                        </tr>
+                        <tr>
                             <td colspan="4">
-                                <h4>七、单位审核意见</h4>
                                 <el-input 
                                     v-model="showForm.unitAuditComments"
-                                    :autosize="{ minRows:10 }"
+                                    :autosize="{ minRows:8 }"
                                     type="textarea">
                                 </el-input>
                             </td>
@@ -209,21 +239,9 @@
                             </td>
                         </tr>
                         <tr class="file_tr">
-                            <td>进度经费使用情况附件：</td>
-                            <td class="file_td" colspan="3">
-                                <input type="file" @change="getFile($event,2)" />
-                            </td>
-                        </tr>
-                        <tr class="file_tr">
                             <td>开题报告附件：</td>
                             <td class="file_td" colspan="3">
                                 <input type="file" @change="getFile($event,3)" />
-                            </td>
-                        </tr>
-                        <tr class="file_tr">
-                            <td>课题进展附件：</td>
-                            <td class="file_td" colspan="3">
-                                <input type="file" @change="getFile($event,4)" />
                             </td>
                         </tr>
                     </tbody>
@@ -240,8 +258,8 @@
 
 <script>
     export default {
-        name:'progressReportAdd',
-        data(){
+        name: 'progressReportAdd',
+        data() {
             return {
                 radio: '',
                 showForm: {
@@ -297,7 +315,14 @@
                 }
             }
         },
-        methods:{
+        methods: {
+            alertInfo(info,type) {
+                this.$alert(info,'提示', {
+                    confirmButtonText: '确定',
+                    type: type,
+                    callback: action => {}
+                });
+            },
             errorInfo() {
                 this.$alert('提交失败','提示', {
                     confirmButtonText: '确定',
@@ -314,6 +339,60 @@
                     }
                 });
             },
+            handleTrAdd(val) {
+                if(val == 1) {
+                    let item = {
+                        progressId: 0,
+                    requireStoddTaskContent: ''
+                    };
+                    this.taskForm.push(item);
+                }else if(val == 2) {
+                    let item = {
+                        progressId: 0,
+                        currentProgressContent: ''
+                    };
+                    this.progressForm.push(item);
+                }else if(val == 3) {
+                    let item = {
+                        progressId: 0,
+                        mainProblems: ''
+                    };
+                    this.problemForm.push(item);
+                }else if(val == 4) {
+                    let item = {
+                        progressId: 0,
+                        nextWorkPlan: ''
+                    };
+                    this.planForm.push(item);
+                }
+            },
+            handleTrRemove(index,val) {
+                if(index == 1) {
+                    if(this.taskForm.length == 1) {
+                        this.alertInfo("至少保留一条","warning");
+                    }else {
+                        this.taskForm.splice(val,1);
+                    }
+                }else if(index == 2) {
+                    if(this.progressForm.length == 1) {
+                        this.alertInfo("至少保留一条","warning");
+                    }else {
+                        this.progressForm.splice(val,1);
+                    }
+                }else if(index == 3) {
+                    if(this.problemForm.length == 1) {
+                        this.alertInfo("至少保留一条","warning");
+                    }else {
+                        this.problemForm.splice(val,1);
+                    }
+                }else if(index == 4) {
+                    if(this.planForm.length == 1) {
+                        this.alertInfo("至少保留一条","warning");
+                    }else {
+                        this.planForm.splice(val,1);
+                    }
+                }
+            },
             getFile(event,index) {
                 if(index == 1) {
                     this.file.expertSuggestAnnex = event.target.files[0];
@@ -324,6 +403,7 @@
                 }else if(index == 4) {
                     this.file.subjectProgressAnnex = event.target.files[0];
                 }
+                console.log(this.file)
             },
             handleSubmit() {
                 const loading = this.$loading({
@@ -354,41 +434,37 @@
                             this.planForm[i].progressId = id;
                         }
                         // 一、合同要求研发任务
-                        let data = this.taskForm.slice(0,-1);
                         this.axios({
                             url: 'http://192.168.0.80:8087/environment/progress/insertCRDT',
                             method: 'post',
-                            data
+                            data: this.taskForm
                         }).then((res) => {
                             console.log(1)
                             console.log(res)
                             if(res.data.resultFlag == 0) {
                                 // 二、目前进展情况
-                                let data = this.progressForm.slice(0,-1);
                                 this.axios({
                                     url: 'http://192.168.0.80:8087/environment/progress/insertCP',
                                     method: 'post',
-                                    data
+                                    data: this.progressForm
                                 }).then((res) => {
                                     console.log(2)
                                     console.log(res);
                                     if(res.data.resultFlag == 0) {
                                         // 四、课题实施中存在的主要问题
-                                        let data = this.problemForm.slice(0,-1);
                                         this.axios({
                                             url: 'http://192.168.0.80:8087/environment/progress/insertPMP',
                                             method: 'post',
-                                            data
+                                            data: this.problemForm
                                         }).then((res) => {
                                             console.log(3)
                                             console.log(res);
                                             if(res.data.resultFlag == 0) {
                                                 // 五、下一步研发工作安排
-                                                let data = this.planForm.slice(0,-1);
                                                 this.axios({
                                                     url: 'http://192.168.0.80:8087/environment/progress/insertNWP',
                                                     method: 'post',
-                                                    data
+                                                    data: this.planForm
                                                 }).then((res) => {
                                                     console.log(4)
                                                     console.log(res);
@@ -501,7 +577,6 @@
                     });
                 }
 
-
                 let planFormFlag = true;
                 for(let i in this.planForm) {
                     if((this.planForm[i].nextWorkPlan + "").match(/^[ ]*$/)) {
@@ -523,53 +598,32 @@
     #progressReportAdd{
         .showForm {
             margin-bottom: 30px;
-            table.form_table{
+            table.form_table,
+            table.form_table1 {
                 min-width: 1000px;
                 width: 65.4%;
+                .td_head {
+                    font-weight: bold;
+                    font-size: 18px;
+                    background-color:#e5f3ff;
+                    height: 50px;
+                    text-align: center !important;
+                }
+                .el-textarea {
+                    .el-textarea__inner {
+                        padding: 10px;
+                    }
+                }
+                thead {
+                    th {
+                        font-weight: bold;
+                    }
+                }
                 @media screen and ( max-width: 1600px ) {
                     width: 87.4%;
                 }
                 .el-radio {
                     margin: 0 50px;
-                }
-                .item {
-                    td {
-                        * {
-                            text-align: left;  
-                        }
-                        h4 {
-                            padding: 15px 0;
-                        }
-                        p {
-                            margin-bottom: 5px;
-                        }
-                        background-color: #fff !important;
-                        padding: 0 10px;
-                        ol {
-                            padding-bottom: 5px;
-                            list-style-type: none;
-                            li {
-                                display: flex;
-                                // line-height: 1.8;
-                                .index {
-                                    display: inline-block;
-                                    padding-top: 2px;
-                                    height: 16px;
-                                }
-                                .el-textarea {
-                                    display: inline-block;
-                                    .el-textarea__inner {
-                                        // margin-top: 10px;
-                                        padding-left: 10px;
-                                    }
-                                    
-                                }
-                            }
-                        }
-                    }
-                    .el-textarea {
-                        margin-bottom: 10px;
-                    }
                 }
                 .el-date-editor {
                     width: 100%;
@@ -577,32 +631,46 @@
                         width: 100%;
                     }
                 }
-                ._inline {
+                ._inline,._inline2 {
                     display: inline-block;
                     width: 40px;
                     height: 18px;
-                    .el-input__inner{
+                    .el-input__inner {
                         height: 100%;
                         padding: 0 3px;
                         border-bottom: 1px solid #000;
                         border-radius: 0;
                     }
-                    
                 }
-                ._inline_date{
-                    width: 300px;
-                    height: 28px;
-                    .el-input__icon {
-                        display: none;
-                    }
+                ._inline2 {
                     .el-input__inner {
-                        height: 100%;
+                        background-color: #e5f3ff;
                     }
                 }
                 .el-textarea {
                     .el-textarea__inner {
                         resize: none;
                     }
+                }
+            }
+            .form_table1 {
+                tr {
+                    position: relative;
+                    i {
+                        position: absolute;
+                        font-size: 30px;
+                        top: 10px;
+                        right: -40px;
+                        cursor: pointer;
+                    }
+                    .align_left {
+                        .el-input {
+                            .el-input__inner {
+                                text-align: left;
+                            }
+                        }
+                    }
+                    
                 }
             }
             .qianding{

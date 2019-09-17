@@ -197,6 +197,7 @@
 		},
 		methods: {
 			handleAddTab(tabName,path) {
+				this.reload();
 				if(path) {
 					let flag = true;
 					for(let i = 0;i < this.tabs.length;i ++) {

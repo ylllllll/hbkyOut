@@ -8,19 +8,19 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><span class="required">*</span>指南建议名称：</td>
+                            <td>指南建议名称 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-input v-model="showForm.guideName"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td><span class="required">*</span>所属领域：</td>
+                            <td>所属领域 <span class="required">*</span>：</td>
                             <td>
                                 <el-select v-model="showForm.domain">
                                     <el-option v-for="(item,index) in optGroup1" :key="index" :label="item.content" :value="item.id"></el-option>
                                 </el-select>
                             </td>
-                            <td><span class="required">*</span>所属类别：</td>
+                            <td>所属类别 <span class="required">*</span>：</td>
                             <td>
                                 <el-select v-model="showForm.category">
                                     <el-option v-for="(item,index) in optGroup2" :key="index" :label="item.content" :value="item.id"></el-option>
@@ -28,7 +28,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><span class="required">*</span>建议理由及依据：</td>
+                            <td>建议理由及依据 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-input 
                                     v-model="showForm.reasonBasis"
@@ -40,7 +40,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><span class="required">*</span>主要研究内容和关键技术：</td>
+                            <td>主要研究内容和关键技术 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-input 
                                     v-model="showForm.researchContentTechnology"
@@ -52,7 +52,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><span class="required">*</span>预期目标和成果：</td>
+                            <td>预期目标和成果 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-input 
                                     v-model="showForm.expectedTargetOutcome"
@@ -64,55 +64,56 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><span class="required">*</span>填报单位：</td>
+                            <td>填报单位 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.fillUnit" readonly></el-input>
                             </td>
-                            <td><span class="required">*</span>单位负责人：</td>
+                            <td>单位负责人 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.unitPrincipal"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td><span class="required">*</span>拟出标准、技术规范、法规名称：</td>
+                            <td>拟出标准、技术规范、法规名称 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-input v-model="showForm.standardsSpecificationsRegulatory"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td><span class="required" tip="研究经费">*</span>研究经费预测（万元）：</td>
+                            <td>研究经费预测（万元） <span class="required">*</span>：</td>
                             <td>
                                 <el-input 
-                                v-model="showForm.researchFund"
-                                @blur="fun"></el-input>
+                                    v-model="showForm.researchFund"
+                                    @blur="fun">
+                                </el-input>
                             </td>
-                            <td><span class="required" tip="研究期限">*</span>研究期限（年）：</td>
+                            <td>研究期限（年） <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.researchPeriod"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td><span class="required">*</span>示范工程规模：</td>
+                            <td>示范工程规模 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.demonstrationScale"></el-input>
                             </td>
-                            <td><span class="required">*</span>示范工程点：</td>
+                            <td>示范工程点 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.demonstrationPoint"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td><span class="required">*</span>省内从事该领域的主要研究机构：</td>
+                            <td>省内从事该领域的主要研究机构 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-input v-model="showForm.provinceDomainMechanism"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td><span class="required">*</span>填报联系人：</td>
+                            <td>填报联系人 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.fillContacts"></el-input>
                             </td>
-                            <td><span class="required">*</span>联系人手机：</td>
+                            <td>联系人手机 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.contactPhone"></el-input>
                             </td>

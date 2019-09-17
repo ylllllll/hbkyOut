@@ -268,24 +268,25 @@
                 formData.append('openTender',new Blob([openTender],{type:"application/json"}));
                 if(this.Enclosure.winningDocument) {
                     formData.append('oldWinningDocumentFileUrl',this.fileData.winningDocumentFileUrl);
+                    formData.append('winningDocument',this.Enclosure.winningDocument);
                 }
                 if(this.Enclosure.transactionAnnouncement) {
                     formData.append('oldTransactionAnnouncementFileUrl',this.fileData.transactionAnnouncementUrl);
+                    formData.append('transactionAnnouncement',this.Enclosure.transactionAnnouncement);
                 }
+                // 顺序更改
                 if(this.Enclosure.noticeTransaction) {
                     formData.append('oldNoticeTransactionFileUrl',this.fileData.noticeTransactionUrl);
+                    formData.append('responseFile',this.Enclosure.noticeTransaction);
                 }
                 if(this.Enclosure.responseFile) {
                     formData.append('oldResponseFileFileUrl',this.fileData.responseFiletUrl);
+                    formData.append('noticeTransaction',this.Enclosure.responseFile);
                 }
                 if(this.Enclosure.otherAttachments) {
                     formData.append('oldOtherAttachmentsFileUrl',this.fileData.otherAttachmentsUrl);
+                    formData.append('otherAttachments',this.Enclosure.otherAttachments);
                 }
-                formData.append('winningDocument',this.Enclosure.winningDocument);
-                formData.append('transactionAnnouncement',this.Enclosure.transactionAnnouncement);
-                formData.append('noticeTransaction',this.Enclosure.noticeTransaction);
-                formData.append('responseFile',this.Enclosure.responseFile);
-                formData.append('otherAttachments',this.Enclosure.otherAttachments);
                 this.axios({
                     url: 'http://192.168.0.80:8087/environment/tender/updateTenderStatusByReturnCommit',
                     method: 'post',

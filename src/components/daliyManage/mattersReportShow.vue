@@ -95,25 +95,25 @@
                         <tr class="file_tr" v-if="showForm.adjustTypeId == 1">
                             <td>变更申请表附件：</td>
                             <td class="file_td" colspan="3">
-                                <a @click="handleDownload(0)">{{ fileData[0].upload_file_name }}</a>
+                                <a @click="handleDownload(0)">{{ fileData.changeApplicationAttachmentFileName }}</a>
                             </td>
                         </tr>
                         <tr class="file_tr" v-if="showForm.adjustTypeId == 2">
                             <td>备案申请表附件：</td>
                             <td class="file_td" colspan="3">
-                                <a @click="handleDownload(0)">{{ fileData[0].upload_file_name }}</a>
+                                <a @click="handleDownload(1)">{{ fileData.filingApplicationAttachmentFileName }}</a>
                             </td>
                         </tr>
                         <tr class="file_tr">
                             <td>专家论证意见附件：</td>
                             <td class="file_td" colspan="3">
-                                <a @click="handleDownload(1)">{{ fileData[1].upload_file_name }}</a>
+                                <a @click="handleDownload(2)">{{ fileData.expertArgumentationAttachmentFileName }}</a>
                             </td>
                         </tr>
                         <tr class="file_tr">
                             <td>批准文件附件：</td>
                             <td class="file_td" colspan="3">
-                                <a @click="handleDownload(2)">{{ fileData[2].upload_file_name }}</a>
+                                <a @click="handleDownload(3)">{{ fileData.approvalDocumentsAttachmentFileName }}</a>
                             </td>
                         </tr>
                         <tr>
@@ -150,21 +150,32 @@
                 paramsData: {
                     id: this.$route.params.id
                 },
-                fileData: [{ 
-                    upload_file_name: '' 
-                },{ 
-                    upload_file_name: '' 
-                },{ 
-                    upload_file_name: '' 
-                }]
+                fileData: {}
             }
         },
         methods: { 
             handleDownload(val) {
-                window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
-                                     + this.fileData[val].upload_file_address 
+                if(val == 0) {
+                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
+                                     + this.fileData.changeApplicationAttachmentFileUrl 
                                      + '&fileName=' 
-                                     + this.fileData[val].upload_file_name;
+                                     + this.fileData.changeApplicationAttachmentFileName;
+                }else if(val == 1) {
+                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
+                                     + this.fileData.filingApplicationAttachmentFileUrl 
+                                     + '&fileName=' 
+                                     + this.fileData.filingApplicationAttachmentFileName;
+                }else if(val == 2) {
+                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
+                                     + this.fileData.expertArgumentationAttachmentFileUrl 
+                                     + '&fileName=' 
+                                     + this.fileData.expertArgumentationAttachmentFileName;
+                }else if(val == 3) {
+                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
+                                     + this.fileData.approvalDocumentsAttachmentFileUrl 
+                                     + '&fileName=' 
+                                     + this.fileData.approvalDocumentsAttachmentFileName;
+                }
             },
             handleBack() {
                 this.$router.go(-1);
