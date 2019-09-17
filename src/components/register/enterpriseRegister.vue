@@ -165,106 +165,6 @@
             }
         },
         methods: {
-            handleSubmit() {
-                // 非空验证
-                for(let i in this.showForm) {
-                    if(typeof(this.showForm[i]) == "string") {
-                        if(this.showForm[i].match(/^[ ]*$/)){
-                            this.$alert('请将表格填写完整','提示', {
-                                confirmButtonText: '确定',
-                                type: 'warning',
-                                callback: action => {}
-                            });
-                            return false;
-                        }
-                    }
-                }
-                for(let i in this.showForm.administratorInformation) {
-                    if((this.showForm.administratorInformation[i] + "").match(/^[ ]*$/)){
-                        this.$alert('请将表格填写完整','提示', {
-                            confirmButtonText: '确定',
-                            type: 'warning',
-                            callback: action => {}
-                        });
-                        return false;
-                    }
-                }
-                if(this.businessFile == "" || this.legalCardIdFile == "" || this.contactCardFile == "") {
-                    this.$alert('请上传全部附件','提示', {
-                        confirmButtonText: '确定',
-                        type: 'warning',
-                        callback: action => {}
-                    });
-                    return false;
-                }
-                // // 邮箱验证
-                // let validateEmail = this.validate.validateEmail(this.showForm.administratorInformation.email);
-                // if(validateEmail) {
-                //     this.$alert(validateEmail,'提示', {
-                //         confirmButtonText: '确定',
-                //         type: 'warning',
-                //         callback: action => {}
-                //     });
-                //     return false;
-                // }
-                let formData = new FormData(),
-                    userInformation = JSON.stringify(this.showForm);
-                formData.append('userInformation',new Blob([userInformation],{type:"application/json"}));
-                formData.append('businessFile',this.businessFile);
-                formData.append('legalCardIdFile',this.legalCardIdFile);
-                formData.append('contactCardFile',this.contactCardFile);
-                this.axios({
-                    url: 'http://192.168.0.80:8087/company/register',
-                    method: 'post',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    usecredensives: true
-                }).then((res) => {
-                    if(res.data.resultFlag == 0) {
-                        this.$alert('注册成功','提示', {
-                            confirmButtonText: '确定',
-                            type: 'success',
-                            callback: action => {
-                                this.$router.push("/");
-                            }
-                        });
-                    }else {
-                        this.$alert(res.data.data,'提示', {
-                            confirmButtonText: '确定',
-                            type: 'warning',
-                            callback: action => {}
-                        });
-                    }
-                }).catch(() => {
-                    this.$alert('注册失败','提示', {
-                        confirmButtonText: '确定',
-                        type: 'warning',
-                        callback: action => {}
-                    });
-                })
-            },
-            handleBack() {
-                this.$router.go(-1);
-            },
-            getFile(event,index) {
-                // 附件格式验证
-                let _event = event.srcElement || event.target,
-                    val = _event.value,
-                    validateFile = this.validate.validateFile(event.target.files[0].name);
-                if(validateFile) {
-                    this.alertInfo(validateFile,"warning");
-                    _event.value = "";
-                    return false;
-                }
-                if(index == 1) {
-                    this.businessFile = event.target.files[0];
-                }else if(index == 2) {
-                    this.legalCardIdFile = event.target.files[0];
-                }else if(index == 3) {
-                    this.contactCardFile = event.target.files[0];
-                }
-            },
             // 验证信息提示
             alertInfo(info,type) {
                 this.$alert(info,'提示', {
@@ -272,7 +172,6 @@
                     type: type,
                     callback: action => {}
                 });
-                return false;
             },
             // 密码验证
             validatePwd(event) {
@@ -299,14 +198,14 @@
             // 统一社会信用代码验证(前端暂无，后端验证)
             // 身份证号验证
             validateCard(event) {
-                let _event = event.srcElement || event.target,
-                    val = _event.value,
-                    validateCard = this.validate.validateCard(val);
-                if(validateCard) {
-                    this.alertInfo(validateCard,"warning");
-                    _event.value = "";
-                    return false;
-                }
+                // let _event = event.srcElement || event.target,
+                //     val = _event.value,
+                //     validateCard = this.validate.validateCard(val);
+                // if(validateCard) {
+                //     this.alertInfo(validateCard,"warning");
+                //     _event.value = "";
+                //     return false;
+                // }
             },
             // 手机号验证
             validatePhone(event) {
@@ -321,7 +220,92 @@
             },
             // 邮箱验证
             validateEmail(event) {
-                
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validateEmail = this.validate.validateEmail(val);
+                if(validateEmail) {
+                    this.alertInfo(validateEmail,"warning");
+                    _event.value = "";
+                    return false;
+                }
+            },
+            handleSubmit() {
+                // 非空验证
+                for(let i in this.showForm) {
+                    let str = this.showForm[i] + "";
+                    if(!str.trim()) {
+                        this.alertInfo("请将表格填写完整","warning");
+                        return false;
+                    }
+                }
+                for(let i in this.showForm.administratorInformation) {
+                    let str = this.showForm[i] + "";
+                    if(!str.trim()) {
+                        this.alertInfo("请将表格填写完整","warning");
+                        return false;
+                    }
+                }
+                if(this.businessFile == "" || this.legalCardIdFile == "" || this.contactCardFile == "") {
+                    this.alertInfo("请上传全部附件","warning");
+                    return false;
+                }
+                const loading = this.$loading({
+                    lock: true,
+                    text: '请稍后...',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(255,255,255,0.7)'
+                });
+                let formData = new FormData(),
+                    userInformation = JSON.stringify(this.showForm);
+                formData.append('userInformation',new Blob([userInformation],{type:"application/json"}));
+                formData.append('businessFile',this.businessFile);
+                formData.append('legalCardIdFile',this.legalCardIdFile);
+                formData.append('contactCardFile',this.contactCardFile);
+                this.axios({
+                    url: 'http://192.168.0.80:8087/company/register',
+                    method: 'post',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    usecredensives: true
+                }).then((res) => {
+                    loading.close();
+                    if(res.data.resultFlag == 0) {
+                        this.$alert('注册成功','提示', {
+                            confirmButtonText: '确定',
+                            type: 'success',
+                            callback: action => {
+                                this.$router.push("/");
+                            }
+                        });
+                    }else {
+                        this.alertInfo(res.data.data,"warning");
+                    }
+                }).catch(() => {
+                    loading.close();
+                    this.alertInfo("注册失败","warning");
+                })
+            },
+            handleBack() {
+                this.$router.go(-1);
+            },
+            getFile(event,index) {
+                // 附件格式验证
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validateFile = this.validate.validateFile(event.target.files[0].name);
+                if(validateFile) {
+                    this.alertInfo(validateFile,"warning");
+                    _event.value = "";
+                    return false;
+                }
+                if(index == 1) {
+                    this.businessFile = event.target.files[0];
+                }else if(index == 2) {
+                    this.legalCardIdFile = event.target.files[0];
+                }else if(index == 3) {
+                    this.contactCardFile = event.target.files[0];
+                }
             }
         },
         beforeMount() {

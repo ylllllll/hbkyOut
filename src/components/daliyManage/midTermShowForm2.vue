@@ -405,7 +405,7 @@
                         <tr class="file_tr" style="border-top:none;">
                             <td>中期检查表附件：</td>
                             <td colspan="3" class="file_td">
-                                a
+                                <a @click="handleDownload">{{ fileData.upload_file_name }}</a>
                             </td>
                         </tr>
                     </tbody>
@@ -482,10 +482,46 @@
                     remark: ''
                 },
                 midCheckAnnex: '',
-                paramsData: {
-                    id: this.$route.params.id
-                }
+                fileData: []
             }
+        },
+        methods: {
+            handleDownload() {
+                window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
+                                    + this.fileData.upload_file_address 
+                                    + '&fileName=' 
+                                    + this.fileData.upload_file_name;
+            },
+        },
+        beforeMount() {
+            // 中期检查表
+            setTimeout(() => {
+                this.axios({
+                    url: 'http://192.168.0.80:8087/environment/daily/getMidCheckTemplateByCid',
+                    method: 'post',
+                    params: {
+                        cid: this.$parent.paramsData.id
+                    }
+                }).then((res) => {
+                    // console.log(res);
+                    this.showForm = res.data.data;
+                    for(let i in this.showForm) {
+                        this.showForm[i] += "";
+                    }
+                    this.showForm.notCompletingReason = this.showForm.notCompletingReason.split(",");
+                    let id = res.data.data.id;
+                    this.axios({
+                        url: 'http://192.168.0.80:8087/environment/daily/getMidCheckFileInfo',
+                        method: 'get',
+                        params: {
+                            mid: id
+                        }
+                    }).then((res) => {
+                        this.fileData = res.data.data[0];
+                    })
+                })
+            },0);
+            
         }
     }
 </script>

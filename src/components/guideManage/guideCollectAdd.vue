@@ -84,12 +84,15 @@
                             <td>
                                 <el-input 
                                     v-model="showForm.researchFund"
-                                    @blur="fun">
+                                    @blur="validateNum">
                                 </el-input>
                             </td>
                             <td>研究期限（年） <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.researchPeriod"></el-input>
+                                <el-input 
+                                    v-model="showForm.researchPeriod"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
@@ -115,7 +118,10 @@
                             </td>
                             <td>联系人手机 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.contactPhone"></el-input>
+                                <el-input 
+                                    v-model="showForm.contactPhone"
+                                    @blur="validatePhone">
+                                </el-input>
                             </td>
                         </tr>
                     </tbody>
@@ -157,50 +163,43 @@
             }
         },
         methods: {
-            fun(event) {
-                let _event = event.srcElement || event.target;
-                console.log(_event.value)
+            alertInfo(info,type) {
+                this.$alert(info,'提示', {
+                    confirmButtonText: '确定',
+                    type: type,
+                    callback: action => {}
+                });
+            },
+            // 数字验证
+            validateNum() {
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validateNum = this.validate.validateNum(val);
+                if(validateNum) {
+                    this.alertInfo(validateNum,"warning");
+                    _event.value = "";
+                    return false;
+                }
+            },
+            // 手机验证
+            validatePhone() {
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validatePhone = this.validate.validatePhone(val);
+                if(validatePhone) {
+                    this.alertInfo(validatePhone,"warning");
+                    _event.value = "";
+                    return false;
+                }
             },
             handleSubmit() {
                 // 非空验证
                 for(let i in this.showForm) {
-                    if((this.showForm[i] + "").match(/^[ ]*$/)){
-                        this.$alert('请将表格填写完整','提示', {
-                            confirmButtonText: '确定',
-                            type: 'warning',
-                            callback: action => {}
-                        });
+                    let str = this.showForm[i] + "";
+                    if(!str.trim()) {
+                        this.alertInfo("请将表格填写完整","warning");
                         return false;
                     } 
-                }
-                //数字验证
-                let validateNum1 = this.validate.validateNum(this.showForm.researchFund);
-                if(validateNum1) {
-                     this.$alert('研究经费' + validateNum1,'提示', {
-                        confirmButtonText: '确定',
-                        type: 'warning',
-                        callback: action => {}
-                    });
-                    return false;
-                }
-                let validateNum2 = this.validate.validateNum(this.showForm.researchPeriod);
-                if(validateNum2) {
-                     this.$alert('研究期限' + validateNum2,'提示', {
-                        confirmButtonText: '确定',
-                        type: 'warning',
-                        callback: action => {}
-                    });
-                    return false;
-                }
-                // 手机验证
-                let validatePhone = this.validate.validatePhone(this.showForm.contactPhone);
-                if(validatePhone) {
-                    this.$alert(validatePhone,'提示', {
-                        confirmButtonText: '确定',
-                        type: 'warning',
-                        callback: action => {}
-                    });
-                    return false;
                 }
                 const loading = this.$loading({
                     lock: true,
@@ -225,19 +224,11 @@
                             }
                         });
                     }else {
-                        this.$alert('提交失败','提示', {
-                            confirmButtonText: '确定',
-                            type: 'warning',
-                            callback: action => {}
-                        });
+                        this.alertInfo("提交失败","warning");
                     }
                 }).catch((err) => {
                     loading.close();
-                    this.$alert('提交失败','提示', {
-                        confirmButtonText: '确定',
-                        type: 'warning',
-                        callback: action => {}
-                    });
+                    this.alertInfo("提交失败","warning");
                 })
             }
         },

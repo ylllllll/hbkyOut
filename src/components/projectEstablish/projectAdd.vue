@@ -8,75 +8,86 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>项目名称：</td>
+                            <td>项目名称 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-input v-model="showForm.projectName"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>标书编号：</td>
+                            <td>标书编号 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.tenderNo"></el-input>
                             </td>
-                            <td>分包号：</td>
+                            <td>分包号 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.subcontractingNo"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>课题名称：</td>
+                            <td>课题名称 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.subjectName"></el-input>
                             </td>
-                            <td>投标人：</td>
+                            <td>投标人 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.bidders">
                                 </el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>中标（成交）金额：</td>
+                            <td>中标（成交）金额 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.winningAmount"></el-input>
+                                <el-input 
+                                    v-model="showForm.winningAmount"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
-                            <td>配套经费：</td>
+                            <td>配套经费 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.supportingFunds"></el-input>
+                                <el-input 
+                                    v-model="showForm.supportingFunds"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>课题负责人：</td>
+                            <td>课题负责人 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.subjectLeader">
                                 </el-input>
                             </td>
-                            <td>课题负责人联系方式：</td>
+                            <td>课题负责人手机 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.leaderContact"></el-input>
+                                <el-input 
+                                    v-model="showForm.leaderContact"
+                                    @blur="validatePhone">
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                课题联合投标单位：
+                                课题联合投标单位 <span class="required">*</span>：
                                 <br>
                                 （如有请填写）
                             </td>
                             <td>
                                 <el-input v-model="showForm.joinTenderUnits"></el-input>
                             </td>
-                            <td>责任单位：</td>
+                            <td>责任单位 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.responsibleUnit" readonly></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>经办人：</td>
+                            <td>经办人 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.operator"></el-input>
                             </td>
-                            <td>经办人联系方式：</td>
+                            <td>经办人手机 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.operatorContact">
+                                <el-input 
+                                    v-model="showForm.operatorContact"
+                                    @blur="validatePhone">
                                 </el-input>
                             </td>
                         </tr>
@@ -92,31 +103,31 @@
                             </td>
                         </tr>
                         <tr class="file_tr">
-                            <td>中标文件附件：</td>
+                            <td>中标文件附件 <span class="required">*</span>：</td>
                             <td colspan="3" class="file_td">
                                 <input type="file" @change="getFile($event,1)">
                             </td>
                         </tr>
                         <tr class="file_tr">
-                            <td>成交公告附件：</td>
+                            <td>成交公告附件 <span class="required">*</span>：</td>
                             <td colspan="3" class="file_td">
                                 <input type="file" @change="getFile($event,2)">
                             </td>
                         </tr>
                         <tr class="file_tr">
-                            <td>成交通知书附件：</td>
+                            <td>成交通知书附件 <span class="required">*</span>：</td>
                             <td colspan="3" class="file_td">
                                 <input type="file" @change="getFile($event,3)">
                             </td>
                         </tr>
                         <tr class="file_tr">
-                            <td>响应文件附件：</td>
+                            <td>响应文件附件 <span class="required">*</span>：</td>
                             <td colspan="3" class="file_td">
                                 <input type="file" @change="getFile($event,4)">
                             </td>
                         </tr>
                         <tr class="file_tr">
-                            <td>其他附件：</td>
+                            <td>其他附件 <span class="required">*</span>：</td>
                             <td colspan="3" class="file_td">
                                 <input type="file" @change="getFile($event,5)">
                             </td>
@@ -163,6 +174,13 @@
             }
         },
         methods: {
+            alertInfo(info,type) {
+                this.$alert(info,'提示', {
+                    confirmButtonText: '确定',
+                    type: type,
+                    callback: action => {}
+                });
+            },
             errorInfo() {
                 this.$alert('提交失败','提示', {
                     confirmButtonText: '确定',
@@ -170,43 +188,44 @@
                     callback: action => {}
                 });
             },
+            // 数字验证
+            validateNum() {
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validateNum = this.validate.validateNum(val);
+                if(validateNum) {
+                    this.alertInfo(validateNum,"warning");
+                    _event.value = "";
+                    return false;
+                }
+            },
+            // 手机验证
+            validatePhone() {
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validatePhone = this.validate.validatePhone(val);
+                if(validatePhone) {
+                    this.alertInfo(validatePhone,"warning");
+                    _event.value = "";
+                    return false;
+                }
+            },
             handleSubmit() {
                 // 非空验证
                 for(let i in this.showForm) {
-                    if(typeof(this.showForm[i]) == "string") {
-                        if(this.showForm[i].match(/^[ ]*$/)){
-                            this.$alert('请将表格填写完整','提示', {
-                                confirmButtonText: '确定',
-                                type: 'warning',
-                                callback: action => {}
-                            });
-                            return false;
-                        }
+                    if(i == "remark") {
+                        continue;
                     }
-                }
-                // 数字验证
-                let validateNum = [ this.validate.validateNum(this.showForm.winningAmount),
-                                    this.validate.validateNum(this.showForm.supportingFunds)];
-                for(let i in validateNum) {
-                    if(validateNum[i]) {
-                        this.$alert(validateNum[i],'提示', {
-                            confirmButtonText: '确定',
-                            type: 'warning',
-                            callback: action => {}
-                        });
+                    let str = this.showForm[i] + "";
+                    if(!str.trim()) {
+                        this.alertInfo("请将表格填写完整","warning");
                         return false;
                     }
                 }
-                // 手机号验证
-                let validatePhone = [   this.validate.validatePhone(this.showForm.leaderContact),
-                                        this.validate.validatePhone(this.showForm.operatorContact)];
-                for(let i in validatePhone) {
-                    if(validatePhone[i]) {
-                        this.$alert(validatePhone[i],'提示', {
-                            confirmButtonText: '确定',
-                            type: 'warning',
-                            callback: action => {}
-                        });
+                for(let i in this.Enclosure) {
+                    let str = this.Enclosure[i] + "";
+                    if(!str.trim()) {
+                        this.alertInfo("请上传全部附件","warning");
                         return false;
                     }
                 }
@@ -264,6 +283,15 @@
                 })
             },
             getFile(event,index) {
+                // 附件格式验证
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validateFile = this.validate.validateFile(event.target.files[0].name);
+                if(validateFile) {
+                    this.alertInfo(validateFile,"warning");
+                    _event.value = "";
+                    return false;
+                }
                 if(index == 1) {
                     this.Enclosure.winningDocument = event.target.files[0];
                 }else if(index == 2) {

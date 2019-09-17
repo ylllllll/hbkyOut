@@ -200,7 +200,7 @@ let validateEmail = (val) => {
 
 // 数字验证
 let validateNum = (val) => {
-    let pattern = /(.*?)\d+(.*?)/;
+    let pattern = /^\d+$/;
     if(!pattern.test(val)) {
         return "请输入数字";
     }else {

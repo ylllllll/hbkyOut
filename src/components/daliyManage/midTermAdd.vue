@@ -78,20 +78,33 @@
                             method: 'post',
                             data: formData
                         }).then((res) => {
-                            loading.close();
                             if(res.data.resultFlag == 0) {
-                                this.$alert('提交通过','提示', {
-                                    confirmButtonText: '确定',
-                                    type: 'success',
-                                    callback: action => {
-                                        this.axios({
-                                            url: 'http://192.168.0.80:8087/environment/daily/updateContractMidCheckStateOne',
-                                            method: 'post'
-                                        })
-                                        this.$router.go(-1);
+                                this.axios({
+                                    url: 'http://192.168.0.80:8087/environment/daily/updateContractMidCheckStateOne',
+                                    method: 'post',
+                                    data: {
+                                        cid: this.paramsData.id
                                     }
-                                });
+                                }).then((res) => {
+                                    loading.close();
+                                    if(res.data.resultFlag == 0) {
+                                        this.$alert('提交成功','提示', {
+                                            confirmButtonText: '确定',
+                                            type: 'success',
+                                            callback: action => {
+                                                this.$router.go(-1);
+                                            }
+                                        });
+                                    }else {
+                                        loading.close();
+                                        this.errorInfo();
+                                    }
+                                }).catch(() => {
+                                    loading.close();
+                                    this.errorInfo();
+                                })
                             }else {
+                                loading.close();
                                 this.errorInfo();
                             }
                         }).catch(() => {
@@ -117,6 +130,7 @@
 <style lang="less">
     #midTermAdd {
         background-color: #fff;
+        margin-bottom: 30px;
         .check_box {
             background-color: #fff;
             a {

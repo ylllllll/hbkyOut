@@ -8,13 +8,13 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>课题类别：</td>
+                            <td>课题类别 <span class="required">*</span>：</td>
                             <td>
                                 <el-select v-model="showForm.subjectCategory">
                                     <el-option v-for="(item,index) in optGroup1" :key="index" :label="item.content" :value="item.id"></el-option>
                                 </el-select>
                             </td>
-                            <td>课题编号：</td>
+                            <td>课题编号 <span class="required">*</span>：</td>
                             <td>
                                 <el-input 
                                     v-model="showForm.projectNo"
@@ -24,13 +24,13 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>课题名称：</td>
+                            <td>课题名称 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-input v-model="showForm.subjectName"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>合同开始时间：</td>
+                            <td>合同开始时间 <span class="required">*</span>：</td>
                             <td>
                                 <el-date-picker
                                     v-model="showForm.contractStartTime"
@@ -39,7 +39,7 @@
                                     value-format="yyyy-MM-dd">
                                 </el-date-picker>
                             </td>
-                            <td>合同结束时间：</td>
+                            <td>合同结束时间 <span class="required">*</span>：</td>
                             <td>
                                 <el-date-picker
                                     v-model="showForm.contractEndTime"
@@ -50,158 +50,158 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>课题负责人：</td>
+                            <td>课题负责人 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.subjeceLeader"></el-input>
                             </td>
-                            <td>课题负责人手机：</td>
+                            <td>课题负责人手机 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.subjectLeaderPhone"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>课题联系人：</td>
+                            <td>课题联系人 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.subjectContact"></el-input>
                             </td>
-                            <td>课题联系人手机：</td>
+                            <td>课题联系人手机 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.subjectContactPhone"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>承担单位：</td>
+                            <td>承担单位 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-input v-model="showForm.commitmentUnit"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>承担单位地址：</td>
+                            <td>承担单位地址 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-input v-model="showForm.commitmentUnitAddress"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>承担单位邮编：</td>
+                            <td>承担单位邮编 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.commitmentUnitZip"></el-input>
                             </td>
-                            <td>课题主管部门：</td>
+                            <td>课题主管部门 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.subjectSupervisorDepartment"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>开户银行：</td>
+                            <td>开户银行 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.openBank"></el-input>
                             </td>
-                            <td>开户银行账号：</td>
+                            <td>开户银行账号 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.openBankAccount"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>电子信箱（E-mail）：</td>
+                            <td>电子信箱 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.email"></el-input>
                             </td>
-                            <td>保证单位：</td>
+                            <td>保证单位 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.guaranteedUnits"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>保证单位联系人：</td>
+                            <td>保证单位联系人 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.guaranteedUnitContact"></el-input>
                             </td>
-                            <td>保证单位联系人手机：</td>
+                            <td>保证单位联系人手机 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.guaranteedContactPhone"></el-input>
                             </td>
                         </tr>
                         <!-- 甲方 -->
                         <tr>
-                            <td>委托单位（甲方）：</td>
+                            <td>委托单位（甲方） <span class="required">*</span>：</td>
                             <td> 
                                 <el-input v-model="showForm.commissioningUnit"></el-input>
                             </td>
-                            <td>委托单位法定代表人：</td>
+                            <td>委托单位法定代表人 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.legalRepresentativeEntrustingA"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>委托单位地址：</td>
+                            <td>委托单位地址 <span class="required">*</span>：</td>
                             <td> 
                                 <el-input v-model="showForm.commissionedUnitAddressA"></el-input>
                             </td>
-                            <td>委托单位邮政编码：</td>
+                            <td>委托单位邮政编码 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.commissionedUnitZipA"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>承担单位（乙方）：</td>
+                            <td>承担单位（乙方） <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.responsibilityUnitB"></el-input>
                             </td>
-                            <td>承担单位法定代表人：</td>
+                            <td>承担单位法定代表人 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.responsibilityLegalRepresentativeB"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>承担单位地址：</td>
+                            <td>承担单位地址 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-input v-model="showForm.commitUnitAddressB"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>承担单位邮政编码：</td>
+                            <td>承担单位邮政编码 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-input v-model="showForm.commitUnitZipB"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>承担单位课题负责人：</td>
+                            <td>承担单位课题负责人 <span class="required">*</span>：</td>
                             <td> 
                                 <el-input v-model="showForm.commitUnitLeaderB"></el-input>
                             </td>
-                            <td>承担单位课题负责人手机：</td>
+                            <td>承担单位课题负责人手机 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.commitunitLeadersPhoneB"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>承担单位课题负责人电子邮件：</td>
+                            <td>承担单位课题负责人电子邮件 <span class="required">*</span>：</td>
                             <td> 
                                 <el-input v-model="showForm.commitmentUnitEmailB"></el-input>
                             </td>
-                            <td>保证单位（丙方）：</td>
+                            <td>保证单位（丙方） <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.guaranteedUnitC"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>保证单位法定代表人/部门负责人：</td>
+                            <td>保证单位法定代表人/部门负责人 <span class="required">*</span>：</td>
                             <td> 
                                 <el-input v-model="showForm.guaranteedUnitLeaderC"></el-input>
                             </td>
-                            <td>保证单位邮政编码：</td>
+                            <td>保证单位邮政编码 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.guaranteedUnitZipC"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>保证单位地址：</td>
+                            <td>保证单位地址 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-input v-model="showForm.guaranteedUnitAddressC"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>课题签订说明：</td>
+                            <td>课题签订说明 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-input 
                                     type="textarea"
@@ -211,7 +211,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>课题的目标和主要研究内容：</td>
+                            <td>课题的目标和主要研究内容 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-input 
                                     type="textarea" 
@@ -221,7 +221,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>课题验收内容和考核指标：</td>
+                            <td>课题验收内容和考核指标 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-input 
                                     type="textarea" 
@@ -241,9 +241,9 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="height:50px;line-height:50px;">时间</td>
+                            <td style="height:50px;line-height:50px;">时间 <span class="required">*</span></td>
                             <td colspan="3" style="position:relative;">
-                                计划内容及考核指标
+                                计划内容及考核指标 <span class="required">*</span>
                                 <i class="el-icon-circle-plus-outline" @click="handleTrAdd(1)"></i>
                             </td>
                         </tr>
@@ -265,19 +265,19 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>课题承担单位：</td>
+                            <td>课题承担单位 <span class="required">*</span>：</td>
                             <td colspan="3"><el-input v-model="unitForm.bearingUnits"></el-input></td>
                         </tr>
                         <tr>
-                            <td>课题参加单位：</td>
+                            <td>课题参加单位 <span class="required">*</span>：</td>
                             <td colspan="3"><el-input v-model="unitForm.participatingUnits"></el-input></td>
                         </tr>
                          <tr>
-                            <td>境外合作单位：</td>
+                            <td>境外合作单位 <span class="required">*</span>：</td>
                             <td colspan="3"><el-input v-model="unitForm.overseasCooperationUnits"></el-input></td>
                         </tr>
                         <tr>
-                            <td>国家或地区：</td>
+                            <td>国家或地区 <span class="required">*</span>：</td>
                             <td colspan="3"><el-input v-model="unitForm.country"></el-input></td>
                         </tr>
                     </tbody>
@@ -285,14 +285,14 @@
                 <table class="form_table1" :model="unitForm" style="margin-top:10px;">
                     <tbody>
                         <tr style="background-color:#e5f3ff;">
-                            <td><span>姓名</span></td>
-                            <td><span>所在单位</span></td>
-                            <td><span>性别</span></td>
-                            <td><span>年龄</span></td>
-                            <td><span>职称</span></td>
-                            <td><span>从事专业</span></td>
-                            <td style="padding:0 10px;"><span style="white-space:nowrap;">本课题中承担工作</span></td>
-                            <td style="padding:0 10px;"><span style="white-space:nowrap;">为本课题工作时间（%）</span></td>
+                            <td><span>姓名 <span class="required">*</span></span></td>
+                            <td><span>所在单位 <span class="required">*</span></span></td>
+                            <td><span>性别 <span class="required">*</span></span></td>
+                            <td><span>年龄 <span class="required">*</span></span></td>
+                            <td><span>职称 <span class="required">*</span></span></td>
+                            <td><span>从事专业 <span class="required">*</span></span></td>
+                            <td style="padding:0 10px;"><span style="white-space:nowrap;">本课题中承担工作 <span class="required">*</span></span></td>
+                            <td style="padding:0 10px;"><span style="white-space:nowrap;">为本课题工作时间（%） <span class="required">*</span></span></td>
                             <!-- <td><span>本人签名</span></td> -->
                         </tr>
                         <tr>
@@ -713,6 +713,13 @@
             }
         },
         methods: {
+            alertInfo(info,type) {
+                this.$alert(info,'提示', {
+                    confirmButtonText: '确定',
+                    type: type,
+                    callback: action => {}
+                });
+            },
             handleOpenBox(event) {
                 this.overBoxFlag = true;
                 event.target.blur();
@@ -755,6 +762,8 @@
                 //         }
                 //     }
                 // }
+
+                return false;
                 // 手机号验证
                 let validatePhone = [   this.validate.validatePhone(this.showForm.subjectLeaderPhone),
                                         this.validate.validatePhone(this.showForm.subjectContactPhone)];

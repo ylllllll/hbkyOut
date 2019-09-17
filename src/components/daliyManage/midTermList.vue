@@ -1,38 +1,5 @@
 <template>
     <div id="midTermList">
-        <!-- 搜索 -->
-        <!-- <div class="queryForm">
-            <el-form ref="queryForm" :model="queryForm">
-                <el-form-item label="课题名称：" >
-                    <el-input v-model="queryForm.name"></el-input>
-                </el-form-item>
-                <el-form-item label="进度执行情况：">
-                    <el-select v-model="queryForm.region" placeholder="请选择">
-                        <el-option
-                            v-for="item in queryForm.reginOptions"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="技术、经济等考核指标：">
-                    <el-select v-model="queryForm.category">
-                        <el-option 
-                            v-for="item in queryForm.categoryOptions"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="承担单位：">
-                    <el-input v-model="queryForm.unit"></el-input>
-                </el-form-item>
-            </el-form>
-            <el-button>搜索</el-button>
-        </div> -->
-
         <!-- 展示列表 -->
         <div class="showList">
             <!-- 表格 -->
@@ -97,28 +64,6 @@
         name:'midTermList',
         data() {
             return {
-                queryForm: {
-                    name:'',
-                    unit:'',
-                    contacts:'',
-                    phone:'',
-                    reginOptions:[{
-                        value:'0',
-                        label:'情况1'
-                    },{
-                        value:'1',
-                        label:'情况2'
-                    }],
-                    region:'',
-                    categoryOptions:[{
-                        value:'0',
-                        label:'指标1'
-                    },{
-                        value:'1',
-                        label:'指标2'
-                    }],
-                    category:''
-                },
                 tableData: [],
                 fenye: {
                     total: 0, //共有数据多少条
@@ -197,11 +142,9 @@
             margin: 10px auto;
         }
         .showList {
-            // min-height: 680px;
             min-height: 800px;
             margin-top: 10px;
             .el-table {
-                // min-height: 630px;
                 min-height: 750px;
                 .green {
                     color: #09bd90;

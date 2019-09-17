@@ -144,7 +144,7 @@
                         <tr class="file_tr">
                             <td>专家评估表附件：</td>
                             <td colspan="3" class="file_td">
-                                a
+                                <a @click="handleDownload">{{ fileData.upload_file_name }}</a>
                             </td>
                         </tr>
                     </tbody>
@@ -159,7 +159,7 @@
         name: 'midTermShowForm1',
         data() {
             return {
-                showForm:{
+                showForm: {
                     subjectNo: '',
                     subjectLeader: '',
                     subjectName: '',
@@ -178,13 +178,44 @@
                     expertName: '',
                     fillDate: ''
                 },
-                expertAssessmentAnnex: ''
+                expertAssessmentAnnex: '',
+                fileData: []
             }
         },
         methods: {
-            getFile(event) {
-                this.expertAssessmentAnnex = event.target.files[0];
+            handleDownload() {
+                window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
+                                    + this.fileData.upload_file_address 
+                                    + '&fileName=' 
+                                    + this.fileData.upload_file_name;
             }
+        },
+        mounted() {
+            // 专家评估表
+            this.axios({
+                url: 'http://192.168.0.80:8087/environment/daily/getExpertAssessmentByCid',
+                method: 'post',
+                params: {
+                    cid: this.$parent.paramsData.id
+                }
+            }).then((res) => {
+                // console.log(res);
+                this.showForm = res.data.data;
+                for(let i in this.showForm) {
+                    this.showForm[i] += "";
+                }
+                let id = res.data.data.id;
+                this.axios({
+                    url: 'http://192.168.0.80:8087/environment/daily/getEAFileInfo',
+                    method: 'get',
+                    params: {
+                        eid: id
+                    }
+                }).then((res) => {
+                    // console.log(res);
+                    this.fileData = res.data.data[0];
+                })
+            })
         }
     }
 </script>

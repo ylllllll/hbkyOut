@@ -6,7 +6,7 @@
         </div>
         <form1 ref="form1" v-show="toggleFlag == 1"></form1>
         <form2 ref="form2" v-show="toggleFlag == 2"></form2>
-        <div class="file_box">专家意见附件：a</div>
+        <div class="file_box">专家意见附件：<a @click="handleDownload">{{ fileData.uploadFileName }}</a></div>
         <div class="btn_group">
             <el-button @click="handleBack">返回</el-button>
         </div>
@@ -28,7 +28,10 @@
                 paramsData: {
                     id: this.$route.params.id
                 },
-                subjectSuggestAnnex: ''
+                subjectSuggestAnnex: '',
+                formData1: {},
+                formData2: {},
+                fileData: {}
             }
         },
         methods: {
@@ -37,22 +40,36 @@
             },
             handleBack() {
                 this.$router.go(-1);
+            },
+            handleDownload() {
+                window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
+                                    + this.fileData.uploadFileAddress 
+                                    + '&fileName=' 
+                                    + this.fileData.uploadFileName;
             }
         },
         beforeMount() {
-            // this.axios({
-            //     url: 'http://192.168.0.80:8087/environment/dailymanage/zhuanjiapinggu/getEAByid',
-            //     method: 'get',
-            //     params: {
-            //         id: 
-            //     }
-            // })
+            setTimeout(() => {
+                // 附件
+                this.axios({
+                    url: 'http://192.168.0.80:8087/environment/contract/getSubjectSuggestAnnexInfo',
+                    method: 'get',
+                    params: {
+                        cid: this.paramsData.id
+                    }
+                }).then((res) => {
+                    console.log(res);
+                    // this.formData1 = res.data.data;
+                    this.fileData = res.data.data;
+                })
+            },0);
         }
     }
 </script>
 
 <style lang="less">
     #midTermShow {
+        margin-bottom: 30px;
         background-color: #fff;
         .check_box {
             background-color: #fff;
