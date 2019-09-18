@@ -29,8 +29,6 @@
                     id: this.$route.params.id
                 },
                 subjectSuggestAnnex: '',
-                formData1: {},
-                formData2: {},
                 fileData: {}
             }
         },

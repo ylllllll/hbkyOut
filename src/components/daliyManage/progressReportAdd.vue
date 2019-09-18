@@ -14,7 +14,11 @@
                             </td>
                             <td>课题编号：</td>
                             <td>
-                                <el-input v-model="showForm.projectNo"></el-input>
+                                <el-input 
+                                    v-model="showForm.projectNo"
+                                    placeholder="请选择"
+                                    @focus="handleOpenBox">
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
@@ -251,42 +255,60 @@
                 <el-button @click="handleSubmit">提交</el-button>
                 <el-button @click="handleBack">返回</el-button>
             </div>
-            
+        </div>
+        <div class="cover_box" v-show="overBoxFlag">
+            <div class="message_box">
+                <span class="btn_close" @click="handleCloseCover"></span>
+                <header class="message_box_header">
+                    <h2 class="title">课题查询</h2>
+                </header>
+                <section class="message_box_content">
+                    <messageBox @receipt="receiptChildInfo"></messageBox>
+                </section>
+                <div class="btn_group">
+                    <el-button @click="handleConfirmCover">确定</el-button>
+                    <el-button @click="handleCloseCover">取消</el-button>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+    import mattersReportMessageBox from '@/components/daliyManage/mattersReportMessageBox'
     export default {
         name: 'progressReportAdd',
+        components: {
+            messageBox: mattersReportMessageBox
+        },
         data() {
             return {
                 radio: '',
                 showForm: {
                     // 主表
-                    subjectName: '17',
-                    projectNo: '18',
-                    bearerUnit: '1',
+                    subjectName: '',
+                    projectNo: '',
+                    bearerUnit: '',
                     fillTime: '',
-                    projectLeader: '13',
-                    projectLeaderPhone: '14',
-                    primaryContacts: '8',
-                    primaryContactsPhone: '9',
-                    progress: '45',
+                    projectLeader: '',
+                    projectLeaderPhone: '',
+                    primaryContacts: '',
+                    primaryContactsPhone: '',
+                    progress: '',
                     // 进展情况完成比
-                    progressCompletedPercentage: '28',
+                    progressCompletedPercentage: '',
                     // 使用经费情况
-                    totalFundsInplace: '21',
-                    projectFundsUsed: '12',
-                    totalFunding: '20',
-                    provincialEnvironmentalFundsUsed: '16',
-                    provincialEnvironmentalFundsPercent: '15',
+                    totalFundsInplace: '',
+                    projectFundsUsed: '',
+                    totalFunding: '',
+                    provincialEnvironmentalFundsUsed: '',
+                    provincialEnvironmentalFundsPercent: '',
                     // 课题预计完成时间
                     contractAgreedClosingTime: '',
-                    isComplateContract: '0',
+                    isComplateContract: '',
                     estimatedAcceptanceTime: '',
                     // 单位核审意见
-                    unitAuditComments: '22'
+                    unitAuditComments: ''
                 },
                 taskForm: [{
                     progressId: 0,
@@ -312,7 +334,9 @@
                 },
                 paramsData: {
                     id: this.$route.params.id
-                }
+                },
+                overBoxFlag: false,
+                messageBoxData: {}
             }
         },
         methods: {
@@ -338,6 +362,24 @@
                         this.$router.go(-1);
                     }
                 });
+            },
+            handleOpenBox(event) {
+                this.overBoxFlag = true;
+                event.target.blur();
+            },
+            receiptChildInfo(val) {
+                this.messageBoxData = val;
+            },
+            handleCloseCover() {
+                this.overBoxFlag = false;
+            },
+            handleConfirmCover() {
+                this.overBoxFlag = false;
+                this.showForm.projectNo = this.messageBoxData.projectNo;
+                this.showForm.subjectName = this.messageBoxData.subjectName;
+                this.showForm.projectLeader = this.messageBoxData.subjeceLeader;
+                this.showForm.primaryContacts = this.messageBoxData.subjectContact;
+                this.showForm.bearerUnit = this.messageBoxData.commitmentUnit;
             },
             handleTrAdd(val) {
                 if(val == 1) {
@@ -536,59 +578,6 @@
             },
             handleBack() {
                 this.$router.go(-1);
-            },
-            autoAdd() {
-                let taskFormFlag = true;
-                for(let i in this.taskForm) {
-                    if((this.taskForm[i].requireStoddTaskContent + "").match(/^[ ]*$/)) {
-                        taskFormFlag = false;
-                    }
-                }
-                if(taskFormFlag) {
-                    this.taskForm.push({
-                        progressId: 0,
-                        requireStoddTaskContent: ''
-                    });
-                }
-
-                let progressFormFlag = true;
-                for(let i in this.progressForm) {
-                    if((this.progressForm[i].currentProgressContent + "").match(/^[ ]*$/)) {
-                        progressFormFlag = false;
-                    }
-                }
-                if(progressFormFlag) {
-                    this.progressForm.push({
-                        progressId: 0,
-                        currentProgressContent: ''
-                    });
-                }
-                
-                let problemFormFlag = true;
-                for(let i in this.problemForm) {
-                    if((this.problemForm[i].mainProblems + "").match(/^[ ]*$/)) {
-                        problemFormFlag = false;
-                    }
-                }
-                if(problemFormFlag) {
-                    this.problemForm.push({
-                        progressId: 0,
-                        mainProblems: ''
-                    });
-                }
-
-                let planFormFlag = true;
-                for(let i in this.planForm) {
-                    if((this.planForm[i].nextWorkPlan + "").match(/^[ ]*$/)) {
-                        planFormFlag = false;
-                    }
-                }
-                if(planFormFlag) {
-                    this.planForm.push({
-                        progressId: 0,
-                        nextWorkPlan: ''
-                    });
-                }
             }
         }
     }

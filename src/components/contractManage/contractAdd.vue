@@ -56,7 +56,10 @@
                             </td>
                             <td>课题负责人手机 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.subjectLeaderPhone"></el-input>
+                                <el-input 
+                                    v-model="showForm.subjectLeaderPhone"
+                                    @blur="validatePhone">
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
@@ -66,7 +69,10 @@
                             </td>
                             <td>课题联系人手机 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.subjectContactPhone"></el-input>
+                                <el-input 
+                                    v-model="showForm.subjectContactPhone"
+                                    @blur="validatePhone">
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
@@ -84,7 +90,10 @@
                         <tr>
                             <td>承担单位邮编 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.commitmentUnitZip"></el-input>
+                                <el-input 
+                                    v-model="showForm.commitmentUnitZip"
+                                    @blur="validatePostal">
+                                </el-input>
                             </td>
                             <td>课题主管部门 <span class="required">*</span>：</td>
                             <td>
@@ -104,7 +113,10 @@
                         <tr>
                             <td>电子信箱 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.email"></el-input>
+                                <el-input 
+                                    v-model="showForm.email"
+                                    @blur="validateEmail">
+                                </el-input>
                             </td>
                             <td>保证单位 <span class="required">*</span>：</td>
                             <td>
@@ -118,7 +130,10 @@
                             </td>
                             <td>保证单位联系人手机 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.guaranteedContactPhone"></el-input>
+                                <el-input 
+                                    v-model="showForm.guaranteedContactPhone"
+                                    @blur="validatePhone">
+                                </el-input>
                             </td>
                         </tr>
                         <!-- 甲方 -->
@@ -139,7 +154,10 @@
                             </td>
                             <td>委托单位邮政编码 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.commissionedUnitZipA"></el-input>
+                                <el-input 
+                                    v-model="showForm.commissionedUnitZipA"
+                                    @blur="validatePostal">
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
@@ -161,7 +179,10 @@
                         <tr>
                             <td>承担单位邮政编码 <span class="required">*</span>：</td>
                             <td colspan="3">
-                                <el-input v-model="showForm.commitUnitZipB"></el-input>
+                                <el-input 
+                                    v-model="showForm.commitUnitZipB"
+                                    @blur="validatePostal">
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
@@ -171,13 +192,19 @@
                             </td>
                             <td>承担单位课题负责人手机 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.commitunitLeadersPhoneB"></el-input>
+                                <el-input 
+                                    v-model="showForm.commitunitLeadersPhoneB"
+                                    @blur="validatePhone">
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>承担单位课题负责人电子邮件 <span class="required">*</span>：</td>
                             <td> 
-                                <el-input v-model="showForm.commitmentUnitEmailB"></el-input>
+                                <el-input 
+                                    v-model="showForm.commitmentUnitEmailB"
+                                    @blur="validateEmail">
+                                </el-input>
                             </td>
                             <td>保证单位（丙方） <span class="required">*</span>：</td>
                             <td>
@@ -191,7 +218,10 @@
                             </td>
                             <td>保证单位邮政编码 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.guaranteedUnitZipC"></el-input>
+                                <el-input 
+                                    v-model="showForm.guaranteedUnitZipC"
+                                    @blur="validatePostal">
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
@@ -310,11 +340,21 @@
                                     <el-option value="女"></el-option>
                                 </el-select>
                             </td>
-                            <td><el-input v-model="unitForm.age"></el-input></td>
+                            <td>
+                                <el-input 
+                                    v-model="unitForm.age"
+                                    @blur="validateNum">
+                                </el-input>
+                            </td>
                             <td><el-input v-model="unitForm.professionalTitle"></el-input></td>
                             <td><el-input v-model="unitForm.professional"></el-input></td>
                             <td><el-input v-model="unitForm.workTask"></el-input></td>
-                            <td><el-input v-model="unitForm.workingTime"></el-input></td>
+                            <td>
+                                <el-input 
+                                    v-model="unitForm.workingTime"
+                                    @blur="validateNum">
+                                </el-input>
+                            </td>
                            <!-- <td><el-input v-model="unitForm.name"></el-input></td> -->
                         </tr>
                         <tr>
@@ -333,19 +373,22 @@
                                     <el-option value="女"></el-option>
                                 </el-select>
                             </td>
-                            
-                            <td><el-input v-model="item.age"></el-input></td>
+                            <td>
+                                <el-input 
+                                    v-model="item.age"
+                                    @blur="validateNum">
+                                </el-input>
+                            </td>
                             <td><el-input v-model="item.professionalTitle"></el-input></td>
                             <td><el-input v-model="item.professional"></el-input></td>
                             <td><el-input v-model="item.workTask"></el-input></td>
                             <td style="position:relative;">
-                                <el-input v-model="item.workingTime"></el-input>
+                                <el-input 
+                                    v-model="item.workingTime"
+                                    @blur="validateNum">
+                                </el-input>
                                 <i class="el-icon-remove-outline" @click="handleTrRemove(2,index)"></i>
                             </td>
-                            <!-- <td style="position:relative;">
-                                <el-input v-model="unitForm.keyResearchDevelopers"></el-input>
-                                <i class="el-icon-remove-outline" @click="handleTrRemove(index)"></i>
-                            </td> -->
                         </tr>
                     </tbody>
                 </table>
@@ -371,42 +414,42 @@
                         </tr>
                         <tr>
                             <td style="text-align:center;">合计</td>
-                            <td><el-input v-model="budgetForm.fundingSourcesBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.currentYearSourceTotal"></el-input></td>
-                            <td><el-input v-model="budgetForm.nextYearSourceTotal"></el-input></td>
-                            <td><el-input v-model="budgetForm.afterYearSourceTotal"></el-input></td>
+                            <td><el-input v-model="budgetForm.fundingSourcesBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.currentYearSourceTotal" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.nextYearSourceTotal" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.afterYearSourceTotal" readonly></el-input></td>
                             <td><el-input v-model="budgetForm.fundingSourcesNote"></el-input></td>
                         </tr>
                         <tr>
                             <td>1、省环保科研课题经费</td>
-                            <td><el-input v-model="budgetForm.provincialBudget" @input="computed"></el-input></td>
-                            <td><el-input v-model="budgetForm.provincialCurrentBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.provincialNextBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.provincialAfterBudget"></el-input></td>
+                            <td><el-input v-model="budgetForm.provincialBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.provincialCurrentBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.provincialNextBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.provincialAfterBudget" @input="computed"></el-input></td>
                             <td><el-input v-model="budgetForm.provincialNoteBudget"></el-input></td>
                         </tr>
                         <tr>
                             <td>2、部门、地方配套</td>
-                            <td><el-input v-model="budgetForm.departmentBudget" @input="computed"></el-input></td>
-                            <td><el-input v-model="budgetForm.departmentCurrentBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.departmentNextBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.departmentAfterBudget"></el-input></td>
+                            <td><el-input v-model="budgetForm.departmentBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.departmentCurrentBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.departmentNextBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.departmentAfterBudget" @input="computed"></el-input></td>
                             <td><el-input v-model="budgetForm.departmentNoteBudget"></el-input></td>
                         </tr>
                         <tr>
                             <td>3、承担单位自筹</td>
-                            <td><el-input v-model="budgetForm.bearBudget" @input="computed"></el-input></td>
-                            <td><el-input v-model="budgetForm.bearCurrentBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.bearNextBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.bearAfterBudget"></el-input></td>
+                            <td><el-input v-model="budgetForm.bearBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.bearCurrentBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.bearNextBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.bearAfterBudget" @input="computed"></el-input></td>
                             <td><el-input v-model="budgetForm.bearNoteBudget"></el-input></td>
                         </tr>
                         <tr >
                             <td>4、其他来源</td>
-                            <td><el-input v-model="budgetForm.otherBudget" @input="computed"></el-input></td>
-                            <td><el-input v-model="budgetForm.otherCurrentBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.otherNextBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.otherAfterBudget"></el-input></td>
+                            <td><el-input v-model="budgetForm.otherBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.otherCurrentBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.otherNextBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.otherAfterBudget" @input="computed"></el-input></td>
                             <td><el-input v-model="budgetForm.otherNoteBudget"></el-input></td>
                         </tr>
                     </tbody>
@@ -431,84 +474,84 @@
                         </tr>
                         <tr>
                             <td style="text-align:center;">合计</td>
-                            <td><el-input v-model="budgetForm.expenditureBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.currentYearExpenditureTotal"></el-input></td>
-                            <td><el-input v-model="budgetForm.nextYearExpenditureTotal"></el-input></td>
-                            <td><el-input v-model="budgetForm.afterYearExpenditureTotal"></el-input></td>
-                            <td><el-input v-model="budgetForm.selfTotalExpenditures"></el-input></td>
+                            <td><el-input v-model="budgetForm.expenditureBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.currentYearExpenditureTotal" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.nextYearExpenditureTotal" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.afterYearExpenditureTotal" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.selfTotalExpenditures" readonly></el-input></td>
                             <td><el-input v-model="budgetForm.totalExpendituresNote"></el-input></td>
                         </tr>
                         <tr>
                             <td>1、设备费</td>
-                            <td><el-input v-model="budgetForm.equipmentBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.equipmentCurrentBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.equipmentNextBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.equipmentAfterBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.equipmentSupportingBudget"></el-input></td>
+                            <td><el-input v-model="budgetForm.equipmentBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.equipmentCurrentBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.equipmentNextBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.equipmentAfterBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.equipmentSupportingBudget" @input="computed"></el-input></td>
                             <td><el-input v-model="budgetForm.equipmentNoteBudget"></el-input></td>
                         </tr>
                         <tr>
                             <td>2、材料费</td>
-                            <td><el-input v-model="budgetForm.materialBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.materialCurrentBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.materialNextBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.materialAfterBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.materialSupportingBudget"></el-input></td>
+                            <td><el-input v-model="budgetForm.materialBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.materialCurrentBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.materialNextBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.materialAfterBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.materialSupportingBudget" @input="computed"></el-input></td>
                             <td><el-input v-model="budgetForm.materialNoteBudget"></el-input></td>
                         </tr>
                         <tr>
                             <td>3、测试化验加工费</td>
-                            <td><el-input v-model="budgetForm.testBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.testCurrentBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.testNextBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.testAfterBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.testSupportingBudget"></el-input></td>
+                            <td><el-input v-model="budgetForm.testBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.testCurrentBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.testNextBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.testAfterBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.testSupportingBudget" @input="computed"></el-input></td>
                             <td><el-input v-model="budgetForm.testNoteBudget"></el-input></td>
                         </tr>
                         <tr >
                             <td>4、燃料动力费</td>
-                            <td><el-input v-model="budgetForm.fuelBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.fuelCurrentBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.fuelNextBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.fuelAfterBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.fuelSupportingBudget"></el-input></td>
+                            <td><el-input v-model="budgetForm.fuelBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.fuelCurrentBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.fuelNextBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.fuelAfterBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.fuelSupportingBudget" @input="computed"></el-input></td>
                             <td><el-input v-model="budgetForm.fuelNoteBudget"></el-input></td>
                         </tr>
                         <tr >
                             <td>5、会议差旅费</td>
-                            <td><el-input v-model="budgetForm.mettingBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.mettingCurrentBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.mettingNextBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.mettingAfterBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.mettingSupportingBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.mettingNoteBudget"></el-input></td>
+                            <td><el-input v-model="budgetForm.mettingBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.mettingCurrentBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.mettingNextBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.mettingAfterBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.mettingSupportingBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.mettingNoteBudget" @input="computed"></el-input></td>
                         </tr>
                         <tr >
                             <td>6、劳务费</td>
-                            <td><el-input v-model="budgetForm.laborBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.laborCurrentBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.laborNextBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.laborAfterBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.laborSupportingBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.laborNoteBudget"></el-input></td>
+                            <td><el-input v-model="budgetForm.laborBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.laborCurrentBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.laborNextBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.laborAfterBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.laborSupportingBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.laborNoteBudget" @input="computed"></el-input></td>
                         </tr>
                         <tr >
                             <td>7、专家咨询费</td>
-                            <td><el-input v-model="budgetForm.expertsBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.expertsCurrentBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.expertsNextBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.expertsAfterBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.expertsSupportingBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.expertsNoteBudget"></el-input></td>
+                            <td><el-input v-model="budgetForm.expertsBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.expertsCurrentBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.expertsNextBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.expertsAfterBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.expertsSupportingBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.expertsNoteBudget" @input="computed"></el-input></td>
                         </tr>
                         <tr >
                             <td><span>8、日常水、电、气、暖消耗等</span></td>
-                            <td><el-input v-model="budgetForm.dailyBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.dailyCurrentBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.dailyNextBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.dailyAfterBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.dailySupportingBudget"></el-input></td>
-                            <td><el-input v-model="budgetForm.dailyNoteBudget"></el-input></td>
+                            <td><el-input v-model="budgetForm.dailyBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.dailyCurrentBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.dailyNextBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.dailyAfterBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.dailySupportingBudget" @input="computed"></el-input></td>
+                            <td><el-input v-model="budgetForm.dailyNoteBudget" @input="computed"></el-input></td>
                         </tr>
                         <tr class="file_tr">
                             <td>附件：</td>
@@ -628,84 +671,84 @@
                     currentYear: '',
                     nextYear: '',
                     afterYear: '',
-                    fundingSourcesBudget: '',
-                    currentYearSourceTotal: '',
-                    nextYearSourceTotal: '',
-                    afterYearSourceTotal: '',
+                    fundingSourcesBudget: '0',
+                    currentYearSourceTotal: '0',
+                    nextYearSourceTotal: '0',
+                    afterYearSourceTotal: '0',
                     fundingSourcesNote: '',
-                    provincialBudget: '',
-                    provincialCurrentBudget: '',
-                    provincialNextBudget: '',
-                    provincialAfterBudget: '',
+                    provincialBudget: '0',
+                    provincialCurrentBudget: '0',
+                    provincialNextBudget: '0',
+                    provincialAfterBudget: '0',
                     provincialNoteBudget: '',
-                    departmentBudget: '',
-                    departmentCurrentBudget: '',
-                    departmentNextBudget: '',
-                    departmentAfterBudget: '',
+                    departmentBudget: '0',
+                    departmentCurrentBudget: '0',
+                    departmentNextBudget: '0',
+                    departmentAfterBudget: '0',
                     departmentNoteBudget: '',
-                    bearBudget: '',
-                    bearCurrentBudget: '',
-                    bearNextBudget: '',
-                    bearAfterBudget: '',
+                    bearBudget: '0',
+                    bearCurrentBudget: '0',
+                    bearNextBudget: '0',
+                    bearAfterBudget: '0',
                     bearNoteBudget: '',
-                    otherBudget: '',
-                    otherCurrentBudget: '',
-                    otherNextBudget: '',
-                    otherAfterBudget: '',
+                    otherBudget: '0',
+                    otherCurrentBudget: '0',
+                    otherNextBudget: '0',
+                    otherAfterBudget: '0',
                     otherNoteBudget: '',
-                    expenditureBudget: '',
-                    currentYearExpenditureTotal: '',
-                    nextYearExpenditureTotal: '',
-                    afterYearExpenditureTotal: '',
-                    selfTotalExpenditures: '',
+                    expenditureBudget: '0',
+                    currentYearExpenditureTotal: '0',
+                    nextYearExpenditureTotal: '0',
+                    afterYearExpenditureTotal: '0',
+                    selfTotalExpenditures: '0',
                     totalExpendituresNote: '',
-                    equipmentBudget: '',
-                    equipmentCurrentBudget: '',
-                    equipmentNextBudget: '',
-                    equipmentAfterBudget: '',
-                    equipmentSupportingBudget: '',
+                    equipmentBudget: '0',
+                    equipmentCurrentBudget: '0',
+                    equipmentNextBudget: '0',
+                    equipmentAfterBudget: '0',
+                    equipmentSupportingBudget: '0',
                     equipmentNoteBudget: '',
-                    materialBudget: '',
-                    materialCurrentBudget: '',
-                    materialNextBudget: '',
-                    materialAfterBudget: '',
-                    materialSupportingBudget: '',
+                    materialBudget: '0',
+                    materialCurrentBudget: '0',
+                    materialNextBudget: '0',
+                    materialAfterBudget: '0',
+                    materialSupportingBudget: '0',
                     materialNoteBudget: '',
-                    testBudget: '',
-                    testCurrentBudget: '',
-                    testNextBudget: '',
-                    testAfterBudget: '',
-                    testSupportingBudget: '',
+                    testBudget: '0',
+                    testCurrentBudget: '0',
+                    testNextBudget: '0',
+                    testAfterBudget: '0',
+                    testSupportingBudget: '0',
                     testNoteBudget: '',
-                    fuelBudget: '',
-                    fuelCurrentBudget: '',
-                    fuelNextBudget: '',
-                    fuelAfterBudget: '',
-                    fuelSupportingBudget: '',
+                    fuelBudget: '0',
+                    fuelCurrentBudget: '0',
+                    fuelNextBudget: '0',
+                    fuelAfterBudget: '0',
+                    fuelSupportingBudget: '0',
                     fuelNoteBudget: '',
-                    mettingBudget: '',
-                    mettingCurrentBudget: '',
-                    mettingNextBudget: '',
-                    mettingAfterBudget: '',
-                    mettingSupportingBudget: '',
+                    mettingBudget: '0',
+                    mettingCurrentBudget: '0',
+                    mettingNextBudget: '0',
+                    mettingAfterBudget: '0',
+                    mettingSupportingBudget: '0',
                     mettingNoteBudget: '',
-                    laborBudget: '',
-                    laborCurrentBudget: '',
-                    laborNextBudget: '',
-                    laborAfterBudget: '',
-                    laborSupportingBudget: '',
+                    laborBudget: '0',
+                    laborCurrentBudget: '0',
+                    laborNextBudget: '0',
+                    laborAfterBudget: '0',
+                    laborSupportingBudget: '0',
                     laborNoteBudget: '',
-                    expertsBudget: '',
-                    expertsCurrentBudget: '',
-                    expertsNextBudget: '',
-                    expertsAfterBudget: '',
-                    expertsSupportingBudget: '',
+                    expertsBudget: '0',
+                    expertsCurrentBudget: '0',
+                    expertsNextBudget: '0',
+                    expertsAfterBudget: '0',
+                    expertsSupportingBudget: '0',
                     expertsNoteBudget: '',
-                    dailyBudget: '',
-                    dailyCurrentBudget: '',
-                    dailyNextBudget: '',
-                    dailyAfterBudget: '',
-                    dailySupportingBudget: '',
+                    dailyBudget: '0',
+                    dailyCurrentBudget: '0',
+                    dailyNextBudget: '0',
+                    dailyAfterBudget: '0',
+                    dailySupportingBudget: '0',
                     dailyNoteBudget: ''
                 },
                 overBoxFlag: false,
@@ -713,6 +756,7 @@
             }
         },
         methods: {
+            // 提示
             alertInfo(info,type) {
                 this.$alert(info,'提示', {
                     confirmButtonText: '确定',
@@ -720,74 +764,304 @@
                     callback: action => {}
                 });
             },
-            handleOpenBox(event) {
-                this.overBoxFlag = true;
-                event.target.blur();
+            // 手机验证
+            validatePhone(event) {
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validatePhone = this.validate.validatePhone(val);
+                if(validatePhone) {
+                    this.alertInfo(validatePhone,"warning");
+                    _event.value = "";
+                    return false;
+                }
             },
-            errorInfo() {
-                this.$alert('提交失败','提示', {
-                    confirmButtonText: '确定',
-                    type: 'warning',
-                    callback: action => {}
-                });
+            // 邮编验证
+            validatePostal(event) {
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validatePostal = this.validate.validatePostal(val);
+                if(validatePostal) {
+                    this.alertInfo(validatePostal,"warning");
+                    _event.value = "";
+                    return false;
+                }
             },
-            handleSubmit() {
-                // 非空验证
-                // let obj = {};
-                // Object.assign(obj,this.showForm);
-                // Object.assign(obj,this.unitForm);
-                // Object.assign(obj,this.budgetForm);
-                // for(let i in obj) {
-                //     if((obj[i] + "").match(/^[ ]*$/)) {
-                //         this.$alert('请将表格填写完整','提示', {
-                //             confirmButtonText: '确定',
-                //             type: 'warning',
-                //             callback: action => {}
-                //         });
-                //         return false;
-                //     }
-                // }
-                // let arr = [];
-                // arr.push(...this.progressForm);
-                // arr.push(...this.keyForm);
-                // for(let i in arr) {
-                //     for(let j in arr[i]) {
-                //         if((arr[i][j] + "").match(/^[ ]*$/)) {
-                //             this.$alert('请将表格填写完整','提示', {
-                //                 confirmButtonText: '确定',
-                //                 type: 'warning',
-                //                 callback: action => {}
-                //             });
-                //             return false;
-                //         }
-                //     }
-                // }
-
-                return false;
-                // 手机号验证
-                let validatePhone = [   this.validate.validatePhone(this.showForm.subjectLeaderPhone),
-                                        this.validate.validatePhone(this.showForm.subjectContactPhone)];
-                for(let i in validatePhone) {
-                    if(validatePhone[i]) {
-                        this.$alert(validatePhone[i],'提示', {
+            // 邮箱验证
+            validateEmail(event) {
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validateEmail = this.validate.validateEmail(val);
+                if(validateEmail) {
+                    this.alertInfo(validateEmail,"warning");
+                    _event.value = "";
+                    return false;
+                }
+            },
+            // 数字验证
+            validateNum(event) {
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validateNum = this.validate.validateNum(val);
+                if(validateNum) {
+                    this.alertInfo(validateNum,"warning");
+                    _event.value = "0";
+                    return false;
+                }
+            },
+            // 计算
+            computed() {
+                for(let i in this.budgetForm) {
+                    if(i == "fundingSourcesNote" || i == "provincialNoteBudget" || i == "departmentNoteBudget" || i == "bearNoteBudget" || i == "otherNoteBudget" || i == "totalExpendituresNote" || i == "equipmentNoteBudget" || i == "materialNoteBudget" || i == "testNoteBudget" || i == "fuelNoteBudget" || i == "mettingNoteBudget" || i == "laborSupportingBudget" || i == "expertsNoteBudget" || i == "dailyNoteBudget" || i == "laborNoteBudget") {
+                        continue;
+                    }
+                    let str = this.budgetForm[i] + "";
+                    if(this.validate.validateNum(str)) {
+                        this.budgetForm[i] = 0;
+                    }
+                }
+                // 课题经费来源预算
+                // 省环保科研课题经费
+                this.budgetForm.provincialBudget = (parseFloat(this.budgetForm.provincialCurrentBudget) * 10000
+                                                    + parseFloat(this.budgetForm.provincialNextBudget) * 10000
+                                                    + parseFloat(this.budgetForm.provincialAfterBudget) * 10000) 
+                                                    / 10000;
+                // 部门、地方配套
+                this.budgetForm.departmentBudget = (parseFloat(this.budgetForm.departmentCurrentBudget) * 10000
+                                                    + parseFloat(this.budgetForm.departmentNextBudget) * 10000
+                                                    + parseFloat(this.budgetForm.departmentAfterBudget) * 10000) 
+                                                    / 10000;
+                // 承担单位自筹
+                this.budgetForm.bearBudget = (parseFloat(this.budgetForm.bearCurrentBudget) * 10000
+                                                    + parseFloat(this.budgetForm.bearNextBudget) * 10000
+                                                    + parseFloat(this.budgetForm.bearAfterBudget) * 10000) 
+                                                    / 10000;
+                // 其他来源
+                this.budgetForm.otherBudget = (parseFloat(this.budgetForm.otherCurrentBudget) * 10000
+                                                    + parseFloat(this.budgetForm.otherNextBudget) * 10000
+                                                    + parseFloat(this.budgetForm.otherAfterBudget) * 10000) 
+                                                    / 10000;
+                // 今年
+                this.budgetForm.currentYearSourceTotal = (parseFloat(this.budgetForm.provincialCurrentBudget) * 10000
+                                                    + parseFloat(this.budgetForm.departmentCurrentBudget) * 10000
+                                                    + parseFloat(this.budgetForm.bearCurrentBudget) * 10000
+                                                    + parseFloat(this.budgetForm.otherCurrentBudget) * 10000) 
+                                                    / 10000;
+                // 明年
+                this.budgetForm.nextYearSourceTotal = (parseFloat(this.budgetForm.provincialNextBudget) * 10000
+                                                    + parseFloat(this.budgetForm.departmentNextBudget) * 10000
+                                                    + parseFloat(this.budgetForm.bearNextBudget) * 10000
+                                                    + parseFloat(this.budgetForm.otherNextBudget) * 10000) 
+                                                    / 10000;
+                // 后年
+                this.budgetForm.afterYearSourceTotal = (parseFloat(this.budgetForm.provincialAfterBudget) * 10000
+                                                    + parseFloat(this.budgetForm.departmentAfterBudget) * 10000
+                                                    + parseFloat(this.budgetForm.bearAfterBudget) * 10000
+                                                    + parseFloat(this.budgetForm.otherAfterBudget) * 10000) 
+                                                    / 10000;
+                // 合计
+                this.budgetForm.fundingSourcesBudget = (parseFloat(this.budgetForm.currentYearSourceTotal) * 10000
+                                                    + parseFloat(this.budgetForm.nextYearSourceTotal) * 10000
+                                                    + parseFloat(this.budgetForm.afterYearSourceTotal) * 10000) 
+                                                    / 10000;
+                // 课题总经费支出预算
+                // 设备费
+                this.budgetForm.equipmentBudget = (parseFloat(this.budgetForm.equipmentCurrentBudget) * 10000
+                                                    + parseFloat(this.budgetForm.equipmentNextBudget) * 10000
+                                                    + parseFloat(this.budgetForm.equipmentAfterBudget) * 10000
+                                                    + parseFloat(this.budgetForm.equipmentSupportingBudget) * 10000) 
+                                                    / 10000;
+                // 材料费
+                this.budgetForm.materialBudget = (parseFloat(this.budgetForm.materialCurrentBudget) * 10000
+                                                    + parseFloat(this.budgetForm.materialNextBudget) * 10000
+                                                    + parseFloat(this.budgetForm.materialAfterBudget) * 10000
+                                                    + parseFloat(this.budgetForm.materialSupportingBudget) * 10000) 
+                                                    / 10000;
+                // 测试化验加工费
+                this.budgetForm.testBudget = (parseFloat(this.budgetForm.testCurrentBudget) * 10000
+                                                    + parseFloat(this.budgetForm.testNextBudget) * 10000
+                                                    + parseFloat(this.budgetForm.testAfterBudget) * 10000
+                                                    + parseFloat(this.budgetForm.testSupportingBudget) * 10000) 
+                                                    / 10000;
+                // 燃料动力费
+                this.budgetForm.fuelBudget = (parseFloat(this.budgetForm.fuelCurrentBudget) * 10000
+                                                    + parseFloat(this.budgetForm.fuelNextBudget) * 10000
+                                                    + parseFloat(this.budgetForm.fuelAfterBudget) * 10000
+                                                    + parseFloat(this.budgetForm.fuelSupportingBudget) * 10000) 
+                                                    / 10000;
+                // 会议差旅费
+                this.budgetForm.mettingBudget = (parseFloat(this.budgetForm.mettingCurrentBudget) * 10000
+                                                    + parseFloat(this.budgetForm.mettingNextBudget) * 10000
+                                                    + parseFloat(this.budgetForm.mettingAfterBudget) * 10000
+                                                    + parseFloat(this.budgetForm.mettingSupportingBudget) * 10000) 
+                                                    / 10000;
+                // 劳务费
+                this.budgetForm.laborBudget = (parseFloat(this.budgetForm.laborCurrentBudget) * 10000
+                                                    + parseFloat(this.budgetForm.laborNextBudget) * 10000
+                                                    + parseFloat(this.budgetForm.laborAfterBudget) * 10000
+                                                    + parseFloat(this.budgetForm.laborSupportingBudget) * 10000) 
+                                                    / 10000;
+                // 专家咨询费
+                this.budgetForm.expertsBudget = (parseFloat(this.budgetForm.expertsCurrentBudget) * 10000
+                                                    + parseFloat(this.budgetForm.expertsNextBudget) * 10000
+                                                    + parseFloat(this.budgetForm.expertsAfterBudget) * 10000
+                                                    + parseFloat(this.budgetForm.expertsSupportingBudget) * 10000) 
+                                                    / 10000;
+                // 日常水、电、气、暖消耗等
+                this.budgetForm.dailyBudget = (parseFloat(this.budgetForm.dailyCurrentBudget) * 10000
+                                                    + parseFloat(this.budgetForm.dailyNextBudget) * 10000
+                                                    + parseFloat(this.budgetForm.dailyAfterBudget) * 10000
+                                                    + parseFloat(this.budgetForm.dailySupportingBudget) * 10000) 
+                                                    / 10000;
+                // 今年
+                this.budgetForm.currentYearExpenditureTotal = (parseFloat(this.budgetForm.equipmentCurrentBudget) * 10000
+                                                    + parseFloat(this.budgetForm.materialCurrentBudget) * 10000
+                                                    + parseFloat(this.budgetForm.testCurrentBudget) * 10000
+                                                    + parseFloat(this.budgetForm.fuelCurrentBudget) * 10000
+                                                    + parseFloat(this.budgetForm.mettingCurrentBudget) * 10000
+                                                    + parseFloat(this.budgetForm.laborCurrentBudget) * 10000
+                                                    + parseFloat(this.budgetForm.expertsCurrentBudget) * 10000
+                                                    + parseFloat(this.budgetForm.dailyCurrentBudget) * 10000) 
+                                                    / 10000;
+                // 明年
+                this.budgetForm.nextYearExpenditureTotal = (parseFloat(this.budgetForm.equipmentNextBudget) * 10000
+                                                    + parseFloat(this.budgetForm.materialNextBudget) * 10000
+                                                    + parseFloat(this.budgetForm.testNextBudget) * 10000
+                                                    + parseFloat(this.budgetForm.fuelNextBudget) * 10000
+                                                    + parseFloat(this.budgetForm.mettingNextBudget) * 10000
+                                                    + parseFloat(this.budgetForm.laborNextBudget) * 10000
+                                                    + parseFloat(this.budgetForm.expertsNextBudget) * 10000
+                                                    + parseFloat(this.budgetForm.dailyNextBudget) * 10000) 
+                                                    / 10000;
+                // 后年
+                this.budgetForm.afterYearExpenditureTotal = (parseFloat(this.budgetForm.equipmentAfterBudget) * 10000
+                                                    + parseFloat(this.budgetForm.materialAfterBudget) * 10000
+                                                    + parseFloat(this.budgetForm.testAfterBudget) * 10000
+                                                    + parseFloat(this.budgetForm.fuelAfterBudget) * 10000
+                                                    + parseFloat(this.budgetForm.mettingAfterBudget) * 10000
+                                                    + parseFloat(this.budgetForm.laborAfterBudget) * 10000
+                                                    + parseFloat(this.budgetForm.expertsAfterBudget) * 10000
+                                                    + parseFloat(this.budgetForm.dailyAfterBudget) * 10000) 
+                                                    / 10000;
+                // 自筹配套经费
+                this.budgetForm.selfTotalExpenditures = (parseFloat(this.budgetForm.equipmentSupportingBudget) * 10000
+                                                    + parseFloat(this.budgetForm.materialSupportingBudget) * 10000
+                                                    + parseFloat(this.budgetForm.testSupportingBudget) * 10000
+                                                    + parseFloat(this.budgetForm.fuelSupportingBudget) * 10000
+                                                    + parseFloat(this.budgetForm.mettingSupportingBudget) * 10000
+                                                    + parseFloat(this.budgetForm.laborSupportingBudget) * 10000
+                                                    + parseFloat(this.budgetForm.expertsSupportingBudget) * 10000
+                                                    + parseFloat(this.budgetForm.dailySupportingBudget) * 10000) 
+                                                    / 10000;
+                // 合计
+                this.budgetForm.expenditureBudget = (parseFloat(this.budgetForm.currentYearExpenditureTotal) * 10000
+                                                    + parseFloat(this.budgetForm.nextYearExpenditureTotal) * 10000
+                                                    + parseFloat(this.budgetForm.afterYearExpenditureTotal) * 10000
+                                                    + parseFloat(this.budgetForm.selfTotalExpenditures) * 10000) 
+                                                    / 10000;
+            },
+            // 文件
+            getFile(event) {
+                // 附件格式验证
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validateFile = this.validate.validateFile(event.target.files[0].name);
+                if(validateFile) {
+                    this.alertInfo(validateFile,"warning");
+                    _event.value = "";
+                    return false;
+                }
+                this.file = event.target.files[0];
+            },
+            // 多行操作
+            handleTrAdd(val) {
+                if(val == 1) {
+                    let item = {
+                        contractId: 0,
+                        time: '',
+                        programContentAssessmentIndicators: ''
+                    };
+                    this.progressForm.push(item);
+                }else if(val == 2) {
+                    let item = {
+                        contractId: 0,
+                        keyDevName: '',
+                        unitName: '',
+                        gender: '',
+                        age: '',
+                        professionalTitle: '',
+                        professional: '',
+                        workTask: '',
+                        workingTime: ''
+                    };
+                    this.keyForm.push(item);
+                }
+            },
+            handleTrRemove(index,val) {
+                if(index == 1) {
+                    if(this.progressForm.length == 1) {
+                        this.$alert('至少保留一条','提示', {
                             confirmButtonText: '确定',
                             type: 'warning',
                             callback: action => {}
                         });
+                    }else {
+                        this.progressForm.splice(val,1);
+                    }
+                }else if(index == 2) {
+                    if(this.keyForm.length == 1) {
+                        this.$alert('至少保留一条','提示', {
+                            confirmButtonText: '确定',
+                            type: 'warning',
+                            callback: action => {}
+                        });
+                    }else {
+                        this.keyForm.splice(val,1);
+                    }
+                }
+            },
+            // 弹窗操作
+            handleOpenBox(event) {
+                this.overBoxFlag = true;
+                event.target.blur();
+            },
+            handleCloseCover() {
+                this.overBoxFlag = false;
+            },
+            receiptChildInfo(val) {
+                this.messageBoxData = val;
+            },
+            handleConfirmCover() {
+                this.overBoxFlag = false;
+                this.showForm.projectNo = this.messageBoxData.projectNo;
+                this.showForm.subjectName = this.messageBoxData.subjectName;
+                this.showForm.subjeceLeader = this.messageBoxData.subjectLeader;
+                this.showForm.subjectLeaderPhone = this.messageBoxData.leaderContact;
+            },
+            // 页面操作
+            handleSubmit() {
+                // 非空验证
+                let obj = {};
+                Object.assign(obj,this.showForm);
+                Object.assign(obj,this.unitForm);
+                for(let i in obj) {
+                    let str = obj[i] + "";
+                    if(!str.trim()) {
+                        this.alertInfo("请将表格填写完整","warning");
                         return false;
                     }
                 }
-
-
-                //数字验证
-                // let validateNum = this.validate.validateNum(this.budgetForm);
-                // if(validateNum) {
-                //      this.$alert(validateNum,'提示', {
-                //         confirmButtonText: '确定',
-                //         type: 'warning',
-                //         callback: action => {}
-                //     });
-                // }
+                let arr = [];
+                arr.push(...this.progressForm);
+                arr.push(...this.keyForm);
+                for(let i in arr) {
+                    for(let j in arr[i]) {
+                        let str = arr[i][j] + "";
+                        if(!str.trim()) {
+                            this.alertInfo("请将表格填写完整","warning");
+                            return false;
+                        }
+                    }
+                }
                 const loading = this.$loading({
                     lock: true,
                     text: '请稍后...',
@@ -873,120 +1147,52 @@
                                                                     }
                                                                 });
                                                             }else {  
-                                                                this.errorInfo();
+                                                                this.alertInfo("提交失败","warning");
                                                             }
                                                         }).catch(() => {
                                                             loading.close();
-                                                            this.errorInfo();
+                                                            this.alertInfo("提交失败","warning");
                                                         })
                                                     }else {
                                                         loading.close();
-                                                        this.errorInfo();
+                                                        this.alertInfo("提交失败","warning");
                                                     }
                                                 }).catch(() => {
                                                     loading.close();
-                                                    this.errorInfo();
+                                                    this.alertInfo("提交失败","warning");
                                                 })
                                             }else {
                                                 loading.close();
-                                                this.errorInfo();
+                                                this.alertInfo("提交失败","warning");
                                             }
                                         }).catch(() => {
                                             loading.close();
-                                            this.errorInfo();
+                                            this.alertInfo("提交失败","warning");
                                         })
                                     }else {
                                         loading.close();
-                                        this.errorInfo();
+                                        this.alertInfo("提交失败","warning");
                                     }
                                 }).catch(() => {
                                     loading.close();
-                                    this.errorInfo();
+                                    this.alertInfo("提交失败","warning");
                                 })
                             }else {
                                 loading.close();
-                                this.errorInfo();
+                                this.alertInfo("提交失败","warning");
                             }
                         }).catch(() => {
                             loading.close();
-                            this.errorInfo();
+                            this.alertInfo("提交失败","warning");
                         })
                     }else {
                         loading.close();
-                        this.errorInfo();
+                        this.alertInfo("提交失败","warning");
                     }
                 }).catch(() => {
                     loading.close();
-                    this.errorInfo();
+                    this.alertInfo("提交失败","warning");
                 })
-            },
-            handleTrAdd(val) {
-                if(val == 1) {
-                    let item = {
-                        contractId: 0,
-                        time: '',
-                        programContentAssessmentIndicators: ''
-                    };
-                    this.progressForm.push(item);
-                }else if(val == 2) {
-                    let item = {
-                        contractId: 0,
-                        keyDevName: '',
-                        unitName: '',
-                        gender: '',
-                        age: '',
-                        professionalTitle: '',
-                        professional: '',
-                        workTask: '',
-                        workingTime: ''
-                    };
-                    this.keyForm.push(item);
-                }
-            },
-            handleTrRemove(index,val) {
-                if(index == 1) {
-                    if(this.progressForm.length == 1) {
-                        this.$alert('至少保留一条','提示', {
-                            confirmButtonText: '确定',
-                            type: 'warning',
-                            callback: action => {}
-                        });
-                    }else {
-                        this.progressForm.splice(val,1);
-                    }
-                }else if(index == 2) {
-                    if(this.keyForm.length == 1) {
-                        this.$alert('至少保留一条','提示', {
-                            confirmButtonText: '确定',
-                            type: 'warning',
-                            callback: action => {}
-                        });
-                    }else {
-                        this.keyForm.splice(val,1);
-                    }
-                }
-            },
-            computed() {
-                // this.budgetForm.fundingSourcesBudget = (parseFloat(this.budgetForm.provincialBudget) * 10000
-                //                                      + parseFloat(this.budgetForm.departmentBudget) * 10000
-                //                                      + parseFloat(this.budgetForm.bearBudget) * 10000
-                //                                      + parseFloat(this.budgetForm.otherBudget) * 10000) / 10000;
-            },
-            receiptChildInfo(val) {
-                this.messageBoxData = val;
-            },
-            handleCloseCover() {
-                this.overBoxFlag = false;
-            },
-            handleConfirmCover() {
-                this.overBoxFlag = false;
-                this.showForm.projectNo = this.messageBoxData.projectNo;
-                this.showForm.subjectName = this.messageBoxData.subjectName;
-                this.showForm.subjeceLeader = this.messageBoxData.subjectLeader;
-                this.showForm.subjectLeaderPhone = this.messageBoxData.leaderContact;
-            },
-            getFile(event) {
-                this.file = event.target.files[0];
             }
         },
         beforeMount() {
@@ -1004,6 +1210,7 @@
             })
         },
         mounted() {
+            // 获取本地年份
             let currentYear = new Date().getFullYear(),
                 nextYear = currentYear + 1,
                 afterYear = nextYear + 1;

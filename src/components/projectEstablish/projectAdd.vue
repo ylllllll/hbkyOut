@@ -174,17 +174,11 @@
             }
         },
         methods: {
+            // 提示
             alertInfo(info,type) {
                 this.$alert(info,'提示', {
                     confirmButtonText: '确定',
                     type: type,
-                    callback: action => {}
-                });
-            },
-            errorInfo() {
-                this.$alert('提交失败','提示', {
-                    confirmButtonText: '确定',
-                    type: 'warning',
                     callback: action => {}
                 });
             },
@@ -210,6 +204,30 @@
                     return false;
                 }
             },
+            // 文件
+            getFile(event,index) {
+                // 附件格式验证
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validateFile = this.validate.validateFile(event.target.files[0].name);
+                if(validateFile) {
+                    this.alertInfo(validateFile,"warning");
+                    _event.value = "";
+                    return false;
+                }
+                if(index == 1) {
+                    this.Enclosure.winningDocument = event.target.files[0];
+                }else if(index == 2) {
+                    this.Enclosure.transactionAnnouncement = event.target.files[0];
+                }else if(index == 3) {
+                    this.Enclosure.noticeTransaction = event.target.files[0];
+                }else if(index == 4) {
+                    this.Enclosure.responseFile = event.target.files[0];
+                }else if(index == 5) {
+                    this.Enclosure.otherAttachments = event.target.files[0];
+                }
+            },
+            // 页面操作
             handleSubmit() {
                 // 非空验证
                 for(let i in this.showForm) {
@@ -268,41 +286,21 @@
                                         document.querySelector(".is-active").nextSibling.click();
                                     }
                                 });
-                            }else { this.errorInfo(); }
+                            }else {
+                                this.alertInfo("提交失败","warning");
+                            }
                         }).catch(() => { 
                             loading.close();
-                            this.errorInfo(); 
+                            this.alertInfo("提交失败","warning"); 
                         })
                     }else { 
                         loading.close();
-                        this.errorInfo(); 
+                        this.alertInfo("提交失败","warning"); 
                     }
                 }).catch(() => {
                     loading.close();
-                    this.errorInfo();
+                    this.alertInfo("提交失败","warning");
                 })
-            },
-            getFile(event,index) {
-                // 附件格式验证
-                let _event = event.srcElement || event.target,
-                    val = _event.value,
-                    validateFile = this.validate.validateFile(event.target.files[0].name);
-                if(validateFile) {
-                    this.alertInfo(validateFile,"warning");
-                    _event.value = "";
-                    return false;
-                }
-                if(index == 1) {
-                    this.Enclosure.winningDocument = event.target.files[0];
-                }else if(index == 2) {
-                    this.Enclosure.transactionAnnouncement = event.target.files[0];
-                }else if(index == 3) {
-                    this.Enclosure.noticeTransaction = event.target.files[0];
-                }else if(index == 4) {
-                    this.Enclosure.responseFile = event.target.files[0];
-                }else if(index == 5) {
-                    this.Enclosure.otherAttachments = event.target.files[0];
-                }
             }
         },
         beforeCreate() {

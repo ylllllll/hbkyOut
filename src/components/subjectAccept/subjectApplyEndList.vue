@@ -111,19 +111,21 @@ export default {
                 topicName:'',
                 topicNumber:''
             },
-            tableData:[{
-                id:'',
-                name:'1',
-                unit:'1',
-                startDate:'1',
-                endDate:'1',
-                level:'1',
-                innovate:'1',
-                completion:'2',
-                acceptanceCertificate:{
-                    achievementLevel:null,
-                }
-            }],
+            tableData:[
+            //     {
+            //     id:'',
+            //     name:'1',
+            //     unit:'1',
+            //     startDate:'1',
+            //     endDate:'1',
+            //     level:'1',
+            //     innovate:'1',
+            //     completion:'2',
+            //     acceptanceCertificate:{
+            //         achievementLevel:null,
+            //     }
+            // }
+            ],
             // 成果水平
             achievementLevelOptions:[{
                 id:'',
@@ -135,7 +137,7 @@ export default {
                 pageSize:10, //每页显示的条数
                 pageSizes:[10,20,30,40] //选择每页显示多少条
             },
-            loading:true
+            loading:false
         }
     },
     methods:{

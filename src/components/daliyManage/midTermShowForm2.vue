@@ -390,7 +390,7 @@
                         <tr id="my_tr4">
                             <td colspan="4">
                                 <el-input 
-                                    v-model="showForm.remark"
+                                    v-model="showForm.projectUndertakerReviewOpinion"
                                     :autosize="{ minRows:6 }"
                                     type="textarea"
                                     maxlength="300"
@@ -479,7 +479,7 @@
                     actualProgressProject: '',
                     projectFundsUsage: '',
                     recommendationsProblemsSolutions: '',
-                    remark: ''
+                    projectUndertakerReviewOpinion: ''
                 },
                 midCheckAnnex: '',
                 fileData: []
@@ -521,7 +521,6 @@
                     })
                 })
             },0);
-            
         }
     }
 </script>

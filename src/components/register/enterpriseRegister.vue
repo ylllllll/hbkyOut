@@ -165,7 +165,7 @@
             }
         },
         methods: {
-            // 验证信息提示
+            // 提示
             alertInfo(info,type) {
                 this.$alert(info,'提示', {
                     confirmButtonText: '确定',
@@ -229,6 +229,26 @@
                     return false;
                 }
             },
+            // 文件
+            getFile(event,index) {
+                // 附件格式验证
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validateFile = this.validate.validateFile(event.target.files[0].name);
+                if(validateFile) {
+                    this.alertInfo(validateFile,"warning");
+                    _event.value = "";
+                    return false;
+                }
+                if(index == 1) {
+                    this.businessFile = event.target.files[0];
+                }else if(index == 2) {
+                    this.legalCardIdFile = event.target.files[0];
+                }else if(index == 3) {
+                    this.contactCardFile = event.target.files[0];
+                }
+            },
+            // 页面操作
             handleSubmit() {
                 // 非空验证
                 for(let i in this.showForm) {
@@ -289,24 +309,6 @@
             handleBack() {
                 this.$router.go(-1);
             },
-            getFile(event,index) {
-                // 附件格式验证
-                let _event = event.srcElement || event.target,
-                    val = _event.value,
-                    validateFile = this.validate.validateFile(event.target.files[0].name);
-                if(validateFile) {
-                    this.alertInfo(validateFile,"warning");
-                    _event.value = "";
-                    return false;
-                }
-                if(index == 1) {
-                    this.businessFile = event.target.files[0];
-                }else if(index == 2) {
-                    this.legalCardIdFile = event.target.files[0];
-                }else if(index == 3) {
-                    this.contactCardFile = event.target.files[0];
-                }
-            }
         },
         beforeMount() {
             // 请求单位性质

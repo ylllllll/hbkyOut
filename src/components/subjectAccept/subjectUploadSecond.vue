@@ -262,7 +262,10 @@
                             <td>专业</td>
                             <td>学历</td>
                             <td>职称</td>
-                            <td>联系电话</td>
+                            <td style="position:relative;">
+                                联系电话
+                                <i class="el-icon-circle-plus-outline icon" @click="handleTrAdd(1)"></i>
+                            </td>
                         </tr>
                         <tr v-for="(item,index) in showForm.acceptanceCertificateSubjectPeopleList" :key="index">
 
@@ -297,8 +300,9 @@
                             <td>
                                 <el-input v-model="item.title"></el-input>
                             </td>
-                            <td>
+                            <td style="position:relative;">
                                 <el-input v-model="item.phone"></el-input>
+                                <i class="el-icon-remove-outline icon" @click="handleTrRemove(1,index)"></i>
                             </td>
                         </tr>
                     </tbody>
@@ -500,7 +504,10 @@
                             <td>技术职称</td>
                             <td>学历</td>
                             <td>工作单位 </td>
-                            <td><span>承担的主要研究任务</span></td>
+                            <td style="position:relative;">
+                                <span>承担的主要研究任务</span>
+                                <i class="el-icon-circle-plus-outline icon" @click="handleTrAdd(2)"></i>
+                            </td>
                         </tr>
                         <tr v-for="(item,index) in showForm.acceptanceCertificatePrincipalPersonnelList" :key="index">
                             <td>
@@ -533,8 +540,9 @@
                             <td>
                                 <el-input v-model="item.participantWorkUnit"></el-input>
                             </td>
-                            <td>
+                            <td style="position:relative;">
                                 <el-input v-model="item.taskTaking"></el-input>
+                                <i class="el-icon-remove-outline icon" @click="handleTrRemove(2,index)"></i>
                             </td>
                         </tr>
                     </tbody>
@@ -575,6 +583,7 @@
         </div>
     </div>
 </template>
+
 <script>
 export default {
     name:'subjectUploadSecond',
@@ -756,6 +765,55 @@ export default {
                 return
             }
             this.submitAxios($lastReport)
+        },
+        // 多行操作
+        handleTrAdd(val) {
+            if(val == 1) {
+                let item = {
+                    name:'',
+                    sex:'',
+                    birthDate:'',
+                    major:'',
+                    education:'',
+                    title:'',
+                    phone:''
+                };
+                this.showForm.acceptanceCertificateSubjectPeopleList.push(item);
+            }else if(val == 2) {
+                let item = {
+                    participantName:'',
+                    participantSex:'',
+                    participantBirthDate:'',
+                    participantTechnicalTitle:'',
+                    participantEducation:'',
+                    participantWorkUnit:'',
+                    taskTaking:''
+                };
+                this.showForm.acceptanceCertificatePrincipalPersonnelList.push(item);
+            }
+        },
+        handleTrRemove(index,val) {
+            if(index == 1) {
+                if(this.showForm.acceptanceCertificateSubjectPeopleList.length == 1) {
+                    this.$alert('至少保留一条','提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning',
+                        callback: action => {}
+                    });
+                }else {
+                    this.showForm.acceptanceCertificateSubjectPeopleList.splice(val,1);
+                }
+            }else if(index == 2) {
+                if(this.showForm.acceptanceCertificatePrincipalPersonnelList.length == 1) {
+                    this.$alert('至少保留一条','提示', {
+                        confirmButtonText: '确定',
+                        type: 'warning',
+                        callback: action => {}
+                    });
+                }else {
+                    this.showForm.acceptanceCertificatePrincipalPersonnelList.splice(val,1);
+                }
+            }
         },
         submitAxios(lastReport){
             let _this = this
@@ -1015,6 +1073,16 @@ export default {
             //         font-size: 30px;
             //     }
             // }
+            tr {
+                position: relative;
+                .icon {
+                    position: absolute;
+                    font-size: 30px;
+                    top: 10px;
+                    right: -40px;
+                    cursor: pointer;
+                }
+            }
         }
     }
 }

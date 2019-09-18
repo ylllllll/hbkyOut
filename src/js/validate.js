@@ -200,9 +200,19 @@ let validateEmail = (val) => {
 
 // 数字验证
 let validateNum = (val) => {
-    let pattern = /^\d+$/;
+    let pattern = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/;
     if(!pattern.test(val)) {
         return "请输入数字";
+    }else {
+        return false;
+    }
+}
+
+// 邮编验证
+let validatePostal = (val) => {
+    let pattern = /^[0-9]{6}$/;
+    if(!pattern.test(val)) {
+        return "请输入正确的邮编";
     }else {
         return false;
     }
@@ -211,7 +221,7 @@ let validateNum = (val) => {
 // 验证附件(完整)
 let validateFile = (val) => {
     let ext = val.slice(val.lastIndexOf(".") + 1).toLowerCase();  
-    if ("doc" == ext || "docx" == ext || "zip" == ext || "rar" == ext || "jpg" == ext || "jpeg" == ext || "png" == ext || "gif" == ext || "xls" == ext || "xlsx" == ext || "pdf" == ext || "ceb" == ext || "mp3" == ext || "mp4" == ext || "asf" == ext || "swf" == ext || "txt" == ext || "" == ext) {  
+    if ("doc" == ext || "docx" == ext || "zip" == ext || "rar" == ext || "7z" == ext  || "jpg" == ext || "jpeg" == ext || "png" == ext || "gif" == ext || "xls" == ext || "xlsx" == ext || "pdf" == ext || "ceb" == ext || "mp3" == ext || "mp4" == ext || "asf" == ext || "swf" == ext || "txt" == ext || "" == ext) {  
         return false;
     }else {
         return "该文件格式不支持上传";  
@@ -224,5 +234,6 @@ export default {
     validateCard,
     validateEmail,
     validateNum,
-    validateFile
+    validateFile,
+    validatePostal
 }

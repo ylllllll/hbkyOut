@@ -14,7 +14,11 @@
                             </td>
                             <td>课题编号：</td>
                             <td>
-                                <el-input v-model="showForm.projectNo"></el-input>
+                                <el-input 
+                                    v-model="showForm.projectNo"
+                                    placeholder="请选择"
+                                    @focus="handleOpenBox">
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
@@ -124,12 +128,31 @@
                 <el-button @click="handleBack">返回</el-button>
             </div>
         </div>
+        <div class="cover_box" v-show="overBoxFlag">
+            <div class="message_box">
+                <span class="btn_close" @click="handleCloseCover"></span>
+                <header class="message_box_header">
+                    <h2 class="title">课题查询</h2>
+                </header>
+                <section class="message_box_content">
+                    <messageBox @receipt="receiptChildInfo"></messageBox>
+                </section>
+                <div class="btn_group">
+                    <el-button @click="handleConfirmCover">确定</el-button>
+                    <el-button @click="handleCloseCover">取消</el-button>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
+    import mattersReportMessageBox from '@/components/daliyManage/mattersReportMessageBox'
     export default {
         name:'mattersReportAdd',
+        components: {
+            messageBox: mattersReportMessageBox
+        },
         data(){
             return {
                 checkbox: [],
@@ -150,7 +173,9 @@
                     filingApplicationAttachment: '',
                     expertArgumentationAttachment: '',
                     approvalDocumentsAttachment: ''
-                }
+                },
+                overBoxFlag: false,
+                messageBoxData: {}
             }
         },
         methods: { 
@@ -160,6 +185,23 @@
                     type: 'warning',
                     callback: action => {}
                 });
+            },
+            handleOpenBox(event) {
+                this.overBoxFlag = true;
+                event.target.blur();
+            },
+            receiptChildInfo(val) {
+                this.messageBoxData = val;
+            },
+            handleCloseCover() {
+                this.overBoxFlag = false;
+            },
+            handleConfirmCover() {
+                this.overBoxFlag = false;
+                this.showForm.projectNo = this.messageBoxData.projectNo;
+                this.showForm.subjectName = this.messageBoxData.subjectName;
+                this.showForm.unitHead = this.messageBoxData.subjeceLeader;
+                this.showForm.commitmentUnit = this.messageBoxData.commitmentUnit;
             },
             radioChange() {
                 this.checkbox = [];

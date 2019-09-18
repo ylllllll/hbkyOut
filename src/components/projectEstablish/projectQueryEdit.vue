@@ -8,74 +8,86 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>项目名称：</td>
+                            <td>项目名称 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-input v-model="showForm.projectName"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>标书编号：</td>
+                            <td>标书编号 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.tenderNo"></el-input>
                             </td>
-                            <td>分包号：</td>
+                            <td>分包号 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.subcontractingNo"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>课题名称：</td>
+                            <td>课题名称 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.subjectName"></el-input>
                             </td>
-                            <td>投标人：</td>
+                            <td>投标人 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.bidders"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>中标（成交）金额：</td>
+                            <td>中标（成交）金额 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.winningAmount"></el-input>
+                                <el-input 
+                                    v-model="showForm.winningAmount"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
-                            <td>配套经费：</td>
+                            <td>配套经费 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.supportingFunds"></el-input>
+                                <el-input 
+                                    v-model="showForm.supportingFunds"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>课题负责人：</td>
+                            <td>课题负责人 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.subjectLeader">
                                 </el-input>
                             </td>
-                            <td>课题负责人联系方式：</td>
+                            <td>课题负责人手机 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.leaderContact"></el-input>
+                                <el-input 
+                                    v-model="showForm.leaderContact"
+                                    @blur="validatePhone">
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                课题联合投标单位：
+                                课题联合投标单位 <span class="required">*</span>：
                                 <br>
-                                （如有请填写）&nbsp;&nbsp;&nbsp;
+                                （如有请填写）
                             </td>
                             <td>
                                 <el-input v-model="showForm.joinTenderUnits"></el-input>
                             </td>
-                            <td>责任单位：</td>
+                            <td>责任单位 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.responsibleUnit" readonly></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>经办人：</td>
+                            <td>经办人 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.operator"></el-input>
                             </td>
-                            <td>经办人联系方式：</td>
+                            <td>经办人手机 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.operatorContact"></el-input>
+                                <el-input 
+                                    v-model="showForm.operatorContact"
+                                    @blur="validatePhone">
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
@@ -90,35 +102,35 @@
                             </td>
                         </tr>
                         <tr class="file_tr">
-                            <td>中标文件附件：</td>
+                            <td>中标文件附件 <span class="required">*</span>：</td>
                             <td colspan="3" class="file_td">
                                 <input type="file" @change="getFile($event,1)" />
                                 <div class="file_show">{{ fileData.winningDocumentFileName }}</div>
                             </td>
                         </tr>
                         <tr class="file_tr">
-                            <td>成交公告附件：</td>
+                            <td>成交公告附件 <span class="required">*</span>：</td>
                             <td colspan="3" class="file_td">
                                 <input type="file" @change="getFile($event,2)" />
                                 <div class="file_show">{{ fileData.transactionAnnouncementName }}</div>
                             </td>
                         </tr>
                         <tr class="file_tr">
-                            <td>成交通知书附件：</td>
+                            <td>成交通知书附件 <span class="required">*</span>：</td>
                             <td colspan="3" class="file_td">
                                 <input type="file" @change="getFile($event,3)" />
                                 <div class="file_show">{{ fileData.noticeTransactionName }}</div>
                             </td>
                         </tr>
                         <tr class="file_tr">
-                            <td>响应文件附件：</td>
+                            <td>响应文件附件 <span class="required">*</span>：</td>
                             <td colspan="3" class="file_td">
                                 <input type="file" @change="getFile($event,4)" />
                                 <div class="file_show">{{ fileData.responseFileName }}</div>
                             </td>
                         </tr>
                         <tr class="file_tr">
-                            <td>其他附件：</td>
+                            <td>其他附件 <span class="required">*</span>：</td>
                             <td colspan="3" class="file_td">
                                 <input type="file" @change="getFile($event,5)" />
                                 <div class="file_show">{{ fileData.otherAttachmentsName }}</div>
@@ -192,14 +204,7 @@
                     id: this.$route.params.id
                 },
                 tableData: [],
-                // 解决报错
-                fileData: {
-                    winningDocumentFileName: '',
-                    transactionAnnouncementName: '',
-                    noticeTransactionName: '',
-                    responseFileName: '',
-                    otherAttachmentsName: ''
-                },
+                fileData: {},
                 Enclosure: {
                     winningDocument:'',
                     transactionAnnouncement:'',
@@ -210,50 +215,109 @@
             }
         },
         methods: {
-            errorInfo() {
-                this.$alert('提交失败','提示', {
+            // 提示
+            alertInfo(info,type) {
+                this.$alert(info,'提示', {
                     confirmButtonText: '确定',
-                    type: 'warning',
+                    type: type,
                     callback: action => {}
                 });
             },
+            // 数字验证
+            validateNum() {
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validateNum = this.validate.validateNum(val);
+                if(validateNum) {
+                    this.alertInfo(validateNum,"warning");
+                    _event.value = "";
+                    return false;
+                }
+            },
+            // 手机验证
+            validatePhone() {
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validatePhone = this.validate.validatePhone(val);
+                if(validatePhone) {
+                    this.alertInfo(validatePhone,"warning");
+                    _event.value = "";
+                    return false;
+                }
+            },
+            // 文件
+            getFile(event,index) {
+                // 附件格式验证
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validateFile = this.validate.validateFile(event.target.files[0].name);
+                if(validateFile) {
+                    this.alertInfo(validateFile,"warning");
+                    _event.value = "";
+                    return false;
+                }
+                if(index == 1) {
+                    this.Enclosure.winningDocument = event.target.files[0];
+                    this.fileData.winningDocumentFileName = event.target.files[0].name;
+                }else if(index == 2) {
+                    this.Enclosure.transactionAnnouncement = event.target.files[0];
+                    this.fileData.transactionAnnouncementName = event.target.files[0].name;
+                }else if(index == 3) {
+                    this.Enclosure.noticeTransaction = event.target.files[0];
+                    this.fileData.noticeTransactionName = event.target.files[0].name;
+                }else if(index == 4) {
+                    this.Enclosure.responseFile = event.target.files[0];
+                    this.fileData.responseFileName = event.target.files[0].name;
+                }else if(index == 5) {
+                    this.Enclosure.otherAttachments = event.target.files[0];
+                    this.fileData.otherAttachmentsName = event.target.files[0].name;
+                }
+            },
+            handleDownload(val) {
+                if(val == 0) {
+                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
+                                     + this.fileData.winningDocumentFileUrl 
+                                     + '&fileName=' 
+                                     + this.fileData.winningDocumentFileName;
+                }else if(val == 1) {
+                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
+                                     + this.fileData.transactionAnnouncementUrl 
+                                     + '&fileName=' 
+                                     + this.fileData.transactionAnnouncementName;
+                }else if(val == 2) {
+                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
+                                     + this.fileData.noticeTransactionUrl 
+                                     + '&fileName=' 
+                                     + this.fileData.noticeTransactionName;
+                }else if(val == 3) {
+                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
+                                     + this.fileData.responseFiletUrl 
+                                     + '&fileName=' 
+                                     + this.fileData.responseFileName;
+                }else if(val == 4) {
+                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
+                                     + this.fileData.otherAttachmentsUrl 
+                                     + '&fileName=' 
+                                     + this.fileData.otherAttachmentsName;
+                }
+            },
+            // 页面操作
             handleSubmit() {
                 // 非空验证
                 for(let i in this.showForm) {
-                    if(typeof(this.showForm[i]) == "string") {
-                        if(this.showForm[i].match(/^[ ]*$/)){
-                            this.$alert('请将表格填写完整','提示', {
-                                confirmButtonText: '确定',
-                                type: 'warning',
-                                callback: action => {}
-                            });
-                            return false;
-                        }
+                    if(i == "remark") {
+                        continue;
                     }
-                }
-                // 数字验证
-                let validateNum = [ this.validate.validateNum(this.showForm.winningAmount),
-                                    this.validate.validateNum(this.showForm.supportingFunds)];
-                for(let i in validateNum) {
-                    if(validateNum[i]) {
-                        this.$alert(validateNum[i],'提示', {
-                            confirmButtonText: '确定',
-                            type: 'warning',
-                            callback: action => {}
-                        });
+                    let str = this.showForm[i] + "";
+                    if(!str.trim()) {
+                        this.alertInfo("请将表格填写完整","warning");
                         return false;
                     }
                 }
-                // 手机号验证
-                let validatePhone = [   this.validate.validatePhone(this.showForm.leaderContact),
-                                        this.validate.validatePhone(this.showForm.operatorContact)];
-                for(let i in validatePhone) {
-                    if(validatePhone[i]) {
-                        this.$alert(validatePhone[i],'提示', {
-                            confirmButtonText: '确定',
-                            type: 'warning',
-                            callback: action => {}
-                        });
+                for(let i in this.Enclosure) {
+                    let str = this.Enclosure[i] + "";
+                    if(!str.trim()) {
+                        this.alertInfo("请上传全部附件","warning");
                         return false;
                     }
                 }
@@ -306,61 +370,15 @@
                             }
                         });
                     }else { 
-                        this.errorInfo();
+                        this.alertInfo("提交失败","warning");
                     }
                 }).catch(() => { 
                     loading.close();
-                    this.errorInfo(); 
+                    this.alertInfo("提交失败","warning"); 
                 })
             },
             handleBack() {
                 this.$router.go(-1);
-            },
-            handleDownload(val) {
-                if(val == 0) {
-                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
-                                     + this.fileData.winningDocumentFileUrl 
-                                     + '&fileName=' 
-                                     + this.fileData.winningDocumentFileName;
-                }else if(val == 1) {
-                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
-                                     + this.fileData.transactionAnnouncementUrl 
-                                     + '&fileName=' 
-                                     + this.fileData.transactionAnnouncementName;
-                }else if(val == 2) {
-                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
-                                     + this.fileData.noticeTransactionUrl 
-                                     + '&fileName=' 
-                                     + this.fileData.noticeTransactionName;
-                }else if(val == 3) {
-                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
-                                     + this.fileData.responseFiletUrl 
-                                     + '&fileName=' 
-                                     + this.fileData.responseFileName;
-                }else if(val == 4) {
-                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
-                                     + this.fileData.otherAttachmentsUrl 
-                                     + '&fileName=' 
-                                     + this.fileData.otherAttachmentsName;
-                }
-            },
-            getFile(event,index) {
-                if(index == 1) {
-                    this.Enclosure.winningDocument = event.target.files[0];
-                    this.fileData.winningDocumentFileName = event.target.files[0].name;
-                }else if(index == 2) {
-                    this.Enclosure.transactionAnnouncement = event.target.files[0];
-                    this.fileData.transactionAnnouncementName = event.target.files[0].name;
-                }else if(index == 3) {
-                    this.Enclosure.noticeTransaction = event.target.files[0];
-                    this.fileData.noticeTransactionName = event.target.files[0].name;
-                }else if(index == 4) {
-                    this.Enclosure.responseFile = event.target.files[0];
-                    this.fileData.responseFileName = event.target.files[0].name;
-                }else if(index == 5) {
-                    this.Enclosure.otherAttachments = event.target.files[0];
-                    this.fileData.otherAttachmentsName = event.target.files[0].name;
-                }
             }
         },
         mounted() {

@@ -10,7 +10,11 @@
                         <tr>
                             <td>课题编号：</td>
                             <td>
-                                <el-input v-model="showForm.subjectNo"></el-input>
+                                <el-input 
+                                    v-model="showForm.subjectNo"
+                                    placeholder="请选择"
+                                    @focus="handleOpenBox">
+                                </el-input>
                             </td>
                             <td>课题名称：</td>
                             <td>
@@ -397,7 +401,7 @@
                         <tr id="my_tr4">
                             <td colspan="4">
                                 <el-input 
-                                    v-model="showForm.remark"
+                                    v-model="showForm.projectUndertakerReviewOpinion"
                                     :autosize="{ minRows:6 }"
                                     type="textarea"
                                     maxlength="300">
@@ -418,12 +422,31 @@
                 </table>
             </el-form>
         </div>
+        <div class="cover_box" v-show="overBoxFlag">
+            <div class="message_box">
+                <span class="btn_close" @click="handleCloseCover"></span>
+                <header class="message_box_header">
+                    <h2 class="title">课题查询</h2>
+                </header>
+                <section class="message_box_content">
+                    <messageBox @receipt="receiptChildInfo"></messageBox>
+                </section>
+                <div class="btn_group">
+                    <el-button @click="handleConfirmCover">确定</el-button>
+                    <el-button @click="handleCloseCover">取消</el-button>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
+    import mattersReportMessageBox from '@/components/daliyManage/mattersReportMessageBox'
     export default {
         name: 'midTermAddForm2',
+        components: {
+            messageBox: mattersReportMessageBox
+        },
         data() {
             return {
                 showForm: {
@@ -485,17 +508,37 @@
                     actualProgressProject: '',
                     projectFundsUsage: '',
                     recommendationsProblemsSolutions: '',
-                    remark: ''
+                    projectUndertakerReviewOpinion: ''
                 },
                 midCheckAnnex: '',
                 paramsData: {
                     id: this.$route.params.id
-                }
+                },
+                overBoxFlag: false,
+                messageBoxData: {}
             }
         },
         methods: {
             getFile(event) {
                 this.midCheckAnnex = event.target.files[0];
+            },
+            handleOpenBox(event) {
+                this.overBoxFlag = true;
+                event.target.blur();
+            },
+            receiptChildInfo(val) {
+                this.messageBoxData = val;
+            },
+            handleCloseCover() {
+                this.overBoxFlag = false;
+            },
+            handleConfirmCover() {
+                this.overBoxFlag = false;
+                this.showForm.subjectNo = this.messageBoxData.projectNo;
+                this.showForm.subjectName = this.messageBoxData.subjectName;
+                this.showForm.subjectLeader = this.messageBoxData.subjeceLeader;
+                this.showForm.commitmentUnit = this.messageBoxData.commitmentUnit;
+                this.showForm.topicContact = this.messageBoxData.subjectContact;
             }
         }
     }
