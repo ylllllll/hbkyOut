@@ -23,45 +23,48 @@
                 v-loading="loading"
                 @selection-change="handleSelectionChange">
                 <el-table-column
-                type="selection"
-                align="center">
+                    type="selection"
+                    align="center">
                 </el-table-column>
                 <el-table-column
-                type="index"
-                label="序号"
-                align="center">
+                    type="index"
+                    label="序号"
+                    align="center">
                 </el-table-column>
                 <el-table-column
-                prop="topicName"
-                label="课题名称"
-                :show-overflow-tooltip="true"
-                align="center">
-                 <template slot-scope="scope">
-                    <router-link :to="{
-                        name:'SubjectApplyEndShow',
-                        params:{
-                            id:scope.row.id,
-                            arrays:tableData,
-                        }
-                        }"> 
-                        {{scope.row.topicName}}
-                    </router-link>
-                </template>
+                    prop="topicName"
+                    label="课题名称"
+                    :show-overflow-tooltip="true"
+                    align="center">
+                    <template slot-scope="scope">
+                        <router-link :to="{
+                            name:'SubjectApplyEndShow',
+                            params:{
+                                id:scope.row.id,
+                                arrays:tableData,
+                            }
+                            }"> 
+                            {{scope.row.topicName}}
+                        </router-link>
+                    </template>
                 </el-table-column>
                 <el-table-column
-                prop="subjectUndertakingUnit"
-                label="完成单位"
-                align="center">
+                    prop="subjectUndertakingUnit"
+                    label="完成单位"
+                    :show-overflow-tooltip="true"
+                    align="center">
                 </el-table-column>
                 <el-table-column
-                prop="acceptanceCertificate.projectStartTime"
-                label="课题起始时间"
-                align="center">
+                    prop="acceptanceCertificate.projectStartTime"
+                    label="课题起始时间"
+                    :show-overflow-tooltip="true"
+                    align="center">
                 </el-table-column>
                 <el-table-column
-                prop="acceptanceCertificate.projectCompletionTime"
-                label="课题完成时间"
-                align="center">
+                    prop="acceptanceCertificate.projectCompletionTime"
+                    label="课题完成时间"
+                    :show-overflow-tooltip="true"
+                    align="center">
                 </el-table-column><s></s>
                 <el-table-column
                 prop="acceptanceCertificate.achievementLevel"
@@ -80,16 +83,18 @@
                     </template>
                 </el-table-column>
                 <el-table-column
-                prop="acceptanceCertificate.mainSolveTechnology"
-                label="主要解决的关键技术与创新点"
-                align="center"
-                min-width="80">
+                    prop="acceptanceCertificate.mainSolveTechnology"
+                    label="主要解决的关键技术与创新点"
+                    :show-overflow-tooltip="true"
+                    align="center"
+                    min-width="80">
                 </el-table-column>
                 <el-table-column
-                prop="acceptanceCertificate.mainCompletion"
-                label="主要技术、经济与环境指标完成情况"
-                align="center"
-                min-width="100">
+                    prop="acceptanceCertificate.mainCompletion"
+                    label="主要技术、经济与环境指标完成情况"
+                    align="center"
+                    :show-overflow-tooltip="true"
+                    min-width="100">
                 </el-table-column>
             </el-table>
             <!-- 分页 -->
