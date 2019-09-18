@@ -77,12 +77,12 @@
                     :show-overflow-tooltip="true"
                     align="center">
                 </el-table-column> -->
-                <el-table-column
+                <!-- <el-table-column
                     prop="commit_time"
                     label="进展情况报告提交时间"
                     :show-overflow-tooltip="true"
                     align="center">
-                </el-table-column>
+                </el-table-column> -->
             </el-table>
             <!-- 分页 -->
             <pages
