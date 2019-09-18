@@ -8,11 +8,11 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>课题名称：</td>
+                            <td>课题名称 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.subjectName"></el-input>
                             </td>
-                            <td>课题编号：</td>
+                            <td>课题编号 <span class="required">*</span>：</td>
                             <td>
                                 <el-input 
                                     v-model="showForm.projectNo"
@@ -22,24 +22,24 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>承担单位：</td>
+                            <td>承担单位 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.commitmentUnit"></el-input>
                             </td>
-                            <td>负责人：</td>
+                            <td>负责人 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.unitHead"></el-input>
                             </td>
                         </tr>
                         <tr style="height:50px;">
-                            <td>申请类型：</td>
+                            <td>申请类型 <span class="required">*</span>：</td>
                             <td colspan="3" @click="radioChange">
                                 <el-radio v-model="showForm.adjustTypeId" label="1">变更</el-radio>
                                 <el-radio v-model="showForm.adjustTypeId" label="2">备案</el-radio>
                             </td>
                         </tr>
                         <tr v-if="showForm.adjustTypeId == 1">
-                            <td>变更事项：</td>
+                            <td>变更事项 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-checkbox-group v-model="checkbox">
                                     <div class="item">
@@ -66,7 +66,7 @@
                             </td>
                         </tr>
                         <tr v-if="showForm.adjustTypeId == 2">
-                            <td>备案事项：</td>
+                            <td>备案事项 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-checkbox-group v-model="checkbox">
                                     <div class="item">
@@ -85,31 +85,31 @@
                             </td>
                         </tr>
                         <tr class="file_tr" v-if="showForm.adjustTypeId == 1">
-                            <td>变更申请表附件：</td>
+                            <td>变更申请表附件 <span class="required">*</span>：</td>
                             <td class="file_td" colspan="3">
-                                <input type="file" @change="getFile($event,1)" />
+                                <input type="file" @change="getFile($event,1)" id="changeApplicationAttachment" />
                             </td>
                         </tr>
                         <tr class="file_tr" v-if="showForm.adjustTypeId == 2">
-                            <td>备案申请表附件：</td>
+                            <td>备案申请表附件 <span class="required">*</span>：</td>
                             <td class="file_td" colspan="3">
-                                <input type="file" @change="getFile($event,2)" />
+                                <input type="file" @change="getFile($event,2)" id="filingApplicationAttachment" />
                             </td>
                         </tr>
                         <tr class="file_tr">
-                            <td>专家论证意见附件：</td>
+                            <td>专家论证意见附件 <span class="required">*</span>：</td>
                             <td class="file_td" colspan="3">
                                 <input type="file" @change="getFile($event,3)" />
                             </td>
                         </tr>
                         <tr class="file_tr">
-                            <td>批准文件附件：</td>
+                            <td>批准文件附件 <span class="required">*</span>：</td>
                             <td class="file_td" colspan="3">
                                 <input type="file" @change="getFile($event,4)" />
                             </td>
                         </tr>
                         <tr>
-                            <td>具体情况：<br>（说明需备案的事项及其原因）
+                            <td>具体情况 <span class="required">*</span>：<br>（说明需备案的事项及其原因）
                             </td>
                             <td colspan="3">
                                 <el-input 
@@ -178,35 +178,26 @@
                 messageBoxData: {}
             }
         },
-        methods: { 
-            errorInfo() {
-                this.$alert('提交失败','提示', {
+        methods: {
+            // 提示
+            alertInfo(info,type) {
+                this.$alert(info,'提示', {
                     confirmButtonText: '确定',
-                    type: 'warning',
+                    type: type,
                     callback: action => {}
                 });
             },
-            handleOpenBox(event) {
-                this.overBoxFlag = true;
-                event.target.blur();
-            },
-            receiptChildInfo(val) {
-                this.messageBoxData = val;
-            },
-            handleCloseCover() {
-                this.overBoxFlag = false;
-            },
-            handleConfirmCover() {
-                this.overBoxFlag = false;
-                this.showForm.projectNo = this.messageBoxData.projectNo;
-                this.showForm.subjectName = this.messageBoxData.subjectName;
-                this.showForm.unitHead = this.messageBoxData.subjeceLeader;
-                this.showForm.commitmentUnit = this.messageBoxData.commitmentUnit;
-            },
-            radioChange() {
-                this.checkbox = [];
-            },
+            // 文件
             getFile(event,index) {
+                // 附件格式验证
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validateFile = this.validate.validateFile(event.target.files[0].name);
+                if(validateFile) {
+                    this.alertInfo(validateFile,"warning");
+                    _event.value = "";
+                    return false;
+                }
                 console.log(this.showForm.adjustTypeId);
                 console.log(this.file)
                 let radio = this.showForm.adjustTypeId;
@@ -226,14 +217,45 @@
                 }
                 console.log(this.file);
             },
+            // 弹窗操作
+            handleOpenBox(event) {
+                this.overBoxFlag = true;
+                event.target.blur();
+            },
+            handleCloseCover() {
+                this.overBoxFlag = false;
+            },
+            receiptChildInfo(val) {
+                this.messageBoxData = val;
+            },
+            handleConfirmCover() {
+                this.overBoxFlag = false;
+                this.showForm.projectNo = this.messageBoxData.projectNo;
+                this.showForm.subjectName = this.messageBoxData.subjectName;
+                this.showForm.unitHead = this.messageBoxData.subjeceLeader;
+                this.showForm.commitmentUnit = this.messageBoxData.commitmentUnit;
+            },
+            // 页面操作
             handleSubmit() {
+                this.showForm.adjustmentMattersId = this.checkbox.toString();
+                // 非空验证
+                for(let i in this.showForm) {
+                    let str = this.showForm[i] + "";
+                    if(!str.trim()) {
+                        this.alertInfo("请将表格填写完整","warning");
+                        return false;
+                    }
+                }
+                if((!this.file.changeApplicationAttachment && !this.file.filingApplicationAttachment) || !this.file.expertArgumentationAttachment || !this.file.approvalDocumentsAttachment) {
+                    this.alertInfo("请上传全部附件","warning");
+                    return false;
+                }
                 const loading = this.$loading({
                     lock: true,
                     text: '请稍后...',
                     spinner: 'el-icon-loading',
                     background: 'rgba(255,255,255,0.7)'
                 });
-                this.showForm.adjustmentMattersId = this.checkbox.toString();
                 this.axios({
                     url: 'http://192.168.0.80:8087/enviroment/daily/majormatter/insertMajor',
                     method: 'post',
@@ -273,23 +295,31 @@
                                     }
                                 });
                             }else { 
-                                this.errorInfo();
+                                this.alertInfo("提交失败","warning");
                             }
                         }).catch(() => {
                             loading.close();
-                            this.errorInfo();
+                            this.alertInfo("提交失败","warning");
                         })
                     }else {
                         loading.close();
-                        this.errorInfo();
+                        this.alertInfo("提交失败","warning");
                     }
                 }).catch(() => {
                     loading.close();
-                    this.errorInfo();
+                    this.alertInfo("提交失败","warning");
                 })
             },
             handleBack() {
                 this.$router.go(-1);
+            },
+            // 申请类型切换清除多选框
+            radioChange() {
+                this.checkbox = [];
+                this.file.changeApplicationAttachment = "";
+                this.file.filingApplicationAttachment = "";
+                document.querySelector("#changeApplicationAttachment").value = "";
+                document.querySelector("#filingApplicationAttachment").value = "";
             }
         }
     }

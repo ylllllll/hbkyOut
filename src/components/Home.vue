@@ -42,9 +42,9 @@
 							<span class="bar_left">标题</span>
 							<span class="bar_right">更新时间</span>
 						</li>
-						<li v-for="i in 10" :key="i" class="item">
-							<a class="item_left" href="">南京市鼓楼区绿化改建项目南京市鼓楼区绿化改建项目南京市鼓楼区绿化改建项目</a>
-							<span class="item_right">2019-04-26</span>
+						<li v-for="(item,index) in rightList" :key="'l'+index" class="item">
+							<a class="item_left" href="">{{ item.title }}</a>
+							<span class="item_right">{{ item.startTime }}</span>
 						</li>
 					</ul>
 				</div>
@@ -62,7 +62,8 @@
 				contractCount: 0,
 				checkCount: 0,
 				expertCount: 0,
-				leftList: []
+				leftList: [],
+				rightList: []
 			}
 		},
 		methods: {
@@ -100,6 +101,9 @@
 				}
 				for(let i = 0;i < length;i ++) {
 					this.leftList.push(data[i]);
+				}
+				for(let i = 10;i < data.length;i ++) {
+					this.rightList.push(data[i]);
 				}
 			})
 		},

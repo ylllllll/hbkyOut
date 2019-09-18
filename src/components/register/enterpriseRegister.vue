@@ -169,7 +169,7 @@
             alertInfo(info,type) {
                 this.$alert(info,'提示', {
                     confirmButtonText: '确定',
-                    type: type,
+                    type,
                     callback: action => {}
                 });
             },

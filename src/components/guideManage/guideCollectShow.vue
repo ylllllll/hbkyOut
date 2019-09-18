@@ -92,7 +92,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>研究经费预测：</td>
+                            <td>研究经费预测（万元）：</td>
                             <td>
                                 <el-input 
                                     v-model="showForm.research_fund"

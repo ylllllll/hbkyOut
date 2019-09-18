@@ -19,18 +19,17 @@
                             <td>课题编号：</td>
                             <td>
                                 <el-input 
-                                 v-model="showForm.projectNo"
-                                 :disabled="true"
-                                 ></el-input>
+                                    v-model="showForm.projectNo"
+                                    readonly>
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>课题名称：</td>
                             <td colspan="3">
                                 <el-input 
-                                 v-model="showForm.subjectName"
-                                 :disabled="true"
-                                 >
+                                    v-model="showForm.subjectName"
+                                    readonly>
                                 </el-input>
                             </td>
                         </tr>
@@ -38,31 +37,31 @@
                             <td>合同开始时间：</td>
                             <td>
                                 <el-input 
-                                v-model="showForm.contractStartTime" 
-                                :disabled="true">
+                                    v-model="showForm.contractStartTime" 
+                                    readonly>
                                 </el-input>
                             </td>
                             <td>合同结束时间：</td>
                             <td>
                                 <el-input 
-                                 v-model="showForm.contractEndTime" 
-                                 :disabled="true"
-                                 ></el-input>
+                                    v-model="showForm.contractEndTime" 
+                                    readonly>
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>课题负责人：</td>
                             <td>
                                 <el-input 
-                                v-model="showForm.subjeceLeader" 
-                                :disabled="true">
+                                    v-model="showForm.subjeceLeader" 
+                                    readonly>
                                 </el-input>
                             </td>
-                            <td>课题负责人电话及手机：</td>
+                            <td>课题负责人手机：</td>
                             <td>
                                 <el-input 
-                                v-model="showForm.subjectLeaderPhone"
-                                :disabled="true">
+                                    v-model="showForm.subjectLeaderPhone"
+                                    readonly>
                                 </el-input>
                             </td>
                         </tr>
@@ -70,35 +69,33 @@
                             <td>课题联系人：</td>
                             <td>
                                 <el-input 
-                                v-model="showForm.subjectContact"
-                                :disabled="true">
+                                    v-model="showForm.subjectContact"
+                                    readonly>
                                 </el-input>
                             </td>
-                            <td>课题联系人电话及手机：</td>
+                            <td>课题联系人手机：</td>
                             <td>
                                 <el-input 
-                                 v-model="showForm.subjectContactPhone" 
-                                 :disabled="true"
-                                >
-                            </el-input>
+                                    v-model="showForm.subjectContactPhone" 
+                                    readonly>
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>承担单位：</td>
                             <td colspan="3">
                                 <el-input 
-                                v-model="showForm.commitmentUnit"
-                                :disabled="true">
+                                    v-model="showForm.commitmentUnit"
+                                    readonly>
                                 </el-input>
                             </td>
-                            
                         </tr>
                         <tr>
                             <td>承担单位地址：</td>
                             <td colspan="3">
                                 <el-input 
-                                 v-model="showForm.commitmentUnitAddress"
-                                 :disabled="true">
+                                    v-model="showForm.commitmentUnitAddress"
+                                    readonly>
                                 </el-input>
                             </td>
                         </tr>
@@ -106,15 +103,15 @@
                             <td>承担单位邮编：</td>
                             <td>
                                 <el-input 
-                                 v-model="showForm.commitmentUnitZip"
-                                 :disabled="true">
+                                    v-model="showForm.commitmentUnitZip"
+                                    readonly>
                                 </el-input>
                             </td>
                             <td>课题主管部门：</td>
                             <td>
                                 <el-input 
-                                 v-model="showForm.subjectSupervisorDepartment"
-                                 :disabled="true">
+                                    v-model="showForm.subjectSupervisorDepartment"
+                                    readonly>
                                 </el-input>
                             </td>
                         </tr>
@@ -122,31 +119,31 @@
                             <td>开户银行：</td>
                             <td>
                                 <el-input 
-                                 v-model="showForm.openBank"
-                                 :disabled="true">
+                                    v-model="showForm.openBank"
+                                    readonly>
                                 </el-input>
                             </td>
                             <td>开户银行账号：</td>
                             <td>
                                 <el-input 
-                                 v-model="showForm.openBankAccount"
-                                 :disabled="true">
+                                    v-model="showForm.openBankAccount"
+                                    readonly>
                                 </el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>电子信箱（E-mail）：</td>
+                            <td>电子信箱：</td>
                             <td>
                                 <el-input 
-                                 v-model="showForm.email"
-                                 :disabled="true">
+                                    v-model="showForm.email"
+                                    readonly>
                                 </el-input>
                             </td>
                             <td>保证单位：</td>
                             <td>
                                 <el-input 
-                                 v-model="showForm.guaranteedUnits"
-                                 :disabled="true">
+                                    v-model="showForm.guaranteedUnits"
+                                    readonly>
                                 </el-input>
                             </td>
                         </tr>
@@ -154,15 +151,15 @@
                             <td>保证单位联系人：</td>
                             <td>
                                 <el-input 
-                                 v-model="showForm.guaranteedUnitContact"
-                                 :disabled="true">
+                                    v-model="showForm.guaranteedUnitContact"
+                                    readonly>
                                 </el-input>
                             </td>
-                            <td>保证单位联系人电话：</td>
+                            <td>保证单位联系人手机：</td>
                             <td>
                                 <el-input 
-                                 v-model="showForm.guaranteedContactPhone"
-                                 :disabled="true">
+                                    v-model="showForm.guaranteedContactPhone"
+                                    readonly>
                                 </el-input>
                             </td>
                         </tr>
@@ -171,15 +168,15 @@
                             <td>委托单位（甲方）：</td>
                             <td> 
                                 <el-input 
-                                 v-model="showForm.commissioningUnit"
-                                 :disabled="true">
+                                    v-model="showForm.commissioningUnit"
+                                    readonly>
                                 </el-input>
                             </td>
                             <td>委托单位法定代表人：</td>
                             <td>
                                 <el-input 
-                                 v-model="showForm.legalRepresentativeEntrustingA"
-                                 :disabled="true">
+                                    v-model="showForm.legalRepresentativeEntrustingA"
+                                    readonly>
                                 </el-input>
                             </td>
                         </tr>
@@ -187,15 +184,15 @@
                             <td>委托单位地址：</td>
                             <td> 
                                 <el-input 
-                                 v-model="showForm.commissionedUnitAddressA"
-                                 :disabled="true">
+                                    v-model="showForm.commissionedUnitAddressA"
+                                    readonly>
                                 </el-input>
                             </td>
                             <td>委托单位邮政编码：</td>
                             <td>
                                 <el-input 
-                                 v-model="showForm.commissionedUnitZipA"
-                                 :disabled="true">
+                                    v-model="showForm.commissionedUnitZipA"
+                                    readonly>
                                 </el-input>
                             </td>
                         </tr>
@@ -203,15 +200,15 @@
                             <td>承担单位（乙方）：</td>
                             <td>
                                 <el-input 
-                                 v-model="showForm.responsibilityUnitB"
-                                 :disabled="true">
+                                    v-model="showForm.responsibilityUnitB"
+                                    readonly>
                                 </el-input>
                             </td>
                             <td>承担单位法定代表人：</td>
                             <td>
                                 <el-input 
-                                 v-model="showForm.responsibilityLegalRepresentativeB"
-                                 :disabled="true">
+                                    v-model="showForm.responsibilityLegalRepresentativeB"
+                                    readonly>
                                 </el-input>
                             </td>
                         </tr>
@@ -220,7 +217,7 @@
                             <td colspan="3">
                                 <el-input 
                                     v-model="showForm.commitUnitAddressB"
-                                    :disabled="true">
+                                    readonly>
                                 </el-input>
                             </td>
                         </tr>
@@ -229,7 +226,7 @@
                             <td colspan="3">
                                 <el-input 
                                     v-model="showForm.commitUnitZipB"
-                                    :disabled="true">
+                                    readonly>
                                 </el-input>
                             </td>
                         </tr>
@@ -237,15 +234,15 @@
                             <td>承担单位课题负责人：</td>
                             <td> 
                                 <el-input 
-                                 v-model="showForm.commitUnitLeaderB"
-                                 :disabled="true">
+                                    v-model="showForm.commitUnitLeaderB"
+                                    readonly>
                                 </el-input>
                             </td>
-                            <td>承担单位课题负责人电话（手机号）：</td>
+                            <td>承担单位课题负责人手机：</td>
                             <td>
                                 <el-input 
-                                 v-model="showForm.commitunitLeadersPhoneB"
-                                 :disabled="true">
+                                    v-model="showForm.commitunitLeadersPhoneB"
+                                    readonly>
                                 </el-input>
                             </td>
                         </tr>
@@ -253,15 +250,15 @@
                             <td>承担单位课题负责人电子邮件：</td>
                             <td> 
                                 <el-input 
-                                 v-model="showForm.commitmentUnitEmailB"
-                                 :disabled="true">
+                                    v-model="showForm.commitmentUnitEmailB"
+                                    readonly>
                                 </el-input>
                             </td>
                             <td>保证单位（丙方）：</td>
                             <td>
                                 <el-input 
-                                 v-model="showForm.guaranteedUnitC"
-                                 :disabled="true">
+                                    v-model="showForm.guaranteedUnitC"
+                                    readonly>
                                 </el-input>
                             </td>
                         </tr>
@@ -269,15 +266,15 @@
                             <td>保证单位法定代表人/部门负责人：</td>
                             <td> 
                                 <el-input 
-                                 v-model="showForm.guaranteedUnitLeaderC"
-                                 :disabled="true">
+                                    v-model="showForm.guaranteedUnitLeaderC"
+                                    readonly>
                                 </el-input>
                             </td>
                             <td>保证单位邮政编码：</td>
                             <td>
                                 <el-input 
-                                 v-model="showForm.guaranteedUnitZipC"
-                                 :disabled="true">
+                                    v-model="showForm.guaranteedUnitZipC"
+                                    readonly>
                                 </el-input>
                             </td>
                         </tr>
@@ -285,8 +282,8 @@
                             <td>保证单位地址：</td>
                             <td colspan="3">
                                 <el-input 
-                                 v-model="showForm.guaranteedUnitAddressC"
-                                 :disabled="true">
+                                    v-model="showForm.guaranteedUnitAddressC"
+                                    readonly>
                                 </el-input>
                             </td>
                         </tr>
@@ -296,7 +293,7 @@
                                 <el-input 
                                     type="textarea" 
                                     v-model="showForm.subjectSigningDescription"
-                                    :disabled="true"
+                                    readonly
                                     :autosize="{ minRows:4 }">
                                 </el-input>
                             </td>
@@ -307,7 +304,7 @@
                                 <el-input 
                                     type="textarea" 
                                     v-model="showForm.subjectObjectivesResearch"
-                                    :disabled="true"
+                                    readonly
                                     :autosize="{ minRows:4 }">
                                 </el-input>
                             </td>
@@ -318,7 +315,7 @@
                                 <el-input 
                                     type="textarea" 
                                     v-model="showForm.subjectAcceptanceAssessment"
-                                    :disabled="true"
+                                    readonly
                                     :autosize="{ minRows:4 }">
                                 </el-input>
                             </td>
@@ -339,10 +336,10 @@
                         </tr>
                         <tr v-for="(item,index) in progressForm" :key="index">
                             <td>
-                                <el-input v-model="item.time" disabled=""></el-input>
+                                <el-input v-model="item.time" readonly></el-input>
                             </td>
                             <td>
-                                <el-input v-model="item.programContentAssessmentIndicators" disabled=""></el-input>
+                                <el-input v-model="item.programContentAssessmentIndicators" readonly></el-input>
                             </td>
                         </tr>
                     </tbody>
@@ -357,19 +354,19 @@
                     <tbody>
                         <tr>
                             <td>课题承担单位：</td>
-                            <td colspan="3"><el-input v-model="unitForm.bearingUnits" disabled></el-input></td>
+                            <td colspan="3"><el-input v-model="unitForm.bearingUnits" readonly></el-input></td>
                         </tr>
                         <tr>
                             <td>课题参加单位：</td>
-                            <td colspan="3"><el-input v-model="unitForm.participatingUnits" disabled></el-input></td>
+                            <td colspan="3"><el-input v-model="unitForm.participatingUnits" readonly></el-input></td>
                         </tr>
                          <tr>
                             <td>境外合作单位：</td>
-                            <td colspan="3"><el-input v-model="unitForm.overseasCooperationUnits" disabled></el-input></td>
+                            <td colspan="3"><el-input v-model="unitForm.overseasCooperationUnits" readonly></el-input></td>
                         </tr>
                         <tr>
                             <td>国家或地区：</td>
-                            <td colspan="3"><el-input v-model="unitForm.country" disabled></el-input></td>
+                            <td colspan="3"><el-input v-model="unitForm.country" readonly></el-input></td>
                         </tr>
                     </tbody>
                 </table>
@@ -389,28 +386,28 @@
                             <td colspan="8" style="text-align:left;padding-left:10px;background-color:#fff;">课题负责人：</td>
                         </tr>
                         <tr>
-                            <td><el-input v-model="unitForm.leaderName" disabled></el-input></td>
-                            <td><el-input v-model="unitForm.unitName" disabled></el-input></td>
-                            <td><el-input v-model="unitForm.gender" disabled></el-input></td>
-                            <td><el-input v-model="unitForm.age" disabled></el-input></td>
-                            <td><el-input v-model="unitForm.professionalTitle" disabled></el-input></td>
-                            <td><el-input v-model="unitForm.professional" disabled></el-input></td>
-                            <td><el-input v-model="unitForm.workTask" disabled></el-input></td>
-                            <td><el-input v-model="unitForm.workingTime" disabled></el-input></td>
+                            <td><el-input v-model="unitForm.leaderName" readonly></el-input></td>
+                            <td><el-input v-model="unitForm.unitName" readonly></el-input></td>
+                            <td><el-input v-model="unitForm.gender" readonly></el-input></td>
+                            <td><el-input v-model="unitForm.age" readonly></el-input></td>
+                            <td><el-input v-model="unitForm.professionalTitle" readonly></el-input></td>
+                            <td><el-input v-model="unitForm.professional" readonly></el-input></td>
+                            <td><el-input v-model="unitForm.workTask" readonly></el-input></td>
+                            <td><el-input v-model="unitForm.workingTime" readonly></el-input></td>
                             <!-- <td><el-input v-model="unitForm.name"></el-input></td> -->
                         </tr>
                         <tr>
                             <td colspan="8" style="text-align:left;padding-left:10px;">主要研发人员：</td>
                         </tr>
                         <tr v-for="(item,index) in keyForm" :key="index">
-                            <td><el-input v-model="item.keyDevName" disabled></el-input></td>
-                            <td><el-input v-model="item.unitName" disabled></el-input></td>
-                            <td><el-input v-model="item.gender" disabled></el-input></td>
-                            <td><el-input v-model="item.age" disabled></el-input></td>
-                            <td><el-input v-model="item.professionalTitle" disabled></el-input></td>
-                            <td><el-input v-model="item.professional" disabled></el-input></td>
-                            <td><el-input v-model="item.workTask" disabled></el-input></td>
-                            <td><el-input v-model="item.workingTime" disabled></el-input></td>
+                            <td><el-input v-model="item.keyDevName" readonly></el-input></td>
+                            <td><el-input v-model="item.unitName" readonly></el-input></td>
+                            <td><el-input v-model="item.gender" readonly></el-input></td>
+                            <td><el-input v-model="item.age" readonly></el-input></td>
+                            <td><el-input v-model="item.professionalTitle" readonly></el-input></td>
+                            <td><el-input v-model="item.professional" readonly></el-input></td>
+                            <td><el-input v-model="item.workTask" readonly></el-input></td>
+                            <td><el-input v-model="item.workingTime" readonly></el-input></td>
                         </tr>
                     </tbody>
                 </table>
@@ -436,43 +433,43 @@
                         </tr>
                         <tr>
                             <td style="text-align:center;">合计</td>
-                            <td><el-input v-model="budgetForm.fundingSourcesBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.currentYearSourceTotal" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.nextYearSourceTotal" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.afterYearSourceTotal" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.fundingSourcesNote" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.fundingSourcesBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.currentYearSourceTotal" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.nextYearSourceTotal" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.afterYearSourceTotal" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.fundingSourcesNote" readonly></el-input></td>
                         </tr>
                         <tr>
                             <td>1、省环保科研课题经费</td>
-                            <td><el-input v-model="budgetForm.provincialBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.provincialCurrentBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.provincialNextBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.provincialAfterBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.provincialNoteBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.provincialBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.provincialCurrentBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.provincialNextBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.provincialAfterBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.provincialNoteBudget" readonly></el-input></td>
                         </tr>
                         <tr>
                             <td>2、部门、地方配套</td>
-                            <td><el-input v-model="budgetForm.departmentBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.departmentCurrentBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.departmentNextBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.departmentAfterBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.departmentNoteBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.departmentBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.departmentCurrentBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.departmentNextBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.departmentAfterBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.departmentNoteBudget" readonly></el-input></td>
                         </tr>
                         <tr>
                             <td>3、承担单位自筹</td>
-                            <td><el-input v-model="budgetForm.bearBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.bearCurrentBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.bearNextBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.bearAfterBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.bearNoteBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.bearBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.bearCurrentBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.bearNextBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.bearAfterBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.bearNoteBudget" readonly></el-input></td>
                         </tr>
                         <tr >
                             <td>4、其他来源</td>
-                            <td><el-input v-model="budgetForm.otherBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.otherCurrentBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.otherNextBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.otherAfterBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.otherNoteBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.otherBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.otherCurrentBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.otherNextBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.otherAfterBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.otherNoteBudget" readonly></el-input></td>
                         </tr>
                     </tbody>
                 </table>
@@ -496,84 +493,84 @@
                         </tr>
                         <tr>
                             <td style="text-align:center;">合计</td>
-                            <td><el-input v-model="budgetForm.expenditureBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.currentYearExpenditureTotal" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.nextYearExpenditureTotal" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.afterYearExpenditureTotal" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.selfTotalExpenditures" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.totalExpendituresNote" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.expenditureBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.currentYearExpenditureTotal" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.nextYearExpenditureTotal" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.afterYearExpenditureTotal" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.selfTotalExpenditures" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.totalExpendituresNote" readonly></el-input></td>
                         </tr>
                         <tr>
                             <td>1、设备费</td>
-                            <td><el-input v-model="budgetForm.equipmentBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.equipmentCurrentBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.equipmentNextBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.equipmentAfterBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.equipmentSupportingBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.equipmentNoteBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.equipmentBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.equipmentCurrentBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.equipmentNextBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.equipmentAfterBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.equipmentSupportingBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.equipmentNoteBudget" readonly></el-input></td>
                         </tr>
                         <tr>
                             <td>2、材料费</td>
-                            <td><el-input v-model="budgetForm.materialBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.materialCurrentBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.materialNextBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.materialAfterBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.materialSupportingBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.materialNoteBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.materialBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.materialCurrentBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.materialNextBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.materialAfterBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.materialSupportingBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.materialNoteBudget" readonly></el-input></td>
                         </tr>
                         <tr>
                             <td>3、测试化验加工费</td>
-                            <td><el-input v-model="budgetForm.testBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.testCurrentBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.testNextBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.testAfterBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.testSupportingBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.testNoteBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.testBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.testCurrentBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.testNextBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.testAfterBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.testSupportingBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.testNoteBudget" readonly></el-input></td>
                         </tr>
                         <tr >
                             <td>4、燃料动力费</td>
-                            <td><el-input v-model="budgetForm.fuelBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.fuelCurrentBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.fuelNextBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.fuelAfterBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.fuelSupportingBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.fuelNoteBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.fuelBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.fuelCurrentBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.fuelNextBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.fuelAfterBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.fuelSupportingBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.fuelNoteBudget" readonly></el-input></td>
                         </tr>
                         <tr >
                             <td>5、会议差旅费</td>
-                            <td><el-input v-model="budgetForm.mettingBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.mettingCurrentBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.mettingNextBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.mettingAfterBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.mettingSupportingBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.mettingNoteBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.mettingBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.mettingCurrentBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.mettingNextBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.mettingAfterBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.mettingSupportingBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.mettingNoteBudget" readonly></el-input></td>
                         </tr>
                         <tr >
                             <td>6、劳务费</td>
-                            <td><el-input v-model="budgetForm.laborBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.laborCurrentBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.laborNextBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.laborAfterBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.laborSupportingBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.laborNoteBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.laborBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.laborCurrentBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.laborNextBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.laborAfterBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.laborSupportingBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.laborNoteBudget" readonly></el-input></td>
                         </tr>
                         <tr >
                             <td>7、专家咨询费</td>
-                            <td><el-input v-model="budgetForm.expertsBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.expertsCurrentBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.expertsNextBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.expertsAfterBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.expertsSupportingBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.expertsNoteBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.expertsBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.expertsCurrentBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.expertsNextBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.expertsAfterBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.expertsSupportingBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.expertsNoteBudget" readonly></el-input></td>
                         </tr>
                         <tr >
                             <td><span>8、日常水、电、气、暖消耗等</span></td>
-                            <td><el-input v-model="budgetForm.dailyBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.dailyCurrentBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.dailyNextBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.dailyAfterBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.dailySupportingBudget" disabled></el-input></td>
-                            <td><el-input v-model="budgetForm.dailyNoteBudget" disabled></el-input></td>
+                            <td><el-input v-model="budgetForm.dailyBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.dailyCurrentBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.dailyNextBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.dailyAfterBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.dailySupportingBudget" readonly></el-input></td>
+                            <td><el-input v-model="budgetForm.dailyNoteBudget" readonly></el-input></td>
                         </tr>
                         <tr class="file_tr">
                             <td>附件：</td>

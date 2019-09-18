@@ -25,41 +25,42 @@
                 v-loading="loading"
                 @selection-change="handleSelectionChange">
                 <el-table-column
-                type="selection"
-                align="center">
+                    type="selection"
+                    align="center">
                 </el-table-column>
                 <el-table-column
-                type="index"
-                label="序号"
-                align="center">
-                </el-table-column>
-                <el-table-column>
-                prop="topicName"
-                label="课题名称"
-                :show-overflow-tooltip="true"
-                align="center">
-                 <template slot-scope="scope">
-                    <router-link :to="{
-                        name:'SubjectApplyShow',
-                        params:{
-                            id:scope.row.id,
-                            arrays:tableData,
-                            isShow:1,
-                        }
-                        }"> 
-                        {{scope.row.topicName}}
-                    </router-link>
-                </template>
+                    type="index"
+                    label="序号"
+                    align="center">
                 </el-table-column>
                 <el-table-column
+                    prop="topicName"
+                    label="课题名称"
+                    :show-overflow-tooltip="true"
+                    align="center">
+                    <template slot-scope="scope">
+                        <router-link :to="{
+                            name:'SubjectApplyShow',
+                            params:{
+                                id:scope.row.id,
+                                arrays:tableData,
+                                isShow:1,
+                            }
+                            }"> 
+                            {{scope.row.topicName}}
+                        </router-link>
+                    </template>
+                </el-table-column>
+                <!-- <el-table-column
                 prop="subjectUndertakingUnit"
                 label="承担单位"
-                align="center"
-                </el-table-column>
-                <el-table-column
-                prop="unitNature"
-                label="单位性质"
                 align="center">
+                </el-table-column> -->
+                <el-table-column
+                    prop="unitNature"
+                    label="单位性质"
+                    :show-overflow-tooltip="true"
+                    align="center">
                     <template slot-scope="scope">
                         <span v-show="scope.row.unitNature == '1'">大专院校</span>
                         <span v-show="scope.row.unitNature == '2'">科研院所</span>
@@ -68,34 +69,40 @@
                     </template>
                 </el-table-column>
                 <el-table-column
-                prop="mainContentSituation"
-                label="主要研究内容完成情况"
-                align="center">
+                    prop="mainContentSituation"
+                    label="主要研究内容完成情况"
+                    :show-overflow-tooltip="true"
+                    align="center">
                 </el-table-column>
                 <el-table-column
-                prop="projectLeader"
-                label="课题责任人"
-                align="center">
+                    prop="projectLeader"
+                    label="课题责任人"
+                    :show-overflow-tooltip="true"
+                    align="center">
                 </el-table-column>
                 <el-table-column
-                prop="agreementStartTime"
-                label="合同开始时间"
-                align="center">
+                    prop="agreementStartTime"
+                    label="合同开始时间"
+                    :show-overflow-tooltip="true"
+                    align="center">
                 </el-table-column>
                 <el-table-column
-                prop="agreementEndTime"
-                label="合同结束时间"
-                align="center">
+                    prop="agreementEndTime"
+                    label="合同结束时间"
+                    :show-overflow-tooltip="true"
+                    align="center">
                 </el-table-column>
                 <el-table-column
-                prop="acceptancePhaseName"
-                label="状态"
-                align="center">
+                    prop="acceptancePhaseName"
+                    label="状态"
+                    :show-overflow-tooltip="true"
+                    align="center">
                 </el-table-column>
                 <el-table-column
-                label="操作"
-                align="center"
-                v-if="identity==1" >
+                    label="操作"
+                    align="center"
+                    :show-overflow-tooltip="true"
+                    v-if="identity==1" >
                     <template slot-scope="scope">
                         <el-button class="btnEdit" v-show="scope.row.acceptancePhaseId ==4 || scope.row.acceptancePhaseId == 6" @click="handleUpload(scope.row.id,scope.row.acceptancePhaseId)">上传附件</el-button>
                         <el-button class="btnEdit" v-show="scope.row.acceptancePhaseId <=3 || scope.row.acceptancePhaseId == 5 || scope.row.acceptancePhaseId == 7 || scope.row.acceptancePhaseId == 8 || scope.row.acceptancePhaseId == 9" @click="handleUpload(scope.row.id,scope.row.acceptancePhaseId)">修改</el-button>

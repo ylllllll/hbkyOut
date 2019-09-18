@@ -34,11 +34,11 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>中标（成交）金额：</td>
+                            <td>中标（成交）金额（万元）：</td>
                             <td>
                                 <el-input v-model="showForm.winningAmount" disabled></el-input>
                             </td>
-                            <td>配套经费：</td>
+                            <td>配套经费（万元）：</td>
                             <td>
                                 <el-input v-model="showForm.supportingFunds" disabled></el-input>
                             </td>

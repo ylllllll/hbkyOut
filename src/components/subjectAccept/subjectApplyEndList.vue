@@ -68,25 +68,28 @@
                 label="成果水平"
                 align="center">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.acceptanceCertificate.achievementLevel" disabled>
+                        <!-- <el-select v-model="scope.row.acceptanceCertificate.achievementLevel" disabled>
                             <el-option 
                                 v-for="item in achievementLevelOptions"
                                 :key="item.id"
                                 :label="item.content"
                                 :value="item.id">
                             </el-option>
-                        </el-select>
+                        </el-select> -->
+                        <span v-for="(item,index) in achievementLevelOptions" :key="index" v-show="scope.row.acceptanceCertificate.achievementLevel == item.id">{{ item.content }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column
                 prop="acceptanceCertificate.mainSolveTechnology"
                 label="主要解决的关键技术与创新点"
-                align="center">
+                align="center"
+                min-width="80">
                 </el-table-column>
                 <el-table-column
                 prop="acceptanceCertificate.mainCompletion"
                 label="主要技术、经济与环境指标完成情况"
-                align="center">
+                align="center"
+                min-width="100">
                 </el-table-column>
             </el-table>
             <!-- 分页 -->

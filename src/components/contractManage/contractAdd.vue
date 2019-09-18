@@ -331,10 +331,7 @@
                         <tr>
                             <td><el-input v-model="unitForm.leaderName"></el-input></td>
                             <td><el-input v-model="unitForm.unitName"></el-input></td>
-                            <!-- <td><el-input v-model="unitForm.gender"></el-input></td> -->
                             <td>
-                                <!-- <el-input v-model="unitForm.gender"></el-input> -->
-
                                 <el-select v-model="unitForm.gender" placeholder="请选择">
                                     <el-option value="男"></el-option>
                                     <el-option value="女"></el-option>
@@ -355,7 +352,6 @@
                                     @blur="validateNum">
                                 </el-input>
                             </td>
-                           <!-- <td><el-input v-model="unitForm.name"></el-input></td> -->
                         </tr>
                         <tr>
                             <td colspan="8" style="text-align:left;padding-left:10px;position:relative;">
@@ -804,160 +800,166 @@
                     validateNum = this.validate.validateNum(val);
                 if(validateNum) {
                     this.alertInfo(validateNum,"warning");
-                    _event.value = "0";
+                    _event.value = "";
                     return false;
                 }
             },
             // 计算
             computed() {
+                let _computed = () => {
+                    // 课题经费来源预算
+                    // 省环保科研课题经费
+                    this.budgetForm.provincialBudget = (parseFloat(this.budgetForm.provincialCurrentBudget) * 10000
+                                                        + parseFloat(this.budgetForm.provincialNextBudget) * 10000
+                                                        + parseFloat(this.budgetForm.provincialAfterBudget) * 10000) 
+                                                        / 10000;
+                    // 部门、地方配套
+                    this.budgetForm.departmentBudget = (parseFloat(this.budgetForm.departmentCurrentBudget) * 10000
+                                                        + parseFloat(this.budgetForm.departmentNextBudget) * 10000
+                                                        + parseFloat(this.budgetForm.departmentAfterBudget) * 10000) 
+                                                        / 10000;
+                    // 承担单位自筹
+                    this.budgetForm.bearBudget = (parseFloat(this.budgetForm.bearCurrentBudget) * 10000
+                                                        + parseFloat(this.budgetForm.bearNextBudget) * 10000
+                                                        + parseFloat(this.budgetForm.bearAfterBudget) * 10000) 
+                                                        / 10000;
+                    // 其他来源
+                    this.budgetForm.otherBudget = (parseFloat(this.budgetForm.otherCurrentBudget) * 10000
+                                                        + parseFloat(this.budgetForm.otherNextBudget) * 10000
+                                                        + parseFloat(this.budgetForm.otherAfterBudget) * 10000) 
+                                                        / 10000;
+                    // 今年
+                    this.budgetForm.currentYearSourceTotal = (parseFloat(this.budgetForm.provincialCurrentBudget) * 10000
+                                                        + parseFloat(this.budgetForm.departmentCurrentBudget) * 10000
+                                                        + parseFloat(this.budgetForm.bearCurrentBudget) * 10000
+                                                        + parseFloat(this.budgetForm.otherCurrentBudget) * 10000) 
+                                                        / 10000;
+                    // 明年
+                    this.budgetForm.nextYearSourceTotal = (parseFloat(this.budgetForm.provincialNextBudget) * 10000
+                                                        + parseFloat(this.budgetForm.departmentNextBudget) * 10000
+                                                        + parseFloat(this.budgetForm.bearNextBudget) * 10000
+                                                        + parseFloat(this.budgetForm.otherNextBudget) * 10000) 
+                                                        / 10000;
+                    // 后年
+                    this.budgetForm.afterYearSourceTotal = (parseFloat(this.budgetForm.provincialAfterBudget) * 10000
+                                                        + parseFloat(this.budgetForm.departmentAfterBudget) * 10000
+                                                        + parseFloat(this.budgetForm.bearAfterBudget) * 10000
+                                                        + parseFloat(this.budgetForm.otherAfterBudget) * 10000) 
+                                                        / 10000;
+                    // 合计
+                    this.budgetForm.fundingSourcesBudget = (parseFloat(this.budgetForm.currentYearSourceTotal) * 10000
+                                                        + parseFloat(this.budgetForm.nextYearSourceTotal) * 10000
+                                                        + parseFloat(this.budgetForm.afterYearSourceTotal) * 10000) 
+                                                        / 10000;
+                    // 课题总经费支出预算
+                    // 设备费
+                    this.budgetForm.equipmentBudget = (parseFloat(this.budgetForm.equipmentCurrentBudget) * 10000
+                                                        + parseFloat(this.budgetForm.equipmentNextBudget) * 10000
+                                                        + parseFloat(this.budgetForm.equipmentAfterBudget) * 10000
+                                                        + parseFloat(this.budgetForm.equipmentSupportingBudget) * 10000) 
+                                                        / 10000;
+                    // 材料费
+                    this.budgetForm.materialBudget = (parseFloat(this.budgetForm.materialCurrentBudget) * 10000
+                                                        + parseFloat(this.budgetForm.materialNextBudget) * 10000
+                                                        + parseFloat(this.budgetForm.materialAfterBudget) * 10000
+                                                        + parseFloat(this.budgetForm.materialSupportingBudget) * 10000) 
+                                                        / 10000;
+                    // 测试化验加工费
+                    this.budgetForm.testBudget = (parseFloat(this.budgetForm.testCurrentBudget) * 10000
+                                                        + parseFloat(this.budgetForm.testNextBudget) * 10000
+                                                        + parseFloat(this.budgetForm.testAfterBudget) * 10000
+                                                        + parseFloat(this.budgetForm.testSupportingBudget) * 10000) 
+                                                        / 10000;
+                    // 燃料动力费
+                    this.budgetForm.fuelBudget = (parseFloat(this.budgetForm.fuelCurrentBudget) * 10000
+                                                        + parseFloat(this.budgetForm.fuelNextBudget) * 10000
+                                                        + parseFloat(this.budgetForm.fuelAfterBudget) * 10000
+                                                        + parseFloat(this.budgetForm.fuelSupportingBudget) * 10000) 
+                                                        / 10000;
+                    // 会议差旅费
+                    this.budgetForm.mettingBudget = (parseFloat(this.budgetForm.mettingCurrentBudget) * 10000
+                                                        + parseFloat(this.budgetForm.mettingNextBudget) * 10000
+                                                        + parseFloat(this.budgetForm.mettingAfterBudget) * 10000
+                                                        + parseFloat(this.budgetForm.mettingSupportingBudget) * 10000) 
+                                                        / 10000;
+                    // 劳务费
+                    this.budgetForm.laborBudget = (parseFloat(this.budgetForm.laborCurrentBudget) * 10000
+                                                        + parseFloat(this.budgetForm.laborNextBudget) * 10000
+                                                        + parseFloat(this.budgetForm.laborAfterBudget) * 10000
+                                                        + parseFloat(this.budgetForm.laborSupportingBudget) * 10000) 
+                                                        / 10000;
+                    // 专家咨询费
+                    this.budgetForm.expertsBudget = (parseFloat(this.budgetForm.expertsCurrentBudget) * 10000
+                                                        + parseFloat(this.budgetForm.expertsNextBudget) * 10000
+                                                        + parseFloat(this.budgetForm.expertsAfterBudget) * 10000
+                                                        + parseFloat(this.budgetForm.expertsSupportingBudget) * 10000) 
+                                                        / 10000;
+                    // 日常水、电、气、暖消耗等
+                    this.budgetForm.dailyBudget = (parseFloat(this.budgetForm.dailyCurrentBudget) * 10000
+                                                        + parseFloat(this.budgetForm.dailyNextBudget) * 10000
+                                                        + parseFloat(this.budgetForm.dailyAfterBudget) * 10000
+                                                        + parseFloat(this.budgetForm.dailySupportingBudget) * 10000) 
+                                                        / 10000;
+                    // 今年
+                    this.budgetForm.currentYearExpenditureTotal = (parseFloat(this.budgetForm.equipmentCurrentBudget) * 10000
+                                                        + parseFloat(this.budgetForm.materialCurrentBudget) * 10000
+                                                        + parseFloat(this.budgetForm.testCurrentBudget) * 10000
+                                                        + parseFloat(this.budgetForm.fuelCurrentBudget) * 10000
+                                                        + parseFloat(this.budgetForm.mettingCurrentBudget) * 10000
+                                                        + parseFloat(this.budgetForm.laborCurrentBudget) * 10000
+                                                        + parseFloat(this.budgetForm.expertsCurrentBudget) * 10000
+                                                        + parseFloat(this.budgetForm.dailyCurrentBudget) * 10000) 
+                                                        / 10000;
+                    // 明年
+                    this.budgetForm.nextYearExpenditureTotal = (parseFloat(this.budgetForm.equipmentNextBudget) * 10000
+                                                        + parseFloat(this.budgetForm.materialNextBudget) * 10000
+                                                        + parseFloat(this.budgetForm.testNextBudget) * 10000
+                                                        + parseFloat(this.budgetForm.fuelNextBudget) * 10000
+                                                        + parseFloat(this.budgetForm.mettingNextBudget) * 10000
+                                                        + parseFloat(this.budgetForm.laborNextBudget) * 10000
+                                                        + parseFloat(this.budgetForm.expertsNextBudget) * 10000
+                                                        + parseFloat(this.budgetForm.dailyNextBudget) * 10000) 
+                                                        / 10000;
+                    // 后年
+                    this.budgetForm.afterYearExpenditureTotal = (parseFloat(this.budgetForm.equipmentAfterBudget) * 10000
+                                                        + parseFloat(this.budgetForm.materialAfterBudget) * 10000
+                                                        + parseFloat(this.budgetForm.testAfterBudget) * 10000
+                                                        + parseFloat(this.budgetForm.fuelAfterBudget) * 10000
+                                                        + parseFloat(this.budgetForm.mettingAfterBudget) * 10000
+                                                        + parseFloat(this.budgetForm.laborAfterBudget) * 10000
+                                                        + parseFloat(this.budgetForm.expertsAfterBudget) * 10000
+                                                        + parseFloat(this.budgetForm.dailyAfterBudget) * 10000) 
+                                                        / 10000;
+                    // 自筹配套经费
+                    this.budgetForm.selfTotalExpenditures = (parseFloat(this.budgetForm.equipmentSupportingBudget) * 10000
+                                                        + parseFloat(this.budgetForm.materialSupportingBudget) * 10000
+                                                        + parseFloat(this.budgetForm.testSupportingBudget) * 10000
+                                                        + parseFloat(this.budgetForm.fuelSupportingBudget) * 10000
+                                                        + parseFloat(this.budgetForm.mettingSupportingBudget) * 10000
+                                                        + parseFloat(this.budgetForm.laborSupportingBudget) * 10000
+                                                        + parseFloat(this.budgetForm.expertsSupportingBudget) * 10000
+                                                        + parseFloat(this.budgetForm.dailySupportingBudget) * 10000) 
+                                                        / 10000;
+                    // 合计
+                    this.budgetForm.expenditureBudget = (parseFloat(this.budgetForm.currentYearExpenditureTotal) * 10000
+                                                        + parseFloat(this.budgetForm.nextYearExpenditureTotal) * 10000
+                                                        + parseFloat(this.budgetForm.afterYearExpenditureTotal) * 10000
+                                                        + parseFloat(this.budgetForm.selfTotalExpenditures) * 10000) 
+                                                        / 10000;
+                }
                 for(let i in this.budgetForm) {
                     if(i == "fundingSourcesNote" || i == "provincialNoteBudget" || i == "departmentNoteBudget" || i == "bearNoteBudget" || i == "otherNoteBudget" || i == "totalExpendituresNote" || i == "equipmentNoteBudget" || i == "materialNoteBudget" || i == "testNoteBudget" || i == "fuelNoteBudget" || i == "mettingNoteBudget" || i == "laborSupportingBudget" || i == "expertsNoteBudget" || i == "dailyNoteBudget" || i == "laborNoteBudget") {
                         continue;
                     }
-                    let str = this.budgetForm[i] + "";
-                    if(this.validate.validateNum(str)) {
+                    let str = this.budgetForm[i] + "",
+                        code = str.charCodeAt(0);
+                    if(!str.trim() || (code <48 || code > 57) || (str != parseFloat(str))) {
                         this.budgetForm[i] = 0;
+                        _computed();
+                        return false;
                     }
                 }
-                // 课题经费来源预算
-                // 省环保科研课题经费
-                this.budgetForm.provincialBudget = (parseFloat(this.budgetForm.provincialCurrentBudget) * 10000
-                                                    + parseFloat(this.budgetForm.provincialNextBudget) * 10000
-                                                    + parseFloat(this.budgetForm.provincialAfterBudget) * 10000) 
-                                                    / 10000;
-                // 部门、地方配套
-                this.budgetForm.departmentBudget = (parseFloat(this.budgetForm.departmentCurrentBudget) * 10000
-                                                    + parseFloat(this.budgetForm.departmentNextBudget) * 10000
-                                                    + parseFloat(this.budgetForm.departmentAfterBudget) * 10000) 
-                                                    / 10000;
-                // 承担单位自筹
-                this.budgetForm.bearBudget = (parseFloat(this.budgetForm.bearCurrentBudget) * 10000
-                                                    + parseFloat(this.budgetForm.bearNextBudget) * 10000
-                                                    + parseFloat(this.budgetForm.bearAfterBudget) * 10000) 
-                                                    / 10000;
-                // 其他来源
-                this.budgetForm.otherBudget = (parseFloat(this.budgetForm.otherCurrentBudget) * 10000
-                                                    + parseFloat(this.budgetForm.otherNextBudget) * 10000
-                                                    + parseFloat(this.budgetForm.otherAfterBudget) * 10000) 
-                                                    / 10000;
-                // 今年
-                this.budgetForm.currentYearSourceTotal = (parseFloat(this.budgetForm.provincialCurrentBudget) * 10000
-                                                    + parseFloat(this.budgetForm.departmentCurrentBudget) * 10000
-                                                    + parseFloat(this.budgetForm.bearCurrentBudget) * 10000
-                                                    + parseFloat(this.budgetForm.otherCurrentBudget) * 10000) 
-                                                    / 10000;
-                // 明年
-                this.budgetForm.nextYearSourceTotal = (parseFloat(this.budgetForm.provincialNextBudget) * 10000
-                                                    + parseFloat(this.budgetForm.departmentNextBudget) * 10000
-                                                    + parseFloat(this.budgetForm.bearNextBudget) * 10000
-                                                    + parseFloat(this.budgetForm.otherNextBudget) * 10000) 
-                                                    / 10000;
-                // 后年
-                this.budgetForm.afterYearSourceTotal = (parseFloat(this.budgetForm.provincialAfterBudget) * 10000
-                                                    + parseFloat(this.budgetForm.departmentAfterBudget) * 10000
-                                                    + parseFloat(this.budgetForm.bearAfterBudget) * 10000
-                                                    + parseFloat(this.budgetForm.otherAfterBudget) * 10000) 
-                                                    / 10000;
-                // 合计
-                this.budgetForm.fundingSourcesBudget = (parseFloat(this.budgetForm.currentYearSourceTotal) * 10000
-                                                    + parseFloat(this.budgetForm.nextYearSourceTotal) * 10000
-                                                    + parseFloat(this.budgetForm.afterYearSourceTotal) * 10000) 
-                                                    / 10000;
-                // 课题总经费支出预算
-                // 设备费
-                this.budgetForm.equipmentBudget = (parseFloat(this.budgetForm.equipmentCurrentBudget) * 10000
-                                                    + parseFloat(this.budgetForm.equipmentNextBudget) * 10000
-                                                    + parseFloat(this.budgetForm.equipmentAfterBudget) * 10000
-                                                    + parseFloat(this.budgetForm.equipmentSupportingBudget) * 10000) 
-                                                    / 10000;
-                // 材料费
-                this.budgetForm.materialBudget = (parseFloat(this.budgetForm.materialCurrentBudget) * 10000
-                                                    + parseFloat(this.budgetForm.materialNextBudget) * 10000
-                                                    + parseFloat(this.budgetForm.materialAfterBudget) * 10000
-                                                    + parseFloat(this.budgetForm.materialSupportingBudget) * 10000) 
-                                                    / 10000;
-                // 测试化验加工费
-                this.budgetForm.testBudget = (parseFloat(this.budgetForm.testCurrentBudget) * 10000
-                                                    + parseFloat(this.budgetForm.testNextBudget) * 10000
-                                                    + parseFloat(this.budgetForm.testAfterBudget) * 10000
-                                                    + parseFloat(this.budgetForm.testSupportingBudget) * 10000) 
-                                                    / 10000;
-                // 燃料动力费
-                this.budgetForm.fuelBudget = (parseFloat(this.budgetForm.fuelCurrentBudget) * 10000
-                                                    + parseFloat(this.budgetForm.fuelNextBudget) * 10000
-                                                    + parseFloat(this.budgetForm.fuelAfterBudget) * 10000
-                                                    + parseFloat(this.budgetForm.fuelSupportingBudget) * 10000) 
-                                                    / 10000;
-                // 会议差旅费
-                this.budgetForm.mettingBudget = (parseFloat(this.budgetForm.mettingCurrentBudget) * 10000
-                                                    + parseFloat(this.budgetForm.mettingNextBudget) * 10000
-                                                    + parseFloat(this.budgetForm.mettingAfterBudget) * 10000
-                                                    + parseFloat(this.budgetForm.mettingSupportingBudget) * 10000) 
-                                                    / 10000;
-                // 劳务费
-                this.budgetForm.laborBudget = (parseFloat(this.budgetForm.laborCurrentBudget) * 10000
-                                                    + parseFloat(this.budgetForm.laborNextBudget) * 10000
-                                                    + parseFloat(this.budgetForm.laborAfterBudget) * 10000
-                                                    + parseFloat(this.budgetForm.laborSupportingBudget) * 10000) 
-                                                    / 10000;
-                // 专家咨询费
-                this.budgetForm.expertsBudget = (parseFloat(this.budgetForm.expertsCurrentBudget) * 10000
-                                                    + parseFloat(this.budgetForm.expertsNextBudget) * 10000
-                                                    + parseFloat(this.budgetForm.expertsAfterBudget) * 10000
-                                                    + parseFloat(this.budgetForm.expertsSupportingBudget) * 10000) 
-                                                    / 10000;
-                // 日常水、电、气、暖消耗等
-                this.budgetForm.dailyBudget = (parseFloat(this.budgetForm.dailyCurrentBudget) * 10000
-                                                    + parseFloat(this.budgetForm.dailyNextBudget) * 10000
-                                                    + parseFloat(this.budgetForm.dailyAfterBudget) * 10000
-                                                    + parseFloat(this.budgetForm.dailySupportingBudget) * 10000) 
-                                                    / 10000;
-                // 今年
-                this.budgetForm.currentYearExpenditureTotal = (parseFloat(this.budgetForm.equipmentCurrentBudget) * 10000
-                                                    + parseFloat(this.budgetForm.materialCurrentBudget) * 10000
-                                                    + parseFloat(this.budgetForm.testCurrentBudget) * 10000
-                                                    + parseFloat(this.budgetForm.fuelCurrentBudget) * 10000
-                                                    + parseFloat(this.budgetForm.mettingCurrentBudget) * 10000
-                                                    + parseFloat(this.budgetForm.laborCurrentBudget) * 10000
-                                                    + parseFloat(this.budgetForm.expertsCurrentBudget) * 10000
-                                                    + parseFloat(this.budgetForm.dailyCurrentBudget) * 10000) 
-                                                    / 10000;
-                // 明年
-                this.budgetForm.nextYearExpenditureTotal = (parseFloat(this.budgetForm.equipmentNextBudget) * 10000
-                                                    + parseFloat(this.budgetForm.materialNextBudget) * 10000
-                                                    + parseFloat(this.budgetForm.testNextBudget) * 10000
-                                                    + parseFloat(this.budgetForm.fuelNextBudget) * 10000
-                                                    + parseFloat(this.budgetForm.mettingNextBudget) * 10000
-                                                    + parseFloat(this.budgetForm.laborNextBudget) * 10000
-                                                    + parseFloat(this.budgetForm.expertsNextBudget) * 10000
-                                                    + parseFloat(this.budgetForm.dailyNextBudget) * 10000) 
-                                                    / 10000;
-                // 后年
-                this.budgetForm.afterYearExpenditureTotal = (parseFloat(this.budgetForm.equipmentAfterBudget) * 10000
-                                                    + parseFloat(this.budgetForm.materialAfterBudget) * 10000
-                                                    + parseFloat(this.budgetForm.testAfterBudget) * 10000
-                                                    + parseFloat(this.budgetForm.fuelAfterBudget) * 10000
-                                                    + parseFloat(this.budgetForm.mettingAfterBudget) * 10000
-                                                    + parseFloat(this.budgetForm.laborAfterBudget) * 10000
-                                                    + parseFloat(this.budgetForm.expertsAfterBudget) * 10000
-                                                    + parseFloat(this.budgetForm.dailyAfterBudget) * 10000) 
-                                                    / 10000;
-                // 自筹配套经费
-                this.budgetForm.selfTotalExpenditures = (parseFloat(this.budgetForm.equipmentSupportingBudget) * 10000
-                                                    + parseFloat(this.budgetForm.materialSupportingBudget) * 10000
-                                                    + parseFloat(this.budgetForm.testSupportingBudget) * 10000
-                                                    + parseFloat(this.budgetForm.fuelSupportingBudget) * 10000
-                                                    + parseFloat(this.budgetForm.mettingSupportingBudget) * 10000
-                                                    + parseFloat(this.budgetForm.laborSupportingBudget) * 10000
-                                                    + parseFloat(this.budgetForm.expertsSupportingBudget) * 10000
-                                                    + parseFloat(this.budgetForm.dailySupportingBudget) * 10000) 
-                                                    / 10000;
-                // 合计
-                this.budgetForm.expenditureBudget = (parseFloat(this.budgetForm.currentYearExpenditureTotal) * 10000
-                                                    + parseFloat(this.budgetForm.nextYearExpenditureTotal) * 10000
-                                                    + parseFloat(this.budgetForm.afterYearExpenditureTotal) * 10000
-                                                    + parseFloat(this.budgetForm.selfTotalExpenditures) * 10000) 
-                                                    / 10000;
+                _computed();
             },
             // 文件
             getFile(event) {
@@ -1043,6 +1045,7 @@
                 let obj = {};
                 Object.assign(obj,this.showForm);
                 Object.assign(obj,this.unitForm);
+                console.log(obj)
                 for(let i in obj) {
                     let str = obj[i] + "";
                     if(!str.trim()) {
@@ -1053,6 +1056,7 @@
                 let arr = [];
                 arr.push(...this.progressForm);
                 arr.push(...this.keyForm);
+                console.log(arr)
                 for(let i in arr) {
                     for(let j in arr[i]) {
                         let str = arr[i][j] + "";

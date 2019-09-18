@@ -34,14 +34,14 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>中标（成交）金额 <span class="required">*</span>：</td>
+                            <td>中标（成交）金额（万元） <span class="required">*</span>：</td>
                             <td>
                                 <el-input 
                                     v-model="showForm.winningAmount"
                                     @blur="validateNum">
                                 </el-input>
                             </td>
-                            <td>配套经费 <span class="required">*</span>：</td>
+                            <td>配套经费（万元） <span class="required">*</span>：</td>
                             <td>
                                 <el-input 
                                     v-model="showForm.supportingFunds"
@@ -65,7 +65,7 @@
                         </tr>
                         <tr>
                             <td>
-                                课题联合投标单位 <span class="required">*</span>：
+                                课题联合投标单位：
                                 <br>
                                 （如有请填写）
                             </td>
@@ -219,7 +219,7 @@
             alertInfo(info,type) {
                 this.$alert(info,'提示', {
                     confirmButtonText: '确定',
-                    type: type,
+                    type,
                     callback: action => {}
                 });
             },
@@ -305,19 +305,12 @@
             handleSubmit() {
                 // 非空验证
                 for(let i in this.showForm) {
-                    if(i == "remark") {
+                    if(i == "remark" || i == "joinTenderUnits") {
                         continue;
                     }
                     let str = this.showForm[i] + "";
                     if(!str.trim()) {
                         this.alertInfo("请将表格填写完整","warning");
-                        return false;
-                    }
-                }
-                for(let i in this.Enclosure) {
-                    let str = this.Enclosure[i] + "";
-                    if(!str.trim()) {
-                        this.alertInfo("请上传全部附件","warning");
                         return false;
                     }
                 }

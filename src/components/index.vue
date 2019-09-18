@@ -379,7 +379,6 @@
 			// }
 			$route() {
 				this.reload();
-				console.log(0)
 			}
 		}
 	}
@@ -395,7 +394,7 @@
 				overflow-y: auto;
 				.aside_banner {
 					height: 100%;
-					padding-top: 180px;
+					padding-top: 85%;
 					background-color: #545c64;
 					.el-menu-vertical-demo {
 						height: 100%;

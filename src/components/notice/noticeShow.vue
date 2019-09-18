@@ -111,10 +111,10 @@ export default {
                 content:'11'
             }],
             fenye:{
-                total:400, //共有数据多少条
+                total:0, //共有数据多少条
                 pageNum:1,
-                pageSize:2, //每页显示的条数
-                pageSizes:[2,20,30,40] //选择每页显示多少条
+                pageSize:10, //每页显示的条数
+                pageSizes:[10,20,30,40] //选择每页显示多少条
             },
             dialogTableVisible:false,
             dialogTableEdit:false,
