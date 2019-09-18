@@ -47,7 +47,7 @@
                                     :disabled="true">
                                 </el-input>
                             </td>
-                            <td>项目负责人联系电话：</td>
+                            <td>项目负责人联系手机：</td>
                             <td>
                                 <el-input 
                                     v-model="showForm.projectLeaderPhone"

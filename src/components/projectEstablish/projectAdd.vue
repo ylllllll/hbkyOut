@@ -241,8 +241,7 @@
                     }
                 }
                 for(let i in this.Enclosure) {
-                    let str = this.Enclosure[i] + "";
-                    if(!str.trim()) {
+                    if(!this.Enclosure[i]) {
                         this.alertInfo("请上传全部附件","warning");
                         return false;
                     }

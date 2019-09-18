@@ -42,6 +42,7 @@
                     <template slot-scope="scope">
                         <span class="red" v-show="scope.row.midCheckStatus == '0'">未全部上传</span>
                         <span class="green" v-show="scope.row.midCheckStatus == '1'">已全部上传</span>
+                        <span class="green" v-show="scope.row.midCheckStatus == '2'">已全部上传</span>
                     </template>
                 </el-table-column>
             </el-table>
@@ -83,7 +84,7 @@
                             id: val.id
                         }
                     })
-                }else if(state == 1) {
+                }else if(state == 1 || state == 2) {
                     this.$router.push({
                         name: 'MidTermShow',
                         params: {

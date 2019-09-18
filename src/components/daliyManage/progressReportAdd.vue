@@ -8,11 +8,11 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>课题名称：</td>
+                            <td>课题名称 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.subjectName"></el-input>
                             </td>
-                            <td>课题编号：</td>
+                            <td>课题编号 <span class="required">*</span>：</td>
                             <td>
                                 <el-input 
                                     v-model="showForm.projectNo"
@@ -22,11 +22,11 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>承担单位：</td>
+                            <td>承担单位 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.bearerUnit"></el-input>
                             </td>
-                            <td>填报日期：</td>
+                            <td>填报日期 <span class="required">*</span>：</td>
                             <td>
                                 <el-date-picker
                                     v-model="showForm.fillTime"
@@ -37,28 +37,33 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>项目负责人：</td>
+                            <td>项目负责人 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.projectLeader"></el-input>
                             </td>
-                            <td>项目负责人联系电话：</td>
+                            <td>项目负责人联系手机 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.projectLeaderPhone"></el-input>
+                                <el-input 
+                                    v-model="showForm.projectLeaderPhone"
+                                    @blur="validatePhone">
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>主要联系人：</td>
+                            <td>主要联系人 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.primaryContacts"></el-input>
                             </td>
-                            <td>主要联系人联系电话：</td>
+                            <td>主要联系人联系手机 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.primaryContactsPhone">
-                            </el-input>
+                                <el-input 
+                                    v-model="showForm.primaryContactsPhone"
+                                    @blur="validatePhone">
+                                </el-input>
                             </td>
                         </tr>
                         <tr style="height:50px;">
-                            <td>进展情况：</td>
+                            <td>进展情况 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-radio v-model="showForm.progress" label="45">超前</el-radio>
                                 <el-radio v-model="showForm.progress" label="46">正常</el-radio>
@@ -66,7 +71,7 @@
                             </td>
                         </tr>
                         <tr class="file_tr">
-                            <td>课题进展附件：</td>
+                            <td>课题进展附件 <span class="required">*</span>：</td>
                             <td class="file_td" colspan="3">
                                 <input type="file" @change="getFile($event,4)" />
                             </td>
@@ -107,7 +112,10 @@
                         <tr>
                             <td colspan="2" style="position:relative;">
                                 已完成研发任务{{ progressForm.length }}项，完成工作进度
-                                <el-input class="_inline2" v-model="showForm.progressCompletedPercentage"></el-input>
+                                <el-input 
+                                    class="_inline2" 
+                                    v-model="showForm.progressCompletedPercentage"
+                                    @blur="validateNum"></el-input>
                                 %。
                                 <i class="el-icon-circle-plus-outline" @click="handleTrAdd(2)"></i>
                             </td>
@@ -132,20 +140,40 @@
                         <tr>
                             <td colspan="4" style="background-color:#fff;">
                                 已到位课题总经费
-                                <el-input class="_inline" v-model="showForm.totalFundsInplace"></el-input>
+                                <el-input 
+                                    class="_inline" 
+                                    v-model="showForm.totalFundsInplace"
+                                    @blur="validateNum">
+                                </el-input>
                                 万元；已使用课题经费
-                                <el-input class="_inline" v-model="showForm.projectFundsUsed"></el-input>
+                                <el-input 
+                                    class="_inline" 
+                                    v-model="showForm.projectFundsUsed"
+                                    @blur="validateNum">
+                                </el-input>
                                 万元，占总经费
-                                <el-input class="_inline" v-model="showForm.totalFunding"></el-input>
+                                <el-input 
+                                    class="_inline" 
+                                    v-model="showForm.totalFunding"
+                                    @blur="validateNum">
+                                </el-input>
                                 %。
                             </td>
                         </tr>
                         <tr>
                             <td colspan="4">
                                 其中：已使用省环保课题经费
-                                <el-input class="_inline" v-model="showForm.provincialEnvironmentalFundsUsed"></el-input>
+                                <el-input 
+                                    class="_inline" 
+                                    v-model="showForm.provincialEnvironmentalFundsUsed"
+                                    @blur="validateNum">
+                                </el-input>
                                 万元，占省环保课题经费
-                                <el-input class="_inline" v-model="showForm.provincialEnvironmentalFundsPercent"></el-input>
+                                <el-input 
+                                    class="_inline" 
+                                    v-model="showForm.provincialEnvironmentalFundsPercent"
+                                    @blur="validateNum">
+                                </el-input>
                                 %。
                             </td>
                         </tr>
@@ -196,7 +224,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>合同约定结题时间：</td>
+                            <td>合同约定结题时间 <span class="required">*</span>：</td>
                             <td>
                                 <el-date-picker
                                     v-model="showForm.contractAgreedClosingTime"
@@ -205,7 +233,7 @@
                                     placeholder="选择日期">
                                 </el-date-picker>
                             </td>
-                            <td>预计申请课题验收时间：</td>
+                            <td>预计申请课题验收时间 <span class="required">*</span>：</td>
                             <td>
                                 <el-date-picker
                                     v-model="showForm.estimatedAcceptanceTime"
@@ -216,7 +244,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>能否按合同约定时间完成课题：</td>
+                            <td>能否按合同约定时间完成课题 <span class="required">*</span>：</td>
                             <td colspan="3" style="height:50px;">
                                 <el-radio v-model="showForm.isComplateContract" label="0" style="line-height:28px;">能</el-radio>
                                 <el-radio v-model="showForm.isComplateContract" label="1" style="line-height:28px;">不能</el-radio>
@@ -237,13 +265,13 @@
                         </tr>
                         <!-- 附件 -->
                         <tr class="file_tr">
-                            <td>专家意见附件：</td>
+                            <td>专家意见附件 <span class="required">*</span>：</td>
                             <td class="file_td" colspan="3">
                                 <input type="file" @change="getFile($event,1)" />
                             </td>
                         </tr>
                         <tr class="file_tr">
-                            <td>开题报告附件：</td>
+                            <td>开题报告附件 <span class="required">*</span>：</td>
                             <td class="file_td" colspan="3">
                                 <input type="file" @change="getFile($event,3)" />
                             </td>
@@ -340,47 +368,59 @@
             }
         },
         methods: {
+            // 提示
             alertInfo(info,type) {
                 this.$alert(info,'提示', {
                     confirmButtonText: '确定',
-                    type,
+                    type: type,
                     callback: action => {}
                 });
             },
-            errorInfo() {
-                this.$alert('提交失败','提示', {
-                    confirmButtonText: '确定',
-                    type: 'warning',
-                    callback: action => {}
-                });
+            // 手机验证
+            validatePhone(event) {
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validatePhone = this.validate.validatePhone(val);
+                if(validatePhone) {
+                    this.alertInfo(validatePhone,"warning");
+                    _event.value = "";
+                    return false;
+                }
             },
-            successInfo() {
-                this.$alert('提交成功','提示', {
-                    confirmButtonText: '确定',
-                    type: 'success',
-                    callback: action => {
-                        this.$router.go(-1);
-                    }
-                });
+            // 数字验证
+            validateNum(event) {
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validateNum = this.validate.validateNum(val);
+                if(validateNum) {
+                    this.alertInfo(validateNum,"warning");
+                    _event.value = "";
+                    return false;
+                }
             },
-            handleOpenBox(event) {
-                this.overBoxFlag = true;
-                event.target.blur();
+            // 文件
+            getFile(event,index) {
+                // 附件格式验证
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validateFile = this.validate.validateFile(event.target.files[0].name);
+                if(validateFile) {
+                    this.alertInfo(validateFile,"warning");
+                    _event.value = "";
+                    return false;
+                }
+                if(index == 1) {
+                    this.file.expertSuggestAnnex = event.target.files[0];
+                }else if(index == 2) {
+                    this.file.fundProgressAnnex = event.target.files[0];
+                }else if(index == 3) {
+                    this.file.openReportAnnex = event.target.files[0];
+                }else if(index == 4) {
+                    this.file.subjectProgressAnnex = event.target.files[0];
+                }
+                console.log(this.file)
             },
-            receiptChildInfo(val) {
-                this.messageBoxData = val;
-            },
-            handleCloseCover() {
-                this.overBoxFlag = false;
-            },
-            handleConfirmCover() {
-                this.overBoxFlag = false;
-                this.showForm.projectNo = this.messageBoxData.projectNo;
-                this.showForm.subjectName = this.messageBoxData.subjectName;
-                this.showForm.projectLeader = this.messageBoxData.subjeceLeader;
-                this.showForm.primaryContacts = this.messageBoxData.subjectContact;
-                this.showForm.bearerUnit = this.messageBoxData.commitmentUnit;
-            },
+            // 多行操作
             handleTrAdd(val) {
                 if(val == 1) {
                     let item = {
@@ -435,19 +475,56 @@
                     }
                 }
             },
-            getFile(event,index) {
-                if(index == 1) {
-                    this.file.expertSuggestAnnex = event.target.files[0];
-                }else if(index == 2) {
-                    this.file.fundProgressAnnex = event.target.files[0];
-                }else if(index == 3) {
-                    this.file.openReportAnnex = event.target.files[0];
-                }else if(index == 4) {
-                    this.file.subjectProgressAnnex = event.target.files[0];
-                }
-                console.log(this.file)
+            // 弹窗操作
+            handleOpenBox(event) {
+                this.overBoxFlag = true;
+                event.target.blur();
             },
+            handleCloseCover() {
+                this.overBoxFlag = false;
+            },
+            receiptChildInfo(val) {
+                this.messageBoxData = val;
+            },
+            handleConfirmCover() {
+                this.overBoxFlag = false;
+                this.showForm.projectNo = this.messageBoxData.projectNo;
+                this.showForm.subjectName = this.messageBoxData.subjectName;
+                this.showForm.projectLeader = this.messageBoxData.subjeceLeader;
+                this.showForm.primaryContacts = this.messageBoxData.subjectContact;
+                this.showForm.bearerUnit = this.messageBoxData.commitmentUnit;
+            },
+            // 页面操作
             handleSubmit() {
+                // 非空验证
+                for(let i in this.showForm) {
+                    let str = this.showForm[i] + "";
+                    if(!str.trim()) {
+                        this.alertInfo("请将表格填写完整","warning");
+                        return false;
+                    }
+                }
+                let arr = [];
+                arr.push(...this.taskForm);
+                arr.push(...this.progressForm);
+                arr.push(...this.problemForm);
+                arr.push(...this.planForm);
+                console.log(arr)
+                for(let i in arr) {
+                    for(let j in arr[i]) {
+                        let str = arr[i][j] + "";
+                        if(!str.trim()) {
+                            this.alertInfo("请将表格填写完整","warning");
+                            return false;
+                        }
+                    }
+                }
+                for(let i in this.file) {
+                    if(!this.file[i]) {
+                        this.alertInfo("请上传全部附件","warning");
+                        return false;
+                    }
+                }
                 const loading = this.$loading({
                     lock: true,
                     text: '请稍后...',
@@ -527,53 +604,59 @@
                                                             console.log(5)
                                                             console.log(res);
                                                             if(res.data.resultFlag == 0) {
-                                                                this.successInfo();
+                                                                this.$alert('提交成功','提示', {
+                                                                    confirmButtonText: '确定',
+                                                                    type: 'success',
+                                                                    callback: action => {
+                                                                        this.$router.go(-1);
+                                                                    }
+                                                                });
                                                             }else {
-                                                                this.errorInfo();
+                                                                this.alertInfo("提交失败","warning");
                                                             }
                                                         }).catch(() => {
                                                             loading.close();
-                                                            this.errorInfo();
+                                                            this.alertInfo("提交失败","warning");
                                                         })
                                                     }else {
                                                         loading.close();
-                                                        this.errorInfo();
+                                                        this.alertInfo("提交失败","warning");
                                                     }
                                                 }).catch(() => {
                                                     loading.close();
-                                                    this.errorInfo();
+                                                    this.alertInfo("提交失败","warning");
                                                 })
                                             }else {
                                                 loading.close();
-                                                this.errorInfo();
+                                                this.alertInfo("提交失败","warning");
                                             }
                                         }).catch(() => {
                                             loading.close();
-                                            this.errorInfo();
+                                            this.alertInfo("提交失败","warning");
                                         })
                                     }else {
                                         loading.close();
-                                        this.errorInfo();
+                                        this.alertInfo("提交失败","warning");
                                     }
                                 }).catch(() => {
                                     loading.close();
-                                    this.errorInfo();
+                                    this.alertInfo("提交失败","warning");
                                 })
                             }else {
                                 loading.close();
-                                this.errorInfo();
+                                this.alertInfo("提交失败","warning");
                             }
                         }).catch(() => {
                             loading.close();
-                            this.errorInfo();
+                            this.alertInfo("提交失败","warning");
                         })
                     }else {
                         loading.close();
-                        this.errorInfo();
+                        this.alertInfo("提交失败","warning");
                     }
                 }).catch(() => {
                     loading.close();
-                    this.errorInfo();
+                    this.alertInfo("提交失败","warning");
                 })
             },
             handleBack() {

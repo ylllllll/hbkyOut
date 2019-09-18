@@ -1066,6 +1066,10 @@
                         }
                     }
                 }
+                if(!this.file) {
+                    this.alertInfo("请上传附件","warning");
+                    return false;
+                }
                 const loading = this.$loading({
                     lock: true,
                     text: '请稍后...',
