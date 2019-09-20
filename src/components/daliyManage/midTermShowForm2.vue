@@ -44,7 +44,7 @@
                             <td>
                                 <el-input v-model="showForm.subjectLeader" disabled></el-input>
                             </td>
-                            <td>课题负责人联系电话：</td>
+                            <td>课题负责人联系手机：</td>
                             <td>
                                 <el-input v-model="showForm.leaderPhone" disabled></el-input>
                             </td>
@@ -54,7 +54,7 @@
                             <td>
                                 <el-input v-model="showForm.topicContact" disabled></el-input>
                             </td>
-                            <td>课题联系人联系电话：</td>
+                            <td>课题联系人联系手机：</td>
                             <td>
                                 <el-input v-model="showForm.subjectContactPhone" disabled></el-input>
                             </td>

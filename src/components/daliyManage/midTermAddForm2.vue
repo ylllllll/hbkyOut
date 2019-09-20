@@ -8,7 +8,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>课题编号：</td>
+                            <td>课题编号 <span class="required">*</span>：</td>
                             <td>
                                 <el-input 
                                     v-model="showForm.subjectNo"
@@ -16,13 +16,13 @@
                                     @focus="handleOpenBox">
                                 </el-input>
                             </td>
-                            <td>课题名称：</td>
+                            <td>课题名称 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.subjectName"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>开始时间：</td>
+                            <td>开始时间 <span class="required">*</span>：</td>
                             <td>
                                 <el-date-picker
                                     v-model="showForm.subjectStartTime"
@@ -31,7 +31,7 @@
                                     value-format="yyyy-MM-dd">
                                 </el-date-picker>
                             </td>
-                            <td>结束时间：</td>
+                            <td>结束时间 <span class="required">*</span>：</td>
                             <td>
                                 <el-date-picker
                                     v-model="showForm.subjectEndTime"
@@ -42,35 +42,41 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>承担单位：</td>
+                            <td>承担单位 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-input v-model="showForm.commitmentUnit"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>参加单位：</td>
+                            <td>参加单位 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-input v-model="showForm.participatingUnits"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>课题负责人：</td>
+                            <td>课题负责人 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.subjectLeader"></el-input>
                             </td>
-                            <td>课题负责人联系电话：</td>
+                            <td>课题负责人联系手机 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.leaderPhone"></el-input>
+                                <el-input 
+                                    v-model="showForm.leaderPhone"
+                                    @blur="validatePhone">
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>课题联系人：</td>
+                            <td>课题联系人 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.topicContact"></el-input>
                             </td>
-                            <td>课题联系人联系电话：</td>
+                            <td>课题联系人联系手机 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.subjectContactPhone"></el-input>
+                                <el-input 
+                                    v-model="showForm.subjectContactPhone"
+                                    @blur="validatePhone">
+                                </el-input>
                             </td>
                         </tr>
                     </tbody>
@@ -83,7 +89,7 @@
                     </thead>
                     <tbody>
                         <tr style="height:50px;">
-                            <td>课题按合同计划进度执行情况：</td>
+                            <td>课题按合同计划进度执行情况 <span class="required">*</span>：</td>
                             <td colspan="3" class="radio_group">
                                 <el-radio v-model="showForm.contractPlanCrogressExecution" label="41">超额完成</el-radio>
                                 <el-radio v-model="showForm.contractPlanCrogressExecution" label="42">完成</el-radio>
@@ -92,7 +98,7 @@
                             </td>
                         </tr>
                         <tr style="height:50px;">
-                            <td>课题进度未按时完成的，请选择以下原因（多选）：</td>
+                            <td>课题进度未按时完成的，请选择以下原因（多选） <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-checkbox-group v-model="showForm.notCompletingReason">
                                     <div class="item">
@@ -135,50 +141,74 @@
                             <td colspan="2">其他</td>
                         </tr>
                         <tr>
-                            <td>课题编号：</td>
+                            <td>课题编号 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.totalBudget"></el-input>
+                                <el-input 
+                                    v-model="showForm.totalBudget"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                             <td colspan="2">
-                                <el-input v-model="showForm.provincialSubjectBudget"></el-input>
+                                <el-input 
+                                    v-model="showForm.provincialSubjectBudget"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                             <td>
                                 <el-input v-model="showForm.unitFinancingBudget"></el-input>
                             </td>
                             <td colspan="2">
-                                <el-input v-model="showForm.otherBudgets"></el-input>
+                                <el-input 
+                                    v-model="showForm.otherBudgets"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>已到位数：</td>
+                            <td>已到位数 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.totalExpenditure"></el-input>
+                                <el-input 
+                                    v-model="showForm.totalExpenditure"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                             <td colspan="2">
-                                <el-input v-model="showForm.provincialSubjectExpenditureBudget"></el-input>
+                                <el-input 
+                                    v-model="showForm.provincialSubjectExpenditureBudget"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                             <td>
-                                <el-input v-model="showForm.unitInancingExpenditureBudget"></el-input>
+                                <el-input 
+                                    v-model="showForm.unitInancingExpenditureBudget"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                             <td colspan="2">
-                                <el-input v-model="showForm.otherExpenditureBudget"></el-input>
+                                <el-input 
+                                    v-model="showForm.otherExpenditureBudget"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                         </tr>
                         <tr style="height:50px;" id="my_tr2">
-                            <td colspan="7">省环保课题经费使用情况：目前已支出111万元，具体如下（对照合同支出范围填写）：</td>
+                            <td colspan="7">省环保课题经费使用情况：目前已支出{{ sum }}万元，具体如下（对照合同支出范围填写）：</td>
                         </tr>
                         <tr style="height:50px;" id="my_tr">
-                            <td>设备费</td>
-                            <td>材料费</td>
-                            <td>测试化验加工费</td>
-                            <td>燃料动力费</td>
-                            <td>差旅费</td>
-                            <td>会议费</td>
-                            <td>专家咨询费</td>
+                            <td>设备费 <span class="required">*</span></td>
+                            <td>材料费 <span class="required">*</span></td>
+                            <td>测试化验加工费 <span class="required">*</span></td>
+                            <td>燃料动力费 <span class="required">*</span></td>
+                            <td>差旅费 <span class="required">*</span></td>
+                            <td>会议费 <span class="required">*</span></td>
+                            <td>专家咨询费 <span class="required">*</span></td>
                         </tr>
                         <tr>
                             <td>
-                                <el-input v-model="showForm.equipmentUsage"></el-input>
+                                <el-input 
+                                    v-model="showForm.equipmentUsage"
+                                    @input="computed">
+                                </el-input>
                             </td>
                             <td>
                                 <el-input v-model="showForm.materialUsage"></el-input>
@@ -200,11 +230,15 @@
                             </td>
                         </tr>
                         <tr style="height:50px;" id="my_tr">
-                            <td colspan="2">出版/文献/信息传播/知识产权事务费</td>
-                            <td>劳务费（或管理及人员费中人员费）</td>
-                            <td>其他费用</td>
-                            <td colspan="2">间接费用（水、电、气消耗及管理费等）</td>
-                            <td>外部合作费</td>
+                            <td colspan="2">出版/文献/信息传播/知识产权事务费 <span class="required">*</span></td>
+                            <td>劳务费（或管理及人员费中人员费） <span class="required">*</span></td>
+                            <td>其他费用 <span class="required">*</span></td>
+                            <td colspan="2">
+                                间接费用 <span class="required">*</span>
+                                <br>
+                                （水、电、气消耗及管理费等）
+                            </td>
+                            <td>外部合作费 <span class="required">*</span></td>
                         </tr>
                         <tr>
                             <td colspan="2">
@@ -233,7 +267,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td rowspan="3" style="text-align:center;">经济社会效益情况</td>
+                            <td rowspan="3" style="text-align:center;">经济社会效益情况 <span class="required">*</span></td>
                             <td>新增销售额<br>（万元）</td>
                             <td>
                                 <el-input v-model="showForm.newSales"></el-input>
@@ -276,7 +310,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td rowspan="4" style="text-align:center;">取得成果情况</td>
+                            <td rowspan="4" style="text-align:center;">取得成果情况 <span class="required">*</span></td>
                             <td>发明专利</td>
                             <td>
                                 <el-input v-model="showForm.inventionPatents"></el-input>
@@ -333,7 +367,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td rowspan="2" style="text-align:center;">人才培养情况（人）</td>
+                            <td rowspan="2" style="text-align:center;">人才培养情况（人） <span class="required">*</span></td>
                             <td>高级人才<br>（人）</td>
                             <td>
                                 <el-input v-model="showForm.seniorTalent"></el-input>
@@ -358,34 +392,37 @@
                     <tbody>
                         <tr id="my_tr4">
                             <td>
-                                <p>1、项目实际进度情况（包括经济、技术等指标完成情况，重点介绍课题进展、重大突破及工作成效等）（限300字以内）</p>
+                                <p>1、项目实际进度情况 <span class="required">*</span>（包括经济、技术等指标完成情况，重点介绍课题进展、重大突破及工作成效等）</p>
                                 <el-input 
                                     v-model="showForm.actualProgressProject"
                                     :autosize="{ minRows:6 }"
                                     type="textarea"
-                                    maxlength="300">
+                                    maxlength="300"
+                                    placeholder="请输入少于300字">
                                 </el-input>
                             </td>
                         </tr>
                         <tr id="my_tr4">
                             <td>
-                                <p>2、课题资金使用情况（包括资金落实、使用及存在问题）（限200字以内）</p>
+                                <p>2、课题资金使用情况 <span class="required">*</span>（包括资金落实、使用及存在问题）</p>
                                 <el-input 
                                     v-model="showForm.projectFundsUsage"
                                     :autosize="{ minRows:6 }"
                                     type="textarea"
-                                    maxlength="200">
+                                    maxlength="200"
+                                    placeholder="请输入少于200字">
                                 </el-input>
                             </td>
                         </tr>
                         <tr id="my_tr4">
                             <td>
-                                <p>3、项目执行过程中存在的问题、解决措施及有关建议（限200字以内）</p>
+                                <p>3、项目执行过程中存在的问题、解决措施及有关建议 <span class="required">*</span></p>
                                 <el-input 
                                     v-model="showForm.recommendationsProblemsSolutions"
                                     :autosize="{ minRows:6 }"
                                     type="textarea"
-                                    maxlength="200">
+                                    maxlength="200"
+                                    placeholder="请输入少于200字">
                                 </el-input>
                             </td>
                         </tr>
@@ -394,7 +431,7 @@
                 <table class="form_table my_table" :model="showForm">
                     <thead>
                         <tr>
-                            <th colspan="7" class="small_title">五、项目承担单位审核意见（主要对项目填写情况是否属实作出评价）</th>
+                            <th colspan="7" class="small_title">五、项目承担单位审核意见 <span class="required">*</span>（主要对项目填写情况是否属实作出评价）</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -404,7 +441,8 @@
                                     v-model="showForm.projectUndertakerReviewOpinion"
                                     :autosize="{ minRows:6 }"
                                     type="textarea"
-                                    maxlength="300">
+                                    maxlength="300"
+                                    placeholder="请输入少于300字">
                                 </el-input>
                             </td>
                         </tr>
@@ -413,7 +451,7 @@
                 <table class="form_table" style="border:none;">
                     <tbody>
                         <tr class="file_tr" style="border-top:none;">
-                            <td>中期检查表附件：</td>
+                            <td>中期检查表附件 <span class="required">*</span>：</td>
                             <td colspan="3" class="file_td">
                                 <input type="file" @change="getFile($event)" />
                             </td>
@@ -449,6 +487,7 @@
         },
         data() {
             return {
+                sum: 0,
                 showForm: {
                     subjectNo: '',
                     subjectName: '',
@@ -519,18 +558,62 @@
             }
         },
         methods: {
+            // 提示
+            alertInfo(info,type) {
+                this.$alert(info,'提示', {
+                    confirmButtonText: '确定',
+                    type,
+                    callback: action => {}
+                });
+            },
+            // 手机号验证
+            validatePhone(event) {
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validatePhone = this.validate.validatePhone(val);
+                if(validatePhone) {
+                    this.alertInfo(validatePhone,"warning");
+                    _event.value = "";
+                    return false;
+                }
+            },
+            // 数字验证
+            validateNum(event) {
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validateNum = this.validate.validateNum(val);
+                if(validateNum) {
+                    this.alertInfo(validateNum,"warning");
+                    _event.value = "";
+                    return false;
+                }
+            },
+            computed() {
+                console.log(123)
+            },
+            // 文件
             getFile(event) {
+                // 附件格式验证
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validateFile = this.validate.validateFile(event.target.files[0].name);
+                if(validateFile) {
+                    this.alertInfo(validateFile,"warning");
+                    _event.value = "";
+                    return false;
+                }
                 this.midCheckAnnex = event.target.files[0];
             },
+            // 弹窗操作
             handleOpenBox(event) {
                 this.overBoxFlag = true;
                 event.target.blur();
             },
-            receiptChildInfo(val) {
-                this.messageBoxData = val;
-            },
             handleCloseCover() {
                 this.overBoxFlag = false;
+            },
+            receiptChildInfo(val) {
+                this.messageBoxData = val;
             },
             handleConfirmCover() {
                 this.overBoxFlag = false;
@@ -630,7 +713,7 @@
             }
             .el-textarea {
                 .el-textarea__inner {
-                    padding: 10px;
+                    padding-top: 10px;
                     resize: none;
                 }
             }

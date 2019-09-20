@@ -940,7 +940,7 @@
                                                         + parseFloat(this.budgetForm.expertsSupportingBudget) * 10000
                                                         + parseFloat(this.budgetForm.dailySupportingBudget) * 10000) 
                                                         / 10000;
-                    // 合计
+                    // 和计
                     this.budgetForm.expenditureBudget = (parseFloat(this.budgetForm.currentYearExpenditureTotal) * 10000
                                                         + parseFloat(this.budgetForm.nextYearExpenditureTotal) * 10000
                                                         + parseFloat(this.budgetForm.afterYearExpenditureTotal) * 10000

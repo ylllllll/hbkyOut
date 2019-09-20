@@ -8,7 +8,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>课题编号：</td>
+                            <td>课题编号 <span class="required">*</span>：</td>
                             <td>
                                 <el-input 
                                     v-model="showForm.subjectNo"
@@ -16,19 +16,19 @@
                                     @focus="handleOpenBox">
                                 </el-input>
                             </td>
-                            <td>课题负责人：</td>
+                            <td>课题负责人 <span class="required">*</span>：</td>
                             <td>
                                 <el-input v-model="showForm.subjectLeader"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>课题名称：</td>
+                            <td>课题名称 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-input v-model="showForm.subjectName"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>承担单位：</td>
+                            <td>承担单位 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-input v-model="showForm.commitmentUnit"></el-input>
                             </td>
@@ -37,7 +37,7 @@
                             <td colspan="4" style="height:50px;text-align:center;background-color:#fff;">评估内容</td>
                         </tr>
                         <tr style="height:50px;">
-                            <td>汇报情况：</td>
+                            <td>汇报情况 <span class="required">*</span>：</td>
                             <td colspan="3" class="radio_group">
                                 <el-radio v-model="showForm.evaluationContent" label="53">内容清楚</el-radio>
                                 <el-radio v-model="showForm.evaluationContent" label="54">内容基本清楚</el-radio>
@@ -45,7 +45,7 @@
                             </td>
                         </tr>
                         <tr style="height:50px;">
-                            <td>进度执行情况：</td>
+                            <td>进度执行情况 <span class="required">*</span>：</td>
                             <td colspan="3" class="radio_group">
                                 <el-radio v-model="showForm.progressExecution" label="56">超额完成</el-radio>
                                 <el-radio v-model="showForm.progressExecution" label="57">完成</el-radio>
@@ -54,7 +54,7 @@
                             </td>
                         </tr>
                         <tr style="height:50px;">
-                            <td>课题实施所需条件：</td>
+                            <td>课题实施所需条件 <span class="required">*</span>：</td>
                             <td colspan="3" class="radio_group">
                                 <el-radio v-model="showForm.projectImplementationConditions" label="60">落实</el-radio>
                                 <el-radio v-model="showForm.projectImplementationConditions" label="61">基本落实</el-radio>
@@ -62,7 +62,7 @@
                             </td>
                         </tr>
                         <tr style="height:50px;">
-                            <td>技术、经济等考核指标：</td>
+                            <td>技术、经济等考核指标 <span class="required">*</span>：</td>
                             <td colspan="3" class="radio_group">
                                 <el-radio v-model="showForm.technicalEconomicAssessment" label="63">达到合同规定</el-radio>
                                 <el-radio v-model="showForm.technicalEconomicAssessment" label="64">基本达到合同规定</el-radio>
@@ -70,13 +70,13 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>取得重大技术突破以及成效等情况：</td>
+                            <td>取得重大技术突破以及成效等情况 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-input v-model="showForm.majorTechnologicalBreakthroughs"></el-input>
                             </td>
                         </tr>
                         <tr style="height:50px;">
-                            <td>经费执行情况：</td>
+                            <td>经费执行情况 <span class="required">*</span>：</td>
                             <td colspan="3" class="radio_group">
                                 <el-radio v-model="showForm.fundingPerformance" label="66">合同</el-radio>
                                 <el-radio v-model="showForm.fundingPerformance" label="67">基本合理</el-radio>
@@ -84,7 +84,7 @@
                             </td>
                         </tr>
                         <tr style="height:50px;">
-                            <td>下一步工作机会：</td>
+                            <td>下一步工作机会 <span class="required">*</span>：</td>
                             <td colspan="3" class="radio_group">
                                 <el-radio v-model="showForm.nextWorkPlan" label="69">可行</el-radio>
                                 <el-radio v-model="showForm.nextWorkPlan" label="70">基本可行</el-radio>
@@ -92,7 +92,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>存在问题：</td>
+                            <td>存在问题 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-input 
                                     v-model="showForm.problem"
@@ -102,7 +102,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>建议：</td>
+                            <td>建议 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-input 
                                     v-model="showForm.suggestions"
@@ -112,7 +112,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>专家组综合意见：</td>
+                            <td>专家组综合意见 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-input 
                                     v-model="showForm.expert"
@@ -122,7 +122,7 @@
                             </td>
                         </tr>
                         <tr style="height:50px;">
-                            <td>评价等级：</td>
+                            <td>评价等级 <span class="required">*</span>：</td>
                             <td colspan="3" class="radio_group">
                                 <el-radio v-model="showForm.evaluationTime" label="72">优秀</el-radio>
                                 <el-radio v-model="showForm.evaluationTime" label="73">良好</el-radio>
@@ -131,13 +131,13 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>专家（使用、隔开）：</td>
+                            <td>专家（使用、隔开） <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-input v-model="showForm.expertName"></el-input>
                             </td>
                         </tr>
                         <tr>
-                            <td>日期：</td>
+                            <td>日期 <span class="required">*</span>：</td>
                             <td colspan="3">
                                 <el-date-picker
                                     v-model="showForm.fillDate"
@@ -148,7 +148,7 @@
                             </td>
                         </tr>
                         <tr class="file_tr">
-                            <td>专家评估表附件：</td>
+                            <td>专家评估表附件 <span class="required">*</span>：</td>
                             <td colspan="3" class="file_td">
                                 <input type="file" @change="getFile($event)" />
                             </td>
@@ -212,18 +212,37 @@
             }
         },
         methods: {
+            // 提示
+            alertInfo(info,type) {
+                this.$alert(info,'提示', {
+                    confirmButtonText: '确定',
+                    type,
+                    callback: action => {}
+                });
+            },
+            // 文件
             getFile(event) {
+                // 附件格式验证
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validateFile = this.validate.validateFile(event.target.files[0].name);
+                if(validateFile) {
+                    this.alertInfo(validateFile,"warning");
+                    _event.value = "";
+                    return false;
+                }
                 this.expertAssessmentAnnex = event.target.files[0];
             },
+            // 弹窗操作
             handleOpenBox(event) {
                 this.overBoxFlag = true;
                 event.target.blur();
             },
-            receiptChildInfo(val) {
-                this.messageBoxData = val;
-            },
             handleCloseCover() {
                 this.overBoxFlag = false;
+            },
+            receiptChildInfo(val) {
+                this.messageBoxData = val;
             },
             handleConfirmCover() {
                 this.overBoxFlag = false;
@@ -238,7 +257,7 @@
 
 <style lang="less">
     #midTermAddForm1{
-        .showForm{
+        .showForm {
             table.form_table{
                 @media  screen and ( max-width: 1600px ) {
                     width: 72.4%;

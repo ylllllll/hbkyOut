@@ -6,7 +6,7 @@
         </div>
         <form1 ref="form1" v-show="toggleFlag == 1"></form1>
         <form2 ref="form2" v-show="toggleFlag == 2"></form2>
-        <div class="file_box">专家意见附件：<input type="file" @change="getFile($event)" /></div>
+        <div class="file_box">专家意见附件 <span class="required">*</span>：<input type="file" @change="getFile($event)" /></div>
         <div class="btn_group">
             <el-button @click="handleSubmit">提交</el-button>
             <el-button @click="handleBack">返回</el-button>
@@ -33,20 +33,34 @@
             }
         },
         methods: {
-            errorInfo() {
-                this.$alert('提交失败','提示', {
+            // 提示
+            alertInfo(info,type) {
+                this.$alert(info,'提示', {
                     confirmButtonText: '确定',
-                    type: 'warning',
+                    type,
                     callback: action => {}
                 });
             },
+            // 文件
+            getFile(event) {
+                // 附件格式验证
+                let _event = event.srcElement || event.target,
+                    val = _event.value,
+                    validateFile = this.validate.validateFile(event.target.files[0].name);
+                if(validateFile) {
+                    this.alertInfo(validateFile,"warning");
+                    _event.value = "";
+                    return false;
+                }
+                this.subjectSuggestAnnex = event.target.files[0];
+            },
+            // 页面操作
             handleToggleForm(val) {
                 this.toggleFlag = val;
             },
-            getFile(event) {
-                this.subjectSuggestAnnex = event.target.files[0];
-            },
             handleSubmit() {
+                // 非空验证
+                // 暂无
                 const loading = this.$loading({
                     lock: true,
                     text: '请稍后...',
@@ -89,20 +103,19 @@
                                     }
                                 }); 
                             }else {
-                                loading.close();
-                                this.errorInfo();
+                                this.alertInfo("提交失败","warning");
                             }
                         }).catch(() => {
                             loading.close();
-                            this.errorInfo();
+                            this.alertInfo("提交失败","warning");
                         })
                     }else {
                         loading.close();
-                        this.errorInfo();
+                        this.alertInfo("提交失败","warning");
                     }
                 }).catch(() => {
                     loading.close();
-                    this.errorInfo();
+                    this.alertInfo("提交失败","warning");
                 })  
             },
             handleBack() {
