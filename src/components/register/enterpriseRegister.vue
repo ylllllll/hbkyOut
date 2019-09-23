@@ -177,7 +177,7 @@
             validatePwd(event) {
                 let _event = event.srcElement || event.target,
                     val = _event.value,
-                    validatePwd = this.validate.validatePwd(val,this.showForm.loginName);
+                    validatePwd = this.$validate.validatePwd(val,this.showForm.loginName);
                 if(validatePwd) {
                     this.alertInfo(validatePwd,"warning");
                     _event.value = "";
@@ -200,7 +200,7 @@
             validateCard(event) {
                 // let _event = event.srcElement || event.target,
                 //     val = _event.value,
-                //     validateCard = this.validate.validateCard(val);
+                //     validateCard = this.$validate.validateCard(val);
                 // if(validateCard) {
                 //     this.alertInfo(validateCard,"warning");
                 //     _event.value = "";
@@ -211,7 +211,7 @@
             validatePhone(event) {
                 let _event = event.srcElement || event.target,
                     val = _event.value,
-                    validatePhone = this.validate.validatePhone(val);
+                    validatePhone = this.$validate.validatePhone(val);
                 if(validatePhone) {
                     this.alertInfo(validatePhone,"warning");
                     _event.value = "";
@@ -222,7 +222,7 @@
             validateEmail(event) {
                 let _event = event.srcElement || event.target,
                     val = _event.value,
-                    validateEmail = this.validate.validateEmail(val);
+                    validateEmail = this.$validate.validateEmail(val);
                 if(validateEmail) {
                     this.alertInfo(validateEmail,"warning");
                     _event.value = "";
@@ -234,7 +234,7 @@
                 // 附件格式验证
                 let _event = event.srcElement || event.target,
                     val = _event.value,
-                    validateFile = this.validate.validateFile(event.target.files[0].name);
+                    validateFile = this.$validate.validateFile(event.target.files[0].name);
                 if(validateFile) {
                     this.alertInfo(validateFile,"warning");
                     _event.value = "";

@@ -184,7 +184,7 @@
         },
         data() {
             return {
-                showForm:{
+                showForm: {
                     subjectNo: '',
                     subjectLeader: '',
                     subjectName: '',
@@ -208,7 +208,10 @@
                     id: this.$route.params.id
                 },
                 overBoxFlag: false,
-                messageBoxData: {}
+                messageBoxData: {},
+                test: {
+                    name: '1'
+                }
             }
         },
         methods: {
@@ -225,7 +228,7 @@
                 // 附件格式验证
                 let _event = event.srcElement || event.target,
                     val = _event.value,
-                    validateFile = this.validate.validateFile(event.target.files[0].name);
+                    validateFile = this.$validate.validateFile(event.target.files[0].name);
                 if(validateFile) {
                     this.alertInfo(validateFile,"warning");
                     _event.value = "";

@@ -163,6 +163,7 @@
             }
         },
         methods: {
+            // 提示
             alertInfo(info,type) {
                 this.$alert(info,'提示', {
                     confirmButtonText: '确定',
@@ -174,7 +175,7 @@
             validateNum() {
                 let _event = event.srcElement || event.target,
                     val = _event.value,
-                    validateNum = this.validate.validateNum(val);
+                    validateNum = this.$validate.validateNum(val);
                 if(validateNum) {
                     this.alertInfo(validateNum,"warning");
                     _event.value = "";
@@ -185,7 +186,7 @@
             validatePhone() {
                 let _event = event.srcElement || event.target,
                     val = _event.value,
-                    validatePhone = this.validate.validatePhone(val);
+                    validatePhone = this.$validate.validatePhone(val);
                 if(validatePhone) {
                     this.alertInfo(validatePhone,"warning");
                     _event.value = "";

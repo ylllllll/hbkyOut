@@ -227,7 +227,7 @@
             validateNum() {
                 let _event = event.srcElement || event.target,
                     val = _event.value,
-                    validateNum = this.validate.validateNum(val);
+                    validateNum = this.$validate.validateNum(val);
                 if(validateNum) {
                     this.alertInfo(validateNum,"warning");
                     _event.value = "";
@@ -238,7 +238,7 @@
             validatePhone() {
                 let _event = event.srcElement || event.target,
                     val = _event.value,
-                    validatePhone = this.validate.validatePhone(val);
+                    validatePhone = this.$validate.validatePhone(val);
                 if(validatePhone) {
                     this.alertInfo(validatePhone,"warning");
                     _event.value = "";
@@ -250,7 +250,7 @@
                 // 附件格式验证
                 let _event = event.srcElement || event.target,
                     val = _event.value,
-                    validateFile = this.validate.validateFile(event.target.files[0].name);
+                    validateFile = this.$validate.validateFile(event.target.files[0].name);
                 if(validateFile) {
                     this.alertInfo(validateFile,"warning");
                     _event.value = "";

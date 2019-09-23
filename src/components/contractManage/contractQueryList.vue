@@ -4,8 +4,7 @@
         <div class="queryForm">
             <el-form ref="queryForm" :model="queryForm" >
                 <el-form-item label="课题类别：" >
-                    <el-select v-model="queryForm.subjectCategory">
-                        <el-option label="所有类别" value=""></el-option>
+                    <el-select v-model="queryForm.subjectCategory" clearable>
                         <el-option v-for="(item,index) in optGroup1" :key="index" :label="item.content" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
@@ -64,7 +63,7 @@
                 </el-table-column>
                 <el-table-column
                     prop="subjectObjectivesResearch"
-                    min-width="135"
+                    min-width="150"
                     label="课题的目标和主要研究内容"
                     :show-overflow-tooltip="true"
                     align="center">
@@ -130,6 +129,7 @@
 </template>
 
 <script>
+    import api from '@/js/api'
     export default {
         name:'contractQueryList',
         data(){
@@ -154,6 +154,7 @@
             }
         },
         methods: {
+            // 列表操作
             handleSelectionChange(val) {
                 this.$router.push({
                     name: 'ContractQueryShow',
@@ -162,6 +163,15 @@
                     }
                 })
             },
+            handleEdit(val) {
+                this.$router.push({
+                    name: 'ContractQueryEdit',
+                    params: {
+                        id: val
+                    }
+                })
+            },
+            // 分页
             handleCurrentChange(val) {              //val表示当前页
                 this.fenye.pageNum = val;
                 this._axios();
@@ -174,13 +184,20 @@
                 this._axios;
                 document.querySelector(".first-pager").click();
             },
+            // 搜索
+            handleSearch() {
+                this.loading = true;
+                this.queryForm.pageNum = 1;
+                this._axios();
+                document.querySelector(".first-pager").click();
+            },
             // 请求列表数据
             _axios() {
                 let data = this.queryForm;
                     data.pageNum = this.fenye.pageNum;
                     data.pageSize = this.fenye.pageSize;
                 this.axios({
-                    url: 'http://192.168.0.80:8087/environment/contract/getManageInfoByUid',
+                    url: `http://192.168.0.80:8087/environment/contract/getManageInfoByUid`,
                     method: 'get',
                     params: data
                 }).then((res) => {
@@ -194,26 +211,12 @@
                         this.fenye.total = data.total;
                     }
                 })
-            },
-            handleSearch() {
-                this.loading = true;
-                this.queryForm.pageNum = 1;
-                this._axios();
-                document.querySelector(".first-pager").click();
-            },
-            handleEdit(val) {
-                this.$router.push({
-                    name: 'ContractQueryEdit',
-                    params: {
-                        id: val
-                    }
-                })
             }
         },
         beforeMount() {
             // 请求课题类别
             this.axios({
-                url: 'http://192.168.0.80:8087/environment/guide/getCategoryAndDomain',
+                url: `http://192.168.0.80:8087/environment/guide/getCategoryAndDomain`,
                 method: 'get',
             }).then((res) => {
                 let data = res.data.data;

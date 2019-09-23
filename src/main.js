@@ -20,7 +20,7 @@ Router.prototype.push = function push(location) {
 }
 
 import validate from './js/validate.js'
-Vue.prototype.validate = validate;
+Vue.prototype.$validate = validate;
 
 Vue.use(pages)
 

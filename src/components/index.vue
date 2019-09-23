@@ -326,9 +326,7 @@
 					type: 'warning'
 				}).then(() => {
 					this.$router.push("/");
-				}).catch(() => {
-
-				})
+				}).catch(() => {})
 			},
 			// 当前页刷新
 			reload(){

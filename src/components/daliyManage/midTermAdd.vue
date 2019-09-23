@@ -46,7 +46,7 @@
                 // 附件格式验证
                 let _event = event.srcElement || event.target,
                     val = _event.value,
-                    validateFile = this.validate.validateFile(event.target.files[0].name);
+                    validateFile = this.$validate.validateFile(event.target.files[0].name);
                 if(validateFile) {
                     this.alertInfo(validateFile,"warning");
                     _event.value = "";
@@ -60,7 +60,24 @@
             },
             handleSubmit() {
                 // 非空验证
-                // 暂无
+                let formData1 = this.$refs.form1.showForm,
+                    formData2 = this.$refs.form2.showForm,
+                    obj = Object.assign(formData2,formData1);
+                Object.assign(obj,formData1);
+                Object.assign(obj,formData2);
+                for(let i in obj) {
+                    let str = obj[i] + "";
+                    if(!str.trim()) {
+                        this.alertInfo("请将表格填写完整","warning");
+                        return false;
+                    }
+                }
+                let file1 = this.$refs.form1.expertAssessmentAnnex,
+                    file2 = this.$refs.form2.midCheckAnnex;
+                if(!file1 || !file2 || !this.subjectSuggestAnnex) {
+                    this.alertInfo("请上传全部附件","warning");
+                    return false;
+                }
                 const loading = this.$loading({
                     lock: true,
                     text: '请稍后...',
@@ -69,15 +86,15 @@
                 });
                 let formData = new FormData(),
                     midCheckTemplateDtoAndExpertAssessmentDto = {
-                        midCheckTemplateDTO: this.$refs.form2.showForm,
-                        expertAssessmentDTO: this.$refs.form1.showForm
+                        midCheckTemplateDTO: formData2,
+                        expertAssessmentDTO: formData1
                     };
                 midCheckTemplateDtoAndExpertAssessmentDto.midCheckTemplateDTO.notCompletingReason = this.$refs.form2.showForm.notCompletingReason.toString();
                 midCheckTemplateDtoAndExpertAssessmentDto = JSON.stringify(midCheckTemplateDtoAndExpertAssessmentDto);
                 formData.append('cid',this.paramsData.id);
                 formData.append('midCheckTemplateDtoAndExpertAssessmentDto',new Blob([midCheckTemplateDtoAndExpertAssessmentDto],{type:"application/json"}));
-                formData.append('expertAssessmentAnnex',this.$refs.form1.expertAssessmentAnnex);
-                formData.append('midCheckAnnex',this.$refs.form2.midCheckAnnex);
+                formData.append('expertAssessmentAnnex',file1);
+                formData.append('midCheckAnnex',file2);
                 this.axios({
                     url: 'http://192.168.0.80:8087/environment/daily/WaiCommitFile',
                     method: 'post',

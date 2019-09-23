@@ -211,22 +211,37 @@
                                 </el-input>
                             </td>
                             <td>
-                                <el-input v-model="showForm.materialUsage"></el-input>
+                                <el-input 
+                                    v-model="showForm.materialUsage"
+                                    @input="computed">
+                                </el-input>
                             </td>
                             <td>
-                                <el-input v-model="showForm.processingFeeUsage"></el-input>
+                                <el-input 
+                                    v-model="showForm.processingFeeUsage" 
+                                    @input="computed">
+                                </el-input>
                             </td>
                             <td>
-                                <el-input v-model="showForm.fuelUsage"></el-input>
+                                <el-input 
+                                    v-model="showForm.fuelUsage" 
+                                    @input="computed">
+                                </el-input>
                             </td>
                             <td>
-                                <el-input v-model="showForm.travelExpenses"></el-input>
+                                <el-input 
+                                    v-model="showForm.travelExpenses" 
+                                    @input="computed">
+                                </el-input>
                             </td>
                             <td>
-                                <el-input v-model="showForm.meetingFeeUsage"></el-input>
+                                <el-input 
+                                    v-model="showForm.meetingFeeUsage"
+                                    @input="computed">
+                                </el-input>
                             </td>
                             <td>
-                                <el-input v-model="showForm.expertConsultationFeesUsage"></el-input>
+                                <el-input v-model="showForm.expertConsultationFeesUsage" @input="computed"></el-input>
                             </td>
                         </tr>
                         <tr style="height:50px;" id="my_tr">
@@ -242,19 +257,34 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <el-input v-model="showForm.publicationDocumentationNewsIntellectualproperty"></el-input>
+                                <el-input 
+                                    v-model="showForm.publicationDocumentationNewsIntellectualproperty"
+                                    @input="computed">
+                                </el-input>
                             </td>
                             <td>
-                                <el-input v-model="showForm.labourCostsUsage"></el-input>
+                                <el-input 
+                                    v-model="showForm.labourCostsUsage"
+                                    @input="computed">
+                                </el-input>
                             </td>
                             <td>
-                                <el-input v-model="showForm.otherExpenseUsage"></el-input>
+                                <el-input 
+                                    v-model="showForm.otherExpenseUsage"
+                                    @input="computed">
+                                </el-input>
                             </td>
                             <td colspan="2">
-                                <el-input v-model="showForm.indirectCostsUsage"></el-input>
+                                <el-input 
+                                    v-model="showForm.indirectCostsUsage"
+                                    @input="computed">
+                                </el-input>
                             </td>
                             <td>
-                                <el-input v-model="showForm.externalCooperationFees"></el-input>
+                                <el-input 
+                                    v-model="showForm.externalCooperationFees"
+                                    @input="computed">
+                                </el-input>
                             </td>
                         </tr>
                     </tbody>
@@ -270,114 +300,183 @@
                             <td rowspan="3" style="text-align:center;">经济社会效益情况 <span class="required">*</span></td>
                             <td>新增销售额<br>（万元）</td>
                             <td>
-                                <el-input v-model="showForm.newSales"></el-input>
+                                <el-input 
+                                    v-model="showForm.newSales"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                             <td>新增利润<br>（万元）</td>
                             <td>
-                                <el-input v-model="showForm.newProfit"></el-input>
+                                <el-input 
+                                    v-model="showForm.newProfit"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                             <td>新增税金<br>（万元）</td>
                             <td>
-                                <el-input v-model="showForm.newTax"></el-input>
+                                <el-input 
+                                    v-model="showForm.newTax"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                         </tr>
                         <tr id="my_tr3">
                             <td>创汇<br>（万美元）</td>
                             <td>
-                                <el-input v-model="showForm.foreignExchange"></el-input>
+                                <el-input 
+                                    v-model="showForm.foreignExchange"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                             <td>新产品<br>（个）</td>
                             <td>
-                                <el-input v-model="showForm.newProducts"></el-input>
+                                <el-input 
+                                    v-model="showForm.newProducts"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                             <td>新增装备（装置）（台）</td>
                             <td>
-                                <el-input v-model="showForm.newEquipment"></el-input>
+                                <el-input 
+                                    v-model="showForm.newEquipment"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                         </tr>
                         <tr id="my_tr3">
                             <td>新材料<br>（件）</td>
                             <td>
-                                <el-input v-model="showForm.newMaterials"></el-input>
+                                <el-input 
+                                    v-model="showForm.newMaterials"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                             <td>新工艺<br>（项）</td>
                             <td>
-                                <el-input v-model="showForm.newProcess"></el-input>
+                                <el-input 
+                                    v-model="showForm.newProcess"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                             <td>新品种<br>（个）</td>
                             <td>
-                                <el-input v-model="showForm.newVarieties"></el-input>
+                                <el-input 
+                                    v-model="showForm.newVarieties"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
                             <td rowspan="4" style="text-align:center;">取得成果情况 <span class="required">*</span></td>
                             <td>发明专利</td>
                             <td>
-                                <el-input v-model="showForm.inventionPatents"></el-input>
+                                <el-input 
+                                    v-model="showForm.inventionPatents"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                             <td>实用新型</td>
                             <td>
-                                <el-input v-model="showForm.utilityModel"></el-input>
+                                <el-input 
+                                    v-model="showForm.utilityModel"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                             <td>外观设计</td>
                             <td>
-                                <el-input v-model="showForm.design"></el-input>
+                                <el-input 
+                                    v-model="showForm.design"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                         </tr>
                         <tr id="my_tr3">
                             <td>国外专利</td>
                             <td>
-                                <el-input v-model="showForm.foreignPatents"></el-input>
+                                <el-input 
+                                    v-model="showForm.foreignPatents"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                             <td>论文总数<br>（篇）</td>
                             <td>
-                                <el-input v-model="showForm.totalNumberPapers"></el-input>
+                                <el-input 
+                                    v-model="showForm.totalNumberPapers"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                             <td>核心期刊<br>（篇）</td>
                             <td>
-                                <el-input v-model="showForm.coreJournals"></el-input>
+                                <el-input 
+                                    v-model="showForm.coreJournals"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                         </tr>
                         <tr id="my_tr3">
                             <td>SCI索引<br>（篇）</td>
                             <td>
-                                <el-input v-model="showForm.sciIndex"></el-input>
+                                <el-input 
+                                    v-model="showForm.sciIndex"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                             <td>EI索引<br>（篇）</td>
                             <td>
-                                <el-input v-model="showForm.eiIndex"></el-input>
+                                <el-input 
+                                    v-model="showForm.eiIndex"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                             <td>出版专著<br>（部）</td>
                             <td>
-                                <el-input v-model="showForm.publicationMonograph"></el-input>
+                                <el-input 
+                                    v-model="showForm.publicationMonograph"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                         </tr>
                         <tr id="my_tr3">
                             <td>研究（咨询）<br>报告（份）</td>
                             <td>
-                                <el-input v-model="showForm.report"></el-input>
+                                <el-input 
+                                    v-model="showForm.report"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                             <td>制定技术标准（个）</td>
                             <td>
-                                <el-input v-model="showForm.developTechnicalStandards"></el-input>
+                                <el-input 
+                                    v-model="showForm.developTechnicalStandards"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                             <td>出台文件<br>（个）</td>
                             <td>
-                                <el-input v-model="showForm.releaseDocuments"></el-input>
+                                <el-input 
+                                    v-model="showForm.releaseDocuments"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                         </tr>
                         <tr>
                             <td rowspan="2" style="text-align:center;">人才培养情况（人） <span class="required">*</span></td>
                             <td>高级人才<br>（人）</td>
                             <td>
-                                <el-input v-model="showForm.seniorTalent"></el-input>
+                                <el-input 
+                                    v-model="showForm.seniorTalent"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                             <td colspan="4"></td>
                         </tr>
                         <tr id="my_tr3">
                             <td>培养研究生人数</td>
                             <td>
-                                <el-input v-model="showForm.graduateStudentsNumber"></el-input>
+                                <el-input 
+                                    v-model="showForm.graduateStudentsNumber"
+                                    @blur="validateNum">
+                                </el-input>
                             </td>
                             <td colspan="4"></td>
                         </tr>
@@ -509,18 +608,18 @@
                     provincialSubjectExpenditureBudget: '',
                     unitInancingExpenditureBudget: '',
                     otherExpenditureBudget: '',
-                    equipmentUsage: '',
-                    materialUsage: '',
-                    processingFeeUsage: '',
-                    fuelUsage: '',
-                    travelExpenses: '',
-                    meetingFeeUsage: '',
-                    expertConsultationFeesUsage: '',
-                    publicationDocumentationNewsIntellectualproperty: '',
-                    labourCostsUsage: '',
-                    otherExpenseUsage: '',
-                    indirectCostsUsage: '',
-                    externalCooperationFees: '',
+                    equipmentUsage: '0',
+                    materialUsage: '0',
+                    processingFeeUsage: '0',
+                    fuelUsage: '0',
+                    travelExpenses: '0',
+                    meetingFeeUsage: '0',
+                    expertConsultationFeesUsage: '0',
+                    publicationDocumentationNewsIntellectualproperty: '0',
+                    labourCostsUsage: '0',
+                    otherExpenseUsage: '0',
+                    indirectCostsUsage: '0',
+                    externalCooperationFees: '0',
                     newSales: '',
                     newProfit: '',
                     newTax: '',
@@ -549,6 +648,7 @@
                     recommendationsProblemsSolutions: '',
                     projectUndertakerReviewOpinion: ''
                 },
+                computedData: {},
                 midCheckAnnex: '',
                 paramsData: {
                     id: this.$route.params.id
@@ -570,7 +670,7 @@
             validatePhone(event) {
                 let _event = event.srcElement || event.target,
                     val = _event.value,
-                    validatePhone = this.validate.validatePhone(val);
+                    validatePhone = this.$validate.validatePhone(val);
                 if(validatePhone) {
                     this.alertInfo(validatePhone,"warning");
                     _event.value = "";
@@ -581,7 +681,7 @@
             validateNum(event) {
                 let _event = event.srcElement || event.target,
                     val = _event.value,
-                    validateNum = this.validate.validateNum(val);
+                    validateNum = this.$validate.validateNum(val);
                 if(validateNum) {
                     this.alertInfo(validateNum,"warning");
                     _event.value = "";
@@ -589,14 +689,41 @@
                 }
             },
             computed() {
-                console.log(123)
+                this.computedData = {
+                    equipmentUsage: this.showForm.equipmentUsage,
+                    materialUsage: this.showForm.materialUsage,
+                    processingFeeUsage: this.showForm.processingFeeUsage,
+                    fuelUsage: this.showForm.fuelUsage,
+                    travelExpenses: this.showForm.travelExpenses,
+                    meetingFeeUsage: this.showForm.meetingFeeUsage,
+                    expertConsultationFeesUsage: this.showForm.expertConsultationFeesUsage,
+                    publicationDocumentationNewsIntellectualproperty: this.showForm.publicationDocumentationNewsIntellectualproperty,
+                    labourCostsUsage: this.showForm.labourCostsUsage,
+                    otherExpenseUsage: this.showForm.otherExpenseUsage,
+                    indirectCostsUsage: this.showForm.indirectCostsUsage,
+                    externalCooperationFees: this.showForm.externalCooperationFees
+                }
+                this.sum = 0;
+                let _computed = () => {
+                    for(let i in this.computedData) {
+                        let str = this.computedData[i] + "",
+                            code = str.charCodeAt(0);
+                        if(!str.trim() || (code <48 || code > 57) || (str != parseFloat(str))) {
+                            this.computedData[i] = 0;
+                            this.showForm[i] = 0;
+                        }
+                        let num = parseFloat(this.computedData[i]);
+                        this.sum += num;
+                    }
+                }
+                _computed()
             },
             // 文件
             getFile(event) {
                 // 附件格式验证
                 let _event = event.srcElement || event.target,
                     val = _event.value,
-                    validateFile = this.validate.validateFile(event.target.files[0].name);
+                    validateFile = this.$validate.validateFile(event.target.files[0].name);
                 if(validateFile) {
                     this.alertInfo(validateFile,"warning");
                     _event.value = "";

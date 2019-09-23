@@ -10,8 +10,7 @@
                     <el-input v-model="queryForm.bearerUnit"></el-input>
                 </el-form-item>
                 <el-form-item label="进展情况：">
-                    <el-select v-model="queryForm.progress" placeholder="请选择">
-                        <el-option label="全部情况" value=""></el-option>
+                    <el-select v-model="queryForm.progress" placeholder="请选择" clearable>
                         <el-option label="超前" value="45"></el-option>
                         <el-option label="正常" value="46"></el-option>
                         <el-option label="滞后" value="47"></el-option>

@@ -34,12 +34,13 @@
 </template>
 
 <script>
+	import {service} from '@/js/api'
 	export default {
 	    name: 'login',
 	    data() {
 	        return {
 				rememberPwd: false,
-	        	codeUrl: 'http://192.168.0.80:8087/code/checkCode',
+	        	codeUrl: '',
 	            ruleForm: {
 	                name: '',
 					pwd: '',
@@ -71,14 +72,39 @@
 	        }
 	    },
 	    methods: {
+			// 提示
+			alertInfo(info,type) {
+				this.$alert(info,'提示', {
+					confirmButtonText: '确定',
+					type,
+				}).then(() => {
+					this.handleChangeCode();
+				})
+			},
+			// 验证码
+			handleChangeCode() {
+	        	let num = Math.random();
+				this.codeUrl = `${ service.checkCode }?${ num }`;
+			},
+			// 登录
 	        submitForm(formName) {
 				let _this = this;
 				let type = this.ruleForm.type;
+				// 验证通过
 	            _this.$refs[formName].validate((valid) => {
 	                if(valid) {
-						if(type == 0) {		// 企业
+						let url = "";
+						if(type == 0) {
+							// 企业
+							url = service.loginByCompany;
+						}else if(type == 1) {
+							// 专家
+							url = service.loginByExpert;	
+						}
+						// 企业登录
+						// if(type == 0) {		
 							_this.axios({
-								url: 'http://192.168.0.80:8087/company/login',
+								url,
 								method: "post",
 								params: {
 									loginName: _this.ruleForm.name,
@@ -88,14 +114,8 @@
 								credentials: true
 							}).then((res) => {
 								console.log(res)
-								// res.data.data.identity 0 管理员 1 员工
 								if(res.data.resultFlag === "1") {
-									_this.$alert(res.data.data,'提示', {
-										confirmButtonText: '确定',
-										type:'warning',
-									}).then(() => {
-										_this.handleChangeCode();
-									})
+									this.alertInfo(res.data.data,"warning");
 								}else {
 									// 记住密码
 									if(this.rememberPwd) {
@@ -108,64 +128,25 @@
 									// document.cookie="identity="+i;
 									// 身份
 									let identity = res.data.data.identity;
-									document.cookie="identityIn="+identity;
+									document.cookie="identityOut="+identity;
+									// 修改
+									localStorage.setItem("identityOut",identity);
+
 									// 姓名
 									let realName = res.data.data.realName;
 									document.cookie="realNameOut="+realName;
+									// 修改
+									localStorage.setItem("realNameOut",identity);
+
 									_this.$router.push("/index");
 								}
 							}).catch(() => {
-							  	_this.$alert('登录失败','提示', {
-									confirmButtonText: '确定',
-									type:'warning',
-								}).then(() => {
-									_this.handleChangeCode();
-								})
+								this.alertInfo("登录失败","warning");
 							});
-						}else if(type == 1) {		// 专家
-							_this.axios({
-								url: 'http://192.168.0.80:8087/extranetExpert/login',
-								method: "post",
-								params: {
-									loginName: _this.ruleForm.name,
-									password: _this.ruleForm.pwd,
-									code: _this.ruleForm.code
-								},
-								credentials: true
-							}).then((res) => {
-								if(res.data.resultFlag === "1") {
-									_this.$alert(res.data.data,'提示', {
-										confirmButtonText: '确定',
-										type:'warning',
-									}).then(() => {
-										_this.handleChangeCode();
-									})
-								}else{
-									// 记住密码
-									if(this.rememberPwd) {
-										localStorage.setItem("username",this.ruleForm.name);
-										localStorage.setItem("password",this.ruleForm.pwd);
-										localStorage.setItem("usertype",this.ruleForm.type);
-									}
-									_this.$router.push("/index");
-								}
-							}).catch(() => {
-							  	_this.$alert('登录失败','提示', {
-									confirmButtonText: '确定',
-									type:'warning',
-								}).then(() => {
-									_this.handleChangeCode();
-								})
-							});
-						}
 	                }else {
 	                    return false;
 	                }
 				});
-	        },
-	        handleChangeCode() {
-	        	let num = Math.random();
-	        	this.codeUrl = "http://192.168.0.80:8087/extranetCode/checkCode?"+num;
 	        }
 		},
 		beforeMount() {

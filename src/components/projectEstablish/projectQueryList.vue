@@ -52,7 +52,8 @@
                     prop="winningAmount"
                     label="中标（成交）金额"
                     :show-overflow-tooltip="true"
-                    align="center">
+                    align="center"
+                    min-width="95">
                 </el-table-column>
                 <el-table-column
                     prop="supportingFunds"
@@ -70,19 +71,22 @@
                     prop="leaderContact"
                     label="课题负责人联系方式"
                     :show-overflow-tooltip="true"
-                    align="center">
+                    align="center"
+                    min-width="110">
                 </el-table-column>
                 <el-table-column
                     prop="operatorContact"
                     label="经办人及联系方式"
                     :show-overflow-tooltip="true"
-                    align="center">
+                    align="center"
+                    min-width="95">
                 </el-table-column>
                 <el-table-column
                     prop="auditStatus"
                     label="审批状态"
                     :show-overflow-tooltip="true"
-                    align="center">
+                    align="center"
+                    min-width="50">
                     <template slot-scope="scope">
                         <span v-show="scope.row.auditStatus == 0">已退回</span>
                         <span v-show="scope.row.auditStatus == 2">未审批</span>
