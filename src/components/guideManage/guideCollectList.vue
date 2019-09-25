@@ -117,9 +117,10 @@
 </template>
 
 <script>
+    import { service } from '@/js/api'
     export default {
-        name:'guideCollectList',
-        data(){
+        name: 'guideCollectList',
+        data() {
             return {
                 queryForm: {
                     // null为接口需要
@@ -145,6 +146,7 @@
             }
         },
         methods: {
+            // 列表操作
             handleSelectionChange(val) {
                 this.$router.push({
                     name: 'GuideCollectShow',
@@ -154,25 +156,33 @@
                     }
                 })
             },
+            // 分页操作
             handleCurrentChange(val) {              //val表示当前页
                 this.fenye.pageNum = val;
-                this._axios();
+                this.getListData();
             },
             handleSizeChange(val) {                 //val表示每页展示的条数
                 this.fenye.pageSize = val;
-                this._axios();
+                this.getListData();
             },
             handleTableFresh(){
-                this._axios;
+                this.getListData;
                 document.querySelector(".first-pager").click();
             },
-            // 请求列表数据
-            _axios() {
+            // 搜索
+            handleSearch() {
+                this.loading = true;
+                this.queryForm.pageNum = 1;
+                this.getListData();
+                document.querySelector(".first-pager").click();
+            },
+            // 获取列表数据
+            getListData() {
                 let data = this.queryForm;
                     data.pageNum = this.fenye.pageNum;
                     data.pageSize = this.fenye.pageSize;
                 this.axios({
-                    url: 'http://192.168.0.80:8087/environment/guide/getUnitCollection',
+                    url: service.getGuideList,
                     method: 'post',
                     params: data
                 }).then((res) => {
@@ -186,18 +196,12 @@
                         this.fenye.total = data.total;
                     }
                 })
-            },
-            handleSearch() {
-                this.loading = true;
-                this.queryForm.pageNum = 1;
-                this._axios();
-                document.querySelector(".first-pager").click();
             }
         },
         beforeMount() {
             // 请求所属领域、所属类别
             this.axios({
-                url: 'http://192.168.0.80:8087/environment/guide/getCategoryAndDomain',
+                url: service.getCategoryAndDomain,
                 method: 'get',
             }).then((res) => {
                 let data = res.data.data;
@@ -209,7 +213,7 @@
                     }
                 }
             })
-            this._axios();
+            this.getListData();
         }
     }
 </script>

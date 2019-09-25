@@ -143,8 +143,8 @@
 </template>
 
 <script>
+    import { service } from '@/js/api'
     export default {
-        inject: ["reload"],
         name: 'projectAdd',
         data() {
             return {
@@ -253,7 +253,7 @@
                     background: 'rgba(255,255,255,0.7)'
                 });
                 this.axios({
-                    url: 'http://192.168.0.80:8087/environment/tender/insertTender',
+                    url: service.submitAddTender,
                     method: 'post',
                     data: this.showForm
                 }).then((res) => {
@@ -268,7 +268,7 @@
                         formData.append('responseFile',this.Enclosure.responseFile);
                         formData.append('otherAttachments',this.Enclosure.otherAttachments);
                         this.axios({
-                            url: 'http://192.168.0.80:8087/environment/tender/TenderFileUpload',
+                            url: service.submitAddTenderFile,
                             method: 'post',
                             data: formData,
                             contentType: false,
@@ -281,7 +281,6 @@
                                     confirmButtonText: '确定',
                                     type: 'success',
                                     callback: action => {
-                                        // this.reload();
                                         document.querySelector(".is-active").nextSibling.click();
                                     }
                                 });
@@ -303,9 +302,9 @@
             }
         },
         beforeCreate() {
-            // 取公司类别
+            // 获取责任单位
             this.axios({
-                url: 'http://192.168.0.80:8087/environment/guide/getCookieValue',
+                url: service.getUnit,
                 method: 'post',
             }).then((res) => {
                console.log(res);

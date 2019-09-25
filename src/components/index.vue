@@ -196,6 +196,7 @@
 			}
 		},
 		methods: {
+			// 联动
 			handleAddTab(tabName,path) {
 				this.reload();
 				if(path) {
@@ -353,14 +354,7 @@
 				document.querySelector(".el-main .box").style.height = mainHeight;
 			})
 			// 获取真实姓名
-			let arr = document.cookie.split(";");
-			for(let i in arr) {
-				console.log(arr[i].split("="));
-				let arr2 = arr[i].split("=");
-				if(arr2[0].trim() == "realNameOut") {
-					this.realName = arr2[1];
-				}
-			}
+			this.realName = localStorage.getItem("realNameOut");
 		},
 		provide() {
 			return {

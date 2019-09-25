@@ -135,8 +135,8 @@
 </template>
 
 <script>
+    import { service } from '@/js/api'
     export default {
-        inject: ["reload"],
         name:'guideCollectAdd',
         data() {
             return {
@@ -209,7 +209,7 @@
                     background: 'rgba(255,255,255,0.7)'
                 });
                 this.axios({
-                    url: 'http://192.168.0.80:8087/environment/guide/insertGuideInfo',
+                    url: service.submitAddGuideInfo,
                     method: 'post',
                     data: this.showForm
                 }).then((res) => {
@@ -220,7 +220,6 @@
                             confirmButtonText: '确定',
                             type: 'success',
                             callback: action => {
-                                // this.reload();
                                 document.querySelector(".is-active").nextSibling.click();
                             }
                         });
@@ -234,8 +233,9 @@
             }
         },
         beforeCreate() {
+            // 获取所属领域、所属类别
             this.axios({
-                url: 'http://192.168.0.80:8087/environment/guide/getCategoryAndDomain',
+                url: service.getCategoryAndDomain,
                 method: 'get',
             }).then((res) => {
                 let data = res.data.data;
@@ -246,9 +246,9 @@
                         this.optGroup2.push(data[i]);
                     }
                 }
-                // 取公司类别
+                // 取填报单位
                 this.axios({
-                    url: 'http://192.168.0.80:8087/environment/guide/getCookieValue',
+                    url: service.getUnit,
                     method: 'post',
                 }).then((res) => {
                     console.log(res);

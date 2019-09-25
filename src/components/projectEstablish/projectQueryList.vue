@@ -118,6 +118,7 @@
 </template>
 
 <script>
+    import { service } from '@/js/api'
     export default {
         name: 'projectList',
         data() {
@@ -139,6 +140,7 @@
             }
         },
         methods: {
+            // 列表操作
             handleSelectionChange(val) {
                 this.$router.push({
                     name: 'ProjectQueryShow',
@@ -147,25 +149,41 @@
                     }
                 })
             },
+            handleEdit(val) {
+                this.$router.push({
+                    name: 'ProjectQueryEdit',
+                    params: {
+                        id: val
+                    }
+                })
+            },
+            // 分页操作
             handleCurrentChange(val) {              //val表示当前页
                 this.fenye.pageNum = val;
-                this._axios();
+                this.getListData();
             },
             handleSizeChange(val) {                 //val表示每页展示的条数
                 this.fenye.pageSize = val;
-                this._axios();
+                this.getListData();
             },
             handleTableFresh(){
-                this._axios;
+                this.getListData;
+                document.querySelector(".first-pager").click();
+            },
+            // 搜索
+            handleSearch() {
+                this.loading = true;
+                this.queryForm.pageNum = 1;
+                this.getListData();
                 document.querySelector(".first-pager").click();
             },
             // 请求列表数据
-            _axios() {
+            getListData() {
                 let data = this.queryForm;
                 data.pageNum = this.fenye.pageNum;
                 data.pageSize = this.fenye.pageSize;
                 this.axios({
-                    url: 'http://192.168.0.80:8087/environment/tender/getTenderByUid',
+                    url: service.getTenderList,
                     method: 'get',
                     params: data
                 }).then((res) => {
@@ -180,23 +198,9 @@
                     }
                 })
             },
-            handleSearch() {
-                this.loading = true;
-                this.queryForm.pageNum = 1;
-                this._axios();
-                document.querySelector(".first-pager").click();
-            },
-            handleEdit(val) {
-                this.$router.push({
-                    name: 'ProjectQueryEdit',
-                    params: {
-                        id: val
-                    }
-                })
-            }
         },
         beforeMount() {
-            this._axios();
+            this.getListData();
         }
     }
 </script>

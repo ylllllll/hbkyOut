@@ -137,6 +137,7 @@
 </template>
 
 <script>
+    import { service } from '@/js/api'
     export default {
         name: 'enterpriseRegister',
         data() {
@@ -196,7 +197,7 @@
                 }
             },
             // 统一社会信用代码验证(前端暂无，后端验证)
-            // 身份证号验证
+            // 身份证号验证（规则暂时有问题）
             validateCard(event) {
                 // let _event = event.srcElement || event.target,
                 //     val = _event.value,
@@ -282,7 +283,7 @@
                 formData.append('legalCardIdFile',this.legalCardIdFile);
                 formData.append('contactCardFile',this.contactCardFile);
                 this.axios({
-                    url: 'http://192.168.0.80:8087/company/register',
+                    url: service.registerByCompany,
                     method: 'post',
                     data: formData,
                     contentType: false,
@@ -313,7 +314,7 @@
         beforeMount() {
             // 请求单位性质
             this.axios({
-                url: 'http://192.168.0.80:8087/checkApplyStyle/unitNature',
+                url: service.getUnitNature,
                 method: 'post',
             }).then((res) => {
                 let data = res.data.data;

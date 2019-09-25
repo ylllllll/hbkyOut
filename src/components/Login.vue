@@ -34,7 +34,7 @@
 </template>
 
 <script>
-	import {service} from '@/js/api'
+	import { service } from '@/js/api'
 	export default {
 	    name: 'login',
 	    data() {
@@ -102,47 +102,43 @@
 							url = service.loginByExpert;	
 						}
 						// 企业登录
-						// if(type == 0) {		
-							_this.axios({
-								url,
-								method: "post",
-								params: {
-									loginName: _this.ruleForm.name,
-									password: _this.ruleForm.pwd,
-									code: _this.ruleForm.code
-								},
-								credentials: true
-							}).then((res) => {
-								console.log(res)
-								if(res.data.resultFlag === "1") {
-									this.alertInfo(res.data.data,"warning");
-								}else {
-									// 记住密码
-									if(this.rememberPwd) {
-										localStorage.setItem("username",this.ruleForm.name);
-										localStorage.setItem("password",this.ruleForm.pwd);
-										localStorage.setItem("usertype",this.ruleForm.type);
-									}
-									// 身份(保留)
-									// let i = res.data.data.identity
-									// document.cookie="identity="+i;
-									// 身份
-									let identity = res.data.data.identity;
-									document.cookie="identityOut="+identity;
-									// 修改
-									localStorage.setItem("identityOut",identity);
-
-									// 姓名
-									let realName = res.data.data.realName;
-									document.cookie="realNameOut="+realName;
-									// 修改
-									localStorage.setItem("realNameOut",identity);
-
-									_this.$router.push("/index");
+						_this.axios({
+							url,
+							method: "post",
+							params: {
+								loginName: _this.ruleForm.name,
+								password: _this.ruleForm.pwd,
+								code: _this.ruleForm.code
+							},
+							credentials: true
+						}).then((res) => {
+							console.log(res)
+							if(res.data.resultFlag === "1") {
+								this.alertInfo(res.data.data,"warning");
+							}else {
+								// 记住密码
+								if(this.rememberPwd) {
+									localStorage.setItem("username",this.ruleForm.name);
+									localStorage.setItem("password",this.ruleForm.pwd);
+									localStorage.setItem("usertype",this.ruleForm.type);
 								}
-							}).catch(() => {
-								this.alertInfo("登录失败","warning");
-							});
+								// 身份(保留)
+								// let i = res.data.data.identity
+								// document.cookie="identity="+i;
+								// 身份
+								let identity = res.data.data.identity;
+								document.cookie="identityOut="+identity;
+								// 修改
+								localStorage.setItem("identityOut",identity);
+
+								// 姓名
+								let realName = res.data.data.realName;
+								localStorage.setItem("realNameOut",realName);
+								_this.$router.push("/index");
+							}
+						}).catch(() => {
+							this.alertInfo("登录失败","warning");
+						});
 	                }else {
 	                    return false;
 	                }
@@ -151,6 +147,7 @@
 		},
 		beforeMount() {
 			this.handleChangeCode();
+			// 记住密码
 			let username = localStorage.getItem("username");
 			let password = localStorage.getItem("password");
 			let usertype = localStorage.getItem("usertype");
@@ -203,7 +200,6 @@
 				width: 95%;
 				margin: auto;
 			}
-			
 			.el-form-item {
 				@media screen and ( min-width: 1500px ) {
 					height: 44px;

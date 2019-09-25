@@ -1,7 +1,7 @@
 <template>
     <div id="enterpriseRegister">
         <div class="register_box">
-            <h1 class="box_title">专家注册</h1>
+            <h1 class="box_title">别看了 还没做</h1>
             <section class="box_content">
                 <el-form ref="showForm" :model="showForm">
                     <table class="form_table">

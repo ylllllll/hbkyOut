@@ -1117,11 +1117,6 @@
             table.form_table2{
                 min-width: 1000px;
                 width: 65.4%;
-                thead{
-                    th{
-                        font-weight: bold;
-                    }
-                }
                 @media  screen and ( max-width: 1600px ) {
                     width: 87.4%;
                 }

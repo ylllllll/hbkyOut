@@ -10,17 +10,17 @@
                     <el-input v-model="queryForm.commitmentUnit"></el-input>
                 </el-form-item>
                 <el-form-item label="调整类型：">
-                    <el-select v-model="queryForm.adjustTypId" @change="bug">
+                    <el-select v-model="queryForm.adjustTypId" @change="bug" clearable>
                         <el-option v-for="(item,index) in optGroup1" :key="index" :label="item.adjustType" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="调整事项：">
-                    <el-select placeholder="请先选择调整类型" v-if="queryForm.adjustTypId == ''" v-model="queryForm.adjustmentMattersId">
+                    <el-select placeholder="请先选择调整类型" v-if="queryForm.adjustTypId == ''" v-model="queryForm.adjustmentMattersId" clearable>
                     </el-select>
-                    <el-select v-if="queryForm.adjustTypId == 1" v-model="queryForm.adjustmentMattersId">
+                    <el-select v-if="queryForm.adjustTypId == 1" v-model="queryForm.adjustmentMattersId" clearable>
                         <el-option v-for="(item,index) in optGroup2" :key="index" :label="item.adjustmentMatters" :value="item.id"></el-option>
                     </el-select>
-                    <el-select v-if="queryForm.adjustTypId == 2" v-model="queryForm.adjustmentMattersId">
+                    <el-select v-if="queryForm.adjustTypId == 2" v-model="queryForm.adjustmentMattersId" clearable>
                         <el-option v-for="(item,index) in optGroup3" :key="index" :label="item.adjustmentMatters" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
@@ -77,11 +77,6 @@
                     :show-overflow-tooltip="true"
                     align="center">
                 </el-table-column>
-                <!-- <el-table-column
-                    prop="phone"
-                    label="单位负责人电话"
-                    align="center">
-                </el-table-column> -->
                 <el-table-column
                     prop="shenheStatus"
                     label="审核状态"

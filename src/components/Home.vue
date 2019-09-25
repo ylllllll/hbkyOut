@@ -54,6 +54,7 @@
 </template>
 
 <script>
+	import { service } from '@/js/api'
 	export default {
 		name: 'home',
 		data() {
@@ -66,30 +67,21 @@
 				rightList: []
 			}
 		},
-		methods: {
-		},
 		mounted() {	
 			// 请求验收待审核
 			this.axios({
-				url: 'http://192.168.0.80:8087/extranet/subjectTotal',
+				url: service.getSubjectTotal,
 				method: 'post'
 			}).then((res) => {
 				if(res.data.resultFlag == 0) {
 					this.$nextTick(() => {
 						this.checkCount = res.data.data;
 					})
-				}else {
-					this.$alert(res.data.data,'提示',{
-						confirmButtonText: '确定',
-						type: 'warning',
-						callback: action => {}
-					});
 				}
-				
 			})
 			// 请求通知公告列表数据
 			this.axios({
-				url: 'http://192.168.0.80:8087/notification/ExtranetQuery',
+				url: service.getExtranetQuery,
 				method: 'post'
 			}).then((res) => {
 				let data = res.data.data,

@@ -582,8 +582,8 @@
 
 <script>
     import ContractMessageBox from '@/components/contractManage/contractMessageBox'
+    import { service } from '@/js/api'
     export default {
-        inject: ["reload"],
         name: 'contractAdd',
         components: {
             messageBox: ContractMessageBox
@@ -1078,7 +1078,7 @@
                 });
                 // 主表部分
                 this.axios({
-                    url: 'http://192.168.0.80:8087/environment/contract/addContractInfo',
+                    url: service.submitAddContract,
                     method: 'post',
                     data: this.showForm
                 }).then((res) => {
@@ -1097,7 +1097,7 @@
                         this.budgetForm.contractId = id;
                         // 子表一
                         this.axios({
-                            url: 'http://192.168.0.80:8087/environment/contentindicators/insertCI',
+                            url: service.submitAddContract1,
                             method: 'post',
                             data: this.progressForm
                         }).then((res) => {
@@ -1106,7 +1106,7 @@
                             if(res.data.resultFlag == 0) {
                                 // 子表二
                                 this.axios({
-                                    url: 'http://192.168.0.80:8087/environment/contract/subject_participa_unit/insertInfo',
+                                    url: service.submitAddContract2,
                                     method: 'post',
                                     data: this.unitForm
                                 }).then((res) => {
@@ -1115,7 +1115,7 @@
                                     if(res.data.resultFlag == 0) {
                                         // 子表三
                                         this.axios({
-                                            url: 'http://192.168.0.80:8087/environment/contract/keydev/insertKeyDev',
+                                            url: service.submitAddContract3,
                                             method: 'post',
                                             data: this.keyForm
                                         }).then((res) => {
@@ -1124,7 +1124,7 @@
                                             if(res.data.resultFlag == 0) {
                                                 // 子表四
                                                 this.axios({
-                                                    url: 'http://192.168.0.80:8087/environment/contract/subjectfundbudget/insertInfo',
+                                                    url: service.submitAddContract4,
                                                     method: 'post',
                                                     data: this.budgetForm
                                                 }).then((res) => {
@@ -1136,7 +1136,7 @@
                                                             formData.append('cid',id);
                                                             formData.append('file',this.file);
                                                         this.axios({
-                                                            url: 'http://192.168.0.80:8087/environment/contract/contractFileUpload',
+                                                            url: service.submitAddContractFile,
                                                             method: 'post',
                                                             data: formData,
                                                             contentType: false,
@@ -1150,7 +1150,6 @@
                                                                     confirmButtonText: '确定',
                                                                     type: 'success',
                                                                     callback: action => {
-                                                                        // this.reload();
                                                                         document.querySelector(".is-active").nextSibling.click();
                                                                     }
                                                                 });
@@ -1206,7 +1205,7 @@
         beforeMount() {
             // 请求所属领域、所属类别
             this.axios({
-                url: 'http://192.168.0.80:8087/environment/guide/getCategoryAndDomain',
+                url: service.getCategoryAndDomain,
                 method: 'get',
             }).then((res) => {
                 let data = res.data.data;
@@ -1238,11 +1237,6 @@
             table.form_table2 {
                 min-width: 1000px;
                 width: 65.4%;
-                thead {
-                    th {
-                        font-weight: bold;
-                    }
-                }
                 @media  screen and ( max-width: 1600px ) {
                     width: 87.4%;
                 }

@@ -195,8 +195,9 @@
 </template>
 
 <script>
+    import { service } from '@/js/api'
     export default {
-        name:'projectQueryEdit',
+        name: 'projectQueryEdit',
         data(){
             return{
                 showForm:{},
@@ -275,30 +276,15 @@
             },
             handleDownload(val) {
                 if(val == 0) {
-                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
-                                     + this.fileData.winningDocumentFileUrl 
-                                     + '&fileName=' 
-                                     + this.fileData.winningDocumentFileName;
+                    window.location.href = `${ service.downloadFile }?fileUrl=${ this.fileData.winningDocumentFileUrl }&fileName=${ this.fileData.winningDocumentFileName }`;
                 }else if(val == 1) {
-                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
-                                     + this.fileData.transactionAnnouncementUrl 
-                                     + '&fileName=' 
-                                     + this.fileData.transactionAnnouncementName;
+                    window.location.href = `${ service.downloadFile }?fileUrl=${ this.fileData.transactionAnnouncementUrl }&fileName=${ this.fileData.transactionAnnouncementName }`;
                 }else if(val == 2) {
-                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
-                                     + this.fileData.noticeTransactionUrl 
-                                     + '&fileName=' 
-                                     + this.fileData.noticeTransactionName;
+                    window.location.href = `${ service.downloadFile }?fileUrl=${ this.fileData.noticeTransactionUrl }&fileName=${ this.fileData.noticeTransactionName }`;
                 }else if(val == 3) {
-                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
-                                     + this.fileData.responseFiletUrl 
-                                     + '&fileName=' 
-                                     + this.fileData.responseFileName;
+                    window.location.href = `${ service.downloadFile }?fileUrl=${ this.fileData.responseFiletUrl }&fileName=${ this.fileData.responseFileName }`;
                 }else if(val == 4) {
-                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
-                                     + this.fileData.otherAttachmentsUrl 
-                                     + '&fileName=' 
-                                     + this.fileData.otherAttachmentsName;
+                    window.location.href = `${ service.downloadFile }?fileUrl=${ this.fileData.otherAttachmentsUrl }&fileName=${ this.fileData.otherAttachmentsName }`;
                 }
             },
             // 页面操作
@@ -345,7 +331,7 @@
                     formData.append('otherAttachments',this.Enclosure.otherAttachments);
                 }
                 this.axios({
-                    url: 'http://192.168.0.80:8087/environment/tender/updateTenderStatusByReturnCommit',
+                    url: service.submitEditTender,
                     method: 'post',
                     data: formData,
                     contentType: false,
@@ -377,7 +363,7 @@
         mounted() {
             // 主表数据
             this.axios({
-                url: 'http://192.168.0.80:8087/environment/tender/getTenderById',
+                url: service.getTenderForm,
                 method: 'get',
                 params: {
                     id: this.paramsData.id
@@ -386,7 +372,7 @@
                 this.showForm = res.data.data;
                 // 附件信息
                 this.axios({
-                    url: 'http://192.168.0.80:8087/environment/tender/getTenderFileInfo',
+                    url: service.getTenderFormFile,
                     method: 'get',
                     params: {
                         oid: this.paramsData.id
@@ -397,7 +383,7 @@
                     console.log(this.fileData);
                     // 审核数据
                     this.axios({
-                        url: 'http://192.168.0.80:8087//environment/tender/getAllShenHeTableRecordInfoByContractId',
+                        url: service.getTenderFormList,
                         method: 'get',
                         params: {
                             oid: this.paramsData.id
