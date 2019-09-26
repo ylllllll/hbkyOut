@@ -1077,10 +1077,12 @@
                     background: 'rgba(255,255,255,0.7)'
                 });
                 // 主表部分
+                let data = this.showForm;
+                data.oid = this.messageBoxData.id;
                 this.axios({
                     url: service.submitAddContract,
                     method: 'post',
-                    data: this.showForm
+                    data
                 }).then((res) => {
                     console.log(0)
                     console.log(res);

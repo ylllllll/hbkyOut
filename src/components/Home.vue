@@ -186,7 +186,7 @@
 							padding-right: 8%;
 						}
 						&:nth-child(odd) {
-							background-color: #fbfbfb;
+							background-color: #fafafa;
 						}
 					}
 				}

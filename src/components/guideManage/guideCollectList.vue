@@ -7,12 +7,12 @@
                     <el-input v-model="queryForm.guideName"></el-input>
                 </el-form-item>
                 <el-form-item label="所属领域：">
-                    <el-select v-model="queryForm.domain" clearable>
+                    <el-select v-model="queryForm.domain" clearable placeholder="-- 全部 --">
                         <el-option v-for="(item,index) in optGroup1" :key="index" :label="item.content" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="所属类别：">
-                    <el-select v-model="queryForm.category" clearable>
+                    <el-select v-model="queryForm.category" clearable placeholder="-- 全部 --">
                         <el-option v-for="(item,index) in optGroup2" :key="index" :label="item.content" :value="item.id"></el-option>
                     </el-select>
                 </el-form-item>
@@ -249,16 +249,7 @@
                     }
                 }
             }
-            .pages {
-                .el-button {
-                    background-color: transparent;
-                    border: 0;
-                    margin: 0;
-                    span {
-                        line-height: 1;
-                    }
-                }
-            }
+            
         }    
     }
 </style>
