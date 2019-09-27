@@ -304,6 +304,7 @@
 
 <script>
     import mattersReportMessageBox from '@/components/daliyManage/mattersReportMessageBox'
+    import { service } from '@/js/api'
     export default {
         name: 'progressReportAdd',
         components: {
@@ -532,7 +533,7 @@
                     background: 'rgba(255,255,255,0.7)'
                 });
                 this.axios({
-                    url: 'http://192.168.0.80:8087/environment/progress/insertProgress',
+                    url: service.submitAddProgress,
                     method: 'post',
                     data: this.showForm
                 }).then((res) => {
@@ -554,7 +555,7 @@
                         }
                         // 一、合同要求研发任务
                         this.axios({
-                            url: 'http://192.168.0.80:8087/environment/progress/insertCRDT',
+                            url: service.submitAddProgress1,
                             method: 'post',
                             data: this.taskForm
                         }).then((res) => {
@@ -563,7 +564,7 @@
                             if(res.data.resultFlag == 0) {
                                 // 二、目前进展情况
                                 this.axios({
-                                    url: 'http://192.168.0.80:8087/environment/progress/insertCP',
+                                    url: service.submitAddProgress2,
                                     method: 'post',
                                     data: this.progressForm
                                 }).then((res) => {
@@ -572,7 +573,7 @@
                                     if(res.data.resultFlag == 0) {
                                         // 四、课题实施中存在的主要问题
                                         this.axios({
-                                            url: 'http://192.168.0.80:8087/environment/progress/insertPMP',
+                                            url: service.submitAddProgress3,
                                             method: 'post',
                                             data: this.problemForm
                                         }).then((res) => {
@@ -581,7 +582,7 @@
                                             if(res.data.resultFlag == 0) {
                                                 // 五、下一步研发工作安排
                                                 this.axios({
-                                                    url: 'http://192.168.0.80:8087/environment/progress/insertNWP',
+                                                    url: service.submitAddProgress4,
                                                     method: 'post',
                                                     data: this.planForm
                                                 }).then((res) => {
@@ -596,7 +597,7 @@
                                                         formData.append('openReportAnnex',this.file.openReportAnnex);
                                                         formData.append('subjectProgressAnnex',this.file.subjectProgressAnnex);
                                                         this.axios({
-                                                            url: 'http://192.168.0.80:8087/environment/progress/ProgressMultiUpload',
+                                                            url: service.submitAddProgressFile,
                                                             method: 'post',
                                                             data: formData
                                                         }).then((res) => {

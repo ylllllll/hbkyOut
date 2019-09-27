@@ -95,6 +95,7 @@
 </template>
 
 <script>
+    import { service } from '@/js/api'
     export default {
         name: 'midTermMessageBox',
         data() {

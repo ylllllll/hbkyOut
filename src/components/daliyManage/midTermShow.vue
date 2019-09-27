@@ -16,6 +16,7 @@
 <script>
     import MidTermShowForm1 from '@/components/daliyManage/midTermShowForm1'
     import MidTermShowForm2 from '@/components/daliyManage/midTermShowForm2'
+    import { service } from '@/js/api'
     export default {
         name: 'midTermShow',
         components: {
@@ -40,24 +41,20 @@
                 this.$router.go(-1);
             },
             handleDownload() {
-                window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
-                                    + this.fileData.uploadFileAddress 
-                                    + '&fileName=' 
-                                    + this.fileData.uploadFileName;
+                window.location.href = `${ service.downloadFile }?fileUrl=${ this.fileData.uploadFileAddress }&fileName=${ this.fileData.uploadFileName }`
             }
         },
         beforeMount() {
             setTimeout(() => {
                 // 附件
                 this.axios({
-                    url: 'http://192.168.0.80:8087/environment/contract/getSubjectSuggestAnnexInfo',
+                    url: service.getMidFile,
                     method: 'get',
                     params: {
                         cid: this.paramsData.id
                     }
                 }).then((res) => {
                     console.log(res);
-                    // this.formData1 = res.data.data;
                     this.fileData = res.data.data;
                 })
             },0);

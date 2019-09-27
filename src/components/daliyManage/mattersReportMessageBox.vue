@@ -51,6 +51,7 @@
 </template>
 
 <script>
+    import { service } from '@/js/api'
     export default {
         name: 'mattersReportMessageBox',
         data() {
@@ -67,14 +68,13 @@
         beforeMount() {
             // 回显数据请求
             this.axios({
-                url: 'http://192.168.0.80:8087/environment/daily/queryAllEndContractInfo',
+                url: service.getMatterBackList,
                 method: 'post',
             }).then((res) => {
                 this.tableData = res.data.data;
                 console.log(res);
             })
         }
-
     }
 </script>
 

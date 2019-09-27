@@ -268,9 +268,10 @@
 </template>
 
 <script>
+    import { service } from '@/js/api'
     export default {
         name: 'progressReportShow',
-        data(){
+        data() {
             return{
                 showForm: {},
                 taskForm: [],
@@ -286,34 +287,22 @@
         methods:{
             handleDownload(val) {
                 if(val == 0) {
-                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
-                                     + this.fileData.expertSuggestAnnexFileUrl 
-                                     + '&fileName=' 
-                                     + this.fileData.expertSuggestAnnexFileName;
+                    window.location.href = `${ service.downloadFile }?fileUrl=${ this.fileData.expertSuggestAnnexFileUrl }&fileName=${ this.fileData.expertSuggestAnnexFileName }`;
                 }else if(val == 1) {
-                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
-                                     + this.fileData.fundProgressAnnexFileUrl 
-                                     + '&fileName=' 
-                                     + this.fileData.fundProgressAnnexFileName;
+                    window.location.href = `${ service.downloadFile }?fileUrl=${ this.fileData.fundProgressAnnexFileUrl }&fileName=${ this.fileData.fundProgressAnnexFileName }`;
                 }else if(val == 2) {
-                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
-                                     + this.fileData.openReportAnnexFileUrl 
-                                     + '&fileName=' 
-                                     + this.fileData.openReportAnnexFileName;
+                    window.location.href = `${ service.downloadFile }?fileUrl=${ this.fileData.openReportAnnexFileUrl }&fileName=${ this.fileData.openReportAnnexFileName }`;
                 }else if(val == 3) {
-                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
-                                     + this.fileData.subjectProgressAnnexFileUrl 
-                                     + '&fileName=' 
-                                     + this.fileData.subjectProgressAnnexFileName;
+                    window.location.href = `${ service.downloadFile }?fileUrl=${ this.fileData.subjectProgressAnnexFileUrl }&fileName=${ this.fileData.subjectProgressAnnexFileName }`;
                 }
             },
             handleBack() {
-                this.$router.go(-1);//返回上一页
+                this.$router.go(-1);    //返回上一页
             }
         },
         beforeMount() {
             this.axios({
-                url: 'http://192.168.0.80:8087/environment/progress/getInfoById',
+                url: service.getProgressForm,
                 method: 'get',
                 params: {
                     id: this.paramsData.id
@@ -326,7 +315,7 @@
                 this.showForm.progress = this.showForm.progress + "";
                 // 二、目前进展情况
                 this.axios({
-                    url: 'http://192.168.0.80:8087/environment/progress/getCRDTByPid',
+                    url: service.getProgressForm1,
                     method: 'get',
                     params: {
                         Pid: this.paramsData.id
@@ -337,7 +326,7 @@
                     this.taskForm = res.data.data;
                     // 三、使用经费情况
                     this.axios({
-                        url: 'http://192.168.0.80:8087/environment/progress/getCPByPid',
+                        url: service.getProgressForm2,
                         method: 'get',
                         params: {
                             Pid: this.paramsData.id
@@ -348,7 +337,7 @@
                         this.progressForm = res.data.data;
                         // 四、课题实施中存在的主要问题
                         this.axios({
-                            url: 'http://192.168.0.80:8087/environment/progress/getPMPByPid',
+                            url: service.getProgressForm3,
                             method: 'get',
                             params: {
                                 Pid: this.paramsData.id
@@ -359,7 +348,7 @@
                             this.problemForm = res.data.data;
                             // 五、下一步研发工作安排
                             this.axios({
-                                url: 'http://192.168.0.80:8087/environment/progress/getNWPByPid',
+                                url: service.getProgressForm4,
                                 method: 'get',
                                 params: {
                                     Pid: this.paramsData.id
@@ -370,7 +359,7 @@
                                 this.planForm = res.data.data;
                                 // 附件信息
                                 this.axios({
-                                    url: 'http://192.168.0.80:8087/environment/progress/getProgressFileInfo',
+                                    url: service.getProgressFormFile,
                                     method: 'get',
                                     params: {
                                         pid :this.paramsData.id

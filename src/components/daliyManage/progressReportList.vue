@@ -16,14 +16,6 @@
                         <el-option label="滞后" value="47"></el-option>
                     </el-select>
                 </el-form-item>
-                <!-- <el-form-item label="合同签订时间：">
-                    <el-date-picker
-                        v-model="showForm.contractAgreedClosingTime"
-                        type="date"
-                        value-format="yyyy-MM-dd"
-                        placeholder="选择日期">
-                    </el-date-picker>
-                </el-form-item> -->
             </el-form>
             <el-button @click="handleSearch">搜索</el-button>
         </div>
@@ -98,8 +90,9 @@
 </template>
 
 <script>
+    import { service } from '@/js/api'
     export default {
-        name:'progressReportList',
+        name: 'progressReportList',
         data() {
             return {
                 queryForm: {
@@ -118,6 +111,14 @@
             }
         },
         methods: {
+            // 搜索
+            handleSearch() {
+                this.loading = true;
+                this.queryForm.pageNum = 1;
+                this.getListData();
+                document.querySelector(".first-pager").click();
+            },
+            // 列表操作
             handleSelectionChange(val) {
                 this.$router.push({
                     name: 'ProgressReportShow',
@@ -126,24 +127,30 @@
                     }
                 })
             },
-            handleCurrentChange:function(val) {//val表示当前页
+            // 页面操作
+            handleAudited() {
+                this.$router.push("/index/progressReport/progressReportAdd");
+            },
+            // 分页
+            handleCurrentChange(val) {     //val表示当前页
                 this.fenye.pageNum = val;
-                this._axios();
+                this.getListData();
             },
-            handleSizeChange(val) {//val表示每页展示的条数
+            handleSizeChange(val) {                 //val表示每页展示的条数
                 this.fenye.pageSize = val;
-                this._axios();
+                this.getListData();
             },
-            handleTableFresh(){
-                this._axios;
+            handleTableFresh() {
+                this.getListData;
                 document.querySelector(".first-pager").click();
             },
-            _axios() {
+            // 获取列表数据
+            getListData() {
                 let data = this.queryForm;
                     data.pageNum = this.fenye.pageNum;
                     data.pageSize = this.fenye.pageSize;
                 this.axios({
-                    url: 'http://192.168.0.80:8087/environment/progress/getProgressInfoByUid',
+                    url: service.getProgressList,
                     method: 'get',
                     params: data
                 }).then((res) => {
@@ -157,30 +164,16 @@
                         this.fenye.total = data.total;
                     }
                 })
-            },
-            handleAudited() {
-                this.$router.push("/index/progressReport/progressReportAdd");
-            },
-            handleSearch() {
-                this.loading = true;
-                this.queryForm.pageNum = 1;
-                this._axios();
-                document.querySelector(".first-pager").click();
             }
         },
         beforeMount() {
-            this._axios();
+            this.getListData();
         }
     }
 </script>
 
 <style lang="less">
     #progressReportList {
-        .queryForm {
-            .el-form .el-form-item .el-form-item__label{
-                width: 193px;
-            }
-        }
         .el-button{
             margin: 10px auto;
         }

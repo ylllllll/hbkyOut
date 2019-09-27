@@ -45,10 +45,11 @@
 </template>
 
 <script>
+    import { service } from '@/js/api'
     export default {
         name: 'contractMessageBox',
         data() {
-        return {
+            return {
                 tableData: []
             }
         },
@@ -61,7 +62,7 @@
         beforeMount() {
             // 回显数据请求
             this.axios({
-                url: 'http://192.168.0.80:8087/environment/contract/queryAllEndTenderInfo',
+                url: service.getContractBackList,
                 method: 'post',
             }).then((res) => {
                 this.tableData = res.data.data;

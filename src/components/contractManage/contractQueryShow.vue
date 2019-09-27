@@ -636,6 +636,7 @@
 </template>
 
 <script>
+    import { service } from '@/js/api'
     export default {
         name: 'contractQueryShow',
         data() {
@@ -660,16 +661,13 @@
                 this.$router.go(-1);
             },
             handleDownload() {
-                window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
-                                     + this.fileData.upload_file_address 
-                                     + '&fileName=' 
-                                     + this.fileData.upload_file_name;
+                window.location.href = `${ service.downloadFile }?fileUrl=${ this.fileData.upload_file_address }&fileName=${ this.fileData.upload_file_name }`;
             }
         },
         beforeMount() {
             // 请求所属领域、所属类别
             this.axios({
-                url: 'http://192.168.0.80:8087/environment/guide/getCategoryAndDomain',
+                url: service.getCategoryAndDomain,
                 method: 'get',
             }).then((res) => {
                 let data = res.data.data;
@@ -680,7 +678,7 @@
                 }
                 // 主表
                 this.axios({
-                    url: 'http://192.168.0.80:8087/environment/contract/getManageInfoById',
+                    url: service.getContractForm,
                     method: 'get',
                     params: {
                         id: this.paramsData.id
@@ -690,7 +688,7 @@
                     this.showForm = data;
                     // 子表一
                     this.axios({
-                        url: 'http://192.168.0.80:8087/environment/contentindicators/getIndicatorById',
+                        url: service.getContractForm1,
                         method: 'get',
                         params: {
                             id: this.paramsData.id
@@ -700,7 +698,7 @@
                         this.progressForm = data;
                         // 子表二
                         this.axios({
-                            url: 'http://192.168.0.80:8087/environment/contract/subject_participa_unit/getDeveloperInfoById',
+                            url: service.getContractForm2,
                             method: 'get',
                             params: {
                                 id: this.paramsData.id
@@ -710,7 +708,7 @@
                             this.unitForm = data;
                             // 子表三
                             this.axios({
-                                url: 'http://192.168.0.80:8087/environment/contract/keydev/getKeyDevInfoById',
+                                url: service.getContractForm3,
                                 method: 'get',
                                 params: {
                                     cid: this.paramsData.id
@@ -720,7 +718,7 @@
                                 this.keyForm = data;
                                 // 子表四
                                 this.axios({
-                                    url: 'http://192.168.0.80:8087/environment/contract/subjectfundbudget/getInfoById',
+                                    url: service.getContractForm4,
                                     method: 'get',
                                     params: {
                                         id: this.paramsData.id
@@ -730,7 +728,7 @@
                                     this.budgetForm = data;
                                     // 附件
                                     this.axios({
-                                        url: 'http://192.168.0.80:8087/environment/contract/getContractAnnexInfo',
+                                        url: service.getContractFormFile,
                                         method: 'get',
                                         params: {
                                             cid: this.paramsData.id
@@ -739,7 +737,7 @@
                                         this.fileData = res.data.data[0];
                                         // 审核记录
                                         this.axios({
-                                            url: 'http://192.168.0.80:8087/environment/contract/getRecordInfoByContractId',
+                                            url: service.getContractFormList,
                                             method: 'get',
                                             params: {
                                                 cid: this.paramsData.id

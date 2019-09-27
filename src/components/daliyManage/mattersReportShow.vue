@@ -140,9 +140,10 @@
 </template>
 
 <script>
+    import { service } from '@/js/api'
     export default {
-        name:'mattersReportShow',
-        data(){
+        name: 'mattersReportShow',
+        data() {
             return{
                 checkbox: [],
                 showForm:{
@@ -156,25 +157,13 @@
         methods: { 
             handleDownload(val) {
                 if(val == 0) {
-                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
-                                     + this.fileData.changeApplicationAttachmentFileUrl 
-                                     + '&fileName=' 
-                                     + this.fileData.changeApplicationAttachmentFileName;
+                    window.location.href = `${ service.downloadFile }?fileUrl=${ this.fileData.changeApplicationAttachmentFileUrl }&fileName=${ this.fileData.changeApplicationAttachmentFileName }`;
                 }else if(val == 1) {
-                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
-                                     + this.fileData.filingApplicationAttachmentFileUrl 
-                                     + '&fileName=' 
-                                     + this.fileData.filingApplicationAttachmentFileName;
+                    window.location.href = `${ service.downloadFile }?fileUrl=${ this.fileData.filingApplicationAttachmentFileUrl }&fileName=${ this.fileData.filingApplicationAttachmentFileName }`;
                 }else if(val == 2) {
-                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
-                                     + this.fileData.expertArgumentationAttachmentFileUrl 
-                                     + '&fileName=' 
-                                     + this.fileData.expertArgumentationAttachmentFileName;
+                    window.location.href = `${ service.downloadFile }?fileUrl=${ this.fileData.expertArgumentationAttachmentFileUrl }&fileName=${ this.fileData.expertArgumentationAttachmentFileName }`;
                 }else if(val == 3) {
-                    window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
-                                     + this.fileData.approvalDocumentsAttachmentFileUrl 
-                                     + '&fileName=' 
-                                     + this.fileData.approvalDocumentsAttachmentFileName;
+                    window.location.href = `${ service.downloadFile }?fileUrl=${ this.fileData.approvalDocumentsAttachmentFileUrl }&fileName=${ this.fileData.approvalDocumentsAttachmentFileName }`;
                 }
             },
             handleBack() {
@@ -183,7 +172,7 @@
         },
         beforeMount() {
             this.axios({
-                url: 'http://192.168.0.80:8087/enviroment/daily/majormatter/getMajorById',
+                url: service.getMatterForm,
                 method: 'get',
                 params: {
                     id: this.paramsData.id
@@ -196,7 +185,7 @@
                 // 请求附件信息
                 let id = res.data.data.id;
                 this.axios({
-                    url: 'http://192.168.0.80:8087/enviroment/daily/majormatter/getMajorFileInfo',
+                    url: service.getMatterFormFile,
                     method: 'get',
                     params: {
                         id

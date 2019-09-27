@@ -416,6 +416,7 @@
 </template>
 
 <script>
+    import { service } from '@/js/api'
     export default {
         name: 'midTermShowForm2',
         data() {
@@ -487,17 +488,14 @@
         },
         methods: {
             handleDownload() {
-                window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
-                                    + this.fileData.upload_file_address 
-                                    + '&fileName=' 
-                                    + this.fileData.upload_file_name;
+                window.location.href = `${ service.downloadFile }?fileUrl=${ this.fileData.upload_file_address }&fileName=${ this.fileData.upload_file_name }`;
             },
         },
         beforeMount() {
             // 中期检查表
             setTimeout(() => {
                 this.axios({
-                    url: 'http://192.168.0.80:8087/environment/daily/getMidCheckTemplateByCid',
+                    url: service.getMidForm2,
                     method: 'post',
                     params: {
                         cid: this.$parent.paramsData.id
@@ -511,7 +509,7 @@
                     this.showForm.notCompletingReason = this.showForm.notCompletingReason.split(",");
                     let id = res.data.data.id;
                     this.axios({
-                        url: 'http://192.168.0.80:8087/environment/daily/getMidCheckFileInfo',
+                        url: service.getMidForm2File,
                         method: 'get',
                         params: {
                             mid: id

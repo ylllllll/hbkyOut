@@ -146,6 +146,13 @@
             }
         },
         methods: {
+            // 搜索
+            handleSearch() {
+                this.loading = true;
+                this.queryForm.pageNum = 1;
+                this.getListData();
+                document.querySelector(".first-pager").click();
+            },
             // 列表操作
             handleSelectionChange(val) {
                 this.$router.push({
@@ -167,13 +174,6 @@
             },
             handleTableFresh(){
                 this.getListData;
-                document.querySelector(".first-pager").click();
-            },
-            // 搜索
-            handleSearch() {
-                this.loading = true;
-                this.queryForm.pageNum = 1;
-                this.getListData();
                 document.querySelector(".first-pager").click();
             },
             // 获取列表数据

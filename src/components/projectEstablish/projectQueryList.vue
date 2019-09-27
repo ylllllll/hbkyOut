@@ -140,6 +140,13 @@
             }
         },
         methods: {
+            // 搜索
+            handleSearch() {
+                this.loading = true;
+                this.queryForm.pageNum = 1;
+                this.getListData();
+                document.querySelector(".first-pager").click();
+            },
             // 列表操作
             handleSelectionChange(val) {
                 this.$router.push({
@@ -169,14 +176,7 @@
             handleTableFresh(){
                 this.getListData;
                 document.querySelector(".first-pager").click();
-            },
-            // 搜索
-            handleSearch() {
-                this.loading = true;
-                this.queryForm.pageNum = 1;
-                this.getListData();
-                document.querySelector(".first-pager").click();
-            },
+            }, 
             // 请求列表数据
             getListData() {
                 let data = this.queryForm;
@@ -206,11 +206,8 @@
 </script>
 
 <style lang="less">
-    #projectList{
-        .queryForm .el-form .el-form-item .el-form-item__label{
-            width: 160px;
-        }
-        .showList{
+    #projectList {
+        .showList {
             min-height: 680px;
             margin-top: 10px;
             .el-table{
@@ -233,4 +230,3 @@
         }
     }
 </style>
-

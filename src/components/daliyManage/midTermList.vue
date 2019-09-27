@@ -17,6 +17,18 @@
                     align="center">
                 </el-table-column>
                 <el-table-column
+                    prop="midCheckName"
+                    label="中期检查名称"
+                    :show-overflow-tooltip="true"
+                    align="center">
+                </el-table-column>
+                <el-table-column
+                    prop="midCheckInitinateTime"
+                    label="中期检查发起时间"
+                    :show-overflow-tooltip="true"
+                    align="center">
+                </el-table-column>
+                <el-table-column
                     prop="subjectName"
                     label="课题名称"
                     :show-overflow-tooltip="true"
@@ -61,8 +73,9 @@
 </template>
 
 <script>
+    import { service } from '@/js/api'
     export default {
-        name:'midTermList',
+        name: 'midTermList',
         data() {
             return {
                 tableData: [],
@@ -75,6 +88,7 @@
             }
         },
         methods: {
+            // 列表操作
             handleSelectionChange(val) {
                 let state = val.midCheckStatus;
                 if(state == 0) {
@@ -93,21 +107,23 @@
                     })
                 }
             },
-            handleCurrentChange:function(val) {//val表示当前页
+            // 分页
+            handleCurrentChange(val) {      //val表示当前页
                 this.fenye.pageNum = val;
-                this._axios();
+                this.getListData();
             },
-            handleSizeChange(val) {//val表示每页展示的条数
+            handleSizeChange(val) {         //val表示每页展示的条数
                 this.fenye.pageSize = val;
-                this._axios();
+                this.getListData();
             },
             handleTableFresh() {
-                this._axios;
+                this.getListData;
                 document.querySelector(".first-pager").click();
             },
-            _axios() {
+            // 获取列表数据
+            getListData() {
                 this.axios({
-                    url: 'http://192.168.0.80:8087/environment/contract/getContractByUid',
+                    url: service.getMidList,
                     method: 'get',
                     params: {
                         pageNum: this.fenye.pageNum,
@@ -127,18 +143,13 @@
             },
         },
         beforeMount() {
-            this._axios();
+            this.getListData();
         }
     }
 </script>
 
 <style lang="less">
     #midTermList {
-        .queryForm {
-            .el-form .el-form-item .el-form-item__label{
-                width: 193px;
-            }
-        }
         .el-button{
             margin: 10px auto;
         }

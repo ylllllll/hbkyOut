@@ -388,10 +388,15 @@
 					height: 100%;
 					padding-top: 85%;
 					background-color: #545c64;
-					.el-menu-vertical-demo {
+					.el-menu {
 						height: 100%;
 						border: none;
+						
 						.el-submenu {
+							.el-menu-item-group__title {
+								padding: 0;
+								margin: 0;
+							}
 							.el-menu-item {
 								padding-left: 70px !important;
 								&:hover {
@@ -540,7 +545,7 @@
 				.el-main {
 					overflow-y: auto;
 					background-color: #edf1f4;
-					padding:10px 15px 25px 14px;
+					padding:10px 15px 0px 14px;
 				}
 			}
 		}

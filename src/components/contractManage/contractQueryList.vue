@@ -129,7 +129,7 @@
 </template>
 
 <script>
-    import api from '@/js/api'
+    import { service } from '@/js/api'
     export default {
         name:'contractQueryList',
         data(){
@@ -154,6 +154,13 @@
             }
         },
         methods: {
+            // 搜索
+            handleSearch() {
+                this.loading = true;
+                this.queryForm.pageNum = 1;
+                this.getListData();
+                document.querySelector(".first-pager").click();
+            },
             // 列表操作
             handleSelectionChange(val) {
                 this.$router.push({
@@ -174,30 +181,23 @@
             // 分页
             handleCurrentChange(val) {              //val表示当前页
                 this.fenye.pageNum = val;
-                this._axios();
+                this.getListData();
             },
             handleSizeChange(val) {                 //val表示每页展示的条数
                 this.fenye.pageSize = val;
-                this._axios();
+                this.getListData();
             },
             handleTableFresh(){
-                this._axios;
+                this.getListData;
                 document.querySelector(".first-pager").click();
             },
-            // 搜索
-            handleSearch() {
-                this.loading = true;
-                this.queryForm.pageNum = 1;
-                this._axios();
-                document.querySelector(".first-pager").click();
-            },
-            // 请求列表数据
-            _axios() {
+            // 获取列表数据
+            getListData() {
                 let data = this.queryForm;
                     data.pageNum = this.fenye.pageNum;
                     data.pageSize = this.fenye.pageSize;
                 this.axios({
-                    url: `http://192.168.0.80:8087/environment/contract/getManageInfoByUid`,
+                    url: service.getContractList,
                     method: 'get',
                     params: data
                 }).then((res) => {
@@ -216,7 +216,7 @@
         beforeMount() {
             // 请求课题类别
             this.axios({
-                url: `http://192.168.0.80:8087/environment/guide/getCategoryAndDomain`,
+                url: service.getCategoryAndDomain,
                 method: 'get',
             }).then((res) => {
                 let data = res.data.data;
@@ -226,7 +226,7 @@
                     }
                 }
             })
-            this._axios();
+            this.getListData();
         }
     }
 </script>

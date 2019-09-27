@@ -148,6 +148,7 @@
 
 <script>
     import mattersReportMessageBox from '@/components/daliyManage/mattersReportMessageBox'
+    import { service } from '@/js/api'
     export default {
         name:'mattersReportAdd',
         components: {
@@ -257,7 +258,7 @@
                     background: 'rgba(255,255,255,0.7)'
                 });
                 this.axios({
-                    url: 'http://192.168.0.80:8087/enviroment/daily/majormatter/insertMajor',
+                    url: service.submitAddMatter,
                     method: 'post',
                     data: this.showForm
                 }).then((res) => {
@@ -277,7 +278,7 @@
                         formData.append('expertArgumentationAttachment',this.file.expertArgumentationAttachment);
                         formData.append('approvalDocumentsAttachment',this.file.approvalDocumentsAttachment);
                         this.axios({
-                            url: 'http://192.168.0.80:8087/enviroment/daily/majormatter/majorFileUpload',
+                            url: service.submitAddMatterFile,
                             method: 'post',
                             data: formData,
                             contentType: false,

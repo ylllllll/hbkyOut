@@ -56,8 +56,7 @@ export default {
 		padding: 20px 0;
 	}
 	// 搜索
-	.queryForm{
-		// height: 134px;
+	.queryForm {
 		position: relative;
 		background-color: #fff;
 		.el-form{
@@ -66,7 +65,7 @@ export default {
 				display: inline-block;
 				margin: 10px 20px;
 				.el-form-item__label{
-					width: 120px;
+					width: 175px;
 					line-height: 30px;
 					font-size: 16px;
 					white-space: nowrap;
@@ -93,7 +92,7 @@ export default {
 		}
 		.el-button{
 			position: absolute;
-			bottom: 20px;
+			bottom: 10px;
 			right: 69px;
 			margin: 0;
 		}
@@ -395,8 +394,6 @@ export default {
 
 
 	// 旧
-
-
 	.is-fullscreen {
 		top: 120px;
 		left: 210px;
@@ -412,9 +409,6 @@ export default {
 	
 
 
-
-
-	
   	#app {
 		
 		* {

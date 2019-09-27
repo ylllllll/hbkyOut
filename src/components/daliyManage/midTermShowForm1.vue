@@ -155,6 +155,7 @@
 </template>
 
 <script>
+    import { service } from '@/js/api'
     export default {
         name: 'midTermShowForm1',
         data() {
@@ -184,16 +185,13 @@
         },
         methods: {
             handleDownload() {
-                window.location.href = 'http://192.168.0.80:8087/file/queryFileStream?fileUrl=' 
-                                    + this.fileData.upload_file_address 
-                                    + '&fileName=' 
-                                    + this.fileData.upload_file_name;
+                window.location.href = `${ servicedownloadFile }?fileUrl=${ this.fileData.upload_file_address }&fileName=${ this.fileData.upload_file_name }`;
             }
         },
         mounted() {
             // 专家评估表
             this.axios({
-                url: 'http://192.168.0.80:8087/environment/daily/getExpertAssessmentByCid',
+                url: service.getMidForm1,
                 method: 'post',
                 params: {
                     cid: this.$parent.paramsData.id
@@ -206,7 +204,7 @@
                 }
                 let id = res.data.data.id;
                 this.axios({
-                    url: 'http://192.168.0.80:8087/environment/daily/getEAFileInfo',
+                    url: service.getMidForm1File,
                     method: 'get',
                     params: {
                         eid: id

@@ -17,6 +17,7 @@
 <script>
     import MidTermAddForm1 from '@/components/daliyManage/midTermAddForm1'
     import MidTermAddForm2 from '@/components/daliyManage/midTermAddForm2'
+    import { service } from '@/js/api'
     export default {
         name: 'midTermAdd',
         components: {
@@ -96,7 +97,7 @@
                 formData.append('expertAssessmentAnnex',file1);
                 formData.append('midCheckAnnex',file2);
                 this.axios({
-                    url: 'http://192.168.0.80:8087/environment/daily/WaiCommitFile',
+                    url: service.submitAddMid,
                     method: 'post',
                     data: formData
                 }).then((res) => {
@@ -106,7 +107,7 @@
                         formData.append('cid',this.paramsData.id);
                         formData.append('subjectSuggestAnnex',this.subjectSuggestAnnex);
                         this.axios({
-                            url: 'http://192.168.0.80:8087/environment/contract/subjectSuggestFileUpload',
+                            url: service.submitAddMidFile,
                             method: 'post',
                             data: formData
                         }).then((res) => {
@@ -138,6 +139,19 @@
             handleBack() {
                 this.$router.go(-1);
             }
+        },
+        beforeMount() {
+            // 回显数据请求
+            this.axios({
+                url: service.getMatterBackList,
+                method: 'post',
+                data: {
+                    cid: this.paramsData.id
+                }
+            }).then((res) => {
+                // this.tableData = res.data.data;
+                console.log(res);
+            })
         }
     }
 </script>
