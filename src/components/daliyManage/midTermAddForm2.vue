@@ -10,15 +10,11 @@
                         <tr>
                             <td>课题编号 <span class="required">*</span>：</td>
                             <td>
-                                <el-input 
-                                    v-model="showForm.subjectNo"
-                                    placeholder="请选择"
-                                    @focus="handleOpenBox">
-                                </el-input>
+                                <el-input v-model="showForm.subjectNo" readonly></el-input>
                             </td>
                             <td>课题名称 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.subjectName"></el-input>
+                                <el-input v-model="showForm.subjectName" readonly></el-input>
                             </td>
                         </tr>
                         <tr>
@@ -44,7 +40,7 @@
                         <tr>
                             <td>承担单位 <span class="required">*</span>：</td>
                             <td colspan="3">
-                                <el-input v-model="showForm.commitmentUnit"></el-input>
+                                <el-input v-model="showForm.commitmentUnit" readonly></el-input>
                             </td>
                         </tr>
                         <tr>
@@ -56,7 +52,7 @@
                         <tr>
                             <td>课题负责人 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.subjectLeader"></el-input>
+                                <el-input v-model="showForm.subjectLeader" readonly></el-input>
                             </td>
                             <td>课题负责人联系手机 <span class="required">*</span>：</td>
                             <td>
@@ -69,7 +65,7 @@
                         <tr>
                             <td>课题联系人 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.topicContact"></el-input>
+                                <el-input v-model="showForm.topicContact" readonly></el-input>
                             </td>
                             <td>课题联系人联系手机 <span class="required">*</span>：</td>
                             <td>
@@ -559,21 +555,6 @@
                 </table>
             </el-form>
         </div>
-        <div class="cover_box" v-show="overBoxFlag">
-            <div class="message_box">
-                <span class="btn_close" @click="handleCloseCover"></span>
-                <header class="message_box_header">
-                    <h2 class="title">课题查询</h2>
-                </header>
-                <section class="message_box_content">
-                    <messageBox @receipt="receiptChildInfo"></messageBox>
-                </section>
-                <div class="btn_group">
-                    <el-button @click="handleConfirmCover">确定</el-button>
-                    <el-button @click="handleCloseCover">取消</el-button>
-                </div>
-            </div>
-        </div>
     </div>
 </template>
 
@@ -730,25 +711,6 @@
                     return false;
                 }
                 this.midCheckAnnex = event.target.files[0];
-            },
-            // 弹窗操作
-            handleOpenBox(event) {
-                this.overBoxFlag = true;
-                event.target.blur();
-            },
-            handleCloseCover() {
-                this.overBoxFlag = false;
-            },
-            receiptChildInfo(val) {
-                this.messageBoxData = val;
-            },
-            handleConfirmCover() {
-                this.overBoxFlag = false;
-                this.showForm.subjectNo = this.messageBoxData.projectNo;
-                this.showForm.subjectName = this.messageBoxData.subjectName;
-                this.showForm.subjectLeader = this.messageBoxData.subjeceLeader;
-                this.showForm.commitmentUnit = this.messageBoxData.commitmentUnit;
-                this.showForm.topicContact = this.messageBoxData.subjectContact;
             }
         }
     }

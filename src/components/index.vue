@@ -3,7 +3,12 @@
 		<el-container>
 			<el-aside width="210px">
 				<div class="aside_banner" @click="handleSpecialHome">
-					<el-menu :default-active="menuValue" class="el-menu-vertical-demo" background-color="#545c64" text-color="#fff" active-text-color="#fff" unique-opened router>
+					<el-menu :default-active="menuValue" 
+						class="el-menu-vertical-demo" 
+						background-color="#545c64" 
+						text-color="#fff" 
+						active-text-color="#fff" 
+						unique-opened router>
 						<el-menu-item index="/index/home" @click="handleAddTab" class="special_home" icon_index="-1">
 							<img src="../assets/images/index_icon/home.png" alt="" :class="{'icon_active':iconIndex == '-1'}" />
 							<img src="../assets/images/index_icon/home_active.png" alt="" :class="{'icon_active':iconIndex != '-1'}" />
@@ -16,7 +21,12 @@
 								<span>{{ item.name }}</span>
 							</template>
 							<el-menu-item-group>
-								<el-menu-item v-for="(_item,_index) in item.children" :key="_item.id" :index="testPath[index][_index]" @click="handleAddTab(_item.name,testPath[index][_index])">{{ _item.name }}</el-menu-item>
+								<el-menu-item 
+									v-for="(_item,_index) in item.children" 
+									:key="_item.id" :index="testPath[index][_index]" 
+									@click="handleAddTab(_item.name,testPath[index][_index])">
+									{{ _item.name }}
+								</el-menu-item>
 							</el-menu-item-group>
 						</el-submenu>
 					</el-menu>
@@ -482,6 +492,9 @@
 							}
 							.user_solid {
 								background-image: url(../assets/images/index_icon/header_1.png);
+							}
+							.welcome {
+								white-space: nowrap;
 							}
 							.tools {
 								background-image: url(../assets/images/index_icon/header_2.png);

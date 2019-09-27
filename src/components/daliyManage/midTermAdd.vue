@@ -30,7 +30,8 @@
                 paramsData: {
                     id: this.$route.params.id
                 },
-                subjectSuggestAnnex: ''
+                subjectSuggestAnnex: '',
+                backData: {}
             }
         },
         methods: {
@@ -145,12 +146,23 @@
             this.axios({
                 url: service.getMatterBackList,
                 method: 'post',
-                data: {
+                params: {
                     cid: this.paramsData.id
                 }
             }).then((res) => {
                 // this.tableData = res.data.data;
-                console.log(res);
+                let data = res.data.data[0];
+                console.log(data);
+                this.$refs.form1.showForm.subjectNo = data.projectNo;
+                this.$refs.form1.showForm.subjectLeader = data.subjeceLeader;
+                this.$refs.form1.showForm.subjectName = data.subjectName;
+                this.$refs.form1.showForm.commitmentUnit = data.commitmentUnit;
+
+                this.$refs.form2.showForm.subjectNo = data.projectNo;
+                this.$refs.form2.showForm.subjectName = data.subjectName;
+                this.$refs.form2.showForm.subjectLeader = data.subjeceLeader;
+                this.$refs.form2.showForm.commitmentUnit = data.commitmentUnit;
+                this.$refs.form2.showForm.topicContact = data.subjectContact;
             })
         }
     }

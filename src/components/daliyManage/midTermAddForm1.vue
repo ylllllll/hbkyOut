@@ -10,23 +10,23 @@
                         <tr>
                             <td>课题编号 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.subjectNo"></el-input>
+                                <el-input v-model="showForm.subjectNo" readonly></el-input>
                             </td>
                             <td>课题负责人 <span class="required">*</span>：</td>
                             <td>
-                                <el-input v-model="showForm.subjectLeader"></el-input>
+                                <el-input v-model="showForm.subjectLeader" readonly></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>课题名称 <span class="required">*</span>：</td>
                             <td colspan="3">
-                                <el-input v-model="showForm.subjectName"></el-input>
+                                <el-input v-model="showForm.subjectName" readonly></el-input>
                             </td>
                         </tr>
                         <tr>
                             <td>承担单位 <span class="required">*</span>：</td>
                             <td colspan="3">
-                                <el-input v-model="showForm.commitmentUnit"></el-input>
+                                <el-input v-model="showForm.commitmentUnit" readonly></el-input>
                             </td>
                         </tr>
                         <tr>
